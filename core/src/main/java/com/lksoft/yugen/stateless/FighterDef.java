@@ -21,7 +21,7 @@ public class FighterDef {
     // Author
     private String author = "LK Soft";
     // Target Y resolution
-    private int targetRes = 240;
+    private int targetRes = 360;
 
     // Files
     private FileHandle atlas;

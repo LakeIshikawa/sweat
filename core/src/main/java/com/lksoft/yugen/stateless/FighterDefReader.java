@@ -1,5 +1,6 @@
 package com.lksoft.yugen.stateless;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
@@ -27,22 +28,22 @@ class FighterDefReader {
                 fighterDef.setTargetRes(Integer.parseInt(line.split("=")[1].trim()));
             }
             else if( line.startsWith("atlas") ){
-                fighterDef.setAtlas(new FileHandle(defFile.parent() + "\\" + line.split("=")[1].trim()));
+                fighterDef.setAtlas(Gdx.files.internal(defFile.parent() + "/" + line.split("=")[1].trim()));
             }
             else if( line.startsWith("frm") ){
-                fighterDef.setFrm(new FileHandle(defFile.parent() + "\\" + line.split("=")[1].trim()));
+                fighterDef.setFrm(Gdx.files.internal(defFile.parent() + "/" + line.split("=")[1].trim()));
             }
             else if( line.startsWith("anm") ){
-                fighterDef.setAnm(new FileHandle(defFile.parent() + "\\" + line.split("=")[1].trim()));
+                fighterDef.setAnm(Gdx.files.internal(defFile.parent() + "/" + line.split("=")[1].trim()));
             }
             else if( line.startsWith("fsm") ){
-                fighterDef.setFsm(new FileHandle(defFile.parent() + "\\" + line.split("=")[1].trim()));
+                fighterDef.setFsm(Gdx.files.internal(defFile.parent() + "/" + line.split("=")[1].trim()));
             }
             else if( line.startsWith("cmd") ){
-                fighterDef.setCmd(new FileHandle(defFile.parent() + "\\" + line.split("=")[1].trim()));
+                fighterDef.setCmd(Gdx.files.internal(defFile.parent() + "/" + line.split("=")[1].trim()));
             }
             else if( line.startsWith("snd") ){
-                fighterDef.setSnd(new FileHandle(defFile.parent() + "\\" + line.split("=")[1].trim()));
+                fighterDef.setSnd(Gdx.files.internal(defFile.parent() + "/" + line.split("=")[1].trim()));
             }
         }
 

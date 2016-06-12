@@ -1,5 +1,6 @@
 package com.lksoft.yugen.stateless;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
@@ -35,13 +36,13 @@ public class StageDefReader {
                 layout.setAuthor(line.split("=")[1].trim());
             }
             else if( line.startsWith("atlas") ){
-                layout.setAtlasFile(new FileHandle(stgFile.parent() + "\\" + line.split("=")[1].trim()));
+                layout.setAtlasFile(Gdx.files.internal(stgFile.parent() + "/" + line.split("=")[1].trim()));
             }
             else if( line.startsWith("frm") ){
-                layout.setFrmFile(new FileHandle(stgFile.parent() + "\\" + line.split("=")[1].trim()));
+                layout.setFrmFile(Gdx.files.internal(stgFile.parent() + "/" + line.split("=")[1].trim()));
             }
             else if( line.startsWith("anm") ){
-                layout.setAnmFile(new FileHandle(stgFile.parent() + "\\" + line.split("=")[1].trim()));
+                layout.setAnmFile(Gdx.files.internal(stgFile.parent() + "/" + line.split("=")[1].trim()));
             }
             else if( line.startsWith("camera.width") ){
                 layout.setCameraW(Integer.parseInt(line.split("=")[1].trim()));
