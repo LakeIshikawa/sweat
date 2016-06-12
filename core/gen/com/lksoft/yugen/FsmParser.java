@@ -1,0 +1,1803 @@
+// Generated from E:/Development/yugen/core/src/main/antlr\Fsm.g4 by ANTLR 4.5.3
+package com.lksoft.yugen;
+import org.antlr.v4.runtime.atn.*;
+import org.antlr.v4.runtime.dfa.DFA;
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.misc.*;
+import org.antlr.v4.runtime.tree.*;
+import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
+
+@SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
+public class FsmParser extends Parser {
+	static { RuntimeMetaData.checkVersion("4.5.3", RuntimeMetaData.VERSION); }
+
+	protected static final DFA[] _decisionToDFA;
+	protected static final PredictionContextCache _sharedContextCache =
+		new PredictionContextCache();
+	public static final int
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
+		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
+		T__17=18, T__18=19, T__19=20, T__20=21, WS=22, COMMENT=23, LINE_COMMENT=24, 
+		ID=25, INT=26, FLOAT=27, STRING=28;
+	public static final int
+		RULE_fsm = 0, RULE_params = 1, RULE_paramslist = 2, RULE_param = 3, RULE_stateless = 4, 
+		RULE_statesOpt = 5, RULE_states = 6, RULE_state = 7, RULE_triggers = 8, 
+		RULE_trigger = 9, RULE_triglist = 10, RULE_trigel = 11, RULE_statements = 12, 
+		RULE_statement = 13, RULE_assignment = 14, RULE_e = 15, RULE_fcall = 16, 
+		RULE_elist = 17;
+	public static final String[] ruleNames = {
+		"fsm", "params", "paramslist", "param", "stateless", "statesOpt", "states", 
+		"state", "triggers", "trigger", "triglist", "trigel", "statements", "statement", 
+		"assignment", "e", "fcall", "elist"
+	};
+
+	private static final String[] _LITERAL_NAMES = {
+		null, "'Params'", "'Stateless'", "'State'", "'('", "')'", "'['", "']'", 
+		"'Trigger'", "':'", "'->'", "'='", "'>='", "'<='", "'<'", "'>'", "'=='", 
+		"'!='", "'&&'", "'||'", "'!'", "','"
+	};
+	private static final String[] _SYMBOLIC_NAMES = {
+		null, null, null, null, null, null, null, null, null, null, null, null, 
+		null, null, null, null, null, null, null, null, null, null, "WS", "COMMENT", 
+		"LINE_COMMENT", "ID", "INT", "FLOAT", "STRING"
+	};
+	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
+
+	/**
+	 * @deprecated Use {@link #VOCABULARY} instead.
+	 */
+	@Deprecated
+	public static final String[] tokenNames;
+	static {
+		tokenNames = new String[_SYMBOLIC_NAMES.length];
+		for (int i = 0; i < tokenNames.length; i++) {
+			tokenNames[i] = VOCABULARY.getLiteralName(i);
+			if (tokenNames[i] == null) {
+				tokenNames[i] = VOCABULARY.getSymbolicName(i);
+			}
+
+			if (tokenNames[i] == null) {
+				tokenNames[i] = "<INVALID>";
+			}
+		}
+	}
+
+	@Override
+	@Deprecated
+	public String[] getTokenNames() {
+		return tokenNames;
+	}
+
+	@Override
+
+	public Vocabulary getVocabulary() {
+		return VOCABULARY;
+	}
+
+	@Override
+	public String getGrammarFileName() { return "Fsm.g4"; }
+
+	@Override
+	public String[] getRuleNames() { return ruleNames; }
+
+	@Override
+	public String getSerializedATN() { return _serializedATN; }
+
+	@Override
+	public ATN getATN() { return _ATN; }
+
+	public FsmParser(TokenStream input) {
+		super(input);
+		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
+	}
+	public static class FsmContext extends ParserRuleContext {
+		public ParamsContext params() {
+			return getRuleContext(ParamsContext.class,0);
+		}
+		public StatesOptContext statesOpt() {
+			return getRuleContext(StatesOptContext.class,0);
+		}
+		public StatelessContext stateless() {
+			return getRuleContext(StatelessContext.class,0);
+		}
+		public FsmContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_fsm; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterFsm(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitFsm(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitFsm(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final FsmContext fsm() throws RecognitionException {
+		FsmContext _localctx = new FsmContext(_ctx, getState());
+		enterRule(_localctx, 0, RULE_fsm);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(36);
+			params();
+			setState(37);
+			statesOpt();
+			setState(38);
+			stateless();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ParamsContext extends ParserRuleContext {
+		public ParamslistContext paramslist() {
+			return getRuleContext(ParamslistContext.class,0);
+		}
+		public ParamsContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_params; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterParams(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitParams(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitParams(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final ParamsContext params() throws RecognitionException {
+		ParamsContext _localctx = new ParamsContext(_ctx, getState());
+		enterRule(_localctx, 2, RULE_params);
+		try {
+			setState(43);
+			switch (_input.LA(1)) {
+			case T__0:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(40);
+				match(T__0);
+				setState(41);
+				paramslist();
+				}
+				break;
+			case EOF:
+			case T__1:
+			case T__2:
+				enterOuterAlt(_localctx, 2);
+				{
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ParamslistContext extends ParserRuleContext {
+		public ParamContext param() {
+			return getRuleContext(ParamContext.class,0);
+		}
+		public ParamslistContext paramslist() {
+			return getRuleContext(ParamslistContext.class,0);
+		}
+		public ParamslistContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_paramslist; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterParamslist(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitParamslist(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitParamslist(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final ParamslistContext paramslist() throws RecognitionException {
+		ParamslistContext _localctx = new ParamslistContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_paramslist);
+		try {
+			setState(49);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
+			case 1:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(45);
+				param();
+				}
+				break;
+			case 2:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(46);
+				param();
+				setState(47);
+				paramslist();
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ParamContext extends ParserRuleContext {
+		public AssignmentContext assignment() {
+			return getRuleContext(AssignmentContext.class,0);
+		}
+		public ParamContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_param; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterParam(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitParam(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitParam(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final ParamContext param() throws RecognitionException {
+		ParamContext _localctx = new ParamContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_param);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(51);
+			assignment();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class StatelessContext extends ParserRuleContext {
+		public TriggersContext triggers() {
+			return getRuleContext(TriggersContext.class,0);
+		}
+		public StatelessContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_stateless; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterStateless(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitStateless(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitStateless(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final StatelessContext stateless() throws RecognitionException {
+		StatelessContext _localctx = new StatelessContext(_ctx, getState());
+		enterRule(_localctx, 8, RULE_stateless);
+		try {
+			setState(56);
+			switch (_input.LA(1)) {
+			case T__1:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(53);
+				match(T__1);
+				setState(54);
+				triggers();
+				}
+				break;
+			case EOF:
+				enterOuterAlt(_localctx, 2);
+				{
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class StatesOptContext extends ParserRuleContext {
+		public StatesContext states() {
+			return getRuleContext(StatesContext.class,0);
+		}
+		public StatesOptContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_statesOpt; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterStatesOpt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitStatesOpt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitStatesOpt(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final StatesOptContext statesOpt() throws RecognitionException {
+		StatesOptContext _localctx = new StatesOptContext(_ctx, getState());
+		enterRule(_localctx, 10, RULE_statesOpt);
+		try {
+			setState(60);
+			switch (_input.LA(1)) {
+			case T__2:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(58);
+				states();
+				}
+				break;
+			case EOF:
+			case T__1:
+				enterOuterAlt(_localctx, 2);
+				{
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class StatesContext extends ParserRuleContext {
+		public StateContext state() {
+			return getRuleContext(StateContext.class,0);
+		}
+		public StatesContext states() {
+			return getRuleContext(StatesContext.class,0);
+		}
+		public StatesContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_states; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterStates(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitStates(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitStates(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final StatesContext states() throws RecognitionException {
+		StatesContext _localctx = new StatesContext(_ctx, getState());
+		enterRule(_localctx, 12, RULE_states);
+		try {
+			setState(66);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
+			case 1:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(62);
+				state();
+				}
+				break;
+			case 2:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(63);
+				state();
+				setState(64);
+				states();
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class StateContext extends ParserRuleContext {
+		public List<TerminalNode> ID() { return getTokens(FsmParser.ID); }
+		public TerminalNode ID(int i) {
+			return getToken(FsmParser.ID, i);
+		}
+		public TriggersContext triggers() {
+			return getRuleContext(TriggersContext.class,0);
+		}
+		public StateContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_state; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterState(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitState(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitState(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final StateContext state() throws RecognitionException {
+		StateContext _localctx = new StateContext(_ctx, getState());
+		enterRule(_localctx, 14, RULE_state);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(68);
+			match(T__2);
+			setState(69);
+			match(ID);
+			setState(70);
+			match(T__3);
+			setState(71);
+			match(ID);
+			setState(72);
+			match(T__4);
+			setState(73);
+			triggers();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class TriggersContext extends ParserRuleContext {
+		public TriggerContext trigger() {
+			return getRuleContext(TriggerContext.class,0);
+		}
+		public TriggersContext triggers() {
+			return getRuleContext(TriggersContext.class,0);
+		}
+		public TriggersContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_triggers; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterTriggers(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitTriggers(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitTriggers(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final TriggersContext triggers() throws RecognitionException {
+		TriggersContext _localctx = new TriggersContext(_ctx, getState());
+		enterRule(_localctx, 16, RULE_triggers);
+		try {
+			setState(79);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
+			case 1:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(75);
+				trigger();
+				}
+				break;
+			case 2:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(76);
+				trigger();
+				setState(77);
+				triggers();
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class TriggerContext extends ParserRuleContext {
+		public TriggerContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_trigger; }
+	 
+		public TriggerContext() { }
+		public void copyFrom(TriggerContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class SystemTriggerContext extends TriggerContext {
+		public TerminalNode ID() { return getToken(FsmParser.ID, 0); }
+		public StatementsContext statements() {
+			return getRuleContext(StatementsContext.class,0);
+		}
+		public SystemTriggerContext(TriggerContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterSystemTrigger(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitSystemTrigger(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitSystemTrigger(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class SingleCondTriggerContext extends TriggerContext {
+		public EContext e() {
+			return getRuleContext(EContext.class,0);
+		}
+		public StatementsContext statements() {
+			return getRuleContext(StatementsContext.class,0);
+		}
+		public SingleCondTriggerContext(TriggerContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterSingleCondTrigger(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitSingleCondTrigger(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitSingleCondTrigger(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class MultiCondTriggerContext extends TriggerContext {
+		public TriglistContext triglist() {
+			return getRuleContext(TriglistContext.class,0);
+		}
+		public StatementsContext statements() {
+			return getRuleContext(StatementsContext.class,0);
+		}
+		public MultiCondTriggerContext(TriggerContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterMultiCondTrigger(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitMultiCondTrigger(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitMultiCondTrigger(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final TriggerContext trigger() throws RecognitionException {
+		TriggerContext _localctx = new TriggerContext(_ctx, getState());
+		enterRule(_localctx, 18, RULE_trigger);
+		try {
+			setState(97);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
+			case 1:
+				_localctx = new SystemTriggerContext(_localctx);
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(81);
+				match(T__5);
+				setState(82);
+				match(ID);
+				setState(83);
+				match(T__6);
+				setState(84);
+				statements();
+				}
+				break;
+			case 2:
+				_localctx = new SingleCondTriggerContext(_localctx);
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(85);
+				match(T__5);
+				setState(86);
+				match(T__7);
+				setState(87);
+				e(0);
+				setState(88);
+				match(T__6);
+				setState(89);
+				statements();
+				}
+				break;
+			case 3:
+				_localctx = new MultiCondTriggerContext(_localctx);
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(91);
+				match(T__5);
+				setState(92);
+				match(T__7);
+				setState(93);
+				triglist();
+				setState(94);
+				match(T__6);
+				setState(95);
+				statements();
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class TriglistContext extends ParserRuleContext {
+		public TrigelContext trigel() {
+			return getRuleContext(TrigelContext.class,0);
+		}
+		public TriglistContext triglist() {
+			return getRuleContext(TriglistContext.class,0);
+		}
+		public TriglistContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_triglist; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterTriglist(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitTriglist(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitTriglist(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final TriglistContext triglist() throws RecognitionException {
+		TriglistContext _localctx = new TriglistContext(_ctx, getState());
+		enterRule(_localctx, 20, RULE_triglist);
+		try {
+			setState(103);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
+			case 1:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(99);
+				trigel();
+				}
+				break;
+			case 2:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(100);
+				trigel();
+				setState(101);
+				triglist();
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class TrigelContext extends ParserRuleContext {
+		public TerminalNode INT() { return getToken(FsmParser.INT, 0); }
+		public EContext e() {
+			return getRuleContext(EContext.class,0);
+		}
+		public TrigelContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_trigel; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterTrigel(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitTrigel(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitTrigel(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final TrigelContext trigel() throws RecognitionException {
+		TrigelContext _localctx = new TrigelContext(_ctx, getState());
+		enterRule(_localctx, 22, RULE_trigel);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(105);
+			match(INT);
+			setState(106);
+			match(T__8);
+			setState(107);
+			e(0);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class StatementsContext extends ParserRuleContext {
+		public StatementContext statement() {
+			return getRuleContext(StatementContext.class,0);
+		}
+		public StatementsContext statements() {
+			return getRuleContext(StatementsContext.class,0);
+		}
+		public StatementsContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_statements; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterStatements(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitStatements(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitStatements(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final StatementsContext statements() throws RecognitionException {
+		StatementsContext _localctx = new StatementsContext(_ctx, getState());
+		enterRule(_localctx, 24, RULE_statements);
+		try {
+			setState(113);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
+			case 1:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(109);
+				statement();
+				}
+				break;
+			case 2:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(110);
+				statement();
+				setState(111);
+				statements();
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class StatementContext extends ParserRuleContext {
+		public AssignmentContext assignment() {
+			return getRuleContext(AssignmentContext.class,0);
+		}
+		public TerminalNode ID() { return getToken(FsmParser.ID, 0); }
+		public StatementContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_statement; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterStatement(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitStatement(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitStatement(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final StatementContext statement() throws RecognitionException {
+		StatementContext _localctx = new StatementContext(_ctx, getState());
+		enterRule(_localctx, 26, RULE_statement);
+		try {
+			setState(118);
+			switch (_input.LA(1)) {
+			case ID:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(115);
+				assignment();
+				}
+				break;
+			case T__9:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(116);
+				match(T__9);
+				setState(117);
+				match(ID);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class AssignmentContext extends ParserRuleContext {
+		public TerminalNode ID() { return getToken(FsmParser.ID, 0); }
+		public EContext e() {
+			return getRuleContext(EContext.class,0);
+		}
+		public AssignmentContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_assignment; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterAssignment(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitAssignment(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitAssignment(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final AssignmentContext assignment() throws RecognitionException {
+		AssignmentContext _localctx = new AssignmentContext(_ctx, getState());
+		enterRule(_localctx, 28, RULE_assignment);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(120);
+			match(ID);
+			setState(121);
+			match(T__10);
+			setState(122);
+			e(0);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class EContext extends ParserRuleContext {
+		public EContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_e; }
+	 
+		public EContext() { }
+		public void copyFrom(EContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class NotExpContext extends EContext {
+		public EContext e() {
+			return getRuleContext(EContext.class,0);
+		}
+		public NotExpContext(EContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterNotExp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitNotExp(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitNotExp(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class AndExpContext extends EContext {
+		public List<EContext> e() {
+			return getRuleContexts(EContext.class);
+		}
+		public EContext e(int i) {
+			return getRuleContext(EContext.class,i);
+		}
+		public AndExpContext(EContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterAndExp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitAndExp(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitAndExp(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class FCallExpContext extends EContext {
+		public FcallContext fcall() {
+			return getRuleContext(FcallContext.class,0);
+		}
+		public FCallExpContext(EContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterFCallExp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitFCallExp(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitFCallExp(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class IdLiteralContext extends EContext {
+		public TerminalNode ID() { return getToken(FsmParser.ID, 0); }
+		public IdLiteralContext(EContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterIdLiteral(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitIdLiteral(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitIdLiteral(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class LtEqExpContext extends EContext {
+		public List<EContext> e() {
+			return getRuleContexts(EContext.class);
+		}
+		public EContext e(int i) {
+			return getRuleContext(EContext.class,i);
+		}
+		public LtEqExpContext(EContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterLtEqExp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitLtEqExp(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitLtEqExp(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class FloatLiteralContext extends EContext {
+		public TerminalNode FLOAT() { return getToken(FsmParser.FLOAT, 0); }
+		public FloatLiteralContext(EContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterFloatLiteral(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitFloatLiteral(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitFloatLiteral(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class GtEqExpContext extends EContext {
+		public List<EContext> e() {
+			return getRuleContexts(EContext.class);
+		}
+		public EContext e(int i) {
+			return getRuleContext(EContext.class,i);
+		}
+		public GtEqExpContext(EContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterGtEqExp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitGtEqExp(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitGtEqExp(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class GtExpContext extends EContext {
+		public List<EContext> e() {
+			return getRuleContexts(EContext.class);
+		}
+		public EContext e(int i) {
+			return getRuleContext(EContext.class,i);
+		}
+		public GtExpContext(EContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterGtExp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitGtExp(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitGtExp(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class LtExpContext extends EContext {
+		public List<EContext> e() {
+			return getRuleContexts(EContext.class);
+		}
+		public EContext e(int i) {
+			return getRuleContext(EContext.class,i);
+		}
+		public LtExpContext(EContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterLtExp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitLtExp(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitLtExp(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class EqExpContext extends EContext {
+		public List<EContext> e() {
+			return getRuleContexts(EContext.class);
+		}
+		public EContext e(int i) {
+			return getRuleContext(EContext.class,i);
+		}
+		public EqExpContext(EContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterEqExp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitEqExp(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitEqExp(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ParExpContext extends EContext {
+		public EContext e() {
+			return getRuleContext(EContext.class,0);
+		}
+		public ParExpContext(EContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterParExp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitParExp(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitParExp(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class OrExpContext extends EContext {
+		public List<EContext> e() {
+			return getRuleContexts(EContext.class);
+		}
+		public EContext e(int i) {
+			return getRuleContext(EContext.class,i);
+		}
+		public OrExpContext(EContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterOrExp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitOrExp(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitOrExp(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class StateChangeContext extends EContext {
+		public TerminalNode ID() { return getToken(FsmParser.ID, 0); }
+		public StateChangeContext(EContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterStateChange(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitStateChange(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitStateChange(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class StringListeralContext extends EContext {
+		public TerminalNode STRING() { return getToken(FsmParser.STRING, 0); }
+		public StringListeralContext(EContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterStringListeral(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitStringListeral(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitStringListeral(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class IntLiteralContext extends EContext {
+		public TerminalNode INT() { return getToken(FsmParser.INT, 0); }
+		public IntLiteralContext(EContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterIntLiteral(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitIntLiteral(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitIntLiteral(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class NeqExpContext extends EContext {
+		public List<EContext> e() {
+			return getRuleContexts(EContext.class);
+		}
+		public EContext e(int i) {
+			return getRuleContext(EContext.class,i);
+		}
+		public NeqExpContext(EContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterNeqExp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitNeqExp(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitNeqExp(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final EContext e() throws RecognitionException {
+		return e(0);
+	}
+
+	private EContext e(int _p) throws RecognitionException {
+		ParserRuleContext _parentctx = _ctx;
+		int _parentState = getState();
+		EContext _localctx = new EContext(_ctx, _parentState);
+		EContext _prevctx = _localctx;
+		int _startState = 30;
+		enterRecursionRule(_localctx, 30, RULE_e, _p);
+		try {
+			int _alt;
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(138);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,10,_ctx) ) {
+			case 1:
+				{
+				_localctx = new IntLiteralContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+
+				setState(125);
+				match(INT);
+				}
+				break;
+			case 2:
+				{
+				_localctx = new FloatLiteralContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(126);
+				match(FLOAT);
+				}
+				break;
+			case 3:
+				{
+				_localctx = new StringListeralContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(127);
+				match(STRING);
+				}
+				break;
+			case 4:
+				{
+				_localctx = new IdLiteralContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(128);
+				match(ID);
+				}
+				break;
+			case 5:
+				{
+				_localctx = new NotExpContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(129);
+				match(T__19);
+				setState(130);
+				e(4);
+				}
+				break;
+			case 6:
+				{
+				_localctx = new ParExpContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(131);
+				match(T__3);
+				setState(132);
+				e(0);
+				setState(133);
+				match(T__4);
+				}
+				break;
+			case 7:
+				{
+				_localctx = new FCallExpContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(135);
+				fcall();
+				}
+				break;
+			case 8:
+				{
+				_localctx = new StateChangeContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(136);
+				match(T__9);
+				setState(137);
+				match(ID);
+				}
+				break;
+			}
+			_ctx.stop = _input.LT(-1);
+			setState(166);
+			_errHandler.sync(this);
+			_alt = getInterpreter().adaptivePredict(_input,12,_ctx);
+			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
+					if ( _parseListeners!=null ) triggerExitRuleEvent();
+					_prevctx = _localctx;
+					{
+					setState(164);
+					_errHandler.sync(this);
+					switch ( getInterpreter().adaptivePredict(_input,11,_ctx) ) {
+					case 1:
+						{
+						_localctx = new GtEqExpContext(new EContext(_parentctx, _parentState));
+						pushNewRecursionContext(_localctx, _startState, RULE_e);
+						setState(140);
+						if (!(precpred(_ctx, 12))) throw new FailedPredicateException(this, "precpred(_ctx, 12)");
+						setState(141);
+						match(T__11);
+						setState(142);
+						e(13);
+						}
+						break;
+					case 2:
+						{
+						_localctx = new LtEqExpContext(new EContext(_parentctx, _parentState));
+						pushNewRecursionContext(_localctx, _startState, RULE_e);
+						setState(143);
+						if (!(precpred(_ctx, 11))) throw new FailedPredicateException(this, "precpred(_ctx, 11)");
+						setState(144);
+						match(T__12);
+						setState(145);
+						e(12);
+						}
+						break;
+					case 3:
+						{
+						_localctx = new LtExpContext(new EContext(_parentctx, _parentState));
+						pushNewRecursionContext(_localctx, _startState, RULE_e);
+						setState(146);
+						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
+						setState(147);
+						match(T__13);
+						setState(148);
+						e(11);
+						}
+						break;
+					case 4:
+						{
+						_localctx = new GtExpContext(new EContext(_parentctx, _parentState));
+						pushNewRecursionContext(_localctx, _startState, RULE_e);
+						setState(149);
+						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
+						setState(150);
+						match(T__14);
+						setState(151);
+						e(10);
+						}
+						break;
+					case 5:
+						{
+						_localctx = new EqExpContext(new EContext(_parentctx, _parentState));
+						pushNewRecursionContext(_localctx, _startState, RULE_e);
+						setState(152);
+						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
+						setState(153);
+						match(T__15);
+						setState(154);
+						e(9);
+						}
+						break;
+					case 6:
+						{
+						_localctx = new NeqExpContext(new EContext(_parentctx, _parentState));
+						pushNewRecursionContext(_localctx, _startState, RULE_e);
+						setState(155);
+						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
+						setState(156);
+						match(T__16);
+						setState(157);
+						e(8);
+						}
+						break;
+					case 7:
+						{
+						_localctx = new AndExpContext(new EContext(_parentctx, _parentState));
+						pushNewRecursionContext(_localctx, _startState, RULE_e);
+						setState(158);
+						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
+						setState(159);
+						match(T__17);
+						setState(160);
+						e(7);
+						}
+						break;
+					case 8:
+						{
+						_localctx = new OrExpContext(new EContext(_parentctx, _parentState));
+						pushNewRecursionContext(_localctx, _startState, RULE_e);
+						setState(161);
+						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
+						setState(162);
+						match(T__18);
+						setState(163);
+						e(6);
+						}
+						break;
+					}
+					} 
+				}
+				setState(168);
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,12,_ctx);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			unrollRecursionContexts(_parentctx);
+		}
+		return _localctx;
+	}
+
+	public static class FcallContext extends ParserRuleContext {
+		public TerminalNode ID() { return getToken(FsmParser.ID, 0); }
+		public ElistContext elist() {
+			return getRuleContext(ElistContext.class,0);
+		}
+		public FcallContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_fcall; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterFcall(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitFcall(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitFcall(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final FcallContext fcall() throws RecognitionException {
+		FcallContext _localctx = new FcallContext(_ctx, getState());
+		enterRule(_localctx, 32, RULE_fcall);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(169);
+			match(ID);
+			setState(170);
+			match(T__3);
+			setState(171);
+			elist();
+			setState(172);
+			match(T__4);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ElistContext extends ParserRuleContext {
+		public EContext e() {
+			return getRuleContext(EContext.class,0);
+		}
+		public ElistContext elist() {
+			return getRuleContext(ElistContext.class,0);
+		}
+		public ElistContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_elist; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).enterElist(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof FsmListener ) ((FsmListener)listener).exitElist(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FsmVisitor ) return ((FsmVisitor<? extends T>)visitor).visitElist(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final ElistContext elist() throws RecognitionException {
+		ElistContext _localctx = new ElistContext(_ctx, getState());
+		enterRule(_localctx, 34, RULE_elist);
+		try {
+			setState(179);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,13,_ctx) ) {
+			case 1:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(174);
+				e(0);
+				}
+				break;
+			case 2:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(175);
+				e(0);
+				setState(176);
+				match(T__20);
+				setState(177);
+				elist();
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
+		switch (ruleIndex) {
+		case 15:
+			return e_sempred((EContext)_localctx, predIndex);
+		}
+		return true;
+	}
+	private boolean e_sempred(EContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 0:
+			return precpred(_ctx, 12);
+		case 1:
+			return precpred(_ctx, 11);
+		case 2:
+			return precpred(_ctx, 10);
+		case 3:
+			return precpred(_ctx, 9);
+		case 4:
+			return precpred(_ctx, 8);
+		case 5:
+			return precpred(_ctx, 7);
+		case 6:
+			return precpred(_ctx, 6);
+		case 7:
+			return precpred(_ctx, 5);
+		}
+		return true;
+	}
+
+	public static final String _serializedATN =
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\36\u00b8\4\2\t\2"+
+		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
+		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
+		"\4\23\t\23\3\2\3\2\3\2\3\2\3\3\3\3\3\3\5\3.\n\3\3\4\3\4\3\4\3\4\5\4\64"+
+		"\n\4\3\5\3\5\3\6\3\6\3\6\5\6;\n\6\3\7\3\7\5\7?\n\7\3\b\3\b\3\b\3\b\5\b"+
+		"E\n\b\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\n\3\n\3\n\3\n\5\nR\n\n\3\13\3\13\3"+
+		"\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\5"+
+		"\13d\n\13\3\f\3\f\3\f\3\f\5\fj\n\f\3\r\3\r\3\r\3\r\3\16\3\16\3\16\3\16"+
+		"\5\16t\n\16\3\17\3\17\3\17\5\17y\n\17\3\20\3\20\3\20\3\20\3\21\3\21\3"+
+		"\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\5\21\u008d"+
+		"\n\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21"+
+		"\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\7\21\u00a7\n\21"+
+		"\f\21\16\21\u00aa\13\21\3\22\3\22\3\22\3\22\3\22\3\23\3\23\3\23\3\23\3"+
+		"\23\5\23\u00b6\n\23\3\23\2\3 \24\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36"+
+		" \"$\2\2\u00c0\2&\3\2\2\2\4-\3\2\2\2\6\63\3\2\2\2\b\65\3\2\2\2\n:\3\2"+
+		"\2\2\f>\3\2\2\2\16D\3\2\2\2\20F\3\2\2\2\22Q\3\2\2\2\24c\3\2\2\2\26i\3"+
+		"\2\2\2\30k\3\2\2\2\32s\3\2\2\2\34x\3\2\2\2\36z\3\2\2\2 \u008c\3\2\2\2"+
+		"\"\u00ab\3\2\2\2$\u00b5\3\2\2\2&\'\5\4\3\2\'(\5\f\7\2()\5\n\6\2)\3\3\2"+
+		"\2\2*+\7\3\2\2+.\5\6\4\2,.\3\2\2\2-*\3\2\2\2-,\3\2\2\2.\5\3\2\2\2/\64"+
+		"\5\b\5\2\60\61\5\b\5\2\61\62\5\6\4\2\62\64\3\2\2\2\63/\3\2\2\2\63\60\3"+
+		"\2\2\2\64\7\3\2\2\2\65\66\5\36\20\2\66\t\3\2\2\2\678\7\4\2\28;\5\22\n"+
+		"\29;\3\2\2\2:\67\3\2\2\2:9\3\2\2\2;\13\3\2\2\2<?\5\16\b\2=?\3\2\2\2><"+
+		"\3\2\2\2>=\3\2\2\2?\r\3\2\2\2@E\5\20\t\2AB\5\20\t\2BC\5\16\b\2CE\3\2\2"+
+		"\2D@\3\2\2\2DA\3\2\2\2E\17\3\2\2\2FG\7\5\2\2GH\7\33\2\2HI\7\6\2\2IJ\7"+
+		"\33\2\2JK\7\7\2\2KL\5\22\n\2L\21\3\2\2\2MR\5\24\13\2NO\5\24\13\2OP\5\22"+
+		"\n\2PR\3\2\2\2QM\3\2\2\2QN\3\2\2\2R\23\3\2\2\2ST\7\b\2\2TU\7\33\2\2UV"+
+		"\7\t\2\2Vd\5\32\16\2WX\7\b\2\2XY\7\n\2\2YZ\5 \21\2Z[\7\t\2\2[\\\5\32\16"+
+		"\2\\d\3\2\2\2]^\7\b\2\2^_\7\n\2\2_`\5\26\f\2`a\7\t\2\2ab\5\32\16\2bd\3"+
+		"\2\2\2cS\3\2\2\2cW\3\2\2\2c]\3\2\2\2d\25\3\2\2\2ej\5\30\r\2fg\5\30\r\2"+
+		"gh\5\26\f\2hj\3\2\2\2ie\3\2\2\2if\3\2\2\2j\27\3\2\2\2kl\7\34\2\2lm\7\13"+
+		"\2\2mn\5 \21\2n\31\3\2\2\2ot\5\34\17\2pq\5\34\17\2qr\5\32\16\2rt\3\2\2"+
+		"\2so\3\2\2\2sp\3\2\2\2t\33\3\2\2\2uy\5\36\20\2vw\7\f\2\2wy\7\33\2\2xu"+
+		"\3\2\2\2xv\3\2\2\2y\35\3\2\2\2z{\7\33\2\2{|\7\r\2\2|}\5 \21\2}\37\3\2"+
+		"\2\2~\177\b\21\1\2\177\u008d\7\34\2\2\u0080\u008d\7\35\2\2\u0081\u008d"+
+		"\7\36\2\2\u0082\u008d\7\33\2\2\u0083\u0084\7\26\2\2\u0084\u008d\5 \21"+
+		"\6\u0085\u0086\7\6\2\2\u0086\u0087\5 \21\2\u0087\u0088\7\7\2\2\u0088\u008d"+
+		"\3\2\2\2\u0089\u008d\5\"\22\2\u008a\u008b\7\f\2\2\u008b\u008d\7\33\2\2"+
+		"\u008c~\3\2\2\2\u008c\u0080\3\2\2\2\u008c\u0081\3\2\2\2\u008c\u0082\3"+
+		"\2\2\2\u008c\u0083\3\2\2\2\u008c\u0085\3\2\2\2\u008c\u0089\3\2\2\2\u008c"+
+		"\u008a\3\2\2\2\u008d\u00a8\3\2\2\2\u008e\u008f\f\16\2\2\u008f\u0090\7"+
+		"\16\2\2\u0090\u00a7\5 \21\17\u0091\u0092\f\r\2\2\u0092\u0093\7\17\2\2"+
+		"\u0093\u00a7\5 \21\16\u0094\u0095\f\f\2\2\u0095\u0096\7\20\2\2\u0096\u00a7"+
+		"\5 \21\r\u0097\u0098\f\13\2\2\u0098\u0099\7\21\2\2\u0099\u00a7\5 \21\f"+
+		"\u009a\u009b\f\n\2\2\u009b\u009c\7\22\2\2\u009c\u00a7\5 \21\13\u009d\u009e"+
+		"\f\t\2\2\u009e\u009f\7\23\2\2\u009f\u00a7\5 \21\n\u00a0\u00a1\f\b\2\2"+
+		"\u00a1\u00a2\7\24\2\2\u00a2\u00a7\5 \21\t\u00a3\u00a4\f\7\2\2\u00a4\u00a5"+
+		"\7\25\2\2\u00a5\u00a7\5 \21\b\u00a6\u008e\3\2\2\2\u00a6\u0091\3\2\2\2"+
+		"\u00a6\u0094\3\2\2\2\u00a6\u0097\3\2\2\2\u00a6\u009a\3\2\2\2\u00a6\u009d"+
+		"\3\2\2\2\u00a6\u00a0\3\2\2\2\u00a6\u00a3\3\2\2\2\u00a7\u00aa\3\2\2\2\u00a8"+
+		"\u00a6\3\2\2\2\u00a8\u00a9\3\2\2\2\u00a9!\3\2\2\2\u00aa\u00a8\3\2\2\2"+
+		"\u00ab\u00ac\7\33\2\2\u00ac\u00ad\7\6\2\2\u00ad\u00ae\5$\23\2\u00ae\u00af"+
+		"\7\7\2\2\u00af#\3\2\2\2\u00b0\u00b6\5 \21\2\u00b1\u00b2\5 \21\2\u00b2"+
+		"\u00b3\7\27\2\2\u00b3\u00b4\5$\23\2\u00b4\u00b6\3\2\2\2\u00b5\u00b0\3"+
+		"\2\2\2\u00b5\u00b1\3\2\2\2\u00b6%\3\2\2\2\20-\63:>DQcisx\u008c\u00a6\u00a8"+
+		"\u00b5";
+	public static final ATN _ATN =
+		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
+	static {
+		_decisionToDFA = new DFA[_ATN.getNumberOfDecisions()];
+		for (int i = 0; i < _ATN.getNumberOfDecisions(); i++) {
+			_decisionToDFA[i] = new DFA(_ATN.getDecisionState(i), i);
+		}
+	}
+}

@@ -1,0 +1,63 @@
+[Params]
+name = newstage
+author = LK software
+
+atlas = lionking.atlas
+frm = lionking.frm
+anm = lionking.anm
+
+camera.width = 640
+camera.height = 360
+camera.offsetY = 155
+
+p1.start.x = -70
+p2.start.x = 70
+
+area.right = 768
+area.left = -768
+area.top = 500
+area.bottom = -200
+
+
+[Sprite king001]
+start = 4,367
+scrollFactor = 0.15,0.0
+layer = 0
+resource = king001
+
+[Sprite king003]
+start = 75,182
+scrollFactor = 0.1,0.0
+layer = 0
+resource = king003
+
+[Sprite king002]
+start = -50,105
+scrollFactor = 0.05,-0.0
+layer = 0
+resource = king002
+
+[Sprite king000]
+start = -2,-5
+scrollFactor = 0.0,0.0
+layer = 0
+resource = king000
+
+[Sprite lion]
+start = -59,158
+scrollFactor = 0.05,0.0
+layer = 0
+resource = lion
+
+[Sprite babylion]
+start = -89,164
+scrollFactor = 0.05,0.0
+layer = 0
+resource = babylion
+
+[Sprite musafa]
+start = -287,78
+scrollFactor = 0.0,0.0
+layer = 0
+resource = musafa
+

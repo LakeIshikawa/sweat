@@ -1,0 +1,16 @@
+apply plugin: "java"
+apply plugin: "antlr"
+
+sourceCompatibility = 1.7
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+sourceSets.main.java.srcDirs = [ "src/main/java/", "gen/" ]
+
+generateGrammarSource {
+    maxHeapSize = "64m"
+    arguments += [ "-visitor", "-long-messages", "-package", "com.lksoft.yugen"]
+}
+
+eclipse.project {
+    name = appName + "-core"
+}

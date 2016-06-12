@@ -1,0 +1,97 @@
+Params
+speed.walk.fwd.x = 2
+speed.walk.bwd.x = -1.5
+
+State idle (S)
+	[Enter]
+	physics = standing
+	priority = 0
+	anim = idle
+
+	[Trigger time == 0]
+	vel.y = 0
+
+	[Trigger
+		1: anim != idle && anim != turn
+		2: anim == turn && animTime == 0]
+	anim = idle
+
+	[Trigger !alive]
+	ctrl = 0
+	-> gethitair
+
+State walk (S)
+	[Enter]
+	physics = standing
+	priority = 0
+
+	[Trigger keyhold("F")]
+	vel.x = speed.walk.fwd.x
+
+	[Trigger keyhold("B")]
+	vel.x = speed.walk.bwd.x
+
+	[Trigger vel.x > 0]
+	anim = walkfwd
+
+	[Trigger vel.x < 0]
+	anim = walkbwd
+
+	[Trigger !(keyhold("F") || keyhold("B"))]
+	-> idle
+
+State jumpstart (S)
+	[Enter]
+	physics = standing
+	priority = 1
+	anime = jumpstart
+
+State stand2crouch (C)
+	[Enter]
+	physics = crouching
+	priority = 1
+	anim = stand2crouch
+
+	[Trigger animTime == 0]
+	-> crouching
+
+State crouching (C)
+	[Enter]
+	physics = crouching
+	anim = crouching
+	priority = 0
+
+	[Trigger !keyhold("D")]
+	-> crouch2stand
+
+State crouch2stand (C)
+	[Enter]
+	physics = crouching
+	anim = crouch2stand
+
+	[Trigger animTime == 0]
+	-> idle
+	
+
+// --
+// -- Controls definition from any state that allows control
+// --
+
+// Walk
+Stateless
+[Trigger 
+	1: ctrl
+	1: keyhold("F") || keyhold("B")]
+-> walk
+
+// Jump
+[Trigger
+	1: ctrl
+	1: keyhold("U")]
+-> jumpstart
+
+// Crouch
+[Trigger
+	1: ctrl
+	1: keyhold("U")]
+-> stand2crouch
