@@ -1,7 +1,7 @@
 [Params]
 name = Valkyrie
 author = flowrallia
-targetRes = 360
+scale = 0.9
 
 atlas = valkyrie.atlas
 frm = valkyrie.frm

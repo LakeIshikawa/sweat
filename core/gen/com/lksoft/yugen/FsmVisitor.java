@@ -104,11 +104,19 @@ public interface FsmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatements(FsmParser.StatementsContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link FsmParser#statement}.
+	 * Visit a parse tree produced by the {@code AssignmentStmt}
+	 * labeled alternative in {@link FsmParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitStatement(FsmParser.StatementContext ctx);
+	T visitAssignmentStmt(FsmParser.AssignmentStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code StateChangeStmt}
+	 * labeled alternative in {@link FsmParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStateChangeStmt(FsmParser.StateChangeStmtContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link FsmParser#assignment}.
 	 * @param ctx the parse tree
@@ -193,6 +201,27 @@ public interface FsmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitParExp(FsmParser.ParExpContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code StringLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStringLiteral(FsmParser.StringLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BoolLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBoolLiteral(FsmParser.BoolLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code AnimLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAnimLiteral(FsmParser.AnimLiteralContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code OrExp}
 	 * labeled alternative in {@link FsmParser#e}.
 	 * @param ctx the parse tree
@@ -200,26 +229,19 @@ public interface FsmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitOrExp(FsmParser.OrExpContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code StateChange}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStateChange(FsmParser.StateChangeContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code StringListeral}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStringListeral(FsmParser.StringListeralContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code IntLiteral}
 	 * labeled alternative in {@link FsmParser#e}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitIntLiteral(FsmParser.IntLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code PhysicsLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPhysicsLiteral(FsmParser.PhysicsLiteralContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code NeqExp}
 	 * labeled alternative in {@link FsmParser#e}.
@@ -234,9 +256,17 @@ public interface FsmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFcall(FsmParser.FcallContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link FsmParser#elist}.
+	 * Visit a parse tree produced by the {@code ElistE}
+	 * labeled alternative in {@link FsmParser#elist}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitElist(FsmParser.ElistContext ctx);
+	T visitElistE(FsmParser.ElistEContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code EListEElist}
+	 * labeled alternative in {@link FsmParser#elist}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEListEElist(FsmParser.EListEElistContext ctx);
 }

@@ -1,8 +1,10 @@
-package com.lksoft.yugen.stateless;
+package com.lksoft.yugen.fsm;
 
 import com.badlogic.gdx.utils.Array;
 import com.lksoft.yugen.FsmBaseVisitor;
 import com.lksoft.yugen.FsmParser;
+import com.lksoft.yugen.stateless.FighterDef;
+import com.lksoft.yugen.stateless.FighterState;
 
 /**
  * Created by Lake on 11/06/2016.
@@ -17,8 +19,6 @@ public class FighterSetupVisitor extends FsmBaseVisitor<Void> {
     private FighterState.FighterTrigger currentTrigger = null;
     private Array<FsmParser.StatementContext> currentStatements = null;
     private float currentFloat;
-    private boolean readParam = false;
-    private boolean stateless = false;
 
     /**
      * Create visitor to setup fighter (create states etc.)
@@ -32,7 +32,6 @@ public class FighterSetupVisitor extends FsmBaseVisitor<Void> {
     public Void visitParam(FsmParser.ParamContext ctx) {
         if( ctx.children == null ) return null;
 
-        readParam = true;
         ctx.assignment().accept(this);
         return null;
     }
@@ -108,13 +107,16 @@ public class FighterSetupVisitor extends FsmBaseVisitor<Void> {
 
     @Override
     public Void visitTrigel(FsmParser.TrigelContext ctx) {
-        currentTrigger.addCondition(Integer.parseInt(ctx.INT().getText()), ctx.e());
+        currentTrigger.addCondition(Integer.parseInt(ctx.INT().getText())-1, ctx.e());
         return null;
     }
 
     @Override
-    public Void visitStatement(FsmParser.StatementContext ctx) {
-        currentStatements.add(ctx);
+    public Void visitStatements(FsmParser.StatementsContext ctx) {
+        currentStatements.add(ctx.statement());
+        if( ctx.statements() != null ) {
+            ctx.statements().accept(this);
+        }
         return null;
     }
 

@@ -164,15 +164,29 @@ public interface FsmListener extends ParseTreeListener {
 	 */
 	void exitStatements(FsmParser.StatementsContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link FsmParser#statement}.
+	 * Enter a parse tree produced by the {@code AssignmentStmt}
+	 * labeled alternative in {@link FsmParser#statement}.
 	 * @param ctx the parse tree
 	 */
-	void enterStatement(FsmParser.StatementContext ctx);
+	void enterAssignmentStmt(FsmParser.AssignmentStmtContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link FsmParser#statement}.
+	 * Exit a parse tree produced by the {@code AssignmentStmt}
+	 * labeled alternative in {@link FsmParser#statement}.
 	 * @param ctx the parse tree
 	 */
-	void exitStatement(FsmParser.StatementContext ctx);
+	void exitAssignmentStmt(FsmParser.AssignmentStmtContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code StateChangeStmt}
+	 * labeled alternative in {@link FsmParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterStateChangeStmt(FsmParser.StateChangeStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code StateChangeStmt}
+	 * labeled alternative in {@link FsmParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitStateChangeStmt(FsmParser.StateChangeStmtContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link FsmParser#assignment}.
 	 * @param ctx the parse tree
@@ -316,6 +330,42 @@ public interface FsmListener extends ParseTreeListener {
 	 */
 	void exitParExp(FsmParser.ParExpContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code StringLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void enterStringLiteral(FsmParser.StringLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code StringLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void exitStringLiteral(FsmParser.StringLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BoolLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void enterBoolLiteral(FsmParser.BoolLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BoolLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void exitBoolLiteral(FsmParser.BoolLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code AnimLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void enterAnimLiteral(FsmParser.AnimLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code AnimLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void exitAnimLiteral(FsmParser.AnimLiteralContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code OrExp}
 	 * labeled alternative in {@link FsmParser#e}.
 	 * @param ctx the parse tree
@@ -328,30 +378,6 @@ public interface FsmListener extends ParseTreeListener {
 	 */
 	void exitOrExp(FsmParser.OrExpContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code StateChange}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 */
-	void enterStateChange(FsmParser.StateChangeContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code StateChange}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 */
-	void exitStateChange(FsmParser.StateChangeContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code StringListeral}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 */
-	void enterStringListeral(FsmParser.StringListeralContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code StringListeral}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 */
-	void exitStringListeral(FsmParser.StringListeralContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code IntLiteral}
 	 * labeled alternative in {@link FsmParser#e}.
 	 * @param ctx the parse tree
@@ -363,6 +389,18 @@ public interface FsmListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIntLiteral(FsmParser.IntLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code PhysicsLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void enterPhysicsLiteral(FsmParser.PhysicsLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code PhysicsLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void exitPhysicsLiteral(FsmParser.PhysicsLiteralContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code NeqExp}
 	 * labeled alternative in {@link FsmParser#e}.
@@ -386,13 +424,27 @@ public interface FsmListener extends ParseTreeListener {
 	 */
 	void exitFcall(FsmParser.FcallContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link FsmParser#elist}.
+	 * Enter a parse tree produced by the {@code ElistE}
+	 * labeled alternative in {@link FsmParser#elist}.
 	 * @param ctx the parse tree
 	 */
-	void enterElist(FsmParser.ElistContext ctx);
+	void enterElistE(FsmParser.ElistEContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link FsmParser#elist}.
+	 * Exit a parse tree produced by the {@code ElistE}
+	 * labeled alternative in {@link FsmParser#elist}.
 	 * @param ctx the parse tree
 	 */
-	void exitElist(FsmParser.ElistContext ctx);
+	void exitElistE(FsmParser.ElistEContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code EListEElist}
+	 * labeled alternative in {@link FsmParser#elist}.
+	 * @param ctx the parse tree
+	 */
+	void enterEListEElist(FsmParser.EListEElistContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code EListEElist}
+	 * labeled alternative in {@link FsmParser#elist}.
+	 * @param ctx the parse tree
+	 */
+	void exitEListEElist(FsmParser.EListEElistContext ctx);
 }

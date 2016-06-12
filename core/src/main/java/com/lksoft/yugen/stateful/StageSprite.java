@@ -14,7 +14,7 @@ public class StageSprite extends Sprite {
     private SpriteDef spriteDef;
 
     /**
-     * Create a sprite from a sprite def
+     * Create b1 sprite from b1 sprite def
      *
      * @param def The sprite definition
      */

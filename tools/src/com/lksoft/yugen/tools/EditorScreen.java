@@ -33,7 +33,7 @@ public class EditorScreen implements Screen, InputProcessor {
 
     // Current stage
     private StageDef currentStageDef;
-    private StageLayoutRenderer stageRenderer;
+    private StageDefRenderer stageRenderer;
     private String stageBaseName;
 
     // Screen size info
@@ -45,7 +45,7 @@ public class EditorScreen implements Screen, InputProcessor {
     private Vector2 clickOffset;
 
     /**
-     * Create a stage editor
+     * Create b1 stage editor
      * @param stagesPath
      */
     public EditorScreen(File stagesPath){
@@ -113,7 +113,7 @@ public class EditorScreen implements Screen, InputProcessor {
     // Set the current stage layout
     private void setLayout(StageDef stageDef) {
         currentStageDef = stageDef;
-        stageRenderer = new StageLayoutRenderer(getCurrentStageDef());
+        stageRenderer = new StageDefRenderer(getCurrentStageDef());
         stageRenderer.resize(lastW, lastH);
         stageBaseName = stageDef.getAnmFile().nameWithoutExtension();
     }
@@ -287,7 +287,7 @@ public class EditorScreen implements Screen, InputProcessor {
             @Override
             public void finished (String input) {
 
-                AnimationSequence sequence = getCurrentStageDef().getAnimations().getAnimationSequence(input);
+                AnimationDef sequence = getCurrentStageDef().getAnimations().getAnimationDef(input);
                 if( sequence == null ){
                     Dialogs.showErrorDialog(stage, "Resource not found!");
                 } else {
@@ -325,7 +325,7 @@ public class EditorScreen implements Screen, InputProcessor {
     // Save stage
     private void save() {
         if( getCurrentStageDef() == null ) return;
-        StageLayoutWriter writer = new StageLayoutWriter(new File(getCurrentStageDef().getAnmFile().parent().path(), stageBaseName+".stg"));
+        StageDefWriter writer = new StageDefWriter(new File(getCurrentStageDef().getAnmFile().parent().path(), stageBaseName+".stg"));
         try {
             writer.write(getCurrentStageDef());
         } catch (IOException e) {

@@ -5,6 +5,9 @@ WS:  [ \t\r\n\u000C]+ -> skip;
 COMMENT:   '/*' .*? '*/' -> skip;
 LINE_COMMENT:   '//' ~[\r\n]* -> skip;
 
+BOOL: 'true' | 'false';
+ANIM: 'A:' [a-zA-Z$_] [a-zA-Z0-9$_.]*;
+PHYSICS: 'P:' [a-zA-Z$_] [a-zA-Z0-9$_.]*;
 ID: [a-zA-Z$_] [a-zA-Z0-9$_.]*;
 INT : '-' ? [0-9]+;
 FLOAT: INT ? '.' [0-9]+;
@@ -73,8 +76,8 @@ statements
     ;
 
 statement
-    : assignment
-    | '->' ID
+    : assignment    #AssignmentStmt
+    | '->' ID       #StateChangeStmt
     ;
 
 assignment
@@ -84,8 +87,11 @@ assignment
 e
     : INT       #IntLiteral
     | FLOAT     #FloatLiteral
-    | STRING    #StringListeral
+    | STRING    #StringLiteral
     | ID        #IdLiteral
+    | BOOL      #BoolLiteral
+    | ANIM      #AnimLiteral
+    | PHYSICS   #PhysicsLiteral
     | e '>=' e  #GtEqExp
     | e '<=' e  #LtEqExp
     | e '<' e   #LtExp
@@ -97,7 +103,6 @@ e
     | '!' e     #NotExp
     | '(' e ')' #ParExp
     | fcall     #FCallExp
-    | '->' ID   #StateChange
     ;
 
 fcall
@@ -105,6 +110,6 @@ fcall
     ;
 
 elist
-    : e
-    | e ',' elist
+    : e             #ElistE
+    | e ',' elist   #EListEElist
     ;

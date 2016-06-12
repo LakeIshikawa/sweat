@@ -15,8 +15,8 @@ public class Stage {
     // Sprites
     private List<Sprite> layers[] = new ArrayList[2];
 
-    // Stage layout
-    private StageDef layout;
+    // Stage stageDef
+    private StageDef stageDef;
 
     // Camera
     private StageCamera camera;
@@ -29,24 +29,42 @@ public class Stage {
     private SpriteBatch batch = new SpriteBatch();
 
     /**
-     * Create a stage from a layout
-     * @param layout The stage layout
+     * Create b1 stage from b1 stageDef
+     * @param stageDef The stage stageDef
      */
-    public Stage(StageDef layout, Fighter p1, Fighter p2, StageCamera camera){
-        this.setLayout(layout);
+    public Stage(StageDef stageDef, Fighter p1, Fighter p2, StageCamera camera){
+        this.setStageDef(stageDef);
         this.setCamera(camera);
         camera.setStage(this);
         this.p1 = p1;
         this.p2 = p2;
 
+
         // Position the players
-        if( p1 != null ) p1.pos.set(layout.getP1StartX(), 0);
-        if( p2 != null ) p2.pos.set(layout.getP2StartX(), 0);
+        if( p1 != null ) {
+            p1.setStage(this);
+            p1.pos.set(stageDef.getP1StartX(), 0);
+
+            // Calculate scale factor
+            int oh = p1.getFighterDef().getAnimations().getAnimationDef("idle").getFrameAt(0).frame.region.originalHeight;
+            float scale =  p1.getFighterDef().getScale() * (stageDef.getFightersHeight() / oh);
+            p1.scale = scale;
+
+        }
+        if( p2 != null ) {
+            p2.setStage(this);
+            p2.pos.set(stageDef.getP2StartX(), 0);
+
+            // Calculate scale factor
+            int oh = p2.getFighterDef().getAnimations().getAnimationDef("idle").getFrameAt(0).frame.region.originalHeight;
+            float scale =  p2.getFighterDef().getScale() * (stageDef.getFightersHeight() / oh);
+            p2.scale = scale;
+        }
 
         // Create the sprites
-        for( int i=0; i<layout.getLayers().length; i++ ) {
+        for(int i = 0; i< stageDef.getLayers().length; i++ ) {
             layers[i] = new ArrayList<>();
-            for (SpriteDef def : layout.getLayers()[i]) {
+            for (SpriteDef def : stageDef.getLayers()[i]) {
                 layers[i].add(new StageSprite(def, this));
             }
         }
@@ -56,6 +74,7 @@ public class Stage {
      * Frame update
      */
     public void update(){
+        // Update fighters
         if( getP1() != null ) getP1().update();
         if( getP2() != null ) getP2().update();
 
@@ -97,27 +116,21 @@ public class Stage {
     public void resize(int width, int height) {
         getCamera().resize(width, height);
     }
-
-    public StageDef getLayout() {
-        return layout;
+    public StageDef getStageDef() {
+        return stageDef;
     }
-
-    public void setLayout(StageDef layout) {
-        this.layout = layout;
+    public void setStageDef(StageDef stageDef) {
+        this.stageDef = stageDef;
     }
-
     public StageCamera getCamera() {
         return camera;
     }
-
     public void setCamera(StageCamera camera) {
         this.camera = camera;
     }
-
     public Fighter getP1() {
         return p1;
     }
-
     public Fighter getP2() {
         return p2;
     }

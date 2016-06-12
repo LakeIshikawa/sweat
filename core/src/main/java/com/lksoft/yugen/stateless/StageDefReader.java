@@ -13,7 +13,7 @@ public class StageDefReader {
     private FileHandle stgFile;
 
     /**
-     * Creates a reader for a stage file
+     * Creates b1 reader for b1 stage file
      * @param stgFile
      */
     public StageDefReader(FileHandle stgFile){
@@ -52,6 +52,9 @@ public class StageDefReader {
             }
             else if( line.startsWith("camera.offsetY") ){
                 layout.setCameraOffsetY(Integer.parseInt(line.split("=")[1].trim()));
+            }
+            else if( line.startsWith("fighters.height") ){
+                layout.setFightersHeight(Integer.parseInt(line.split("=")[1].trim()));
             }
             else if( line.startsWith("area.right") ){
                 layout.setAreaR(Integer.parseInt(line.split("=")[1].trim()));
@@ -103,7 +106,7 @@ public class StageDefReader {
                 curSprite.setLayer(Integer.parseInt(line.split("=")[1].trim()));
             }
             else if( line.startsWith("resource") ){
-                curSprite.setResource(animations.getAnimationSequence(line.split("=")[1].trim()));
+                curSprite.setResource(animations.getAnimationDef(line.split("=")[1].trim()));
             }
         }
 

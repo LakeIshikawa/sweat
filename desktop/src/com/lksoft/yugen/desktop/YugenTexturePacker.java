@@ -22,6 +22,7 @@ public class YugenTexturePacker {
         settings.useIndexes = false;
 
         makeChar("valkyrie");
+        makeChar("yui");
 
         makeStage("lionking");
     }

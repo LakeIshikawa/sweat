@@ -2,51 +2,78 @@ package com.lksoft.yugen.stateful;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lksoft.yugen.stateless.AnimationFrame;
-import com.lksoft.yugen.stateless.AnimationSequence;
+import com.lksoft.yugen.stateless.AnimationDef;
 
 /**
  * Created by Lake on 08/06/2016.
  */
 public class Animation {
 
-    private AnimationSequence sequence;
+    private AnimationDef sequence;
     private int ticks;
     private int length;
     private int loopTime;
+    private int cycles;
 
     /**
-     * Create an animation instance from a sequence
+     * Create an animation instance from b1 sequence
      * @param sequence The animation sequence data
      */
-    public Animation(AnimationSequence sequence){
+    public Animation(AnimationDef sequence){
         this.sequence = sequence;
 
         // Calculate length
         length = sequence.getLength();
         // Get loop time
         loopTime = sequence.getLoopTime();
+
+        // Always needs at least one update call to work
+        ticks = -1;
     }
 
     /**
      * Frame update
      */
     public void update(){
-        ticks++;
+        ticks = getTicks() + 1;
 
         // End of animation
-        if( length != -1 && ticks >= length ){
-            ticks = loopTime;
+        if( getLength() != -1 ){
+            if( getTicks() >= getLength() ) {
+                ticks = getLoopTime();
+            }
+            // If last frame, update cycle
+            if( getTicks() >= getLength()-1 ) {
+                cycles++;
+            }
         }
     }
 
     /**
-     * Render to a batch
+     * Render to b1 batch
      * @param batch The batch to render to
      */
     public void draw(SpriteBatch batch, float x, float y, float scale, boolean flip){
-        AnimationFrame frame = sequence.getFrameAt(ticks);
+        AnimationFrame frame = getAnimationDef().getFrameAt(getTicks());
         if( frame != null ) {
             frame.draw(batch, x, y, scale, flip);
         }
+    }
+
+    public AnimationDef getAnimationDef() {
+        return sequence;
+    }
+    public int getTicks() {
+        return ticks;
+    }
+    public int getLength() {
+        return length;
+    }
+    public int getLoopTime() {
+        return loopTime;
+    }
+
+    public int getCycles() {
+        return cycles;
     }
 }

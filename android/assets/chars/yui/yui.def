@@ -1,0 +1,11 @@
+[Params]
+name = Yui
+author = nuuType
+scale = 1.0
+
+atlas = yui.atlas
+frm = yui.frm
+anm = yui.anm
+fsm = yui.fsm
+cmd = yui.cmd
+snd = yui.snd

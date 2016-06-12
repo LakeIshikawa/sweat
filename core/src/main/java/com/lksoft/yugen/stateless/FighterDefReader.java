@@ -24,8 +24,8 @@ class FighterDefReader {
             else if( line.startsWith("author") ){
                 fighterDef.setAuthor(line.split("=")[1].trim());
             }
-            else if( line.startsWith("targetRes") ){
-                fighterDef.setTargetRes(Integer.parseInt(line.split("=")[1].trim()));
+            else if( line.startsWith("scale") ){
+                fighterDef.setScale(Float.parseFloat(line.split("=")[1].trim()));
             }
             else if( line.startsWith("atlas") ){
                 fighterDef.setAtlas(Gdx.files.internal(defFile.parent() + "/" + line.split("=")[1].trim()));

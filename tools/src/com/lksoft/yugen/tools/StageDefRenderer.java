@@ -17,7 +17,7 @@ import com.lksoft.yugen.stateless.StageDef;
  *
  * Renderer for stage layout
  */
-public class StageLayoutRenderer {
+public class StageDefRenderer {
     // Some colors
     private static final Color FLOOR = Color.GREEN;
     private static final Color ORIGIN = Color.BLACK;
@@ -41,10 +41,10 @@ public class StageLayoutRenderer {
 
 
     /**
-     * Create a renderer for a stage layout
+     * Create b1 renderer for b1 stage layout
      * @param stageDef The stage layout to render
      */
-    public StageLayoutRenderer(StageDef stageDef) {
+    public StageDefRenderer(StageDef stageDef) {
         this.stageDef = stageDef;
         shapeRenderer.setAutoShapeType(true);
     }

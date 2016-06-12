@@ -11,7 +11,7 @@ public class FightCamera extends StageCamera {
     private Stage stage;
 
     /**
-     * Create a fight camera
+     * Create b1 fight camera
      *
      * @param layout The stage layout
      */
@@ -23,7 +23,8 @@ public class FightCamera extends StageCamera {
     public void update(Stage stage) {
         // Set camera position to center point
         float x = (stage.getP1().pos.x + stage.getP2().pos.x) / 2;
-        float y = stage.getLayout().getCameraOffsetY();
+        float y = stage.getStageDef().getCameraOffsetY();
         viewport.getCamera().position.set(x, y, 0);
+        viewport.getCamera().update();
     }
 }

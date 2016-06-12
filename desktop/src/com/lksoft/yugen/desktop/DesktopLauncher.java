@@ -37,7 +37,7 @@ public class DesktopLauncher {
             parser.parseArgument(args);
 
         } catch( CmdLineException e ) {
-            // if there's a problem in the command line,
+            // if there's b1 problem in the command line,
             // you'll get this exception. this will report
             // an error message.
             System.err.println(e.getMessage());

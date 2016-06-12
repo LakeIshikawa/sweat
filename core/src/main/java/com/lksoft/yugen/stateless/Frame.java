@@ -13,7 +13,7 @@ public class Frame {
     public int originY;
 
     /**
-     * Create a frame from a region with an origin
+     * Create b1 frame from b1 region with an origin
      * @param region Region
      * @param originX Origin
      * @param originY Origin
@@ -25,7 +25,7 @@ public class Frame {
     }
 
     /**
-     * Draw this frame on a sprite batch
+     * Draw this frame on b1 sprite batch
      * @param batch The ready sprite batch
      * @param flip
      */

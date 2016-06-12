@@ -9,9 +9,10 @@ anm = lionking.anm
 camera.width = 640
 camera.height = 360
 camera.offsetY = 155
+fighters.height = 200
 
-p1.start.x = -70
-p2.start.x = 70
+p1.start.x = -90
+p2.start.x = 90
 
 area.right = 768
 area.left = -768

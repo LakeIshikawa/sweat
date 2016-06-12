@@ -15,7 +15,7 @@ public class Frames {
     private HashMap<String, Frame> frameDefs = new HashMap<>();
 
     /**
-     * Create a frame factory from an atlas and a .frm file
+     * Create b1 frame factory from an atlas and b1 .frm file
      * @param atlas The texture atlas
      * @param frmFile The .frm file
      */
@@ -49,7 +49,7 @@ public class Frames {
     }
 
     /**
-     * Obtains a frame by id
+     * Obtains b1 frame by id
      * @param id Frame id
      * @return The frame object or null if not present
      */

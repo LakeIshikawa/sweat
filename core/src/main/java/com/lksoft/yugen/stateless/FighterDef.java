@@ -5,6 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
 import com.lksoft.yugen.FsmLexer;
 import com.lksoft.yugen.FsmParser;
+import com.lksoft.yugen.fsm.FighterSetupVisitor;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -20,8 +21,8 @@ public class FighterDef {
     private String name = "Yugen";
     // Author
     private String author = "LK Soft";
-    // Target Y resolution
-    private int targetRes = 360;
+    // Target scale
+    private float scale = 1.0f;
 
     // Files
     private FileHandle atlas;
@@ -81,8 +82,8 @@ public class FighterDef {
         return author;
     }
 
-    public int getTargetRes() {
-        return targetRes;
+    public float getScale() {
+        return scale;
     }
 
     public FileHandle getAtlas() {
@@ -117,8 +118,8 @@ public class FighterDef {
         this.author = author;
     }
 
-    public void setTargetRes(int targetRes) {
-        this.targetRes = targetRes;
+    public void setScale(float scale) {
+        this.scale = scale;
     }
 
     public void setAtlas(FileHandle atlas) {

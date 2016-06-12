@@ -12,16 +12,16 @@ public class SpriteDef {
     private float scrollFactorX = 0;
     private float scrollFactorY = 0;
     private int layer = 0;
-    private AnimationSequence resource;
+    private AnimationDef resource;
 
     // Bounds cache
     private Rectangle bounds = new Rectangle();
 
     /**
-     * Create a sprite def
+     * Create b1 sprite def
      * @param resource The sprite def resource
      */
-    public SpriteDef(AnimationSequence resource){
+    public SpriteDef(AnimationDef resource){
         this.setResource(resource);
         this.name = resource.getName();
     }
@@ -63,11 +63,11 @@ public class SpriteDef {
         this.scrollFactorY = scrollFactorY;
     }
 
-    public AnimationSequence getResource() {
+    public AnimationDef getResource() {
         return resource;
     }
 
-    public void setResource(AnimationSequence resource) {
+    public void setResource(AnimationDef resource) {
         this.resource = resource;
     }
 

@@ -26,6 +26,7 @@ public class StageDef {
     private int cameraW = 320;
     private int cameraH = 240;
     private int cameraOffsetY = 90;
+    private float fightersHeight = 200;
 
     // Area
     private int areaR = 768;
@@ -41,7 +42,7 @@ public class StageDef {
     private Array<SpriteDef> layers[] = new Array[2];
 
     /**
-     * Create a new stage
+     * Create b1 new stage
      * @param animations Loaded animation definitions
      */
     public StageDef(Animations animations, FileHandle anmFile, FileHandle frmFile, FileHandle atlasFile){
@@ -163,6 +164,14 @@ public class StageDef {
 
     public void setP2StartX(int p2StartX) {
         this.p2StartX = p2StartX;
+    }
+
+    public float getFightersHeight() {
+        return fightersHeight;
+    }
+
+    public void setFightersHeight(float fightersHeight) {
+        this.fightersHeight = fightersHeight;
     }
 
     public Array<SpriteDef>[] getLayers() {

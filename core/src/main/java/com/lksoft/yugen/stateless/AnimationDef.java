@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.Array;
 /**
  * Created by Lake on 08/06/2016.
  */
-public class AnimationSequence {
+public class AnimationDef {
 
     private String name;
     private Array<AnimationFrame> frames = new Array<>();
@@ -15,7 +15,7 @@ public class AnimationSequence {
      * Create an animation
      * @param name Script name of the animation
      */
-    public AnimationSequence(String name){
+    public AnimationDef(String name){
         this.name = name;
     }
 

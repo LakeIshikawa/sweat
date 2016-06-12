@@ -1,7 +1,6 @@
 package com.lksoft.yugen.stateless;
 
 import com.badlogic.gdx.files.FileHandle;
-import com.lksoft.yugen.stateful.Sprite;
 
 import java.util.HashMap;
 
@@ -10,13 +9,13 @@ import java.util.HashMap;
  */
 public class Animations {
     // Animations
-    private HashMap<String, AnimationSequence> animations = new HashMap<>();
+    private HashMap<String, AnimationDef> animations = new HashMap<>();
 
     // Frames
     private Frames frames;
 
     /**
-     * Create an animation factory from sprites factory and a .anm file
+     * Create an animation factory from sprites factory and b1 .anm file
      * @param frames The frames factory
      * @param anmFile The .anm file
      */
@@ -27,7 +26,7 @@ public class Animations {
         String text = anmFile.readString();
         String[] lines = text.split("\\n");
 
-        AnimationSequence current = null;
+        AnimationDef current = null;
         for( String line : lines ){
             line = line.trim();
 
@@ -40,7 +39,7 @@ public class Animations {
 
                 // Create new animation
                 String name = line.substring(6, line.indexOf(']'));
-                current = new AnimationSequence(name);
+                current = new AnimationDef(name);
             }
 
             // Loopstart def
@@ -59,6 +58,9 @@ public class Animations {
                 }
             }
         }
+
+        // Last one
+        if( current != null ) animations.put(current.getName(), current);
     }
 
     /**
@@ -73,14 +75,14 @@ public class Animations {
      * @param name The unique name id
      * @return The animation sequence or null if not exist
      */
-    public AnimationSequence getAnimationSequence(String name){
-        AnimationSequence sequence = animations.get(name);
+    public AnimationDef getAnimationDef(String name){
+        AnimationDef sequence = animations.get(name);
         if( sequence != null ) return sequence;
 
         // Try single frame
         Frame frame = frames.getFrame(name);
         if( frame != null ){
-            sequence = new AnimationSequence(name);
+            sequence = new AnimationDef(name);
             sequence.addFrame(new AnimationFrame(frame, -1));
             animations.put(name, sequence);
         }

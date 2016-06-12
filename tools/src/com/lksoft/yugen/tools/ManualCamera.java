@@ -12,7 +12,7 @@ import com.lksoft.yugen.stateless.StageDef;
 public class ManualCamera extends StageCamera {
 
     /**
-     * Create a stage camera from a stage layout
+     * Create b1 stage camera from b1 stage layout
      *
      * @param stageDef The stage layout
      */

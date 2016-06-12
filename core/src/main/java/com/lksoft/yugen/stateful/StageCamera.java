@@ -22,7 +22,7 @@ public abstract class StageCamera {
     private Vector2 cameraStart = new Vector2();
 
     /**
-     * Create a stage camera from a stage layout
+     * Create b1 stage camera from b1 stage layout
      * @param stageDef The stage layout
      */
     public StageCamera(StageDef stageDef){

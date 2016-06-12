@@ -196,13 +196,25 @@ public class FsmBaseListener implements FsmListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStatement(FsmParser.StatementContext ctx) { }
+	@Override public void enterAssignmentStmt(FsmParser.AssignmentStmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitStatement(FsmParser.StatementContext ctx) { }
+	@Override public void exitAssignmentStmt(FsmParser.AssignmentStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStateChangeStmt(FsmParser.StateChangeStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStateChangeStmt(FsmParser.StateChangeStmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -352,6 +364,42 @@ public class FsmBaseListener implements FsmListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStringLiteral(FsmParser.StringLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStringLiteral(FsmParser.StringLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBoolLiteral(FsmParser.BoolLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBoolLiteral(FsmParser.BoolLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAnimLiteral(FsmParser.AnimLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAnimLiteral(FsmParser.AnimLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterOrExp(FsmParser.OrExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -364,30 +412,6 @@ public class FsmBaseListener implements FsmListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStateChange(FsmParser.StateChangeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitStateChange(FsmParser.StateChangeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterStringListeral(FsmParser.StringListeralContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitStringListeral(FsmParser.StringListeralContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterIntLiteral(FsmParser.IntLiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -395,6 +419,18 @@ public class FsmBaseListener implements FsmListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitIntLiteral(FsmParser.IntLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPhysicsLiteral(FsmParser.PhysicsLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPhysicsLiteral(FsmParser.PhysicsLiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -424,13 +460,25 @@ public class FsmBaseListener implements FsmListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterElist(FsmParser.ElistContext ctx) { }
+	@Override public void enterElistE(FsmParser.ElistEContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitElist(FsmParser.ElistContext ctx) { }
+	@Override public void exitElistE(FsmParser.ElistEContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEListEElist(FsmParser.EListEElistContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEListEElist(FsmParser.EListEElistContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

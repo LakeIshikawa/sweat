@@ -10,7 +10,7 @@ import com.kotcrab.vis.ui.widget.VisWindow;
 import com.kotcrab.vis.ui.widget.spinner.IntSpinnerModel;
 import com.kotcrab.vis.ui.widget.spinner.SimpleFloatSpinnerModel;
 import com.kotcrab.vis.ui.widget.spinner.Spinner;
-import com.lksoft.yugen.stateless.AnimationSequence;
+import com.lksoft.yugen.stateless.AnimationDef;
 import com.lksoft.yugen.stateless.SpriteDef;
 
 /**
@@ -75,7 +75,7 @@ public class SpriteDefWindow extends VisWindow {
             @Override
             public void keyTyped(VisTextField textField, char c) {
                 if( currentDef != null ){
-                    AnimationSequence sequence = editorScreen.getCurrentStageDef().getAnimations().getAnimationSequence(resource.getText());
+                    AnimationDef sequence = editorScreen.getCurrentStageDef().getAnimations().getAnimationDef(resource.getText());
                     if( sequence != null ){
                         currentDef.setResource(sequence);
                     }

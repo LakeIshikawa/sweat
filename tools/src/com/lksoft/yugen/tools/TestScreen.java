@@ -18,7 +18,7 @@ public class TestScreen implements Screen {
     private Stage stage;
 
     /**
-     * Create a test screen for a stage
+     * Create b1 test screen for b1 stage
      * @param editorScreen
      * @param stage
      */
