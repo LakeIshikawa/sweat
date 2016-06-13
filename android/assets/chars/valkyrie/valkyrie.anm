@@ -32,3 +32,57 @@ test044 7
 test025 2
 
 [Anim crouchTurn]
+test025 2
+
+[Anim stand2crouch]
+test006 7
+
+[Anim crouching]
+test006 90
+test009 8
+
+[Anim crouch2stand]
+test006 7
+
+[Anim jumpstart]
+test026 5
+
+[Anim jumping]
+test045 5
+test046 3
+test047 3
+test048 3
+test049 3
+test050 3
+test051 3
+loopstart
+test052 3
+test053 3
+test054 3
+
+[Anim jumpingFwd]
+test055 7
+test056 4
+test057 5
+test048 5
+test049 5
+test050 5
+loopstart
+test052 3
+
+[Anim jumpingBwd]
+test058 10
+test059 5
+test057 5
+test047 5
+test048 5
+test049 5
+loopstart
+test050 5
+test052 5
+
+[Anim landing]
+test028 2
+test027 3
+test026 3
+test027 3

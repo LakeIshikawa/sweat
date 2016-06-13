@@ -1,7 +1,9 @@
 Params
 speed.walk.fwd.x = 6.0
 speed.walk.bwd.x = -4.0
-speed.jump.up = 11.0
+speed.air.fwd.x = 3.0
+speed.air.bwd.x = -2.0
+speed.jump.up = 13.0
 
 standing.friction.x = 0.6
 crouching.friction.x = 0.5
@@ -18,21 +20,15 @@ State idle (S)
 	-> turn
 
 	// Walk
-	[Trigger 
-		1: ctrl
-		1: keyhold("F") || keyhold("B")]
+	[Trigger keyhold("F") || keyhold("B")]
 	-> walk
 	
 	// Jump
-	[Trigger
-		1: ctrl
-		1: keyhold("U")]
+	[Trigger keyhold("U")]
 	-> jumpstart
 	
 	// Crouch
-	[Trigger
-		1: ctrl
-		1: keyhold("D")]
+	[Trigger keyhold("D")]
 	-> stand2crouch
 
 
@@ -53,15 +49,11 @@ State walk (S)
 	-> idle
 
 	// Jump
-	[Trigger
-		1: ctrl
-		1: keyhold("U")]
+	[Trigger keyhold("U")]
 	-> jumpstart
 	
 	// Crouch
-	[Trigger
-		1: ctrl
-		1: keyhold("D")]
+	[Trigger keyhold("D")]
 	-> stand2crouch
 
 State turn (S)
@@ -77,14 +69,35 @@ State jumpstart (S)
 	priority = 1
 	anim = A:jumpstart
 
-	[Trigger animCycles == 1]
+	// Jump up
+	[Trigger animCycles == 1 && !(keyhold("F") || keyhold("B"))]
+	anim = A:jumping
 	vel.y = speed.jump.up
 	-> jumping
+
+	// Jump fwd
+	[Trigger animCycles == 1 && keyhold("F")]
+	anim = A:jumpingFwd
+	vel.y = speed.jump.up
+	-> jumping
+
+	// Jump bwd
+	[Trigger animCycles == 1 && keyhold("B")]
+	anim = A:jumpingBwd
+	vel.y = speed.jump.up
+	-> jumping
+
 
 State jumping (A)
 	[Enter]
 	physics = P:air
-	anim = A:jumping
+
+	// Controls
+	[Trigger keyhold("F")]
+	vel.x = speed.air.fwd.x * (facing ? -1.0 : 1.0)
+
+	[Trigger keyhold("B")]
+	vel.x = speed.air.bwd.x * (facing ? -1.0 : 1.0)
 
 	// Landing
 	[Trigger pos.y < 0.0]
