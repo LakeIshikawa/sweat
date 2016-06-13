@@ -43,7 +43,8 @@ public class Stage {
         // Position the players
         if( p1 != null ) {
             p1.setStage(this);
-            p1.pos.set(stageDef.getP1StartX(), 0);
+            p1.setPosX(stageDef.getP1StartX());
+            p1.setPosY(0);
 
             // Calculate scale factor
             int oh = p1.getFighterDef().getAnimations().getAnimationDef("idle").getFrameAt(0).frame.region.originalHeight;
@@ -53,7 +54,8 @@ public class Stage {
         }
         if( p2 != null ) {
             p2.setStage(this);
-            p2.pos.set(stageDef.getP2StartX(), 0);
+            p2.setPosX(stageDef.getP2StartX());
+            p2.setPosY(0);
 
             // Calculate scale factor
             int oh = p2.getFighterDef().getAnimations().getAnimationDef("idle").getFrameAt(0).frame.region.originalHeight;

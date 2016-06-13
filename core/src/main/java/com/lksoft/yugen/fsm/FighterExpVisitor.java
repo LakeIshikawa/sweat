@@ -3,6 +3,7 @@ package com.lksoft.yugen.fsm;
 import com.badlogic.gdx.utils.Array;
 import com.lksoft.yugen.FsmBaseVisitor;
 import com.lksoft.yugen.FsmParser;
+import com.lksoft.yugen.Yugen;
 import com.lksoft.yugen.stateful.Fighter;
 import com.lksoft.yugen.stateless.AnimationDef;
 import com.lksoft.yugen.stateless.PhysicsDef;
@@ -43,6 +44,36 @@ public class FighterExpVisitor extends FsmBaseVisitor<Void>{
     public Void visitNotExp(FsmParser.NotExpContext ctx) {
         ctx.e().accept(this);
         result.setBoolValue(!result.getBoolValue());
+        return null;
+    }
+
+    @Override
+    public Void visitAddExp(FsmParser.AddExpContext ctx) {
+        Bop.ADD.execute(this, ctx.e(0), ctx.e(1));
+        return null;
+    }
+
+    @Override
+    public Void visitSubExp(FsmParser.SubExpContext ctx) {
+        Bop.SUB.execute(this, ctx.e(0), ctx.e(1));
+        return null;
+    }
+
+    @Override
+    public Void visitMulExp(FsmParser.MulExpContext ctx) {
+        Bop.MUL.execute(this, ctx.e(0), ctx.e(1));
+        return null;
+    }
+
+    @Override
+    public Void visitDivExp(FsmParser.DivExpContext ctx) {
+        Bop.DIV.execute(this, ctx.e(0), ctx.e(1));
+        return null;
+    }
+
+    @Override
+    public Void visitModExp(FsmParser.ModExpContext ctx) {
+        Bop.MOD.execute(this, ctx.e(0), ctx.e(1));
         return null;
     }
 
@@ -106,6 +137,8 @@ public class FighterExpVisitor extends FsmBaseVisitor<Void>{
         Functions.Function function = Functions.getFunction(ctx.fcall().ID().getText());
         if( function != null ){
             function.execute(this, ctx.fcall());
+        } else {
+            setError("Unkown function: " + function.getSignature());
         }
         return null;
     }
@@ -182,7 +215,12 @@ public class FighterExpVisitor extends FsmBaseVisitor<Void>{
     @Override
     public Void visitPhysicsLiteral(FsmParser.PhysicsLiteralContext ctx) {
         String name = ctx.PHYSICS().getText().substring(2);
-        // TODO
+        PhysicsDef physicsDef = Yugen.i().getPhysicsDef(name);
+        if( physicsDef != null ){
+            setPhysicsResult(physicsDef);
+        } else {
+            setError("Physics not found: " + name);
+        }
         return null;
     }
 
@@ -194,24 +232,24 @@ public class FighterExpVisitor extends FsmBaseVisitor<Void>{
     // Get error message
     public String getError() {return error;}
 
-    void setError(String error){ this.error = error; }
-    void setBoolResult(boolean b) {
+    public void setError(String error){ this.error = error; }
+    public void setBoolResult(boolean b) {
         result.setBoolValue(b);
     }
-    void setIntResult(int i){
+    public void setIntResult(int i){
         result.setIntValue(i);
     }
-    void setFloatResult(float f){
+    public void setFloatResult(float f){
         result.setFloatValue(f);
     }
-    void setIdResult(String id){
+    public void setIdResult(String id){
         result.setIdValue(id);
     }
-    void setStringResult(String string){
+    public void setStringResult(String string){
         result.setStringValue(string);
     }
-    void setAnimResult(AnimationDef animation) { result.setAnimationValue(animation);}
-    void setPhysicsResult(PhysicsDef physics) {result.setPhysicsValue(physics);}
+    public void setAnimResult(AnimationDef animation) { result.setAnimationValue(animation);}
+    public void setPhysicsResult(PhysicsDef physics) {result.setPhysicsValue(physics);}
 
     public Array<Value> getResults() {
         return results;

@@ -9,6 +9,7 @@ import com.lksoft.yugen.fsm.Value;
 import com.lksoft.yugen.stateless.AnimationDef;
 import com.lksoft.yugen.stateless.FighterDef;
 import com.lksoft.yugen.stateless.FighterState;
+import com.lksoft.yugen.stateless.PhysicsDef;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -28,6 +29,9 @@ public class Fighter extends Sprite {
     private int layer = 1;
     // Current state
     private FighterState currentState;
+
+    // Current physics
+    private PhysicsDef currentPhysics;
 
     // The memory
     private HashMap<String, Value> memory = new HashMap<>();
@@ -128,9 +132,20 @@ public class Fighter extends Sprite {
             t.run(executor, evaluator);
         }
 
+        // Run physics triggers
+        if( currentPhysics != null ) {
+            for (FighterState.FighterTrigger t : currentPhysics.getTriggers()) {
+                t.run(executor, evaluator);
+            }
+        }
+
         super.update();
 
-        // Update time
+        // Update system vars
+        setVar("vel.x", Type.FLOAT, vel.x);
+        setVar("vel.y", Type.FLOAT, vel.y);
+        setVar("pos.x", Type.FLOAT, pos.x);
+        setVar("pos.y", Type.FLOAT, pos.y);
         setVar("animTime", Type.INT, animation.getTicks());
         setVar("animCycles", Type.INT, animation.getCycles());
         setVar("time", Type.INT, getVar("time").getIntValue()+1);
@@ -177,6 +192,14 @@ public class Fighter extends Sprite {
     }
 
     /**
+     * Change physics
+     * @param physicsDef Physics def
+     */
+    public void changePhysics(PhysicsDef physicsDef) {
+        this.currentPhysics = physicsDef;
+    }
+
+    /**
      * Gets an animation def belonging to this fighter
      * @param animName Name of the animation
      * @return The animation, or null if non present
@@ -201,6 +224,24 @@ public class Fighter extends Sprite {
     public void setVelY(float value) {
         vel.y = value;
         setVar("vel.y", Type.FLOAT, value);
+    }
+
+    /**
+     * Sets X position
+     * @param value
+     */
+    public void setPosX(float value) {
+        pos.x = value;
+        setVar("pos.x", Type.FLOAT, value);
+    }
+
+    /**
+     * Sets Y velocity
+     * @param value
+     */
+    public void setPosY(float value) {
+        pos.y = value;
+        setVar("pos.y", Type.FLOAT, value);
     }
 
     public int getLayer() {

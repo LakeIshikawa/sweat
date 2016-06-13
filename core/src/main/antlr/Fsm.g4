@@ -92,6 +92,11 @@ e
     | BOOL      #BoolLiteral
     | ANIM      #AnimLiteral
     | PHYSICS   #PhysicsLiteral
+    | e '+' e   #AddExp
+    | e '-' e   #SubExp
+    | e '*' e   #MulExp
+    | e '/' e   #DivExp
+    | e '%' e   #ModExp
     | e '>=' e  #GtEqExp
     | e '<=' e  #LtEqExp
     | e '<' e   #LtExp

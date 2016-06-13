@@ -2,16 +2,15 @@ package com.lksoft.yugen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.lksoft.yugen.screens.FightScreen;
 import com.lksoft.yugen.stateful.FightCamera;
 import com.lksoft.yugen.stateful.Fighter;
 import com.lksoft.yugen.stateful.Stage;
-import com.lksoft.yugen.stateless.FighterDef;
-import com.lksoft.yugen.stateless.Settings;
-import com.lksoft.yugen.stateless.StageDef;
-import com.lksoft.yugen.stateless.StageDefReader;
+import com.lksoft.yugen.stateless.*;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 public class Yugen extends Game {
     private static Yugen self;
@@ -24,6 +23,9 @@ public class Yugen extends Game {
 
     // Settings
     private Settings settings;
+
+    // Physics
+    private HashMap<String, PhysicsDef> physics = new HashMap<>();
 
     /**
      * Start normal mode
@@ -44,10 +46,19 @@ public class Yugen extends Game {
 
     @Override
 	public void create () {
-        // Parse settings
-        settings = new Settings(Gdx.files.internal("shared/settings.def"));
-
         try {
+            // Parse settings
+            settings = new Settings(Gdx.files.internal("shared/settings.def"));
+
+            // Parse physics
+            FileHandle physicsFolder = Gdx.files.internal("shared/physics/");
+            for( FileHandle f : physicsFolder.list() ){
+                if( f.extension().equalsIgnoreCase("phy") ){
+                    physics.put(f.nameWithoutExtension(), new PhysicsDef(f));
+                }
+            }
+
+            // Set game mode
             if( stageFile == null ){
                 // TODO Set title screen!
             } else {
@@ -66,4 +77,5 @@ public class Yugen extends Game {
     public Settings getSettings() {
         return settings;
     }
+    public PhysicsDef getPhysicsDef(String name){ return physics.get(name); }
 }

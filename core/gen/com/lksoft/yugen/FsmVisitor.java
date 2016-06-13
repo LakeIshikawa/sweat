@@ -166,6 +166,13 @@ public interface FsmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFloatLiteral(FsmParser.FloatLiteralContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code AddExp}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAddExp(FsmParser.AddExpContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code GtEqExp}
 	 * labeled alternative in {@link FsmParser#e}.
 	 * @param ctx the parse tree
@@ -173,12 +180,26 @@ public interface FsmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitGtEqExp(FsmParser.GtEqExpContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code DivExp}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDivExp(FsmParser.DivExpContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code GtExp}
 	 * labeled alternative in {@link FsmParser#e}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitGtExp(FsmParser.GtExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code MulExp}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMulExp(FsmParser.MulExpContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code LtExp}
 	 * labeled alternative in {@link FsmParser#e}.
@@ -222,6 +243,13 @@ public interface FsmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAnimLiteral(FsmParser.AnimLiteralContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ModExp}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitModExp(FsmParser.ModExpContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code OrExp}
 	 * labeled alternative in {@link FsmParser#e}.
 	 * @param ctx the parse tree
@@ -242,6 +270,13 @@ public interface FsmVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitPhysicsLiteral(FsmParser.PhysicsLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code SubExp}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSubExp(FsmParser.SubExpContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code NeqExp}
 	 * labeled alternative in {@link FsmParser#e}.

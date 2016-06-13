@@ -49,6 +49,16 @@ public class FighterExecuteVisitor extends FsmBaseVisitor<Void> {
                 fighter.changeAnimation(evaluator.getResult().getAnimationValue());
                 break;
 
+            case "physics":
+                // Error check
+                if( evaluator.getResult().getType() != Type.PHYSICS ){
+                    Gdx.app.error("FSM", "ERROR: physics = ... expected Physics but got " + evaluator.getResult().getType());
+                    return null;
+                }
+
+                fighter.changePhysics(evaluator.getResult().getPhysicsValue());
+                break;
+
             case "vel.x":
                 // Error check
                 if( evaluator.getResult().getType() != Type.FLOAT ){
@@ -68,6 +78,27 @@ public class FighterExecuteVisitor extends FsmBaseVisitor<Void> {
 
                 fighter.setVelY(evaluator.getResult().getFloatValue());
                 break;
+
+            case "pos.x":
+                // Error check
+                if( evaluator.getResult().getType() != Type.FLOAT ){
+                    Gdx.app.error("FSM", "ERROR: pos.x = ... expected Float but got " + evaluator.getResult().getType());
+                    return null;
+                }
+
+                fighter.setPosX(evaluator.getResult().getFloatValue());
+                break;
+
+            case "pos.y":
+                // Error check
+                if( evaluator.getResult().getType() != Type.FLOAT ){
+                    Gdx.app.error("FSM", "ERROR: pos.y = ... expected Float but got " + evaluator.getResult().getType());
+                    return null;
+                }
+
+                fighter.setPosY(evaluator.getResult().getFloatValue());
+                break;
+
 
             // Set a variable if not a system assignment
             default:
