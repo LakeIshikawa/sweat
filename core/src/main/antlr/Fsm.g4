@@ -92,6 +92,7 @@ e
     | BOOL      #BoolLiteral
     | ANIM      #AnimLiteral
     | PHYSICS   #PhysicsLiteral
+    | e '?' e ':' e #CondExp
     | e '+' e   #AddExp
     | e '-' e   #SubExp
     | e '*' e   #MulExp
@@ -112,6 +113,7 @@ e
 
 fcall
     : ID '(' elist ')'
+    | ID '(' ')'
     ;
 
 elist

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.lksoft.yugen.FsmParser;
 import com.lksoft.yugen.Yugen;
 import com.lksoft.yugen.fsm.functions.Abs;
+import com.lksoft.yugen.fsm.functions.FacingP2;
 import com.lksoft.yugen.fsm.functions.KeyHold;
 
 import java.util.HashMap;
@@ -47,5 +48,6 @@ public class Functions {
     static {
         registerFunction(new KeyHold());
         registerFunction(new Abs());
+        registerFunction(new FacingP2());
     }
 }

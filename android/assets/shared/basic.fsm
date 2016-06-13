@@ -1,6 +1,6 @@
 Params
-speed.walk.fwd.x = 8.5
-speed.walk.bwd.x = -6.5
+speed.walk.fwd.x = 6.0
+speed.walk.bwd.x = -4.0
 speed.jump.up = 11.0
 
 standing.friction.x = 0.6
@@ -12,6 +12,10 @@ State idle (S)
 	physics = P:standing
 	priority = 0
 	anim = A:idle
+
+	// Face
+	[Trigger !facingP2()]
+	-> turn
 
 	// Walk
 	[Trigger 
@@ -34,12 +38,16 @@ State idle (S)
 
 State walk (S)
 	[Trigger keyhold("F")]
-	vel.x = speed.walk.fwd.x
+	vel.x = speed.walk.fwd.x * (facing ? -1.0 : 1.0)
 	anim = A:walkfwd
 
 	[Trigger keyhold("B")]
-	vel.x = speed.walk.bwd.x
+	vel.x = speed.walk.bwd.x * (facing ? -1.0 : 1.0)
 	anim = A:walkbwd
+
+	// Face
+	[Trigger !facingP2()]
+	-> turn
 
 	[Trigger !(keyhold("F") || keyhold("B"))]
 	-> idle
@@ -55,6 +63,14 @@ State walk (S)
 		1: ctrl
 		1: keyhold("D")]
 	-> stand2crouch
+
+State turn (S)
+	[Enter]
+	anim = A:turn
+
+	[Trigger animCycles == 1]
+	facing = !facing
+	-> idle
 
 State jumpstart (S)
 	[Enter]

@@ -39,66 +39,13 @@ public class FighterExecuteVisitor extends FsmBaseVisitor<Void> {
 
         // System assignments
         switch (lhs){
-            case "anim":
-                // Error check
-                if( evaluator.getResult().getType() != Type.ANIM ){
-                    Gdx.app.error("FSM", "ERROR: anim = ... expected Anim but got " + evaluator.getResult().getType());
-                    return null;
-                }
-
-                fighter.changeAnimation(evaluator.getResult().getAnimationValue());
-                break;
-
-            case "physics":
-                // Error check
-                if( evaluator.getResult().getType() != Type.PHYSICS ){
-                    Gdx.app.error("FSM", "ERROR: physics = ... expected Physics but got " + evaluator.getResult().getType());
-                    return null;
-                }
-
-                fighter.changePhysics(evaluator.getResult().getPhysicsValue());
-                break;
-
-            case "vel.x":
-                // Error check
-                if( evaluator.getResult().getType() != Type.FLOAT ){
-                    Gdx.app.error("FSM", "ERROR: vel.x = ... expected Float but got " + evaluator.getResult().getType());
-                    return null;
-                }
-
-                fighter.setVelX(evaluator.getResult().getFloatValue());
-                break;
-
-            case "vel.y":
-                // Error check
-                if( evaluator.getResult().getType() != Type.FLOAT ){
-                    Gdx.app.error("FSM", "ERROR: vel.y = ... expected Float but got " + evaluator.getResult().getType());
-                    return null;
-                }
-
-                fighter.setVelY(evaluator.getResult().getFloatValue());
-                break;
-
-            case "pos.x":
-                // Error check
-                if( evaluator.getResult().getType() != Type.FLOAT ){
-                    Gdx.app.error("FSM", "ERROR: pos.x = ... expected Float but got " + evaluator.getResult().getType());
-                    return null;
-                }
-
-                fighter.setPosX(evaluator.getResult().getFloatValue());
-                break;
-
-            case "pos.y":
-                // Error check
-                if( evaluator.getResult().getType() != Type.FLOAT ){
-                    Gdx.app.error("FSM", "ERROR: pos.y = ... expected Float but got " + evaluator.getResult().getType());
-                    return null;
-                }
-
-                fighter.setPosY(evaluator.getResult().getFloatValue());
-                break;
-
+            case "anim": if( !checkError(lhs, Type.ANIM, evaluator) ) fighter.changeAnimation(evaluator.getResult().getAnimationValue()); break;
+            case "physics": if( !checkError(lhs, Type.PHYSICS, evaluator) ) fighter.changePhysics(evaluator.getResult().getPhysicsValue()); break;
+            case "vel.x": if( !checkError(lhs, Type.FLOAT, evaluator) ) fighter.setVelX(evaluator.getResult().getFloatValue()); break;
+            case "vel.y": if( !checkError(lhs, Type.FLOAT, evaluator) ) fighter.setVelY(evaluator.getResult().getFloatValue()); break;
+            case "pos.x": if( !checkError(lhs, Type.FLOAT, evaluator) ) fighter.setPosX(evaluator.getResult().getFloatValue()); break;
+            case "pos.y": if( !checkError(lhs, Type.FLOAT, evaluator) ) fighter.setPosY(evaluator.getResult().getFloatValue()); break;
+            case "facing": if( !checkError(lhs, Type.BOOL, evaluator) ) fighter.setFacing(evaluator.getResult().getBoolValue()); break;
 
             // Set a variable if not a system assignment
             default:
@@ -107,6 +54,20 @@ public class FighterExecuteVisitor extends FsmBaseVisitor<Void> {
         }
 
         return null;
+    }
+
+    /**
+     * Checks exp error
+     * @param lhs
+     * @param evaluator
+     * @return
+     */
+    private boolean checkError(String lhs, Type type, FighterExpVisitor evaluator) {
+        if( evaluator.getResult().getType() != type ){
+            Gdx.app.error("FSM", "ERROR: " + lhs + " = ... expected Float but got " + evaluator.getResult().getType());
+            return true;
+        }
+        return false;
     }
 
     @Override

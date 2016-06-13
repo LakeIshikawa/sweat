@@ -45,6 +45,7 @@ public class Stage {
             p1.setStage(this);
             p1.setPosX(stageDef.getP1StartX());
             p1.setPosY(0);
+            p1.setFacing(false);
 
             // Calculate scale factor
             int oh = p1.getFighterDef().getAnimations().getAnimationDef("idle").getFrameAt(0).frame.region.originalHeight;
@@ -56,6 +57,7 @@ public class Stage {
             p2.setStage(this);
             p2.setPosX(stageDef.getP2StartX());
             p2.setPosY(0);
+            p2.setFacing(true);
 
             // Calculate scale factor
             int oh = p2.getFighterDef().getAnimations().getAnimationDef("idle").getFrameAt(0).frame.region.originalHeight;

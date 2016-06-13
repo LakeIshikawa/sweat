@@ -132,6 +132,25 @@ public class FighterExpVisitor extends FsmBaseVisitor<Void>{
     }
 
     @Override
+    public Void visitCondExp(FsmParser.CondExpContext ctx){
+        ctx.e(0).accept(this);
+        if( getError() != null ) return null;
+        if( getResult().getType() != Type.BOOL ){
+            setError("Conditional expression expects Bool, found " + getResult().getType());
+            return null;
+        }
+
+        // Branch
+        if( getResult().getBoolValue() ){
+            ctx.e(1).accept(this);
+        } else {
+            ctx.e(2).accept(this);
+        }
+
+        return null;
+    }
+
+    @Override
     public Void visitFCallExp(FsmParser.FCallExpContext ctx) {
         // Execute
         Functions.Function function = Functions.getFunction(ctx.fcall().ID().getText());
@@ -145,7 +164,9 @@ public class FighterExpVisitor extends FsmBaseVisitor<Void>{
 
     @Override
     public Void visitFcall(FsmParser.FcallContext ctx) {
-        ctx.elist().accept(this);
+        if( ctx.elist() != null ) {
+            ctx.elist().accept(this);
+        }
         return null;
     }
 

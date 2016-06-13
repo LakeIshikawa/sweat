@@ -222,6 +222,13 @@ public interface FsmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitParExp(FsmParser.ParExpContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code CondExp}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCondExp(FsmParser.CondExpContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code StringLiteral}
 	 * labeled alternative in {@link FsmParser#e}.
 	 * @param ctx the parse tree

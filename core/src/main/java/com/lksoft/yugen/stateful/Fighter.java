@@ -81,6 +81,12 @@ public class Fighter extends Sprite {
     }
 
     /**
+     * Gets the opponent
+     * @return The opponent fighter
+     */
+    public Fighter getOpponent() { return isP1() ? stage.getP2() : stage.getP1(); }
+
+    /**
      * Sets variable value
      * @param name
      * @param value
@@ -146,6 +152,7 @@ public class Fighter extends Sprite {
         setVar("vel.y", Type.FLOAT, vel.y);
         setVar("pos.x", Type.FLOAT, pos.x);
         setVar("pos.y", Type.FLOAT, pos.y);
+        setVar("facing", Type.BOOL, flip);
         setVar("animTime", Type.INT, animation.getTicks());
         setVar("animCycles", Type.INT, animation.getCycles());
         setVar("time", Type.INT, getVar("time").getIntValue()+1);
@@ -242,6 +249,15 @@ public class Fighter extends Sprite {
     public void setPosY(float value) {
         pos.y = value;
         setVar("pos.y", Type.FLOAT, value);
+    }
+
+    /**
+     * Set facing right or left
+     * @param left True for left
+     */
+    public void setFacing(boolean left){
+        flip = left;
+        setVar("facing", Type.BOOL, flip);
     }
 
     public int getLayer() {

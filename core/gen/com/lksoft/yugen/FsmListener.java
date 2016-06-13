@@ -366,6 +366,18 @@ public interface FsmListener extends ParseTreeListener {
 	 */
 	void exitParExp(FsmParser.ParExpContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code CondExp}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void enterCondExp(FsmParser.CondExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code CondExp}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void exitCondExp(FsmParser.CondExpContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code StringLiteral}
 	 * labeled alternative in {@link FsmParser#e}.
 	 * @param ctx the parse tree

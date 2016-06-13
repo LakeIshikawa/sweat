@@ -32,6 +32,7 @@ public class Frame {
     public void draw(SpriteBatch batch, float x, float y, float scale, boolean flip){
         if( flip != region.isFlipX() ){
             region.flip(true, false);
+            originX = region.originalWidth - originX;
         }
 
         batch.draw(
