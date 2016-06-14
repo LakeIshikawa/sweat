@@ -56,9 +56,9 @@ triggers:
     ;
 
 trigger:
-    '[' ID ']' statements #SystemTrigger
-    | '[' 'Trigger' e ']' statements #SingleCondTrigger
-    | '[' 'Trigger' triglist ']' statements #MultiCondTrigger
+    '[' ID ']' statementsOpt #SystemTrigger
+    | '[' 'Trigger' e ']' statementsOpt #SingleCondTrigger
+    | '[' 'Trigger' triglist ']' statementsOpt #MultiCondTrigger
     ;
 
 triglist
@@ -68,6 +68,11 @@ triglist
 
 trigel
     : INT ':' e
+    ;
+
+statementsOpt
+    : statements
+    |
     ;
 
 statements

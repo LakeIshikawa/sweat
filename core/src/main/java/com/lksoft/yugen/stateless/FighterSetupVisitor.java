@@ -64,9 +64,11 @@ public class FighterSetupVisitor extends FsmBaseVisitor<Void> {
     @Override
     public Void visitSystemTrigger(FsmParser.SystemTriggerContext ctx) {
         currentStatements = new Array<>();
-        ctx.statements().accept(this);
+        if( ctx.statementsOpt() != null ) {
+            ctx.statementsOpt().accept(this);
+        }
 
-        switch (ctx.ID().getText()){
+        switch (ctx.ID().getText()) {
             case "Enter":
             case "enter":
                 currentState.enterTrigger = currentStatements;
@@ -77,13 +79,16 @@ public class FighterSetupVisitor extends FsmBaseVisitor<Void> {
                 currentState.exitTrigger = currentStatements;
                 break;
         }
+
         return null;
     }
 
     @Override
     public Void visitSingleCondTrigger(FsmParser.SingleCondTriggerContext ctx) {
         currentStatements = new Array<>();
-        ctx.statements().accept(this);
+        if( ctx.statementsOpt() != null ) {
+            ctx.statementsOpt().accept(this);
+        }
         FighterState.FighterTrigger trigger = new FighterState.FighterTrigger(currentStatements);
         trigger.addCondition(0, ctx.e());
 
@@ -95,7 +100,9 @@ public class FighterSetupVisitor extends FsmBaseVisitor<Void> {
     @Override
     public Void visitMultiCondTrigger(FsmParser.MultiCondTriggerContext ctx) {
         currentStatements = new Array<>();
-        ctx.statements().accept(this);
+        if (ctx.statementsOpt() != null) {
+            ctx.statementsOpt().accept(this);
+        }
 
         currentTrigger = new FighterState.FighterTrigger(currentStatements);
         ctx.triglist().accept(this);

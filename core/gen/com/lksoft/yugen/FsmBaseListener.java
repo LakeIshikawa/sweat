@@ -184,6 +184,18 @@ public class FsmBaseListener implements FsmListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStatementsOpt(FsmParser.StatementsOptContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStatementsOpt(FsmParser.StatementsOptContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterStatements(FsmParser.StatementsContext ctx) { }
 	/**
 	 * {@inheritDoc}

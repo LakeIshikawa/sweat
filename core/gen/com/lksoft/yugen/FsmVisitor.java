@@ -98,6 +98,12 @@ public interface FsmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitTrigel(FsmParser.TrigelContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link FsmParser#statementsOpt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStatementsOpt(FsmParser.StatementsOptContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link FsmParser#statements}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

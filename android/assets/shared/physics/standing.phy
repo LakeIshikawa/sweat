@@ -1,5 +1,5 @@
 // Apply friction
-[Trigger !(keyhold("F") || keyhold("B"))]
+[Trigger true]
 	vel.x = vel.x * standing.friction.x
 
 // Stop if velocity is low

@@ -41,6 +41,10 @@ public class Fighter extends Sprite {
     // Execution visitor (shared)
     private FighterExecuteVisitor executor;
 
+
+    // Flag for noticing statechange
+    private boolean stateChanged;
+
     /**
      * Create b1 fighter by parsing b1 .def script file
      */
@@ -128,14 +132,19 @@ public class Fighter extends Sprite {
 
     @Override
     public void update(){
+        stateChanged = false;
+
         // Evaluate all triggers
         for(FighterState.FighterTrigger t : currentState.triggers) {
             t.run(executor, evaluator);
+            if( stateChanged ) break;
         }
 
-        // Also stateless triggers
-        for(FighterState.FighterTrigger t : getFighterDef().getTriggers()) {
-            t.run(executor, evaluator);
+        if( !stateChanged ) {
+            // Also stateless triggers
+            for (FighterState.FighterTrigger t : getFighterDef().getTriggers()) {
+                t.run(executor, evaluator);
+            }
         }
 
         // Run physics triggers
@@ -165,6 +174,7 @@ public class Fighter extends Sprite {
     public void changeState(String stateName) {
         FighterState newState = getFighterDef().getStates().get(stateName);
         if( currentState == newState ) return;
+        stateChanged = true;
 
         Gdx.app.log("FSM", "-> "+stateName);
 

@@ -154,6 +154,16 @@ public interface FsmListener extends ParseTreeListener {
 	 */
 	void exitTrigel(FsmParser.TrigelContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link FsmParser#statementsOpt}.
+	 * @param ctx the parse tree
+	 */
+	void enterStatementsOpt(FsmParser.StatementsOptContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FsmParser#statementsOpt}.
+	 * @param ctx the parse tree
+	 */
+	void exitStatementsOpt(FsmParser.StatementsOptContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link FsmParser#statements}.
 	 * @param ctx the parse tree
 	 */
