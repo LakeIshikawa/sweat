@@ -17,6 +17,18 @@ public interface FsmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFsm(FsmParser.FsmContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link FsmParser#cmd}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCmd(FsmParser.CmdContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FsmParser#commandlist}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCommandlist(FsmParser.CommandlistContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link FsmParser#params}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -151,26 +163,12 @@ public interface FsmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFCallExp(FsmParser.FCallExpContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code IdLiteral}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIdLiteral(FsmParser.IdLiteralContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code LtEqExp}
 	 * labeled alternative in {@link FsmParser#e}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitLtEqExp(FsmParser.LtEqExpContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code FloatLiteral}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFloatLiteral(FsmParser.FloatLiteralContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code AddExp}
 	 * labeled alternative in {@link FsmParser#e}.
@@ -186,13 +184,6 @@ public interface FsmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitGtEqExp(FsmParser.GtEqExpContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code DivExp}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDivExp(FsmParser.DivExpContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code GtExp}
 	 * labeled alternative in {@link FsmParser#e}.
 	 * @param ctx the parse tree
@@ -206,20 +197,6 @@ public interface FsmVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitMulExp(FsmParser.MulExpContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code LtExp}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLtExp(FsmParser.LtExpContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code EqExp}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitEqExp(FsmParser.EqExpContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ParExp}
 	 * labeled alternative in {@link FsmParser#e}.
@@ -235,13 +212,6 @@ public interface FsmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCondExp(FsmParser.CondExpContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code StringLiteral}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStringLiteral(FsmParser.StringLiteralContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code BoolLiteral}
 	 * labeled alternative in {@link FsmParser#e}.
 	 * @param ctx the parse tree
@@ -255,13 +225,6 @@ public interface FsmVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitAnimLiteral(FsmParser.AnimLiteralContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ModExp}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitModExp(FsmParser.ModExpContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code OrExp}
 	 * labeled alternative in {@link FsmParser#e}.
@@ -298,6 +261,62 @@ public interface FsmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNeqExp(FsmParser.NeqExpContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code IdLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIdLiteral(FsmParser.IdLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code FloatLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFloatLiteral(FsmParser.FloatLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code DivExp}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDivExp(FsmParser.DivExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code CommandLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCommandLiteral(FsmParser.CommandLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code LtExp}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLtExp(FsmParser.LtExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code EqExp}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEqExp(FsmParser.EqExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code StringLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStringLiteral(FsmParser.StringLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ModExp}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitModExp(FsmParser.ModExpContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link FsmParser#fcall}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -317,4 +336,69 @@ public interface FsmVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitEListEElist(FsmParser.EListEElistContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FsmParser#commandline}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCommandline(FsmParser.CommandlineContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code CommandSeqCToken}
+	 * labeled alternative in {@link FsmParser#commandseq}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCommandSeqCToken(FsmParser.CommandSeqCTokenContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code CTokenList}
+	 * labeled alternative in {@link FsmParser#commandseq}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCTokenList(FsmParser.CTokenListContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FsmParser#ctoken}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCtoken(FsmParser.CtokenContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FsmParser#exclusiveOpt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExclusiveOpt(FsmParser.ExclusiveOptContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code HoldMod}
+	 * labeled alternative in {@link FsmParser#modOpt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitHoldMod(FsmParser.HoldModContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ReleaseMod}
+	 * labeled alternative in {@link FsmParser#modOpt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReleaseMod(FsmParser.ReleaseModContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code NoMod}
+	 * labeled alternative in {@link FsmParser#modOpt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNoMod(FsmParser.NoModContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FsmParser#timeOpt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTimeOpt(FsmParser.TimeOptContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FsmParser#keylist}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitKeylist(FsmParser.KeylistContext ctx);
 }

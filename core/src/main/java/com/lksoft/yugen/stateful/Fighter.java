@@ -2,14 +2,12 @@ package com.lksoft.yugen.stateful;
 
 import com.badlogic.gdx.Gdx;
 import com.lksoft.yugen.FsmParser;
-import com.lksoft.yugen.fsm.FighterExecuteVisitor;
-import com.lksoft.yugen.fsm.FighterExpVisitor;
+import com.lksoft.yugen.Yugen;
+import com.lksoft.yugen.fsm.visitor.FighterExecuteVisitor;
+import com.lksoft.yugen.fsm.visitor.FighterExpVisitor;
 import com.lksoft.yugen.fsm.Type;
 import com.lksoft.yugen.fsm.Value;
-import com.lksoft.yugen.stateless.AnimationDef;
-import com.lksoft.yugen.stateless.FighterDef;
-import com.lksoft.yugen.stateless.FighterState;
-import com.lksoft.yugen.stateless.PhysicsDef;
+import com.lksoft.yugen.stateless.*;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -35,6 +33,9 @@ public class Fighter extends Sprite {
 
     // The memory
     private HashMap<String, Value> memory = new HashMap<>();
+
+    // Combo detector
+    private CommandDetector commandDetector = new CommandDetector(this);
 
     // Expression evaluator
     private FighterExpVisitor evaluator = new FighterExpVisitor(this);
@@ -82,6 +83,16 @@ public class Fighter extends Sprite {
      */
     public boolean isP1(){
         return stage.getP1() == this;
+    }
+
+    /**
+     * Get key settings for the player of this fighter
+     * @return
+     */
+    public Settings.KeySettings getKeySettings() {
+        return isP1() ?
+                Yugen.i().getSettings().getP1Keys() :
+                Yugen.i().getSettings().getP2Keys();
     }
 
     /**
@@ -134,18 +145,20 @@ public class Fighter extends Sprite {
     public void update(){
         stateChanged = false;
 
+        // Update input
+        commandDetector.update();
+
         // Evaluate all triggers
         for(FighterState.FighterTrigger t : currentState.triggers) {
             t.run(executor, evaluator);
             if( stateChanged ) break;
         }
 
-        if( !stateChanged ) {
-            // Also stateless triggers
-            for (FighterState.FighterTrigger t : getFighterDef().getTriggers()) {
-                t.run(executor, evaluator);
-            }
+        // Also stateless triggers
+        for (FighterState.FighterTrigger t : getFighterDef().getTriggers()) {
+            t.run(executor, evaluator);
         }
+
 
         // Run physics triggers
         if( currentPhysics != null ) {
@@ -201,6 +214,7 @@ public class Fighter extends Sprite {
      * @param def Animation def
      */
     public void changeAnimation(AnimationDef def){
+        if( def == null ) return;
         if(animation != null &&  def == animation.getAnimationDef() ) return;
         animation = new Animation(def);
         setVar("anim", Type.ANIM, def);
@@ -213,7 +227,9 @@ public class Fighter extends Sprite {
      * @param physicsDef Physics def
      */
     public void changePhysics(PhysicsDef physicsDef) {
-        this.currentPhysics = physicsDef;
+        if( physicsDef != null ) {
+            this.currentPhysics = physicsDef;
+        }
     }
 
     /**
@@ -223,6 +239,28 @@ public class Fighter extends Sprite {
      */
     public AnimationDef getAnimationDef(String animName){
         return getFighterDef().getAnimations().getAnimationDef(animName);
+    }
+
+    /**
+     * Gets a command def belonging to the fighter
+     * @param name Name of the command
+     * @return The command, or null if not present
+     */
+    public CommandDef getCommand(String name) {
+        return getFighterDef().getCommands().getCommandDef(name);
+    }
+
+    /**
+     * Match specified command agains input
+     * @param commandDef The command def to match
+     * @return true if matching input
+     */
+    public boolean matchCommand(CommandDef commandDef) {
+        boolean match = commandDetector.matchCommand(commandDef);
+        if( match ){
+            commandDetector.clearHistory();
+        }
+        return match;
     }
 
     /**

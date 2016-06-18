@@ -18,6 +18,26 @@ public interface FsmListener extends ParseTreeListener {
 	 */
 	void exitFsm(FsmParser.FsmContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link FsmParser#cmd}.
+	 * @param ctx the parse tree
+	 */
+	void enterCmd(FsmParser.CmdContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FsmParser#cmd}.
+	 * @param ctx the parse tree
+	 */
+	void exitCmd(FsmParser.CmdContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FsmParser#commandlist}.
+	 * @param ctx the parse tree
+	 */
+	void enterCommandlist(FsmParser.CommandlistContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FsmParser#commandlist}.
+	 * @param ctx the parse tree
+	 */
+	void exitCommandlist(FsmParser.CommandlistContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link FsmParser#params}.
 	 * @param ctx the parse tree
 	 */
@@ -244,18 +264,6 @@ public interface FsmListener extends ParseTreeListener {
 	 */
 	void exitFCallExp(FsmParser.FCallExpContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code IdLiteral}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 */
-	void enterIdLiteral(FsmParser.IdLiteralContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code IdLiteral}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 */
-	void exitIdLiteral(FsmParser.IdLiteralContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code LtEqExp}
 	 * labeled alternative in {@link FsmParser#e}.
 	 * @param ctx the parse tree
@@ -267,18 +275,6 @@ public interface FsmListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitLtEqExp(FsmParser.LtEqExpContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code FloatLiteral}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 */
-	void enterFloatLiteral(FsmParser.FloatLiteralContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code FloatLiteral}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 */
-	void exitFloatLiteral(FsmParser.FloatLiteralContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code AddExp}
 	 * labeled alternative in {@link FsmParser#e}.
@@ -304,18 +300,6 @@ public interface FsmListener extends ParseTreeListener {
 	 */
 	void exitGtEqExp(FsmParser.GtEqExpContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code DivExp}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 */
-	void enterDivExp(FsmParser.DivExpContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code DivExp}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 */
-	void exitDivExp(FsmParser.DivExpContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code GtExp}
 	 * labeled alternative in {@link FsmParser#e}.
 	 * @param ctx the parse tree
@@ -339,30 +323,6 @@ public interface FsmListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitMulExp(FsmParser.MulExpContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code LtExp}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 */
-	void enterLtExp(FsmParser.LtExpContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code LtExp}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 */
-	void exitLtExp(FsmParser.LtExpContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code EqExp}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 */
-	void enterEqExp(FsmParser.EqExpContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code EqExp}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 */
-	void exitEqExp(FsmParser.EqExpContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ParExp}
 	 * labeled alternative in {@link FsmParser#e}.
@@ -388,18 +348,6 @@ public interface FsmListener extends ParseTreeListener {
 	 */
 	void exitCondExp(FsmParser.CondExpContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code StringLiteral}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 */
-	void enterStringLiteral(FsmParser.StringLiteralContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code StringLiteral}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 */
-	void exitStringLiteral(FsmParser.StringLiteralContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code BoolLiteral}
 	 * labeled alternative in {@link FsmParser#e}.
 	 * @param ctx the parse tree
@@ -423,18 +371,6 @@ public interface FsmListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAnimLiteral(FsmParser.AnimLiteralContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ModExp}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 */
-	void enterModExp(FsmParser.ModExpContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ModExp}
-	 * labeled alternative in {@link FsmParser#e}.
-	 * @param ctx the parse tree
-	 */
-	void exitModExp(FsmParser.ModExpContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code OrExp}
 	 * labeled alternative in {@link FsmParser#e}.
@@ -496,6 +432,102 @@ public interface FsmListener extends ParseTreeListener {
 	 */
 	void exitNeqExp(FsmParser.NeqExpContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code IdLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdLiteral(FsmParser.IdLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IdLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdLiteral(FsmParser.IdLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code FloatLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void enterFloatLiteral(FsmParser.FloatLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code FloatLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void exitFloatLiteral(FsmParser.FloatLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code DivExp}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void enterDivExp(FsmParser.DivExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code DivExp}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void exitDivExp(FsmParser.DivExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code CommandLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void enterCommandLiteral(FsmParser.CommandLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code CommandLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void exitCommandLiteral(FsmParser.CommandLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code LtExp}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void enterLtExp(FsmParser.LtExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code LtExp}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void exitLtExp(FsmParser.LtExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code EqExp}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void enterEqExp(FsmParser.EqExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code EqExp}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void exitEqExp(FsmParser.EqExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code StringLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void enterStringLiteral(FsmParser.StringLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code StringLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void exitStringLiteral(FsmParser.StringLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ModExp}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void enterModExp(FsmParser.ModExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ModExp}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void exitModExp(FsmParser.ModExpContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link FsmParser#fcall}.
 	 * @param ctx the parse tree
 	 */
@@ -529,4 +561,114 @@ public interface FsmListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitEListEElist(FsmParser.EListEElistContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FsmParser#commandline}.
+	 * @param ctx the parse tree
+	 */
+	void enterCommandline(FsmParser.CommandlineContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FsmParser#commandline}.
+	 * @param ctx the parse tree
+	 */
+	void exitCommandline(FsmParser.CommandlineContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code CommandSeqCToken}
+	 * labeled alternative in {@link FsmParser#commandseq}.
+	 * @param ctx the parse tree
+	 */
+	void enterCommandSeqCToken(FsmParser.CommandSeqCTokenContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code CommandSeqCToken}
+	 * labeled alternative in {@link FsmParser#commandseq}.
+	 * @param ctx the parse tree
+	 */
+	void exitCommandSeqCToken(FsmParser.CommandSeqCTokenContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code CTokenList}
+	 * labeled alternative in {@link FsmParser#commandseq}.
+	 * @param ctx the parse tree
+	 */
+	void enterCTokenList(FsmParser.CTokenListContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code CTokenList}
+	 * labeled alternative in {@link FsmParser#commandseq}.
+	 * @param ctx the parse tree
+	 */
+	void exitCTokenList(FsmParser.CTokenListContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FsmParser#ctoken}.
+	 * @param ctx the parse tree
+	 */
+	void enterCtoken(FsmParser.CtokenContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FsmParser#ctoken}.
+	 * @param ctx the parse tree
+	 */
+	void exitCtoken(FsmParser.CtokenContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FsmParser#exclusiveOpt}.
+	 * @param ctx the parse tree
+	 */
+	void enterExclusiveOpt(FsmParser.ExclusiveOptContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FsmParser#exclusiveOpt}.
+	 * @param ctx the parse tree
+	 */
+	void exitExclusiveOpt(FsmParser.ExclusiveOptContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code HoldMod}
+	 * labeled alternative in {@link FsmParser#modOpt}.
+	 * @param ctx the parse tree
+	 */
+	void enterHoldMod(FsmParser.HoldModContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code HoldMod}
+	 * labeled alternative in {@link FsmParser#modOpt}.
+	 * @param ctx the parse tree
+	 */
+	void exitHoldMod(FsmParser.HoldModContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ReleaseMod}
+	 * labeled alternative in {@link FsmParser#modOpt}.
+	 * @param ctx the parse tree
+	 */
+	void enterReleaseMod(FsmParser.ReleaseModContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ReleaseMod}
+	 * labeled alternative in {@link FsmParser#modOpt}.
+	 * @param ctx the parse tree
+	 */
+	void exitReleaseMod(FsmParser.ReleaseModContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code NoMod}
+	 * labeled alternative in {@link FsmParser#modOpt}.
+	 * @param ctx the parse tree
+	 */
+	void enterNoMod(FsmParser.NoModContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code NoMod}
+	 * labeled alternative in {@link FsmParser#modOpt}.
+	 * @param ctx the parse tree
+	 */
+	void exitNoMod(FsmParser.NoModContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FsmParser#timeOpt}.
+	 * @param ctx the parse tree
+	 */
+	void enterTimeOpt(FsmParser.TimeOptContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FsmParser#timeOpt}.
+	 * @param ctx the parse tree
+	 */
+	void exitTimeOpt(FsmParser.TimeOptContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FsmParser#keylist}.
+	 * @param ctx the parse tree
+	 */
+	void enterKeylist(FsmParser.KeylistContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FsmParser#keylist}.
+	 * @param ctx the parse tree
+	 */
+	void exitKeylist(FsmParser.KeylistContext ctx);
 }

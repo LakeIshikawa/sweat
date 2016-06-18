@@ -4,6 +4,9 @@ speed.walk.bwd.x = -4.0
 speed.air.fwd.x = 3.0
 speed.air.bwd.x = -2.0
 speed.jump.up = 15.0
+speed.run.fwd.x = 9.0
+speed.backhop.x = -9.0
+speed.backhop.y = 5.0
 
 standing.friction.x = 0.4
 crouching.friction.x = 0.65
@@ -14,6 +17,7 @@ State idle (S)
 	physics = P:standing
 	priority = 0
 	anim = A:idle
+	ctrl = true
 
 	// Face
 	[Trigger !facingP2()]
@@ -50,6 +54,7 @@ State walk (S)
 	[Trigger !facingP2()]
 	-> turn
 
+	// Stop walking
 	[Trigger 
 		1: !(keyhold("F") || keyhold("B"))
 		2: keyhold("F") && keyhold("B")]
@@ -75,6 +80,7 @@ State jumpstart (S)
 	[Enter]
 	priority = 1
 	anim = A:jumpstart
+	ctrl = false
 
 	// Jump up
 	[Trigger animCycles == 1 && !(keyhold("F") || keyhold("B"))]
@@ -141,7 +147,38 @@ State crouch2stand (C)
 	[Trigger animCycles == 1]
 	-> idle
 	
+State running (S)
+	[Enter]
+	anim = A:running
+	vel.x = speed.run.fwd.x * (facing ? -1.0 : 1.0)
+
+	[Trigger !keyhold("F")]
+	->idle
+
+State backhop (S)
+	[Enter]
+	anim = A:backhop
+	vel.x = speed.backhop.x * (facing ? -1.0 : 1.0)
+	vel.y = speed.backhop.y
+	physics = P:air
+
+	// Landing
+	[Trigger pos.y < 0.0]
+	-> backhopland
+
+State backhopland (S)
+	[Enter]
+	anim = A:backhopland
+
+	[Trigger animCycles == 1]
+	-> idle
 
 // --
 // -- Controls definition from any state that allows control
 // --
+Stateless
+	[Trigger ctrl && has(A:running) && C:run]
+		-> running
+	
+	[Trigger ctrl && has(A:backhop) && C:backhop]
+		-> backhop

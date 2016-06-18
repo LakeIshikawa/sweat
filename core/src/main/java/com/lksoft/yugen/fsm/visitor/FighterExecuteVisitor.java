@@ -1,9 +1,9 @@
-package com.lksoft.yugen.fsm;
+package com.lksoft.yugen.fsm.visitor;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.lksoft.yugen.FsmBaseVisitor;
 import com.lksoft.yugen.FsmParser;
+import com.lksoft.yugen.fsm.Type;
 import com.lksoft.yugen.stateful.Fighter;
 
 /**
@@ -64,7 +64,7 @@ public class FighterExecuteVisitor extends FsmBaseVisitor<Void> {
      */
     private boolean checkError(String lhs, Type type, FighterExpVisitor evaluator) {
         if( evaluator.getResult().getType() != type ){
-            Gdx.app.error("FSM", "ERROR: " + lhs + " = ... expected Float but got " + evaluator.getResult().getType());
+            Gdx.app.error("FSM", "ERROR: " + lhs + " = ... expected " + type + " but got " + evaluator.getResult().getType());
             return true;
         }
         return false;

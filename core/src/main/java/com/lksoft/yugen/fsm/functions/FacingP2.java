@@ -1,7 +1,7 @@
 package com.lksoft.yugen.fsm.functions;
 
 import com.lksoft.yugen.FsmParser;
-import com.lksoft.yugen.fsm.FighterExpVisitor;
+import com.lksoft.yugen.fsm.visitor.FighterExpVisitor;
 import com.lksoft.yugen.fsm.Functions;
 
 /**

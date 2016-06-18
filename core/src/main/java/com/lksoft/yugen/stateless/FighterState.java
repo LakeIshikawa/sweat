@@ -1,11 +1,10 @@
 package com.lksoft.yugen.stateless;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.lksoft.yugen.FsmParser;
-import com.lksoft.yugen.fsm.FighterExecuteVisitor;
-import com.lksoft.yugen.fsm.FighterExpVisitor;
+import com.lksoft.yugen.fsm.visitor.FighterExecuteVisitor;
+import com.lksoft.yugen.fsm.visitor.FighterExpVisitor;
 import com.lksoft.yugen.fsm.Type;
 
 /**

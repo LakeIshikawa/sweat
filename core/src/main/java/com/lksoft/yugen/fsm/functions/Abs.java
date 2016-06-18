@@ -1,7 +1,7 @@
 package com.lksoft.yugen.fsm.functions;
 
 import com.lksoft.yugen.FsmParser;
-import com.lksoft.yugen.fsm.FighterExpVisitor;
+import com.lksoft.yugen.fsm.visitor.FighterExpVisitor;
 import com.lksoft.yugen.fsm.Functions;
 import com.lksoft.yugen.fsm.Value;
 
@@ -18,6 +18,8 @@ public class Abs implements Functions.Function {
     public void execute(FighterExpVisitor evaluator, FsmParser.FcallContext fcall) {
         // Evaluate ID arg
         fcall.accept(evaluator);
+        if( evaluator.getError() != null ) return;
+
         // Take first arg
         Value v = evaluator.getResults().get(0);
 

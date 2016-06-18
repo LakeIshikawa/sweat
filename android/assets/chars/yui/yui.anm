@@ -125,3 +125,40 @@ loopstart
 [Anim falling]
 058 4
 059 4
+
+[Anim running]
+041 1
+070 2
+074 2
+075 3
+077 2
+loopstart
+080 3
+081 2
+082 2
+071 3
+072 2
+073 2
+074 3
+075 2
+076 2
+077 3
+078 2
+079 2
+
+[Anim brake]
+091 4
+
+[Anim backhop]
+033 1
+068 1
+083 3
+084 3
+085 3
+086 3
+loopstart
+087 1
+
+[Anim backhopland]
+087 1
+019 4

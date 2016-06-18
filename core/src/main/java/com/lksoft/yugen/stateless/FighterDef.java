@@ -5,6 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
 import com.lksoft.yugen.FsmLexer;
 import com.lksoft.yugen.FsmParser;
+import com.lksoft.yugen.fsm.visitor.FighterSetupVisitor;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -33,6 +34,8 @@ public class FighterDef {
 
     // Animations
     private Animations animations;
+    // Commands
+    private Commands commands;
 
     // Params
     private HashMap<String, Float> params = new HashMap<>();
@@ -151,6 +154,14 @@ public class FighterDef {
 
     public void setAnimations(Animations animations) {
         this.animations = animations;
+    }
+
+    public Commands getCommands() {
+        return commands;
+    }
+
+    public void setCommands(Commands commands) {
+        this.commands = commands;
     }
 
     public HashMap<String, FighterState> getStates() {

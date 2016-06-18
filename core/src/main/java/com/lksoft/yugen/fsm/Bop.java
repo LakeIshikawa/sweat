@@ -1,6 +1,7 @@
 package com.lksoft.yugen.fsm;
 
 import com.lksoft.yugen.FsmParser;
+import com.lksoft.yugen.fsm.visitor.FighterExpVisitor;
 import com.lksoft.yugen.stateless.AnimationDef;
 import com.lksoft.yugen.stateless.PhysicsDef;
 

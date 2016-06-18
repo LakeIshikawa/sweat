@@ -1,11 +1,16 @@
-package com.lksoft.yugen.fsm;
+package com.lksoft.yugen.fsm.visitor;
 
 import com.badlogic.gdx.utils.Array;
 import com.lksoft.yugen.FsmBaseVisitor;
 import com.lksoft.yugen.FsmParser;
 import com.lksoft.yugen.Yugen;
+import com.lksoft.yugen.fsm.Bop;
+import com.lksoft.yugen.fsm.Functions;
+import com.lksoft.yugen.fsm.Type;
+import com.lksoft.yugen.fsm.Value;
 import com.lksoft.yugen.stateful.Fighter;
 import com.lksoft.yugen.stateless.AnimationDef;
+import com.lksoft.yugen.stateless.CommandDef;
 import com.lksoft.yugen.stateless.PhysicsDef;
 
 /**
@@ -224,12 +229,7 @@ public class FighterExpVisitor extends FsmBaseVisitor<Void>{
     public Void visitAnimLiteral(FsmParser.AnimLiteralContext ctx) {
         String name = ctx.ANIM().getText().substring(2);
         AnimationDef animationDef = fighter.getAnimationDef(name);
-        if( animationDef != null ){
-            setAnimResult(animationDef);
-        }
-        else{
-            setError("Animation not found: " + name);
-        }
+        setAnimResult(animationDef);
         return null;
     }
 
@@ -237,10 +237,18 @@ public class FighterExpVisitor extends FsmBaseVisitor<Void>{
     public Void visitPhysicsLiteral(FsmParser.PhysicsLiteralContext ctx) {
         String name = ctx.PHYSICS().getText().substring(2);
         PhysicsDef physicsDef = Yugen.i().getPhysicsDef(name);
-        if( physicsDef != null ){
-            setPhysicsResult(physicsDef);
+        setPhysicsResult(physicsDef);
+        return null;
+    }
+
+    @Override
+    public Void visitCommandLiteral(FsmParser.CommandLiteralContext ctx) {
+        String name = ctx.COMMAND().getText().substring(2);
+        CommandDef commandDef = fighter.getCommand(name);
+        if( commandDef != null ){
+            setBoolResult(fighter.matchCommand(commandDef));
         } else {
-            setError("Physics not found: " + name);
+            setError("Command not found: " + name);
         }
         return null;
     }

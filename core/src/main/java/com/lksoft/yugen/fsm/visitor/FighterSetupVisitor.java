@@ -1,4 +1,4 @@
-package com.lksoft.yugen.stateless;
+package com.lksoft.yugen.fsm.visitor;
 
 import com.badlogic.gdx.utils.Array;
 import com.lksoft.yugen.FsmBaseVisitor;

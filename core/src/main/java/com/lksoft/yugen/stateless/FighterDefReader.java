@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
+import java.io.IOException;
+
 /**
  * Created by Lake on 11/06/2016.
  */
@@ -14,7 +16,7 @@ class FighterDefReader {
      * @param defFile
      * @param fighterDef
      */
-    void read(FileHandle defFile, FighterDef fighterDef){
+    void read(FileHandle defFile, FighterDef fighterDef) throws IOException {
         String[] lines = defFile.readString().split("\\n");
         for( String line : lines ){
             line = line.trim();
@@ -52,5 +54,11 @@ class FighterDefReader {
         Frames frames = new Frames(atlas, fighterDef.getFrm());
         Animations animations = new Animations(frames, fighterDef.getAnm());
         fighterDef.setAnimations(animations);
+
+        // Load commands
+        Commands commands = new Commands(Gdx.files.internal("shared/basic.cmd"));
+        Commands customCommands = new Commands(fighterDef.getCmd());
+        commands.merge(customCommands);
+        fighterDef.setCommands(commands);
     }
 }

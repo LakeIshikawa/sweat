@@ -94,3 +94,29 @@ test028 2
 test027 3
 test026 3
 test027 3
+
+[Anim running]
+test060 3
+loopstart
+test061 3
+test062 3
+test063 3
+
+[Anim brake]
+test064 4
+test065 3
+test066 3
+test065 3
+test066 3
+test067 5
+test025 4
+
+[Anim backhop]
+test026 2
+test068 2
+loopstart
+test069 4
+
+[Anim backhopland]
+test070 4
+test071 3
