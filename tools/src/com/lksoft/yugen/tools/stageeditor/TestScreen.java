@@ -1,4 +1,4 @@
-package com.lksoft.yugen.tools;
+package com.lksoft.yugen.tools.stageeditor;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -13,17 +13,17 @@ import com.lksoft.yugen.stateful.Stage;
 public class TestScreen implements Screen {
 
     // Screen to go back to
-    private EditorScreen backTo;
+    private StageEditorScreen backTo;
     // Stage
     private Stage stage;
 
     /**
      * Create b1 test screen for b1 stage
-     * @param editorScreen
+     * @param stageEditorScreen
      * @param stage
      */
-    public TestScreen(EditorScreen editorScreen, Stage stage) {
-        this.backTo = editorScreen;
+    public TestScreen(StageEditorScreen stageEditorScreen, Stage stage) {
+        this.backTo = stageEditorScreen;
         this.stage = stage;
     }
 

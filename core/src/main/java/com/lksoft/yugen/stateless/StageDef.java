@@ -8,8 +8,8 @@ import com.badlogic.gdx.utils.Array;
  */
 public class StageDef {
 
-    // Animations
-    private transient Animations animations;
+    // AnimationPack
+    private transient AnimationPack animationPack;
 
     // Frm file
     private FileHandle frmFile;
@@ -43,11 +43,11 @@ public class StageDef {
 
     /**
      * Create b1 new stage
-     * @param animations Loaded animation definitions
+     * @param animationPack Loaded animation definitions
      */
-    public StageDef(Animations animations, FileHandle anmFile, FileHandle frmFile, FileHandle atlasFile){
+    public StageDef(AnimationPack animationPack, FileHandle anmFile, FileHandle frmFile, FileHandle atlasFile){
         this();
-        this.setAnimations(animations);
+        this.setAnimationPack(animationPack);
         this.setAnmFile(anmFile);
         this.setFrmFile(frmFile);
         this.setAtlasFile(atlasFile);
@@ -70,12 +70,12 @@ public class StageDef {
         layers[layer].add(currentDef);
     }
 
-    public Animations getAnimations() {
-        return animations;
+    public AnimationPack getAnimationPack() {
+        return animationPack;
     }
 
-    public void setAnimations(Animations animations) {
-        this.animations = animations;
+    public void setAnimationPack(AnimationPack animationPack) {
+        this.animationPack = animationPack;
     }
 
     public String getName() {

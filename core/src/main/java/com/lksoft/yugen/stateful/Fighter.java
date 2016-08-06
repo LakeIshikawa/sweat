@@ -238,7 +238,7 @@ public class Fighter extends Sprite {
      * @return The animation, or null if non present
      */
     public AnimationDef getAnimationDef(String animName){
-        return getFighterDef().getAnimations().getAnimationDef(animName);
+        return getFighterDef().getAnimationPack().getAnimationDef(animName);
     }
 
     /**

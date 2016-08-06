@@ -29,31 +29,21 @@ class FighterDefReader {
             else if( line.startsWith("scale") ){
                 fighterDef.setScale(Float.parseFloat(line.split("=")[1].trim()));
             }
-            else if( line.startsWith("atlas") ){
-                fighterDef.setAtlas(Gdx.files.internal(defFile.parent() + "/" + line.split("=")[1].trim()));
-            }
-            else if( line.startsWith("frm") ){
-                fighterDef.setFrm(Gdx.files.internal(defFile.parent() + "/" + line.split("=")[1].trim()));
-            }
-            else if( line.startsWith("anm") ){
-                fighterDef.setAnm(Gdx.files.internal(defFile.parent() + "/" + line.split("=")[1].trim()));
-            }
-            else if( line.startsWith("fsm") ){
-                fighterDef.setFsm(Gdx.files.internal(defFile.parent() + "/" + line.split("=")[1].trim()));
-            }
-            else if( line.startsWith("cmd") ){
-                fighterDef.setCmd(Gdx.files.internal(defFile.parent() + "/" + line.split("=")[1].trim()));
-            }
-            else if( line.startsWith("snd") ){
-                fighterDef.setSnd(Gdx.files.internal(defFile.parent() + "/" + line.split("=")[1].trim()));
-            }
         }
 
-        // Load animations
+        // Infer resources
+        fighterDef.setAtlas(new FileHandle(defFile.pathWithoutExtension() + ".atlas"));
+        fighterDef.setFrm(new FileHandle(defFile.pathWithoutExtension() + ".frm"));
+        fighterDef.setAnm(new FileHandle(defFile.pathWithoutExtension() + ".anm"));
+        fighterDef.setCmd(new FileHandle(defFile.pathWithoutExtension() + ".cmd"));
+        fighterDef.setFsm(new FileHandle(defFile.pathWithoutExtension() + ".fsm"));
+        fighterDef.setSnd(new FileHandle(defFile.pathWithoutExtension() + ".snd"));
+
+        // Load animationPack
         TextureAtlas atlas = new TextureAtlas(fighterDef.getAtlas());
         Frames frames = new Frames(atlas, fighterDef.getFrm());
-        Animations animations = new Animations(frames, fighterDef.getAnm());
-        fighterDef.setAnimations(animations);
+        AnimationPack animationPack = new AnimationPackReader(fighterDef.getAnm()).read(frames);
+        fighterDef.setAnimationPack(animationPack);
 
         // Load commands
         Commands commands = new Commands(Gdx.files.internal("shared/basic.cmd"));

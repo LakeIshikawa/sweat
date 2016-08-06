@@ -1,4 +1,4 @@
-package com.lksoft.yugen.tools;
+package com.lksoft.yugen.tools.stageeditor;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -19,7 +19,7 @@ import com.lksoft.yugen.stateless.SpriteDef;
 public class SpriteDefWindow extends VisWindow {
 
     // Editor
-    private EditorScreen editorScreen;
+    private StageEditorScreen stageEditorScreen;
 
     // Widgets
     private VisTextField name;
@@ -33,11 +33,11 @@ public class SpriteDefWindow extends VisWindow {
 
     /**
      * Create sprite def window
-     * @param editorScreen
+     * @param stageEditorScreen
      */
-    public SpriteDefWindow(final EditorScreen editorScreen) {
+    public SpriteDefWindow(final StageEditorScreen stageEditorScreen) {
         super("Sprite definition");
-        this.editorScreen = editorScreen;
+        this.stageEditorScreen = stageEditorScreen;
         TableUtils.setSpacingDefaults(this);
 
         VisTable table = new VisTable();
@@ -60,8 +60,6 @@ public class SpriteDefWindow extends VisWindow {
         table.row();
 
         add(table);
-        pack();
-        setPosition(1280-getWidth(), 0);
 
 
         // Listeners
@@ -75,7 +73,7 @@ public class SpriteDefWindow extends VisWindow {
             @Override
             public void keyTyped(VisTextField textField, char c) {
                 if( currentDef != null ){
-                    AnimationDef sequence = editorScreen.getCurrentStageDef().getAnimations().getAnimationDef(resource.getText());
+                    AnimationDef sequence = stageEditorScreen.getCurrentStageDef().getAnimationPack().getAnimationDef(resource.getText());
                     if( sequence != null ){
                         currentDef.setResource(sequence);
                     }
@@ -110,7 +108,7 @@ public class SpriteDefWindow extends VisWindow {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if( currentDef != null ) {
-                    editorScreen.getCurrentStageDef().changeLayer(currentDef,
+                    stageEditorScreen.getCurrentStageDef().changeLayer(currentDef,
                             ((IntSpinnerModel)layer.getModel()).getValue());
                 }
             }

@@ -1,4 +1,4 @@
-package com.lksoft.yugen.tools;
+package com.lksoft.yugen.tools.stageeditor;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;

@@ -1,4 +1,4 @@
-package com.lksoft.yugen.tools;
+package com.lksoft.yugen.tools.stageeditor;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

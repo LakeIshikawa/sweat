@@ -25,62 +25,58 @@ public class StageDefReader {
      * @return A stage layout
      */
     public StageDef read(){
-        StageDef layout = new StageDef();
+        StageDef stageDef = new StageDef();
         String[] lines = stgFile.readString().split("\\n");
         for( String line : lines ){
             line = line.trim();
             if( line.startsWith("name") ){
-                layout.setName(line.split("=")[1].trim());
+                stageDef.setName(line.split("=")[1].trim());
             }
             else if( line.startsWith("author") ){
-                layout.setAuthor(line.split("=")[1].trim());
-            }
-            else if( line.startsWith("atlas") ){
-                layout.setAtlasFile(Gdx.files.internal(stgFile.parent() + "/" + line.split("=")[1].trim()));
-            }
-            else if( line.startsWith("frm") ){
-                layout.setFrmFile(Gdx.files.internal(stgFile.parent() + "/" + line.split("=")[1].trim()));
-            }
-            else if( line.startsWith("anm") ){
-                layout.setAnmFile(Gdx.files.internal(stgFile.parent() + "/" + line.split("=")[1].trim()));
+                stageDef.setAuthor(line.split("=")[1].trim());
             }
             else if( line.startsWith("camera.width") ){
-                layout.setCameraW(Integer.parseInt(line.split("=")[1].trim()));
+                stageDef.setCameraW(Integer.parseInt(line.split("=")[1].trim()));
             }
             else if( line.startsWith("camera.height") ){
-                layout.setCameraH(Integer.parseInt(line.split("=")[1].trim()));
+                stageDef.setCameraH(Integer.parseInt(line.split("=")[1].trim()));
             }
             else if( line.startsWith("camera.offsetY") ){
-                layout.setCameraOffsetY(Integer.parseInt(line.split("=")[1].trim()));
+                stageDef.setCameraOffsetY(Integer.parseInt(line.split("=")[1].trim()));
             }
             else if( line.startsWith("fighters.height") ){
-                layout.setFightersHeight(Integer.parseInt(line.split("=")[1].trim()));
+                stageDef.setFightersHeight(Float.parseFloat(line.split("=")[1].trim()));
             }
             else if( line.startsWith("area.right") ){
-                layout.setAreaR(Integer.parseInt(line.split("=")[1].trim()));
+                stageDef.setAreaR(Integer.parseInt(line.split("=")[1].trim()));
             }
             else if( line.startsWith("area.left") ){
-                layout.setAreaL(Integer.parseInt(line.split("=")[1].trim()));
+                stageDef.setAreaL(Integer.parseInt(line.split("=")[1].trim()));
             }
             else if( line.startsWith("area.top") ){
-                layout.setAreaT(Integer.parseInt(line.split("=")[1].trim()));
+                stageDef.setAreaT(Integer.parseInt(line.split("=")[1].trim()));
             }
             else if( line.startsWith("area.bottom") ){
-                layout.setAreaB(Integer.parseInt(line.split("=")[1].trim()));
+                stageDef.setAreaB(Integer.parseInt(line.split("=")[1].trim()));
             }
             else if( line.startsWith("p1.start.x") ){
-                layout.setP1StartX(Integer.parseInt(line.split("=")[1].trim()));
+                stageDef.setP1StartX(Integer.parseInt(line.split("=")[1].trim()));
             }
             else if( line.startsWith("p2.start.x") ){
-                layout.setP2StartX(Integer.parseInt(line.split("=")[1].trim()));
+                stageDef.setP2StartX(Integer.parseInt(line.split("=")[1].trim()));
             }
         }
 
-        // Load animations
-        TextureAtlas atlas = new TextureAtlas(layout.getAtlasFile());
-        Frames frames = new Frames(atlas, layout.getFrmFile());
-        Animations animations = new Animations(frames, layout.getAnmFile());
-        layout.setAnimations(animations);
+        // Infer resources
+        stageDef.setAtlasFile(new FileHandle(stgFile.pathWithoutExtension() + ".atlas"));
+        stageDef.setFrmFile(new FileHandle(stgFile.pathWithoutExtension() + ".frm"));
+        stageDef.setAnmFile(new FileHandle(stgFile.pathWithoutExtension() + ".anm"));
+
+        // Load animationPack
+        TextureAtlas atlas = new TextureAtlas(stageDef.getAtlasFile());
+        Frames frames = new Frames(atlas, stageDef.getFrmFile());
+        AnimationPack animationPack = new AnimationPackReader(stageDef.getAnmFile()).read(frames);
+        stageDef.setAnimationPack(animationPack);
 
         // Sprites
         SpriteDef curSprite = null;
@@ -90,7 +86,7 @@ public class StageDefReader {
             if (line.startsWith("[Sprite")) {
                 String name = line.substring(8, line.indexOf("]"));
                 curSprite = new SpriteDef(name);
-                layout.addSpriteDef(curSprite);
+                stageDef.addSpriteDef(curSprite);
             }
             else if( line.startsWith("start") ){
                 String[] xy = line.split("=")[1].trim().split(",");
@@ -106,10 +102,10 @@ public class StageDefReader {
                 curSprite.setLayer(Integer.parseInt(line.split("=")[1].trim()));
             }
             else if( line.startsWith("resource") ){
-                curSprite.setResource(animations.getAnimationDef(line.split("=")[1].trim()));
+                curSprite.setResource(animationPack.getAnimationDef(line.split("=")[1].trim()));
             }
         }
 
-        return layout;
+        return stageDef;
     }
 }

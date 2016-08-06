@@ -1,3 +1,37 @@
+[Anim backhop]
+test026 2
+test068 2
+loopstart
+test069 4
+
+[Anim backhopland]
+test070 4
+test071 3
+
+[Anim brake]
+test064 4
+test065 3
+test066 3
+test065 3
+test066 3
+test067 5
+test025 4
+
+[Anim crouch2stand]
+test006 7
+
+[Anim crouching]
+test006 90
+test009 8
+
+[Anim crouchTurn]
+test025 2
+
+[Anim falling]
+test052 3
+test053 3
+test054 3
+
 [Anim idle]
 test017 7
 test018 7
@@ -8,45 +42,6 @@ test022 7
 test023 7
 test024 7
 
-[Anim walkfwd]
-test029 7
-test030 7
-test031 7
-test032 7
-test033 7
-test034 7
-test035 7
-test036 7
-
-[Anim walkbwd]
-test037 7
-test038 7
-test039 7
-test040 7
-test041 7
-test042 7
-test043 7
-test044 7
-
-[Anim turn]
-test025 2
-
-[Anim crouchTurn]
-test025 2
-
-[Anim stand2crouch]
-test006 7
-
-[Anim crouching]
-test006 90
-test009 8
-
-[Anim crouch2stand]
-test006 7
-
-[Anim jumpstart]
-test026 5
-
 [Anim jumping]
 test045 5
 test046 3
@@ -55,18 +50,6 @@ test048 3
 test049 3
 test050 3
 test051 3
-loopstart
-test052 3
-test053 3
-test054 3
-
-[Anim jumpingFwd]
-test055 7
-test056 4
-test057 5
-test048 5
-test049 5
-test050 5
 loopstart
 test052 3
 test053 3
@@ -84,10 +67,20 @@ test052 3
 test053 3
 test054 3
 
-[Anim falling]
+[Anim jumpingFwd]
+test055 7
+test056 4
+test057 5
+test048 5
+test049 5
+test050 5
+loopstart
 test052 3
 test053 3
 test054 3
+
+[Anim jumpstart]
+test026 5
 
 [Anim landing]
 test028 2
@@ -102,21 +95,29 @@ test061 3
 test062 3
 test063 3
 
-[Anim brake]
-test064 4
-test065 3
-test066 3
-test065 3
-test066 3
-test067 5
-test025 4
+[Anim stand2crouch]
+test006 7
 
-[Anim backhop]
-test026 2
-test068 2
-loopstart
-test069 4
+[Anim turn]
+test025 2
 
-[Anim backhopland]
-test070 4
-test071 3
+[Anim walkbwd]
+test037 7
+test038 7
+test039 7
+test040 7
+test041 7
+test042 7
+test043 7
+test044 7
+
+[Anim walkfwd]
+test029 7
+test030 7
+test031 7
+test032 7
+test033 7
+test034 7
+test035 7
+test036 7
+

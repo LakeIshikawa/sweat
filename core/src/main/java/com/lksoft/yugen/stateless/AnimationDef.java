@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.Array;
 /**
  * Created by Lake on 08/06/2016.
  */
-public class AnimationDef {
+public class AnimationDef implements Comparable<AnimationDef> {
 
     private String name;
     private Array<AnimationFrame> frames = new Array<>();
@@ -87,5 +87,10 @@ public class AnimationDef {
         }
 
         return null;
+    }
+
+    @Override
+    public int compareTo(AnimationDef o) {
+        return getName().toLowerCase().compareTo(o.getName().toLowerCase());
     }
 }

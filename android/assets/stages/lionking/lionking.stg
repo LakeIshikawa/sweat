@@ -2,14 +2,10 @@
 name = newstage
 author = LK software
 
-atlas = lionking.atlas
-frm = lionking.frm
-anm = lionking.anm
-
 camera.width = 640
 camera.height = 360
 camera.offsetY = 155
-fighters.height = 200
+fighters.height = 200.0
 
 p1.start.x = -90
 p2.start.x = 90

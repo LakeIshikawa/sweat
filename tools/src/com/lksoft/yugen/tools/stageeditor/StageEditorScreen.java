@@ -1,4 +1,4 @@
-package com.lksoft.yugen.tools;
+package com.lksoft.yugen.tools.stageeditor;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.files.FileHandle;
@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.util.dialog.Dialogs;
 import com.kotcrab.vis.ui.util.dialog.InputDialogAdapter;
+import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.file.FileChooser;
 import com.kotcrab.vis.ui.widget.file.FileChooserListener;
 import com.kotcrab.vis.ui.widget.file.FileTypeFilter;
@@ -20,7 +21,7 @@ import java.io.IOException;
 /**
  * Created by Lake on 07/06/2016.
  */
-public class EditorScreen implements Screen, InputProcessor {
+public class StageEditorScreen implements Screen, InputProcessor {
 
     // Stages path
     private File stagesPath;
@@ -48,7 +49,7 @@ public class EditorScreen implements Screen, InputProcessor {
      * Create b1 stage editor
      * @param stagesPath
      */
-    public EditorScreen(File stagesPath){
+    public StageEditorScreen(File stagesPath){
         this.stagesPath = stagesPath;
     }
 
@@ -57,8 +58,21 @@ public class EditorScreen implements Screen, InputProcessor {
         stage = new Stage();
         Gdx.input.setInputProcessor(new InputMultiplexer(stage, this));
 
+        // Create menu bar
+        StageEditorMenuBar menuBar = new StageEditorMenuBar(this);
+
         // Create sprite def window
         spriteDefWindow = new SpriteDefWindow(this);
+        spriteDefWindow.pack();
+        spriteDefWindow.setPosition(stage.getViewport().getWorldWidth()-spriteDefWindow.getWidth(), 0);
+
+        // Root with menu bar
+        VisTable root = new VisTable(true);
+        root.add(menuBar.getTable()).fillX().expandX().row();
+        root.add().expand().fill();
+        root.setFillParent(true);
+
+        stage.addActor(root);
         stage.addActor(spriteDefWindow);
     }
 
@@ -241,36 +255,28 @@ public class EditorScreen implements Screen, InputProcessor {
     }
 
     // Create new stage
-    private void newStage() {
+    void newStage() {
         // Show file chooser
         final FileChooser chooser = new FileChooser(FileChooser.Mode.OPEN);
         chooser.setSelectionMode(FileChooser.SelectionMode.FILES);
-        chooser.setMultiSelectionEnabled(true);
+        chooser.setMultiSelectionEnabled(false);
         chooser.setDirectory(stagesPath);
+        FileTypeFilter filter = new FileTypeFilter(false);
+        filter.addRule("Animation pack files", "anm");
+        chooser.setFileTypeFilter(filter);
         chooser.setListener(new FileChooserListener() {
             @Override
             public void selected(Array<FileHandle> files) {
-                // Find the 3 files
-                FileHandle atlas = null;
-                FileHandle frm = null;
-                FileHandle anm = null;
+                // Read frm and atlas
+                FileHandle frm = new FileHandle(files.first().pathWithoutExtension() + ".frm");
+                FileHandle atlasHandle = new FileHandle(files.first().pathWithoutExtension() + ".atlas");
+                TextureAtlas atlas = new TextureAtlas(atlasHandle);
+                Frames frames = new Frames(atlas, frm);
 
-                for( FileHandle f : files ){
-                    if( f.extension().equals("atlas") ) atlas = f;
-                    if( f.extension().equals("frm") ) frm = f;
-                    if( f.extension().equals("anm") ) anm = f;
-                }
+                AnimationPackReader reader = new AnimationPackReader(files.first());
 
-                if( atlas != null && frm != null && anm != null ){
-                    // Load stuff
-                    TextureAtlas tAtlas = new TextureAtlas(atlas);
-                    Frames frames = new Frames(tAtlas, frm);
-                    Animations animations = new Animations(frames, anm);
-
-                    // Create new stage
-                    setLayout(new StageDef(animations, anm, frm, atlas));
-
-                }
+                // Create new stage
+                setLayout(new StageDef(reader.read(frames), files.first(), frm, atlasHandle));
             }
 
             @Override
@@ -282,12 +288,14 @@ public class EditorScreen implements Screen, InputProcessor {
     }
 
     // Add sprite def
-    private void addSpriteDef() {
+    void addSpriteDef() {
+        if( currentStageDef == null ) return;
+
         Dialogs.showInputDialog(stage, "Enter resource to add", "resource name:", new InputDialogAdapter() {
             @Override
             public void finished (String input) {
 
-                AnimationDef sequence = getCurrentStageDef().getAnimations().getAnimationDef(input);
+                AnimationDef sequence = getCurrentStageDef().getAnimationPack().getAnimationDef(input);
                 if( sequence == null ){
                     Dialogs.showErrorDialog(stage, "Resource not found!");
                 } else {
@@ -298,7 +306,7 @@ public class EditorScreen implements Screen, InputProcessor {
     }
 
     // Open stage
-    private void open() {
+    void open() {
         final FileChooser chooser = new FileChooser(FileChooser.Mode.OPEN);
         chooser.setSelectionMode(FileChooser.SelectionMode.FILES);
         chooser.setMultiSelectionEnabled(false);
@@ -323,11 +331,12 @@ public class EditorScreen implements Screen, InputProcessor {
     }
 
     // Save stage
-    private void save() {
+    void save() {
         if( getCurrentStageDef() == null ) return;
         StageDefWriter writer = new StageDefWriter(new File(getCurrentStageDef().getAnmFile().parent().path(), stageBaseName+".stg"));
         try {
             writer.write(getCurrentStageDef());
+            Dialogs.showOKDialog(stage, "Success", "Stage saved.");
         } catch (IOException e) {
             e.printStackTrace();
             Dialogs.showErrorDialog(stage, "Could not write file.  Check permissions?");

@@ -2,8 +2,10 @@ package com.lksoft.yugen.stateless;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
 
-import java.util.HashMap;
+import java.util.Comparator;
 
 /**
  * Created by Lake on 08/06/2016.
@@ -12,7 +14,7 @@ public class Frames {
     // Atlas
     private TextureAtlas atlas;
     // Frame definitions
-    private HashMap<String, Frame> frameDefs = new HashMap<>();
+    private ObjectMap<String, Frame> frameDefs = new ObjectMap<>();
 
     /**
      * Create b1 frame factory from an atlas and b1 .frm file
@@ -55,5 +57,19 @@ public class Frames {
      */
     public Frame getFrame(String id){
         return frameDefs.get(id);
+    }
+
+    /**
+     * @return All frames in an array
+     */
+    public Array<Frame> getFrames(){
+        Array<Frame> res = frameDefs.values().toArray();
+        res.sort(new Comparator<Frame>() {
+            @Override
+            public int compare(Frame o1, Frame o2) {
+                return o1.region.name.toLowerCase().compareTo(o2.region.name.toLowerCase());
+            }
+        });
+        return res;
     }
 }

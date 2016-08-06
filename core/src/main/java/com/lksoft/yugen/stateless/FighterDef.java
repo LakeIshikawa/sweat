@@ -32,8 +32,8 @@ public class FighterDef {
     private FileHandle cmd;
     private FileHandle snd;
 
-    // Animations
-    private Animations animations;
+    // AnimationPack
+    private AnimationPack animationPack;
     // Commands
     private Commands commands;
 
@@ -61,7 +61,7 @@ public class FighterDef {
      * Disposes of associated resources.
      */
     public void dispose(){
-        animations.dispose();
+        animationPack.dispose();
     }
 
     // Parse given fsm file and update this fighter definition
@@ -148,12 +148,12 @@ public class FighterDef {
         this.snd = snd;
     }
 
-    public Animations getAnimations() {
-        return animations;
+    public AnimationPack getAnimationPack() {
+        return animationPack;
     }
 
-    public void setAnimations(Animations animations) {
-        this.animations = animations;
+    public void setAnimationPack(AnimationPack animationPack) {
+        this.animationPack = animationPack;
     }
 
     public Commands getCommands() {

@@ -1,4 +1,4 @@
-package com.lksoft.yugen.tools;
+package com.lksoft.yugen.tools.stageeditor;
 
 import com.badlogic.gdx.Game;
 import com.kotcrab.vis.ui.VisUI;
@@ -26,6 +26,6 @@ public class StageEditor extends Game {
     @Override
     public void create() {
         VisUI.load();
-        setScreen(new EditorScreen(stagesPath));
+        setScreen(new StageEditorScreen(stagesPath));
     }
 }

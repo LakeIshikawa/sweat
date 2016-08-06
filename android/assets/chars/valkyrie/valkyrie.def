@@ -2,10 +2,3 @@
 name = Valkyrie
 author = flowrallia
 scale = 0.9
-
-atlas = valkyrie.atlas
-frm = valkyrie.frm
-anm = valkyrie.anm
-fsm = valkyrie.fsm
-cmd = valkyrie.cmd
-snd = valkyrie.snd
