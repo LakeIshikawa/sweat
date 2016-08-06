@@ -2,6 +2,8 @@ package com.lksoft.yugen.stateless;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by Lake on 04/08/2016.
@@ -39,9 +41,38 @@ public class FramePackReader {
             // Find region
             TextureAtlas.AtlasRegion region = atlas.findRegion(split[0]);
             if( region != null ){
-                result.addFrame(new Frame(region, Integer.parseInt(split[1]), Integer.parseInt(split[2])));
+                Frame frame = new Frame(region, Integer.parseInt(split[1]), Integer.parseInt(split[2]));
+                result.addFrame(frame);
+
+                // Parse rectangles
+                if( split.length > 3 ) {
+                    String[] rectsSplit = split[3].split("\\|\\|");
+
+                    // Allow all 3 cases
+                    if( rectsSplit.length == 2){
+                        if( !rectsSplit[0].isEmpty() ) {
+                            addRectangles(frame.damageCollisions, rectsSplit[0]);
+                        }
+                        addRectangles(frame.hitCollisions, rectsSplit[1]);
+                    }
+                    else {
+                        addRectangles(frame.damageCollisions, rectsSplit[0]);
+                    }
+                }
             }
         }
         return result;
+    }
+
+    /**
+     * Parse and add rectangles to specified array
+     * @param array
+     * @param string
+     */
+    private void addRectangles(Array<Rectangle> array, String string) {
+        String[] split = string.split(";");
+        for( String s : split){
+            array.add(new Rectangle().fromString(s));
+        }
     }
 }

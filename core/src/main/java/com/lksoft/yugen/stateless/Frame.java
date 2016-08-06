@@ -3,6 +3,7 @@ package com.lksoft.yugen.stateless;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by Lake on 08/06/2016.
@@ -11,9 +12,11 @@ public class Frame {
     public TextureAtlas.AtlasRegion region;
     public int originX;
     public int originY;
+    public Array<Rectangle> damageCollisions = new Array<>();
+    public Array<Rectangle> hitCollisions = new Array<>();
 
     /**
-     * Create b1 frame from b1 region with an origin
+     * Create a frame from a region with an origin
      * @param region Region
      * @param originX Origin
      * @param originY Origin
@@ -25,7 +28,7 @@ public class Frame {
     }
 
     /**
-     * Draw this frame on b1 sprite batch
+     * Draw this frame on a sprite batch
      * @param batch The ready sprite batch
      * @param flip
      */
