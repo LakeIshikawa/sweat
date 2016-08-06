@@ -291,18 +291,16 @@ public class StageEditorScreen implements Screen, InputProcessor {
     void addSpriteDef() {
         if( currentStageDef == null ) return;
 
-        Dialogs.showInputDialog(stage, "Enter resource to add", "resource name:", new InputDialogAdapter() {
+        AnimationDefPicker picker = new AnimationDefPicker(getCurrentStageDef().getAnimationPack(), new AnimationDefPicker.PickListener() {
             @Override
-            public void finished (String input) {
-
-                AnimationDef sequence = getCurrentStageDef().getAnimationPack().getAnimationDef(input);
-                if( sequence == null ){
-                    Dialogs.showErrorDialog(stage, "Resource not found!");
-                } else {
-                    getCurrentStageDef().addSpriteDef(new SpriteDef(sequence));
-                }
+            public void onFramePicked(AnimationDef frame) {
+                getCurrentStageDef().addSpriteDef(new SpriteDef(frame));
             }
+
+            @Override
+            public void onCancel() {}
         });
+        picker.show(stage);
     }
 
     // Open stage

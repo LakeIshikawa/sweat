@@ -1,22 +1,23 @@
-package com.lksoft.yugen.tools.animationeditor;
+package com.lksoft.yugen.tools.stageeditor;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.Selection;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.VisUI;
 import com.kotcrab.vis.ui.util.adapter.ArrayAdapter;
 import com.kotcrab.vis.ui.widget.*;
+import com.lksoft.yugen.stateless.AnimationDef;
+import com.lksoft.yugen.stateless.AnimationPack;
 import com.lksoft.yugen.stateless.Frame;
-import com.lksoft.yugen.stateless.Frames;
 
 /**
  * Created by Lake on 06/08/2016.
  */
-public class AnimationFramePicker extends VisWindow {
+public class AnimationDefPicker extends VisWindow {
 
     // GUI components
     private VisImage icon;
@@ -24,23 +25,24 @@ public class AnimationFramePicker extends VisWindow {
     /**
      * Creates an animation picker
      */
-    public AnimationFramePicker(Frames frames, final PickListener listener) {
-        super("Pick frame");
+    public AnimationDefPicker(final AnimationPack pack, final PickListener listener) {
+        super("Pick animation");
         setModal(true);
 
         icon = new VisImage();
 
-        final ListView<Frame> frameList = new ListView<>(new FramesAdapter(frames.getFrames()));
-        frameList.setItemClickListener(new ListView.ItemClickListener<Frame>() {
+        final ListView<AnimationDef> animList = new ListView<>(new AnimationsDefAdapter(pack.getAnimations()));
+        animList.setItemClickListener(new ListView.ItemClickListener<AnimationDef>() {
             @Override
-            public void clicked(Frame item) {
-                icon.setDrawable(new TextureRegionDrawable(item.region));
+            public void clicked(AnimationDef item) {
+                icon.setDrawable(new TextureRegionDrawable(item.getFrameAt(0).frame.region));
             }
         });
 
+        // Content table
         VisTable table = new VisTable(true);
         table.left();
-        table.add(frameList.getMainTable()).width(200).growY();
+        table.add(animList.getMainTable()).width(200).growY();
         table.add(icon).expand();
 
         add(table).grow();
@@ -51,7 +53,7 @@ public class AnimationFramePicker extends VisWindow {
         choose.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Array<Frame> selection = ((ArrayAdapter)frameList.getAdapter()).getSelection();
+                Array<AnimationDef> selection = ((ArrayAdapter)animList.getAdapter()).getSelection();
                 if(selection.size > 0) {
                     listener.onFramePicked(selection.first());
                 }
@@ -69,7 +71,7 @@ public class AnimationFramePicker extends VisWindow {
 
         buttonTable.add(choose);
         buttonTable.add(cancel);
-        add(buttonTable).grow();
+        add(buttonTable).growX();
 
         setSize(500, 400);
     }
@@ -84,19 +86,19 @@ public class AnimationFramePicker extends VisWindow {
     }
 
     // Adapter for Frame array
-    private class FramesAdapter extends ArrayAdapter<Frame, VisTable> {
+    private class AnimationsDefAdapter extends ArrayAdapter<AnimationDef, VisTable> {
         private final Drawable bg = VisUI.getSkin().getDrawable("window-bg");
         private final Drawable selection = VisUI.getSkin().getDrawable("list-selection");
 
         // Create adapter
-        public FramesAdapter(Array<Frame> frames) {
+        public AnimationsDefAdapter(Array<AnimationDef> frames) {
             super(frames);
             setSelectionMode(SelectionMode.SINGLE);
         }
 
         @Override
-        protected VisTable createView(Frame item) {
-            VisLabel label = new VisLabel(item.region.name);
+        protected VisTable createView(AnimationDef item) {
+            VisLabel label = new VisLabel(item.getName());
 
             VisTable table = new VisTable();
             table.left();
@@ -121,8 +123,7 @@ public class AnimationFramePicker extends VisWindow {
 
     // Pick listener interface
     public interface PickListener {
-
-        void onFramePicked(Frame frame);
+        void onFramePicked(AnimationDef frame);
         void onCancel();
     }
 }
