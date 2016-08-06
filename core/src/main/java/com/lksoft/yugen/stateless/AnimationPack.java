@@ -3,8 +3,6 @@ package com.lksoft.yugen.stateless;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
-import java.util.Comparator;
-
 /**
  * Created by Lake on 08/06/2016.
  */
@@ -12,15 +10,15 @@ public class AnimationPack {
     // AnimationPack
     private ObjectMap<String, AnimationDef> animations = new ObjectMap<>();
 
-    // Frames
-    private Frames frames;
+    // FramePack
+    private FramePack framePack;
 
     /**
      * Create an empty animation pack from sprites factory
-     * @param frames The frames factory
+     * @param framePack The framePack factory
      */
-    public AnimationPack(Frames frames){
-        this.frames = frames;
+    public AnimationPack(FramePack framePack){
+        this.framePack = framePack;
     }
 
     /**
@@ -49,7 +47,7 @@ public class AnimationPack {
         if( sequence != null ) return sequence;
 
         // Try single frame
-        Frame frame = frames.getFrame(name);
+        Frame frame = framePack.getFrame(name);
         if( frame != null ){
             sequence = new AnimationDef(name);
             sequence.addFrame(new AnimationFrame(frame, -1));
@@ -69,16 +67,16 @@ public class AnimationPack {
     }
 
     /**
-     * @return Frames
+     * @return FramePack
      */
-    public Frames getFrames() {
-        return frames;
+    public FramePack getFramePack() {
+        return framePack;
     }
 
     /**
      * Dispose associated resources
      */
     public void dispose() {
-        frames.dispose();
+        framePack.dispose();
     }
 }

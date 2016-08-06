@@ -22,8 +22,8 @@ public class AnimationPackReader {
      * Read the animation pack
      * @return An animation pack
      */
-    public AnimationPack read(Frames frames){
-        AnimationPack result = new AnimationPack(frames);
+    public AnimationPack read(FramePack framePack){
+        AnimationPack result = new AnimationPack(framePack);
 
         // Parse animations
         String text = anmFile.readString();
@@ -54,7 +54,7 @@ public class AnimationPackReader {
             else if( !line.isEmpty() ){
                 String[] data = line.split("\\s+");
                 if( current != null ){
-                    Frame frame = frames.getFrame(data[0]);
+                    Frame frame = framePack.getFrame(data[0]);
                     if( frame != null ) {
                         current.addFrame(new AnimationFrame(frame, Integer.parseInt(data[1])));
                     }

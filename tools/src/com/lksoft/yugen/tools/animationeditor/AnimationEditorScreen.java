@@ -1,10 +1,10 @@
 package com.lksoft.yugen.tools.animationeditor;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.util.dialog.Dialogs;
@@ -20,7 +20,7 @@ import java.io.IOException;
 /**
  * Created by Lake on 07/06/2016.
  */
-public class AnimationEditorScreen implements Screen, InputProcessor {
+public class AnimationEditorScreen implements Screen {
 
     // Chooser Path
     private File path;
@@ -42,9 +42,6 @@ public class AnimationEditorScreen implements Screen, InputProcessor {
     // Screen size info
     private int lastW, lastH;
 
-    // Dragging
-    private Vector2 clickOffset;
-
     // Playback
     boolean playing = false;
     int ticks = 0;
@@ -60,7 +57,7 @@ public class AnimationEditorScreen implements Screen, InputProcessor {
     @Override
     public void show() {
         stage = new Stage();
-        Gdx.input.setInputProcessor(new InputMultiplexer(stage, this));
+        Gdx.input.setInputProcessor(stage);
 
         // -- Create GUI components
         float w = stage.getViewport().getWorldWidth();
@@ -159,55 +156,6 @@ public class AnimationEditorScreen implements Screen, InputProcessor {
         stage.dispose();
     }
 
-    @Override
-    public boolean keyDown(int keycode) {
-        switch (keycode){
-            case Input.Keys.DEL:
-                break;
-        }
-        return true;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        // Selection
-        //if( getCurrentAnimationPack() != null ){
-            //Vector2 touch = animationFrameRenderer.getTouch(screenX, screenY);
-        //}
-        return true;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-
-        return true;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
-        return false;
-    }
-
     // Set the current animdef
     private void setAnimationPack(AnimationPack animationPack, FileHandle anmFile) {
         this.anmFile = anmFile;
@@ -278,8 +226,8 @@ public class AnimationEditorScreen implements Screen, InputProcessor {
     public void addFrame() {
         if( animationPackWindow.getAnimationPack() == null ) return;
 
-        AnimationFramePicker picker = new AnimationFramePicker(animationPackWindow.getAnimationPack().getFrames(),
-                new AnimationFramePicker.PickListener() {
+        FramePicker picker = new FramePicker(animationPackWindow.getAnimationPack().getFramePack(),
+                new FramePicker.PickListener() {
                     @Override
                     public void onFramePicked(Frame frame) {
                         AnimationFrame newFrame = new AnimationFrame(frame, 3);
@@ -301,7 +249,7 @@ public class AnimationEditorScreen implements Screen, InputProcessor {
         chooser.setMultiSelectionEnabled(false);
         chooser.setDirectory(path);
         FileTypeFilter filter = new FileTypeFilter(false);
-        filter.addRule("Frames file", "frm");
+        filter.addRule("FramePack file", "frm");
         chooser.setFileTypeFilter(filter);
         chooser.setListener(new FileChooserListener() {
             @Override
@@ -313,10 +261,10 @@ public class AnimationEditorScreen implements Screen, InputProcessor {
 
                 // Load stuff
                 TextureAtlas tAtlas = new TextureAtlas(atlas);
-                Frames frames = new Frames(tAtlas, frm);
+                FramePack framePack = new FramePackReader(frm).read(tAtlas);
 
                 // Create new stage
-                setAnimationPack(new AnimationPack(frames), anm);
+                setAnimationPack(new AnimationPack(framePack), anm);
             }
 
             @Override
@@ -344,10 +292,10 @@ public class AnimationEditorScreen implements Screen, InputProcessor {
                 FileHandle frm = new FileHandle(files.first().pathWithoutExtension() + ".frm");
                 FileHandle atlasHandle = new FileHandle(files.first().pathWithoutExtension() + ".atlas");
                 TextureAtlas atlas = new TextureAtlas(atlasHandle);
-                Frames frames = new Frames(atlas, frm);
+                FramePack framePack = new FramePackReader(frm).read(atlas);
 
                 AnimationPackReader reader = new AnimationPackReader(files.first());
-                setAnimationPack(reader.read(frames), files.first());
+                setAnimationPack(reader.read(framePack), files.first());
             }
 
             @Override

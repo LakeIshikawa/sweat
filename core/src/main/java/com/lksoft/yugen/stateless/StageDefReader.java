@@ -1,6 +1,5 @@
 package com.lksoft.yugen.stateless;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
@@ -74,8 +73,8 @@ public class StageDefReader {
 
         // Load animationPack
         TextureAtlas atlas = new TextureAtlas(stageDef.getAtlasFile());
-        Frames frames = new Frames(atlas, stageDef.getFrmFile());
-        AnimationPack animationPack = new AnimationPackReader(stageDef.getAnmFile()).read(frames);
+        FramePack framePack =new FramePackReader(stageDef.getFrmFile()).read(atlas);
+        AnimationPack animationPack = new AnimationPackReader(stageDef.getAnmFile()).read(framePack);
         stageDef.setAnimationPack(animationPack);
 
         // Sprites

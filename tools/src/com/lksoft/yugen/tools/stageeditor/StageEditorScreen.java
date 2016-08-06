@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.util.dialog.Dialogs;
-import com.kotcrab.vis.ui.util.dialog.InputDialogAdapter;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.file.FileChooser;
 import com.kotcrab.vis.ui.widget.file.FileChooserListener;
@@ -271,12 +270,12 @@ public class StageEditorScreen implements Screen, InputProcessor {
                 FileHandle frm = new FileHandle(files.first().pathWithoutExtension() + ".frm");
                 FileHandle atlasHandle = new FileHandle(files.first().pathWithoutExtension() + ".atlas");
                 TextureAtlas atlas = new TextureAtlas(atlasHandle);
-                Frames frames = new Frames(atlas, frm);
+                FramePack framePack = new FramePackReader(frm).read(atlas);
 
                 AnimationPackReader reader = new AnimationPackReader(files.first());
 
                 // Create new stage
-                setLayout(new StageDef(reader.read(frames), files.first(), frm, atlasHandle));
+                setLayout(new StageDef(reader.read(framePack), files.first(), frm, atlasHandle));
             }
 
             @Override

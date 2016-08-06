@@ -4,19 +4,18 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.Selection;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.VisUI;
 import com.kotcrab.vis.ui.util.adapter.ArrayAdapter;
 import com.kotcrab.vis.ui.widget.*;
 import com.lksoft.yugen.stateless.Frame;
-import com.lksoft.yugen.stateless.Frames;
+import com.lksoft.yugen.stateless.FramePack;
 
 /**
  * Created by Lake on 06/08/2016.
  */
-public class AnimationFramePicker extends VisWindow {
+public class FramePicker extends VisWindow {
 
     // GUI components
     private VisImage icon;
@@ -24,13 +23,13 @@ public class AnimationFramePicker extends VisWindow {
     /**
      * Creates an animation picker
      */
-    public AnimationFramePicker(Frames frames, final PickListener listener) {
+    public FramePicker(FramePack framePack, final PickListener listener) {
         super("Pick frame");
         setModal(true);
 
         icon = new VisImage();
 
-        final ListView<Frame> frameList = new ListView<>(new FramesAdapter(frames.getFrames()));
+        final ListView<Frame> frameList = new ListView<>(new FramesAdapter(framePack.getFrames()));
         frameList.setItemClickListener(new ListView.ItemClickListener<Frame>() {
             @Override
             public void clicked(Frame item) {

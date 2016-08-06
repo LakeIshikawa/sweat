@@ -30,7 +30,7 @@ public class AnimationFrameWindow extends VisWindow {
      * @param animationEditorScreen
      */
     public AnimationFrameWindow(AnimationEditorScreen animationEditorScreen) {
-        super("Frames");
+        super("FramePack");
         this.editorScreen = animationEditorScreen;
         TableUtils.setSpacingDefaults(this);
 

@@ -1,6 +1,5 @@
 package com.lksoft.yugen.stateless;
 
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -10,37 +9,18 @@ import java.util.Comparator;
 /**
  * Created by Lake on 08/06/2016.
  */
-public class Frames {
+public class FramePack {
     // Atlas
     private TextureAtlas atlas;
     // Frame definitions
     private ObjectMap<String, Frame> frameDefs = new ObjectMap<>();
 
     /**
-     * Create b1 frame factory from an atlas and b1 .frm file
-     * @param atlas The texture atlas
-     * @param frmFile The .frm file
+     * Create an empty frame pack
+     * @param atlas
      */
-    public Frames(TextureAtlas atlas, FileHandle frmFile) {
+    public FramePack(TextureAtlas atlas){
         this.atlas = atlas;
-
-        // Parse the spr file and create sprite definitions
-        String text = frmFile.readString();
-
-        String[] lines = text.split("\\n");
-        for( String line : lines ){
-            line = line.trim();
-            if( line.isEmpty() ) continue;
-
-            String[] split = line.split("\\s+");
-
-            // Find region
-            TextureAtlas.AtlasRegion region = atlas.findRegion(split[0]);
-            if( region != null ){
-                frameDefs.put(split[0],
-                        new Frame(region, Integer.parseInt(split[1]), Integer.parseInt(split[2])));
-            }
-        }
     }
 
     /**
@@ -48,6 +28,13 @@ public class Frames {
      */
     public void dispose() {
         atlas.dispose();
+    }
+
+    /**
+     * @return The Atlas
+     */
+    public TextureAtlas getAtlas(){
+        return atlas;
     }
 
     /**
@@ -71,5 +58,24 @@ public class Frames {
             }
         });
         return res;
+    }
+
+    /**
+     * Adds a frame
+     * @param frame
+     */
+    public void addFrame(Frame frame){
+        // No overwriting
+        if( !frameDefs.containsKey(frame.region.name) ) {
+            frameDefs.put(frame.region.name, frame);
+        }
+    }
+
+    /**
+     * Removes a frame
+     * @param name
+     */
+    public void removeFrame(String name) {
+        frameDefs.remove(name);
     }
 }

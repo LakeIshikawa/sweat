@@ -188,7 +188,11 @@ public class AnimationPackWindow extends VisWindow {
 
         @Override
         public void add(AnimationDef item) {
-            if( pack == null ) return;
+            // No overwriting
+            if( pack == null || pack.getAnimationDef(item.getName()) != null ) {
+                setSelected(pack.getAnimationDef(item.getName()));
+                return;
+            }
             pack.addAnimationDef(item);
             sorted.add(item);
             itemsChanged();
