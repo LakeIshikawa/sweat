@@ -55,6 +55,10 @@ public class FrameEditorScreen implements Screen, InputProcessor {
     private boolean hoveringCorner = false;
     private Vector2 touchOffset;
 
+    // Palette
+    private Array<Rectangle> paletteDamage;
+    private Array<Rectangle> paletteHit;
+
     /**
      * Create frame editor
      * @param path
@@ -80,6 +84,11 @@ public class FrameEditorScreen implements Screen, InputProcessor {
         framePackWindow.setSize(300, h - 30);
         framePackWindow.setPosition((w-5)- framePackWindow.getWidth(), 5);
 
+        // Tool window
+        ToolsWindow toolsWindow = new ToolsWindow(this);
+        toolsWindow.pack();
+        toolsWindow.setPosition( w/2 - toolsWindow.getWidth()/2, 5);
+
         // Root with menu bar
         VisTable root = new VisTable(true);
         root.add(menuBar.getTable()).fillX().expandX().row();
@@ -88,6 +97,7 @@ public class FrameEditorScreen implements Screen, InputProcessor {
 
         stage.addActor(root);
         stage.addActor(framePackWindow);
+        stage.addActor(toolsWindow);
 
         // Autoshape
         shapeRenderer.setAutoShapeType(true);
@@ -347,6 +357,29 @@ public class FrameEditorScreen implements Screen, InputProcessor {
     private void removeCollision(Rectangle rectangle) {
         framePackWindow.getSelected().damageCollisions.removeValue(rectangle, true);
         framePackWindow.getSelected().hitCollisions.removeValue(rectangle, true);
+    }
+
+    // Copy rectangles
+    public void copy() {
+        paletteDamage = new Array<>();
+        paletteHit = new Array<>();
+
+        for( Rectangle r : framePackWindow.getSelected().damageCollisions ){
+            paletteDamage.add(new Rectangle(r));
+        }
+        for( Rectangle r : framePackWindow.getSelected().hitCollisions ){
+            paletteHit.add(new Rectangle(r));
+        }
+    }
+
+    // PAste rectangles
+    public void paste() {
+        for( Rectangle r : paletteDamage ){
+            framePackWindow.getSelected().damageCollisions.add(new Rectangle(r));
+        }
+        for( Rectangle r : paletteHit ){
+            framePackWindow.getSelected().hitCollisions.add(new Rectangle(r));
+        }
     }
 
     // Create new pack
