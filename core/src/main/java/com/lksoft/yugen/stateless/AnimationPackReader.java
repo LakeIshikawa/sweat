@@ -1,6 +1,8 @@
 package com.lksoft.yugen.stateless;
 
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by Lake on 04/08/2016.
@@ -53,10 +55,27 @@ public class AnimationPackReader {
             // Frame def
             else if( !line.isEmpty() ){
                 String[] data = line.split("\\s+");
+                AnimationFrame animFrame = null;
                 if( current != null ){
                     Frame frame = framePack.getFrame(data[0]);
                     if( frame != null ) {
-                        current.addFrame(new AnimationFrame(frame, Integer.parseInt(data[1])));
+                        current.addFrame(animFrame = new AnimationFrame(frame, Integer.parseInt(data[1])));
+                    }
+                }
+
+                // Parse rectangles
+                if( data.length > 2 && animFrame != null) {
+                    String[] rectsSplit = data[2].split("\\|\\|");
+
+                    // Allow all 3 cases
+                    if( rectsSplit.length == 2){
+                        if( !rectsSplit[0].isEmpty() ) {
+                            addRectangles(animFrame.damageCollisions, rectsSplit[0]);
+                        }
+                        addRectangles(animFrame.hitCollisions, rectsSplit[1]);
+                    }
+                    else {
+                        addRectangles(animFrame.damageCollisions, rectsSplit[0]);
                     }
                 }
             }
@@ -65,5 +84,17 @@ public class AnimationPackReader {
         // Last one
         if( current != null ) result.addAnimationDef(current);
         return result;
+    }
+
+    /**
+     * Parse and add rectangles to specified array
+     * @param array
+     * @param string
+     */
+    private void addRectangles(Array<Rectangle> array, String string) {
+        String[] split = string.split(";");
+        for( String s : split){
+            array.add(new Rectangle().fromString(s));
+        }
     }
 }

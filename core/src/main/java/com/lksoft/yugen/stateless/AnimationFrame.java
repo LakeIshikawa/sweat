@@ -1,6 +1,8 @@
 package com.lksoft.yugen.stateless;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by Lake on 08/06/2016.
@@ -12,6 +14,10 @@ public class AnimationFrame {
 
     // The length in ticks
     public int lengthTicks;
+
+    // Collisions
+    public Array<Rectangle> damageCollisions = new Array<>();
+    public Array<Rectangle> hitCollisions = new Array<>();
 
     /**
      * Create an animation frame

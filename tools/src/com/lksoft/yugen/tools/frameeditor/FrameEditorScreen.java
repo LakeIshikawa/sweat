@@ -33,12 +33,10 @@ public class FrameEditorScreen implements Screen, InputProcessor {
     // UI
     private Stage stage;
 
-    // Shape
-    private ShapeRenderer shapeRenderer = new ShapeRenderer();
-
     // GUI components
     private FrameEditorMenuBar menuBar;
     private FramePackWindow framePackWindow;
+    private InspectorWindow inspectorWindow;
 
     // Current animations
     private FrameRenderer frameRenderer;
@@ -47,17 +45,8 @@ public class FrameEditorScreen implements Screen, InputProcessor {
     // Screen size info
     private int lastW, lastH;
 
-    // Dragging
-    private Vector2 touchPoint;
-    private Rectangle draggingRect;
-    private Rectangle hoveringRect;
-    private Rectangle hoveringCornerRect = new Rectangle();
-    private boolean hoveringCorner = false;
-    private Vector2 touchOffset;
-
     // Palette
-    private Array<Rectangle> paletteDamage;
-    private Array<Rectangle> paletteHit;
+    private Vector2 palette;
 
     /**
      * Create frame editor
@@ -84,6 +73,11 @@ public class FrameEditorScreen implements Screen, InputProcessor {
         framePackWindow.setSize(300, h - 30);
         framePackWindow.setPosition((w-5)- framePackWindow.getWidth(), 5);
 
+        // Inspector window
+        inspectorWindow = new InspectorWindow(this);
+        inspectorWindow.setSize(150, 60);
+        inspectorWindow.setPosition(5, 5);
+
         // Tool window
         ToolsWindow toolsWindow = new ToolsWindow(this);
         toolsWindow.pack();
@@ -97,10 +91,8 @@ public class FrameEditorScreen implements Screen, InputProcessor {
 
         stage.addActor(root);
         stage.addActor(framePackWindow);
+        stage.addActor(inspectorWindow);
         stage.addActor(toolsWindow);
-
-        // Autoshape
-        shapeRenderer.setAutoShapeType(true);
     }
 
     @Override
@@ -119,27 +111,6 @@ public class FrameEditorScreen implements Screen, InputProcessor {
         // Render stage layout
         if( frameRenderer != null ) {
             frameRenderer.render();
-
-            // Current rectangle
-            shapeRenderer.setProjectionMatrix(frameRenderer.getViewport().getCamera().combined);
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            if( draggingRect != null ) {
-                shapeRenderer.setColor(Color.YELLOW);
-                shapeRenderer.rect(draggingRect.x, draggingRect.y, draggingRect.width, draggingRect.height);
-            }
-
-            // Hovering
-            if( hoveringRect != null ){
-                shapeRenderer.setColor(hoveringCorner ? Color.PURPLE : Color.CYAN);
-                shapeRenderer.rect(hoveringRect.x, hoveringRect.y, hoveringRect.width, hoveringRect.height);
-
-                // Resize corner
-                shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
-                shapeRenderer.setColor(Color.PURPLE);
-                shapeRenderer.rect(hoveringCornerRect.x, hoveringCornerRect.y, hoveringCornerRect.width, hoveringCornerRect.height);
-
-            }
-            shapeRenderer.end();
         }
 
         // Render ui
@@ -167,138 +138,6 @@ public class FrameEditorScreen implements Screen, InputProcessor {
         stage.dispose();
     }
 
-    @Override
-    public boolean keyDown(int keycode) {
-        switch (keycode){
-            case Input.Keys.FORWARD_DEL:
-                if( hoveringRect != null ){
-                    removeCollision(hoveringRect);
-                    hoveringRect = null;
-                }
-                break;
-        }
-        return true;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if( frameRenderer == null ) return false;
-
-        touchPoint = new Vector2(frameRenderer.getTouch(screenX, screenY));
-
-        // Start new rectangle
-        if( hoveringRect == null ) {
-            draggingRect = new Rectangle();
-        }
-        // Move or resize selected!
-        else {
-            touchOffset = new Vector2(touchPoint).sub(hoveringRect.x, hoveringRect.y);
-        }
-        return true;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        if( frameRenderer == null ) return false;
-
-        // Add rectangle
-        if( touchPoint != null && hoveringRect == null ){
-            Vector2 touch = frameRenderer.getTouch(screenX, screenY);
-
-            float x = Math.min(touchPoint.x, touch.x);
-            float y = Math.min(touchPoint.y, touch.y);
-            float w = Math.abs(touchPoint.x - touch.x);
-            float h = Math.abs(touchPoint.y - touch.y);
-            addCollision(new Rectangle(x, y, w, h), button == Input.Buttons.LEFT);
-        }
-
-        touchPoint = null;
-        draggingRect = null;
-        return true;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        if( frameRenderer == null ) return false;
-
-        if( touchPoint != null ) {
-            Vector2 touch = frameRenderer.getTouch(screenX, screenY);
-
-            // New rectangle
-            if( draggingRect != null ) {
-                float x = Math.min(touchPoint.x, touch.x);
-                float y = Math.min(touchPoint.y, touch.y);
-                float w = Math.abs(touchPoint.x - touch.x);
-                float h = Math.abs(touchPoint.y - touch.y);
-                draggingRect.set(x, y, w, h);
-            }
-
-            // Dragging selection
-            else if( hoveringRect != null ){
-                // Resize
-                if( hoveringCorner ){
-                    hoveringRect.setSize(touch.x - hoveringRect.x, touch.y - hoveringRect.y);
-                }
-                // Move
-                else {
-                    hoveringRect.setPosition(touch.x - touchOffset.x, touch.y - touchOffset.y);
-                }
-
-                // Update corner
-                hoveringCornerRect.set(
-                        hoveringRect.x + hoveringRect.width - 20,
-                        hoveringRect.y + hoveringRect.height - 20,
-                        20, 20);
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        if( frameRenderer == null ) return false;
-
-        // Check hovering
-        hoveringRect = null;
-        Vector2 touch = frameRenderer.getTouch(screenX, screenY);
-        Frame frame = framePackWindow.getSelected();
-        for( Rectangle r : frame.damageCollisions ){
-            if( r.contains(touch) ){
-                hoveringRect = r;
-            }
-        }
-        for( Rectangle r : frame.hitCollisions ){
-            if( r.contains(touch) ){
-                hoveringRect = r;
-            }
-        }
-
-        if( hoveringRect != null ){
-            hoveringCornerRect.set(
-                    hoveringRect.x + hoveringRect.width - 20,
-                    hoveringRect.y + hoveringRect.height - 20,
-                    20, 20);
-        }
-
-        hoveringCorner = hoveringCornerRect.contains(touch);
-        return true;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
-        return false;
-    }
-
     // Set the current frame pack
     private void setFramePack(FramePack pack, FileHandle frmFile) {
         this.frmFile = frmFile;
@@ -319,7 +158,9 @@ public class FrameEditorScreen implements Screen, InputProcessor {
         // Set window selection
         framePackWindow.setSelected(frame);
         // Renderer
-        frameRenderer.setFrame(frame == null ? null : frame);
+        frameRenderer.setFrame(frame);
+        // Inspector
+        inspectorWindow.setFrame(frame);
     }
 
     // Remove frame
@@ -347,39 +188,35 @@ public class FrameEditorScreen implements Screen, InputProcessor {
         picker.show(stage);
     }
 
-    // Add collision rectangle to current frame
-    private void addCollision(Rectangle rectangle, boolean damage) {
-        if( damage ) framePackWindow.getSelected().damageCollisions.add(rectangle);
-        else framePackWindow.getSelected().hitCollisions.add(rectangle);
+    // Set origin
+    private void setOrigin(int x, int y) {
+        framePackWindow.getSelected().originX = x;
+        framePackWindow.getSelected().originY = y;
+        inspectorWindow.setFrame(framePackWindow.getSelected());
     }
 
-    // Remove collision rectangle from current frame
-    private void removeCollision(Rectangle rectangle) {
-        framePackWindow.getSelected().damageCollisions.removeValue(rectangle, true);
-        framePackWindow.getSelected().hitCollisions.removeValue(rectangle, true);
-    }
-
-    // Copy rectangles
+    // Copy
     public void copy() {
-        paletteDamage = new Array<>();
-        paletteHit = new Array<>();
-
-        for( Rectangle r : framePackWindow.getSelected().damageCollisions ){
-            paletteDamage.add(new Rectangle(r));
-        }
-        for( Rectangle r : framePackWindow.getSelected().hitCollisions ){
-            paletteHit.add(new Rectangle(r));
-        }
+        if( framePackWindow.getFramePack() == null ) return;
+        palette= new Vector2(framePackWindow.getSelected().originX, framePackWindow.getSelected().originY);
     }
 
-    // PAste rectangles
+    // Paste to cur frame
     public void paste() {
-        for( Rectangle r : paletteDamage ){
-            framePackWindow.getSelected().damageCollisions.add(new Rectangle(r));
+        if( framePackWindow.getFramePack() == null || palette == null ) return;
+        framePackWindow.getSelected().originX = (int) palette.x;
+        framePackWindow.getSelected().originY = (int) palette.y;
+        inspectorWindow.setFrame(framePackWindow.getSelected());
+    }
+
+    // Paste to all frames
+    public void pasteToAll() {
+        if( framePackWindow.getFramePack() == null || palette == null ) return;
+        for( Frame f : framePackWindow.getFramePack().getFrames() ){
+            f.originX = (int) palette.x;
+            f.originY = (int) palette.y;
         }
-        for( Rectangle r : paletteHit ){
-            framePackWindow.getSelected().hitCollisions.add(new Rectangle(r));
-        }
+        inspectorWindow.setFrame(framePackWindow.getSelected());
     }
 
     // Create new pack
@@ -455,5 +292,49 @@ public class FrameEditorScreen implements Screen, InputProcessor {
             e.printStackTrace();
             Dialogs.showErrorDialog(stage, "Could not write file.  Check permissions?");
         }
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        Vector2 touch = frameRenderer.getTouch(screenX, screenY);
+        setOrigin((int)-touch.x, (int)-touch.y);
+        return true;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        Vector2 touch = frameRenderer.getTouch(screenX, screenY);
+        setOrigin((int)-touch.x, (int)-touch.y);
+        return true;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
     }
 }

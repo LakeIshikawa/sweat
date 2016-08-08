@@ -1,6 +1,9 @@
 package com.lksoft.yugen.tools.animationeditor;
 
-import com.lksoft.yugen.stateless.*;
+import com.badlogic.gdx.math.Rectangle;
+import com.lksoft.yugen.stateless.AnimationDef;
+import com.lksoft.yugen.stateless.AnimationFrame;
+import com.lksoft.yugen.stateless.AnimationPack;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -41,6 +44,17 @@ public class AnimationPackWriter {
                 bw.write(frame.frame.region.name);
                 bw.write(" ");
                 bw.write(""+frame.lengthTicks);
+                bw.write(" ");
+
+                if( !(frame.damageCollisions.size == 0 && frame.hitCollisions.size == 0)) {
+                    for (Rectangle r : frame.damageCollisions) {
+                        bw.write(r + ";");
+                    }
+                    bw.write("||");
+                    for (Rectangle r : frame.hitCollisions) {
+                        bw.write(r + ";");
+                    }
+                }
                 bw.write("\n");
             }
             bw.write("\n");

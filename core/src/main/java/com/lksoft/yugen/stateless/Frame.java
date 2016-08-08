@@ -12,8 +12,6 @@ public class Frame {
     public TextureAtlas.AtlasRegion region;
     public int originX;
     public int originY;
-    public Array<Rectangle> damageCollisions = new Array<>();
-    public Array<Rectangle> hitCollisions = new Array<>();
 
     /**
      * Create a frame from a region with an origin

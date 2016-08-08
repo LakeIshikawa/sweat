@@ -1,6 +1,5 @@
 package com.lksoft.yugen.tools.frameeditor;
 
-import com.badlogic.gdx.math.Rectangle;
 import com.lksoft.yugen.stateless.Frame;
 import com.lksoft.yugen.stateless.FramePack;
 
@@ -37,17 +36,6 @@ public class FramePackWriter {
             bw.write(def.region.name);
             bw.write(" ");
             bw.write("" + def.originX + " " + (def.region.originalHeight - def.originY));
-            bw.write(" ");
-
-            if( !(def.damageCollisions.size == 0 && def.hitCollisions.size == 0)) {
-                for (Rectangle r : def.damageCollisions) {
-                    bw.write(r + ";");
-                }
-                bw.write("||");
-                for (Rectangle r : def.hitCollisions) {
-                    bw.write(r + ";");
-                }
-            }
             bw.write("\n");
         }
 

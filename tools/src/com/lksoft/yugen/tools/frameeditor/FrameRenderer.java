@@ -59,16 +59,6 @@ public class FrameRenderer {
         shapeRenderer.line(-10, 0, 10, 0);
         shapeRenderer.line(0, -10, 0, 10);
 
-        // Collision
-        for(Rectangle r : frame.damageCollisions){
-            shapeRenderer.setColor(Color.WHITE);
-            shapeRenderer.rect(r.x, r.y, r.width, r.height);
-        }
-        for(Rectangle r : frame.hitCollisions){
-            shapeRenderer.setColor(Color.RED);
-            shapeRenderer.rect(r.x, r.y, r.width, r.height);
-        }
-
         shapeRenderer.end();
     }
 
