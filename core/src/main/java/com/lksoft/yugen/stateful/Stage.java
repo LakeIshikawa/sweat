@@ -13,7 +13,7 @@ import java.util.List;
 public class Stage {
 
     // Sprites
-    private List<Sprite> layers[] = new ArrayList[2];
+    private List<Sprite> layers[] = new ArrayList[10];
 
     // Stage stageDef
     private StageDef stageDef;

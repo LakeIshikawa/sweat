@@ -1,16 +1,16 @@
 package com.lksoft.yugen.stateful;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.lksoft.yugen.FsmParser;
 import com.lksoft.yugen.Yugen;
-import com.lksoft.yugen.fsm.visitor.FighterExecuteVisitor;
-import com.lksoft.yugen.fsm.visitor.FighterExpVisitor;
 import com.lksoft.yugen.fsm.Type;
 import com.lksoft.yugen.fsm.Value;
+import com.lksoft.yugen.fsm.visitor.FighterExecuteVisitor;
+import com.lksoft.yugen.fsm.visitor.FighterExpVisitor;
 import com.lksoft.yugen.stateless.*;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -24,7 +24,7 @@ public class Fighter extends Sprite {
     private Stage stage;
 
     // Fighter layer
-    private int layer = 1;
+    private int layer = 5;
     // Current state
     private FighterState currentState;
 
@@ -32,7 +32,7 @@ public class Fighter extends Sprite {
     private PhysicsDef currentPhysics;
 
     // The memory
-    private HashMap<String, Value> memory = new HashMap<>();
+    private ObjectMap<String, Value> memory = new ObjectMap<>();
 
     // Combo detector
     private CommandDetector commandDetector = new CommandDetector(this);
@@ -60,6 +60,7 @@ public class Fighter extends Sprite {
         setVar("time", Type.INT, 0);
         setVelX(0);
         setVelY(0);
+        setLayer(layer);
 
         // Params
         for(Map.Entry<String, Float> e : fighterDef.getParams().entrySet()){
@@ -178,6 +179,7 @@ public class Fighter extends Sprite {
         setVar("animTime", Type.INT, animation.getTicks());
         setVar("animCycles", Type.INT, animation.getCycles());
         setVar("time", Type.INT, getVar("time").getIntValue()+1);
+        setVar("layer", Type.INT, layer);
     }
 
     /**
@@ -313,6 +315,7 @@ public class Fighter extends Sprite {
     }
     public void setLayer(int layer) {
         this.layer = layer;
+        setVar("layer", Type.INT, layer);
     }
     public FighterDef getFighterDef() {
         return fighterDef;

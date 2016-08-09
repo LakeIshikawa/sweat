@@ -39,7 +39,7 @@ public class StageDef {
     private int p2StartX = 70;
 
     // Sprite definitions
-    private Array<SpriteDef> layers[] = new Array[2];
+    private Array<SpriteDef> layers[] = new Array[10];
 
     /**
      * Create b1 new stage

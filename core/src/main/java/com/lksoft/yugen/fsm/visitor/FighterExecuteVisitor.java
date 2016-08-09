@@ -46,6 +46,7 @@ public class FighterExecuteVisitor extends FsmBaseVisitor<Void> {
             case "pos.x": if( !checkError(lhs, Type.FLOAT, evaluator) ) fighter.setPosX(evaluator.getResult().getFloatValue()); break;
             case "pos.y": if( !checkError(lhs, Type.FLOAT, evaluator) ) fighter.setPosY(evaluator.getResult().getFloatValue()); break;
             case "facing": if( !checkError(lhs, Type.BOOL, evaluator) ) fighter.setFacing(evaluator.getResult().getBoolValue()); break;
+            case "layer": if( !checkError(lhs, Type.INT, evaluator) ) fighter.setLayer(evaluator.getResult().getIntValue()); break;
 
             // Set a variable if not a system assignment
             default:

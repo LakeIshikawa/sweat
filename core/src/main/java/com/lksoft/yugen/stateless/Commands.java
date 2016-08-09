@@ -1,6 +1,7 @@
 package com.lksoft.yugen.stateless;
 
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.lksoft.yugen.FsmLexer;
 import com.lksoft.yugen.FsmParser;
 import com.lksoft.yugen.fsm.visitor.CommandsSetupVisitor;
@@ -8,7 +9,6 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 /**
  * Created by Lake on 18/06/2016.
@@ -16,7 +16,7 @@ import java.util.HashMap;
 public class Commands {
 
     // Commands table
-    private HashMap<String, CommandDef> commands = new HashMap<>();
+    private ObjectMap<String, CommandDef> commands = new ObjectMap<>();
 
     /**
      * Create commands resources from cmd file

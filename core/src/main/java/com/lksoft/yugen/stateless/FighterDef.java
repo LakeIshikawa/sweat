@@ -3,6 +3,7 @@ package com.lksoft.yugen.stateless;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.lksoft.yugen.FsmLexer;
 import com.lksoft.yugen.FsmParser;
 import com.lksoft.yugen.fsm.visitor.FighterSetupVisitor;
@@ -10,7 +11,6 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 /**
  * Created by Lake on 11/06/2016.
@@ -38,9 +38,9 @@ public class FighterDef {
     private Commands commands;
 
     // Params
-    private HashMap<String, Float> params = new HashMap<>();
+    private ObjectMap<String, Float> params = new ObjectMap<>();
     // States
-    private HashMap<String, FighterState> states = new HashMap<>();
+    private ObjectMap<String, FighterState> states = new ObjectMap<>();
     // Stateless triggers
     private Array<FighterState.FighterTrigger> triggers = new Array<>();
 
@@ -164,13 +164,13 @@ public class FighterDef {
         this.commands = commands;
     }
 
-    public HashMap<String, FighterState> getStates() {
+    public ObjectMap<String, FighterState> getStates() {
         return states;
     }
     public Array<FighterState.FighterTrigger> getTriggers() {
         return triggers;
     }
-    public HashMap<String, Float> getParams() {
+    public ObjectMap<String, Float> getParams() {
         return params;
     }
 }

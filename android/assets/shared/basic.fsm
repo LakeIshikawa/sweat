@@ -18,6 +18,7 @@ State idle (S)
 	priority = 0
 	anim = A:idle
 	ctrl = true
+	layer = 5
 
 	// Face
 	[Trigger !facingP2()]
@@ -172,6 +173,15 @@ State backhopland (S)
 
 	[Trigger animCycles == 1]
 	-> idle
+	
+State midpunch (S)
+	[Enter]
+	layer = 6
+	anim = A:midpunch
+	// hit = H:midpunch
+	
+	[Trigger animCycles == 1]
+	-> idle
 
 // --
 // -- Controls definition from any state that allows control
@@ -183,3 +193,9 @@ Stateless
 	// Back-hop	
 	[Trigger ctrl && has(A:backhop) && C:backhop]
 		-> backhop
+		
+	// Middle-punch
+	[Trigger ctrl && has(A:midpunch) && keypress("B1")]
+		-> midpunch
+		
+	// Damage

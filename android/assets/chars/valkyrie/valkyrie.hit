@@ -1,0 +1,8 @@
+[Hit midpunch]
+damage = 20
+guardflag = "SC"
+pausetime = 12
+damageanim.type = "M"
+damageanim.height = "H"
+ground.velocity.x = -8
+air.velocity.x = -5
