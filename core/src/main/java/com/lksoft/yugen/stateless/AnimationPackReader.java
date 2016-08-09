@@ -94,7 +94,15 @@ public class AnimationPackReader {
     private void addRectangles(Array<Rectangle> array, String string) {
         String[] split = string.split(";");
         for( String s : split){
-            array.add(new Rectangle().fromString(s));
+            Rectangle r = new Rectangle().fromString(s);
+
+            // Intify
+            r.x = Math.round(r.x);
+            r.y = Math.round(r.y);
+            r.width = Math.round(r.width);
+            r.height = Math.round(r.height);
+
+            array.add(r);
         }
     }
 }

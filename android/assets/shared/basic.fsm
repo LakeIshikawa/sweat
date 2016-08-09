@@ -177,8 +177,9 @@ State backhopland (S)
 // -- Controls definition from any state that allows control
 // --
 Stateless
+	// Run
 	[Trigger ctrl && has(A:running) && C:run]
 		-> running
-	
+	// Back-hop	
 	[Trigger ctrl && has(A:backhop) && C:backhop]
 		-> backhop
