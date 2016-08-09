@@ -310,6 +310,8 @@ public class AnimationEditorScreen implements Screen, InputProcessor {
         hoveringRect = null;
         Vector2 touch = animationFrameRenderer.getTouch(screenX, screenY);
         AnimationFrame frame = animationFrameWindow.getSelectedFrame();
+        if( frame == null ) return false;
+
         for( Rectangle r : frame.damageCollisions ){
             if( r.contains(touch) ){
                 hoveringRect = r;

@@ -40,13 +40,13 @@ public class AnimationFrameRenderer {
      * Render the animation def
      */
     public void render() {
+        if( frame == null ) return;
+
         // Draw sprites
         batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
 
-        if( frame != null ) {
-            frame.draw(batch, 0, 0, 1, false);
-        }
+        frame.draw(batch, 0, 0, 1, false);
 
         batch.end();
 
