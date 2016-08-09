@@ -81,7 +81,6 @@ State jumpstart (S)
 	[Enter]
 	priority = 1
 	anim = A:jumpstart
-	ctrl = false
 
 	// Jump up
 	[Trigger animCycles == 1 && !(keyhold("F") || keyhold("B"))]
@@ -178,6 +177,8 @@ State midpunch (S)
 	[Enter]
 	layer = 6
 	anim = A:midpunch
+	vel.x = 0.0
+	ctrl = false
 	// hit = H:midpunch
 	
 	[Trigger animCycles == 1]
@@ -188,14 +189,14 @@ State midpunch (S)
 // --
 Stateless
 	// Run
-	[Trigger ctrl && has(A:running) && C:run]
+	[Trigger ctrl && (stype() == "S") && has(A:running) && C:run]
 		-> running
 	// Back-hop	
-	[Trigger ctrl && has(A:backhop) && C:backhop]
+	[Trigger ctrl && (stype() == "S") && has(A:backhop) && C:backhop]
 		-> backhop
 		
 	// Middle-punch
-	[Trigger ctrl && has(A:midpunch) && keypress("B1")]
+	[Trigger ctrl && (stype() == "S") && has(A:midpunch) && keypress("B1")]
 		-> midpunch
 		
 	// Damage

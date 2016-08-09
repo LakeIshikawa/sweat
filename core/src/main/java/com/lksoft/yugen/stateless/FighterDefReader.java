@@ -3,20 +3,36 @@ package com.lksoft.yugen.stateless;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.lksoft.yugen.FsmLexer;
+import com.lksoft.yugen.FsmParser;
+import com.lksoft.yugen.fsm.visitor.FighterSetupVisitor;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 
 import java.io.IOException;
 
 /**
  * Created by Lake on 11/06/2016.
  */
-class FighterDefReader {
+public class FighterDefReader {
+
+    // Def file handle
+    private FileHandle defFile;
+
+    /**
+     * Create new reader for fighterDef
+     * @param defFile
+     */
+    public FighterDefReader(FileHandle defFile){
+        this.defFile = defFile;
+    }
 
     /**
      * Reads fighterdef from .def file
-     * @param defFile
-     * @param fighterDef
      */
-    void read(FileHandle defFile, FighterDef fighterDef) throws IOException {
+    public FighterDef read() throws IOException {
+        FighterDef fighterDef = new FighterDef();
+
         String[] lines = defFile.readString().split("\\n");
         for( String line : lines ){
             line = line.trim();
@@ -50,5 +66,26 @@ class FighterDefReader {
         Commands customCommands = new Commands(fighterDef.getCmd());
         commands.merge(customCommands);
         fighterDef.setCommands(commands);
+
+        // Parse FSM
+        // Parse shared base character
+        parseFsm(Gdx.files.internal("shared/basic.fsm"), fighterDef);
+        // Parse fighter
+        parseFsm(fighterDef.getFsm(), fighterDef);
+
+        return fighterDef;
+    }
+
+
+    // Parse given fsm file and update this fighter definition
+    private void parseFsm(FileHandle fsmFile, FighterDef fighterDef) throws IOException {
+        // Parse script
+        FsmLexer lexer = new FsmLexer(new ANTLRInputStream(fsmFile.read()));
+        FsmParser parser = new FsmParser(new CommonTokenStream(lexer));
+        FsmParser.FsmContext fsm = parser.fsm();
+
+        // Create params and states
+        FighterSetupVisitor visitor = new FighterSetupVisitor(fighterDef);
+        fsm.accept(visitor);
     }
 }

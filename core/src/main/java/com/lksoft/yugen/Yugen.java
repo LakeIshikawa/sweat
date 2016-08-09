@@ -63,8 +63,8 @@ public class Yugen extends Game {
                 // TODO Set title screen!
             } else {
                 StageDef layout = new StageDefReader(Gdx.files.internal(stageFile)).read();
-                Fighter p1 = new Fighter(new FighterDef(Gdx.files.internal(p1File)));
-                Fighter p2 = new Fighter(new FighterDef(Gdx.files.internal(p2File)));
+                Fighter p1 = new Fighter(new FighterDefReader(Gdx.files.internal(p1File)).read());
+                Fighter p2 = new Fighter(new FighterDefReader(Gdx.files.internal(p2File)).read());
                 Stage stage = new Stage(layout, p1, p2, new FightCamera(layout));
 
                 setScreen(new FightScreen(stage));

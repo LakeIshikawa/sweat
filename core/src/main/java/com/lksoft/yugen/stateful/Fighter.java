@@ -11,7 +11,6 @@ import com.lksoft.yugen.fsm.visitor.FighterExpVisitor;
 import com.lksoft.yugen.stateless.*;
 
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * Created by Lake on 11/06/2016.
@@ -63,8 +62,8 @@ public class Fighter extends Sprite {
         setLayer(layer);
 
         // Params
-        for(Map.Entry<String, Float> e : fighterDef.getParams().entrySet()){
-            setVar(e.getKey(), Type.FLOAT, e.getValue());
+        for(ObjectMap.Entry<String, Float> e : fighterDef.getParams().entries()){
+            setVar(e.key, Type.FLOAT, e.value);
         }
 
         // Set idle state
@@ -319,5 +318,8 @@ public class Fighter extends Sprite {
     }
     public FighterDef getFighterDef() {
         return fighterDef;
+    }
+    public FighterState getCurrentState(){
+        return currentState;
     }
 }

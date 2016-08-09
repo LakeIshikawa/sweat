@@ -1,16 +1,8 @@
 package com.lksoft.yugen.stateless;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.lksoft.yugen.FsmLexer;
-import com.lksoft.yugen.FsmParser;
-import com.lksoft.yugen.fsm.visitor.FighterSetupVisitor;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-
-import java.io.IOException;
 
 /**
  * Created by Lake on 11/06/2016.
@@ -34,6 +26,8 @@ public class FighterDef {
 
     // AnimationPack
     private AnimationPack animationPack;
+    // Hit pack
+    private HitPack hitPack;
     // Commands
     private Commands commands;
 
@@ -44,36 +38,14 @@ public class FighterDef {
     // Stateless triggers
     private Array<FighterState.FighterTrigger> triggers = new Array<>();
 
-    /**
-     * Parse fighter def from .def file
-     * @return Parsed Fighter definition
-     */
-    public FighterDef(FileHandle defFile) throws IOException {
-        new FighterDefReader().read(defFile, this);
-
-        // Parse shared base character
-        parseFsm(Gdx.files.internal("shared/basic.fsm"));
-        // Parse fighter
-        parseFsm(getFsm());
-    }
+    // Package only constructor
+    FighterDef(){}
 
     /**
      * Disposes of associated resources.
      */
     public void dispose(){
         animationPack.dispose();
-    }
-
-    // Parse given fsm file and update this fighter definition
-    private void parseFsm(FileHandle fsmFile) throws IOException {
-        // Parse script
-        FsmLexer lexer = new FsmLexer(new ANTLRInputStream(fsmFile.read()));
-        FsmParser parser = new FsmParser(new CommonTokenStream(lexer));
-        FsmParser.FsmContext fsm = parser.fsm();
-
-        // Create params and states
-        FighterSetupVisitor visitor = new FighterSetupVisitor(this);
-        fsm.accept(visitor);
     }
 
     public String getName() {

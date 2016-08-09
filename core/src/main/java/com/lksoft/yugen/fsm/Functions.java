@@ -48,5 +48,6 @@ public class Functions {
         registerFunction(new Abs());
         registerFunction(new FacingP2());
         registerFunction(new Has());
+        registerFunction(new StateType());
     }
 }

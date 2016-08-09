@@ -180,9 +180,26 @@ public enum Bop {
 
         switch (visitor.getResult().getType()){
             case ID:
-            case STRING:
                 visitor.setError("Unexpected " + visitor.getResult().getType() +" type exp: " + left.getText());
                 return;
+
+            case STRING:
+                String leftString = visitor.getResult().getStringValue();
+                right.accept(visitor);
+                if( visitor.getError() != null ) return;
+                if( visitor.getResult().getType() != Type.STRING ){
+                    visitor.setError("Unexpected " + visitor.getResult().getType() +" type exp: " + right.getText());
+                    return;
+                }
+                switch (bop) {
+                    case EQ:
+                        visitor.setBoolResult(leftString.equals(visitor.getResult().getStringValue()));
+                        break;
+                    case NEQ:
+                        visitor.setBoolResult(leftString.equals(visitor.getResult().getStringValue()));
+                        break;
+                }
+                break;
 
             case BOOL:
                 boolean leftBool = visitor.getResult().getBoolValue();
