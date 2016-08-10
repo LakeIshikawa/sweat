@@ -50,10 +50,11 @@ public class Fighter extends Sprite {
     // Execution visitor (shared)
     private FighterExecuteVisitor executor;
 
+    // Pause time
+    private int pauseTime = 0;
 
     // Rectangle for collision rendering
     private Rectangle collRect = new Rectangle();
-
 
     // Flag for noticing statechange
     private boolean stateChanged;
@@ -157,6 +158,12 @@ public class Fighter extends Sprite {
 
     @Override
     public void update(){
+        // Pause!
+        if( pauseTime > 0 ){
+            pauseTime--;
+            return;
+        }
+
         stateChanged = false;
 
         // Update input
@@ -411,10 +418,18 @@ public class Fighter extends Sprite {
      */
     public void getRectWorld(Rectangle r) {
         if( flip ){
-            r.set(pos.x - (r.x + r.width), r.y, r.width, r.height);
+            r.set(pos.x - (r.x + r.width), pos.y + r.y, r.width, r.height);
         } else {
             r.set(pos.x + r.x, pos.y + r.y, r.width, r.height);
         }
+    }
+
+    /**
+     * Pause the FSM for the specified number of ticks
+     * @param ticks
+     */
+    public void setPause(int ticks){
+        pauseTime = ticks;
     }
 
     public FighterDef getFighterDef() {

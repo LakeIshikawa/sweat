@@ -159,7 +159,7 @@ public class FighterExecuteVisitor extends FsmBaseVisitor<Void> {
         if( function != null ){
             function.execute(evaluator, ctx.fcall());
         } else {
-            evaluator.setError("Unkown function: " + function.getSignature());
+            evaluator.setError("Unkown function: " + ctx.fcall().ID().getText());
         }
         return null;
     }

@@ -216,6 +216,10 @@ Stateless
 		
 	// Standing Damage
 	[Trigger ishit() && !(keyhold("B") && strhas(hitget("guardflag"), "S"))]
+		// Set pause
+		pause(hitget("pausetime"))
+		pauseP2(hitget("pausetime"))
+
 		// Air damage
 		if(stype() == "A"){
 			anim = A:damageFall

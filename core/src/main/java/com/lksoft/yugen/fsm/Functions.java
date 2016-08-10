@@ -54,5 +54,7 @@ public class Functions {
         registerFunction(new HitGet());
         registerFunction(new StrHas());
         registerFunction(new ClearHit());
+        registerFunction(new Pause());
+        registerFunction(new PauseP2());
     }
 }
