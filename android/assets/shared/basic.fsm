@@ -185,7 +185,10 @@ State midpunch (S)
 	-> idle
 
 State groundDamage (S)
-	[Trigger animCycles == 1]
+	[Enter]
+	physics = P:none
+
+	[Trigger statetime == slidetime]
 	-> idle
 	
 State airDamage (A)
@@ -233,6 +236,7 @@ Stateless
 		
 		// Set ground vel
 		vel.x = hitget("ground.velocity.x") * (facing ? -1.0 : 1.0)
+		slidetime = hitget("ground.slidetime")
 	
 		// Ground Damages
 		if( stype() == "S" ){

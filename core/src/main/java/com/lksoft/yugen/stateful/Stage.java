@@ -1,6 +1,9 @@
 package com.lksoft.yugen.stateful;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.lksoft.yugen.stateless.SpriteDef;
 import com.lksoft.yugen.stateless.StageDef;
@@ -32,6 +35,10 @@ public class Stage {
     // For collision check
     private Rectangle p1Rect = new Rectangle();
     private Rectangle p2Rect = new Rectangle();
+
+    // Debug rendering
+    private boolean debug = false;
+    private ShapeRenderer shapeRenderer = new ShapeRenderer();
 
     /**
      * Create b1 stage from b1 stageDef
@@ -99,6 +106,11 @@ public class Stage {
                 s.update();
             }
         }
+
+        // Debug
+        if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)){
+            debug = !debug;
+        }
     }
 
     /**
@@ -107,9 +119,11 @@ public class Stage {
     private void checkCollisions() {
         // P1 to P2
         for(Rectangle r1 : getP1().animation.getCurrentFrame().hitCollisions ){
+            p1Rect.set(r1);
+            getP1().getRectWorld(p1Rect);
             for(Rectangle r2 : getP2().animation.getCurrentFrame().damageCollisions ){
-                p1Rect.set(r1.x + getP1().pos.x, r1.y + getP1().pos.y, r1.width, r1.height);
-                p2Rect.set(r2.x + getP2().pos.x, r2.y + getP2().pos.y, r2.width, r2.height);
+                p2Rect.set(r2);
+                getP2().getRectWorld(p2Rect);
                 if (p1Rect.overlaps(p2Rect)){
                     getP2().setCurrentHit(getP1().getAttackHit());
                 }
@@ -118,9 +132,11 @@ public class Stage {
 
         // P2 to P1
         for(Rectangle r2 : getP2().animation.getCurrentFrame().hitCollisions ){
+            p2Rect.set(r2);
+            getP2().getRectWorld(p2Rect);
             for(Rectangle r1 : getP1().animation.getCurrentFrame().damageCollisions ){
-                p1Rect.set(r1.x + getP1().pos.x, r1.y + getP1().pos.y, r1.width, r1.height);
-                p2Rect.set(r2.x + getP2().pos.x, r2.y + getP2().pos.y, r2.width, r2.height);
+                p1Rect.set(r1);
+                getP1().getRectWorld(p1Rect);
                 if (p1Rect.overlaps(p2Rect)){
                     getP1().setCurrentHit(getP2().getAttackHit());
                 }
@@ -145,6 +161,16 @@ public class Stage {
             if( p2 != null && p2.getLayer() == i ) p2.render(batch);
         }
         batch.end();
+
+
+        // Render collisions
+        if( debug ){
+            shapeRenderer.setProjectionMatrix(getCamera().getCombinedMatrix());
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            p1.renderCollision(shapeRenderer);
+            p2.renderCollision(shapeRenderer);
+            shapeRenderer.end();
+        }
     }
 
     /**

@@ -1,6 +1,9 @@
 package com.lksoft.yugen.stateful;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.lksoft.yugen.FsmParser;
 import com.lksoft.yugen.Yugen;
@@ -48,6 +51,10 @@ public class Fighter extends Sprite {
     private FighterExecuteVisitor executor;
 
 
+    // Rectangle for collision rendering
+    private Rectangle collRect = new Rectangle();
+
+
     // Flag for noticing statechange
     private boolean stateChanged;
 
@@ -63,6 +70,7 @@ public class Fighter extends Sprite {
         setVar("ctrl", Type.BOOL, true);
         setVar("alive", Type.BOOL, true);
         setVar("time", Type.INT, 0);
+        setVar("statetime", Type.INT, 0);
         setVelX(0);
         setVelY(0);
         setLayer(layer);
@@ -165,7 +173,6 @@ public class Fighter extends Sprite {
             t.run(executor, evaluator);
         }
 
-
         // Run physics triggers
         if( currentPhysics != null ) {
             for (FighterState.FighterTrigger t : currentPhysics.getTriggers()) {
@@ -184,8 +191,29 @@ public class Fighter extends Sprite {
         setVar("animTime", Type.INT, animation.getTicks());
         setVar("animCycles", Type.INT, animation.getCycles());
         setVar("time", Type.INT, getVar("time").getIntValue()+1);
+        setVar("statetime", Type.INT, getVar("statetime").getIntValue()+1);
         setVar("layer", Type.INT, layer);
         setVar("attackhit", Type.HIT, attackHit);
+    }
+
+    /**
+     * Renders collision rectangles
+     * @param shapeRenderer
+     */
+    public void renderCollision(ShapeRenderer shapeRenderer) {
+        shapeRenderer.setColor(Color.WHITE);
+        for( Rectangle r : animation.getCurrentFrame().damageCollisions ){
+            collRect.set(r);
+            getRectWorld(collRect);
+            shapeRenderer.rect(collRect.x, collRect.y, collRect.width, collRect.height);
+        }
+
+        shapeRenderer.setColor(Color.RED);
+        for( Rectangle r : animation.getCurrentFrame().hitCollisions ){
+            collRect.set(r);
+            getRectWorld(collRect);
+            shapeRenderer.rect(collRect.x, collRect.y, collRect.width, collRect.height);
+        }
     }
 
     /**
@@ -212,6 +240,7 @@ public class Fighter extends Sprite {
 
         // Change state
         currentState = newState;
+        setVar("statetime", Type.INT, 0);
 
         // Execute enter triggers
         if( currentState.enterTrigger != null ) {
@@ -374,6 +403,18 @@ public class Fighter extends Sprite {
      */
     public HitPack.HitDef getCurrentHit(){
         return currentHit;
+    }
+
+    /**
+     * Transform a local rectangle to world coordinates
+     * @param r Collision rectangle (Will be modified)
+     */
+    public void getRectWorld(Rectangle r) {
+        if( flip ){
+            r.set(pos.x - (r.x + r.width), r.y, r.width, r.height);
+        } else {
+            r.set(pos.x + r.x, pos.y + r.y, r.width, r.height);
+        }
     }
 
     public FighterDef getFighterDef() {
