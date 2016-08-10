@@ -125,7 +125,7 @@ public class AnimationFrameWindow extends VisWindow {
      * @return Currently selected frame
      */
     public AnimationFrame getSelectedFrame() {
-        if( getAdapter().size() == 0 ) return null;
+        if( getAdapter().getSelection().size == 0 ) return null;
         return getAdapter().getSelection().first();
     }
 

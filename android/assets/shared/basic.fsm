@@ -179,10 +179,22 @@ State midpunch (S)
 	anim = A:midpunch
 	vel.x = 0.0
 	ctrl = false
-	// hit = H:midpunch
+	attackhit = H:midpunch
 	
 	[Trigger animCycles == 1]
 	-> idle
+
+State groundDamage (S)
+	[Trigger animCycles == 1]
+	-> idle
+	
+State airDamage (A)
+	[Enter]
+	physics = P:air
+	
+	// Landing
+	[Trigger pos.y < 0.0]
+	-> landing
 
 // --
 // -- Controls definition from any state that allows control
@@ -191,7 +203,7 @@ Stateless
 	// Run
 	[Trigger ctrl && (stype() == "S") && has(A:running) && C:run]
 		-> running
-	// Back-hop	
+	// Back-hop
 	[Trigger ctrl && (stype() == "S") && has(A:backhop) && C:backhop]
 		-> backhop
 		
@@ -199,4 +211,44 @@ Stateless
 	[Trigger ctrl && (stype() == "S") && has(A:midpunch) && keypress("B1")]
 		-> midpunch
 		
-	// Damage
+	// Standing Damage
+	[Trigger ishit() && !(keyhold("B") && strhas(hitget("guardflag"), "S"))]
+		// Air damage
+		if(stype() == "A"){
+			anim = A:damageFall
+			vel.x = hitget("air.velocity.x") * (facing ? -1.0 : 1.0)
+			vel.y = 0.0
+			clearhit()
+			-> airDamage
+		}
+		
+		// Falls
+		if( hithas("fall") && hitget("fall") ) { 
+			anim = A:damageFall
+			vel.x = hitget("air.velocity.x") * (facing ? -1.0 : 1.0)
+			vel.y = 15.0
+			clearhit()
+			-> airDamage
+		}
+		
+		// Set ground vel
+		vel.x = hitget("ground.velocity.x") * (facing ? -1.0 : 1.0)
+	
+		// Ground Damages
+		if( stype() == "S" ){
+			switch hitget("damageanim.type") {
+				"L": { if(hitget("damageanim.height") == "H") { anim = A:damageSHL } else { anim = A:damageSLL } }
+				"M": { if(hitget("damageanim.height") == "H") { anim = A:damageSHM } else { anim = A:damageSLM } }
+				"H": { if(hitget("damageanim.height") == "H") { anim = A:damageSHH } else { anim = A:damageSLH } }
+			}
+		}
+		else {
+			switch hitget("damageanim.type") {
+				"L": { if(hitget("damageanim.height") == "H") { anim = A:damageCHL } else { anim = A:damageCLL } }
+				"M": { if(hitget("damageanim.height") == "H") { anim = A:damageCHM } else { anim = A:damageCLM } }
+				"H": { if(hitget("damageanim.height") == "H") { anim = A:damageCHH } else { anim = A:damageCLH } }
+			}
+		}
+		
+		clearhit()
+		-> groundDamage

@@ -1,8 +1,8 @@
 package com.lksoft.yugen.stateful;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.lksoft.yugen.stateless.AnimationFrame;
 import com.lksoft.yugen.stateless.AnimationDef;
+import com.lksoft.yugen.stateless.AnimationFrame;
 
 /**
  * Created by Lake on 08/06/2016.
@@ -54,7 +54,7 @@ public class Animation {
      * @param batch The batch to render to
      */
     public void draw(SpriteBatch batch, float x, float y, float scale, boolean flip){
-        AnimationFrame frame = getAnimationDef().getFrameAt(getTicks());
+        AnimationFrame frame = getCurrentFrame();
         if( frame != null ) {
             frame.draw(batch, x, y, scale, flip);
         }
@@ -63,6 +63,7 @@ public class Animation {
     public AnimationDef getAnimationDef() {
         return sequence;
     }
+    public AnimationFrame getCurrentFrame() { return getAnimationDef().getFrameAt(getTicks()); }
     public int getTicks() {
         return ticks;
     }

@@ -4,5 +4,5 @@ guardflag = "SC"
 pausetime = 12
 damageanim.type = "M"
 damageanim.height = "H"
-ground.velocity.x = -8.0
-air.velocity.x = -5.0
+ground.velocity.x = -8
+air.velocity.x = -5

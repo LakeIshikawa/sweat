@@ -1,6 +1,7 @@
 package com.lksoft.yugen.stateful;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.lksoft.yugen.stateless.SpriteDef;
 import com.lksoft.yugen.stateless.StageDef;
 
@@ -27,6 +28,10 @@ public class Stage {
 
     // Batch
     private SpriteBatch batch = new SpriteBatch();
+
+    // For collision check
+    private Rectangle p1Rect = new Rectangle();
+    private Rectangle p2Rect = new Rectangle();
 
     /**
      * Create b1 stage from b1 stageDef
@@ -82,6 +87,9 @@ public class Stage {
         if( getP1() != null ) getP1().update();
         if( getP2() != null ) getP2().update();
 
+        // Check collisions
+        checkCollisions();
+
         // Update camera
         getCamera().update(this);
 
@@ -89,6 +97,33 @@ public class Stage {
         for( int i=0; i<layers.length; i++ ) {
             for (Sprite s : layers[i]) {
                 s.update();
+            }
+        }
+    }
+
+    /**
+     * Check for player collisions
+     */
+    private void checkCollisions() {
+        // P1 to P2
+        for(Rectangle r1 : getP1().animation.getCurrentFrame().hitCollisions ){
+            for(Rectangle r2 : getP2().animation.getCurrentFrame().damageCollisions ){
+                p1Rect.set(r1.x + getP1().pos.x, r1.y + getP1().pos.y, r1.width, r1.height);
+                p2Rect.set(r2.x + getP2().pos.x, r2.y + getP2().pos.y, r2.width, r2.height);
+                if (p1Rect.overlaps(p2Rect)){
+                    getP2().setCurrentHit(getP1().getAttackHit());
+                }
+            }
+        }
+
+        // P2 to P1
+        for(Rectangle r2 : getP2().animation.getCurrentFrame().hitCollisions ){
+            for(Rectangle r1 : getP1().animation.getCurrentFrame().damageCollisions ){
+                p1Rect.set(r1.x + getP1().pos.x, r1.y + getP1().pos.y, r1.width, r1.height);
+                p2Rect.set(r2.x + getP2().pos.x, r2.y + getP2().pos.y, r2.width, r2.height);
+                if (p1Rect.overlaps(p2Rect)){
+                    getP1().setCurrentHit(getP2().getAttackHit());
+                }
             }
         }
     }

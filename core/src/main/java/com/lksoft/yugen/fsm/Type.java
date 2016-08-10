@@ -10,5 +10,6 @@ public enum Type {
     FLOAT,
     INT,
     ANIM,
-    PHYSICS
+    PHYSICS,
+    HIT
 }

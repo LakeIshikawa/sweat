@@ -30,6 +30,12 @@ public class Fighter extends Sprite {
     // Current physics
     private PhysicsDef currentPhysics;
 
+    // Hit status
+    private HitPack.HitDef currentHit;
+
+    // Attacking hit
+    private HitPack.HitDef attackHit;
+
     // The memory
     private ObjectMap<String, Value> memory = new ObjectMap<>();
 
@@ -179,6 +185,7 @@ public class Fighter extends Sprite {
         setVar("animCycles", Type.INT, animation.getCycles());
         setVar("time", Type.INT, getVar("time").getIntValue()+1);
         setVar("layer", Type.INT, layer);
+        setVar("attackhit", Type.HIT, attackHit);
     }
 
     /**
@@ -188,6 +195,10 @@ public class Fighter extends Sprite {
     public void changeState(String stateName) {
         FighterState newState = getFighterDef().getStates().get(stateName);
         if( currentState == newState ) return;
+        if( newState == null ){
+            Gdx.app.error("FSM", "No such state:"+stateName);
+            return;
+        }
         stateChanged = true;
 
         Gdx.app.log("FSM", "-> "+stateName);
@@ -240,6 +251,15 @@ public class Fighter extends Sprite {
      */
     public AnimationDef getAnimationDef(String animName){
         return getFighterDef().getAnimationPack().getAnimationDef(animName);
+    }
+
+    /**
+     * Gets a hit def belonging to this fighter
+     * @param hitName Name of the hitdef
+     * @return The hitdef, or null if non present
+     */
+    public HitPack.HitDef getHitDef(String hitName){
+        return getFighterDef().getHitPack().get(hitName);
     }
 
     /**
@@ -309,13 +329,53 @@ public class Fighter extends Sprite {
         setVar("facing", Type.BOOL, flip);
     }
 
+    /**
+     * @return Current layer
+     */
     public int getLayer() {
         return layer;
     }
+
+    /**
+     * Sets current display layer
+     * @param layer
+     */
     public void setLayer(int layer) {
         this.layer = layer;
         setVar("layer", Type.INT, layer);
     }
+
+    /**
+     * @return The currently attacking hit def
+     */
+    public HitPack.HitDef getAttackHit(){
+        return attackHit;
+    }
+
+    /**
+     * Sets the attack hit
+     * @param hit
+     */
+    public void setAttackHit(HitPack.HitDef hit){
+        this.attackHit = hit;
+        setVar("attackhit", Type.HIT, attackHit);
+    }
+
+    /**
+     * Set hit status to fighter (the fighter has been hit)
+     * @param hit Hit def info
+     */
+    public void setCurrentHit(HitPack.HitDef hit){
+        this.currentHit = hit;
+    }
+
+    /**
+     * @return Current hit status (being hit)
+     */
+    public HitPack.HitDef getCurrentHit(){
+        return currentHit;
+    }
+
     public FighterDef getFighterDef() {
         return fighterDef;
     }

@@ -1,4 +1,4 @@
-// Generated from E:/Development/yugen/core/src/main/antlr\Fsm.g4 by ANTLR 4.5.3
+// Generated from D:/lksoft/yugen/core/src/main/antlr\Fsm.g4 by ANTLR 4.5.3
 package com.lksoft.yugen;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -244,6 +244,42 @@ public class FsmBaseListener implements FsmListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterSwitchStmt(FsmParser.SwitchStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSwitchStmt(FsmParser.SwitchStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIteStmt(FsmParser.IteStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIteStmt(FsmParser.IteStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFCallStmt(FsmParser.FCallStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFCallStmt(FsmParser.FCallStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterStateChangeStmt(FsmParser.StateChangeStmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -251,6 +287,66 @@ public class FsmBaseListener implements FsmListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStateChangeStmt(FsmParser.StateChangeStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSwitchcase(FsmParser.SwitchcaseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSwitchcase(FsmParser.SwitchcaseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCaselist(FsmParser.CaselistContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCaselist(FsmParser.CaselistContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterScase(FsmParser.ScaseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitScase(FsmParser.ScaseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIfThen(FsmParser.IfThenContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIfThen(FsmParser.IfThenContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIfThenElse(FsmParser.IfThenElseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIfThenElse(FsmParser.IfThenElseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -491,6 +587,18 @@ public class FsmBaseListener implements FsmListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFloatLiteral(FsmParser.FloatLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterHitLiteral(FsmParser.HitLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitHitLiteral(FsmParser.HitLiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

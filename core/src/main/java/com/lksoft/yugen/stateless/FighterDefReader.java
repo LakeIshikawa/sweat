@@ -54,12 +54,17 @@ public class FighterDefReader {
         fighterDef.setCmd(new FileHandle(defFile.pathWithoutExtension() + ".cmd"));
         fighterDef.setFsm(new FileHandle(defFile.pathWithoutExtension() + ".fsm"));
         fighterDef.setSnd(new FileHandle(defFile.pathWithoutExtension() + ".snd"));
+        fighterDef.setHit(new FileHandle(defFile.pathWithoutExtension() + ".hit"));
 
         // Load animationPack
         TextureAtlas atlas = new TextureAtlas(fighterDef.getAtlas());
         FramePack framePack = new FramePackReader(fighterDef.getFrm()).read(atlas);
         AnimationPack animationPack = new AnimationPackReader(fighterDef.getAnm()).read(framePack);
         fighterDef.setAnimationPack(animationPack);
+
+        // Load hit pack
+        HitPack hitPack = new HitPackReader(fighterDef.getHit()).read();
+        fighterDef.setHitPack(hitPack);
 
         // Load commands
         Commands commands = new Commands(Gdx.files.internal("shared/basic.cmd"));

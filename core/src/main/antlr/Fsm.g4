@@ -10,6 +10,7 @@ BOOL: 'true' | 'false';
 ANIM: 'A:' [a-zA-Z$_] [a-zA-Z0-9$_.]*;
 PHYSICS: 'P:' [a-zA-Z$_] [a-zA-Z0-9$_.]*;
 COMMAND: 'C:' [a-zA-Z$_] [a-zA-Z0-9$_.]*;
+HIT: 'H:' [a-zA-Z$_] [a-zA-Z0-9$_.]*;
 ID: [a-zA-Z$_] [a-zA-Z0-9$_.]*;
 INT : '-' ? [0-9]+;
 FLOAT: INT ? '.' [0-9]+;
@@ -94,7 +95,28 @@ statements
 
 statement
     : assignment    #AssignmentStmt
+    | switchcase    #SwitchStmt
+    | ite           #IteStmt
+    | fcall         #FCallStmt
     | '->' ID       #StateChangeStmt
+    ;
+
+switchcase
+    : 'switch' e '{' caselist '}'
+    ;
+
+caselist
+    : scase
+    | scase caselist
+    ;
+
+scase
+    : e ':' '{' statements '}'
+    ;
+
+ite
+    : 'if' e '{' statements '}'                             #IfThen
+    | 'if' e '{' statements '}' 'else' '{' statements '}'   #IfThenElse
     ;
 
 assignment
@@ -110,6 +132,7 @@ e
     | ANIM      #AnimLiteral
     | PHYSICS   #PhysicsLiteral
     | COMMAND   #CommandLiteral
+    | HIT       #HitLiteral
     | e '?' e ':' e #CondExp
     | e '+' e   #AddExp
     | e '-' e   #SubExp

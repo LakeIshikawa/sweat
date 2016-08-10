@@ -1,4 +1,4 @@
-// Generated from E:/Development/yugen/core/src/main/antlr\Fsm.g4 by ANTLR 4.5.3
+// Generated from D:/lksoft/yugen/core/src/main/antlr\Fsm.g4 by ANTLR 4.5.3
 package com.lksoft.yugen;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -206,6 +206,42 @@ public interface FsmListener extends ParseTreeListener {
 	 */
 	void exitAssignmentStmt(FsmParser.AssignmentStmtContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code SwitchStmt}
+	 * labeled alternative in {@link FsmParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterSwitchStmt(FsmParser.SwitchStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code SwitchStmt}
+	 * labeled alternative in {@link FsmParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitSwitchStmt(FsmParser.SwitchStmtContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code IteStmt}
+	 * labeled alternative in {@link FsmParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterIteStmt(FsmParser.IteStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IteStmt}
+	 * labeled alternative in {@link FsmParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitIteStmt(FsmParser.IteStmtContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code FCallStmt}
+	 * labeled alternative in {@link FsmParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterFCallStmt(FsmParser.FCallStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code FCallStmt}
+	 * labeled alternative in {@link FsmParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitFCallStmt(FsmParser.FCallStmtContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code StateChangeStmt}
 	 * labeled alternative in {@link FsmParser#statement}.
 	 * @param ctx the parse tree
@@ -217,6 +253,60 @@ public interface FsmListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStateChangeStmt(FsmParser.StateChangeStmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FsmParser#switchcase}.
+	 * @param ctx the parse tree
+	 */
+	void enterSwitchcase(FsmParser.SwitchcaseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FsmParser#switchcase}.
+	 * @param ctx the parse tree
+	 */
+	void exitSwitchcase(FsmParser.SwitchcaseContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FsmParser#caselist}.
+	 * @param ctx the parse tree
+	 */
+	void enterCaselist(FsmParser.CaselistContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FsmParser#caselist}.
+	 * @param ctx the parse tree
+	 */
+	void exitCaselist(FsmParser.CaselistContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FsmParser#scase}.
+	 * @param ctx the parse tree
+	 */
+	void enterScase(FsmParser.ScaseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FsmParser#scase}.
+	 * @param ctx the parse tree
+	 */
+	void exitScase(FsmParser.ScaseContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code IfThen}
+	 * labeled alternative in {@link FsmParser#ite}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfThen(FsmParser.IfThenContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IfThen}
+	 * labeled alternative in {@link FsmParser#ite}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfThen(FsmParser.IfThenContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code IfThenElse}
+	 * labeled alternative in {@link FsmParser#ite}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfThenElse(FsmParser.IfThenElseContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IfThenElse}
+	 * labeled alternative in {@link FsmParser#ite}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfThenElse(FsmParser.IfThenElseContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link FsmParser#assignment}.
 	 * @param ctx the parse tree
@@ -455,6 +545,18 @@ public interface FsmListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFloatLiteral(FsmParser.FloatLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code HitLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void enterHitLiteral(FsmParser.HitLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code HitLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 */
+	void exitHitLiteral(FsmParser.HitLiteralContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code DivExp}
 	 * labeled alternative in {@link FsmParser#e}.

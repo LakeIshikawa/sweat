@@ -49,5 +49,10 @@ public class Functions {
         registerFunction(new FacingP2());
         registerFunction(new Has());
         registerFunction(new StateType());
+        registerFunction(new IsHit());
+        registerFunction(new HitHas());
+        registerFunction(new HitGet());
+        registerFunction(new StrHas());
+        registerFunction(new ClearHit());
     }
 }

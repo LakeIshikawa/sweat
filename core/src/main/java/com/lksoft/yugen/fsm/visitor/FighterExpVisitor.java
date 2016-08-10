@@ -11,6 +11,7 @@ import com.lksoft.yugen.fsm.Value;
 import com.lksoft.yugen.stateful.Fighter;
 import com.lksoft.yugen.stateless.AnimationDef;
 import com.lksoft.yugen.stateless.CommandDef;
+import com.lksoft.yugen.stateless.HitPack;
 import com.lksoft.yugen.stateless.PhysicsDef;
 
 /**
@@ -253,6 +254,18 @@ public class FighterExpVisitor extends FsmBaseVisitor<Void>{
         return null;
     }
 
+    @Override
+    public Void visitHitLiteral(FsmParser.HitLiteralContext ctx) {
+        String name = ctx.HIT().getText().substring(2);
+        HitPack.HitDef hitDef = fighter.getHitDef(name);
+        if( hitDef != null ){
+            setHitResult(hitDef);
+        } else {
+            setError("Hitdef not found: " + name);
+        }
+        return null;
+    }
+
 
     // Get current result
     public Value getResult(){
@@ -279,6 +292,7 @@ public class FighterExpVisitor extends FsmBaseVisitor<Void>{
     }
     public void setAnimResult(AnimationDef animation) { result.setAnimationValue(animation);}
     public void setPhysicsResult(PhysicsDef physics) {result.setPhysicsValue(physics);}
+    public void setHitResult(HitPack.HitDef hit) {result.setHitValue(hit);}
 
     public Array<Value> getResults() {
         return results;

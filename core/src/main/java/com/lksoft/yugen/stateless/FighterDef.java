@@ -23,6 +23,7 @@ public class FighterDef {
     private FileHandle fsm;
     private FileHandle cmd;
     private FileHandle snd;
+    private FileHandle hit;
 
     // AnimationPack
     private AnimationPack animationPack;
@@ -63,25 +64,23 @@ public class FighterDef {
     public FileHandle getAtlas() {
         return atlas;
     }
-
     public FileHandle getFrm() {
         return frm;
     }
-
     public FileHandle getAnm() {
         return anm;
     }
-
     public FileHandle getFsm() {
         return fsm;
     }
-
     public FileHandle getCmd() {
         return cmd;
     }
-
     public FileHandle getSnd() {
         return snd;
+    }
+    public FileHandle getHit() {
+        return hit;
     }
 
     public void setName(String name) {
@@ -99,33 +98,35 @@ public class FighterDef {
     public void setAtlas(FileHandle atlas) {
         this.atlas = atlas;
     }
-
     public void setFrm(FileHandle frm) {
         this.frm = frm;
     }
-
     public void setAnm(FileHandle anm) {
         this.anm = anm;
     }
-
     public void setFsm(FileHandle fsm) {
         this.fsm = fsm;
     }
-
     public void setCmd(FileHandle cmd) {
         this.cmd = cmd;
     }
-
     public void setSnd(FileHandle snd) {
         this.snd = snd;
+    }
+    public void setHit(FileHandle hit) {
+        this.hit = hit;
     }
 
     public AnimationPack getAnimationPack() {
         return animationPack;
     }
-
     public void setAnimationPack(AnimationPack animationPack) {
         this.animationPack = animationPack;
+    }
+
+    public HitPack getHitPack() { return hitPack; }
+    public void setHitPack(HitPack pack){
+        this.hitPack = pack;
     }
 
     public Commands getCommands() {

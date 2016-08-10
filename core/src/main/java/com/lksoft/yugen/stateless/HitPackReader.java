@@ -3,6 +3,7 @@ package com.lksoft.yugen.stateless;
 import com.badlogic.gdx.files.FileHandle;
 import com.lksoft.yugen.FsmLexer;
 import com.lksoft.yugen.FsmParser;
+import com.lksoft.yugen.fsm.Value;
 import com.lksoft.yugen.fsm.visitor.FighterExpVisitor;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -49,7 +50,7 @@ public class HitPackReader {
                 }
 
                 // Create new animation
-                String name = line.substring(6, line.indexOf(']'));
+                String name = line.substring(5, line.indexOf(']'));
                 current = new HitPack.HitDef(name);
             }
 
@@ -61,10 +62,12 @@ public class HitPackReader {
                 FsmParser.AssignmentContext ass = parser.assignment();
 
                 ass.e().accept(expVisitor);
-                current.set(ass.ID().getText(), expVisitor.getResult());
+                current.set(ass.ID().getText(), new Value(expVisitor.getResult()));
             }
         }
 
+        // Last one
+        if( current != null ) result.set(current.getName(), current);
         return result;
     }
 }

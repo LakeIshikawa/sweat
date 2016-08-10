@@ -1,4 +1,4 @@
-// Generated from E:/Development/yugen/core/src/main/antlr\Fsm.g4 by ANTLR 4.5.3
+// Generated from D:/lksoft/yugen/core/src/main/antlr\Fsm.g4 by ANTLR 4.5.3
 package com.lksoft.yugen;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -129,12 +129,65 @@ public interface FsmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAssignmentStmt(FsmParser.AssignmentStmtContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code SwitchStmt}
+	 * labeled alternative in {@link FsmParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSwitchStmt(FsmParser.SwitchStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code IteStmt}
+	 * labeled alternative in {@link FsmParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIteStmt(FsmParser.IteStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code FCallStmt}
+	 * labeled alternative in {@link FsmParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFCallStmt(FsmParser.FCallStmtContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code StateChangeStmt}
 	 * labeled alternative in {@link FsmParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStateChangeStmt(FsmParser.StateChangeStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FsmParser#switchcase}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSwitchcase(FsmParser.SwitchcaseContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FsmParser#caselist}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCaselist(FsmParser.CaselistContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FsmParser#scase}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitScase(FsmParser.ScaseContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code IfThen}
+	 * labeled alternative in {@link FsmParser#ite}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfThen(FsmParser.IfThenContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code IfThenElse}
+	 * labeled alternative in {@link FsmParser#ite}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfThenElse(FsmParser.IfThenElseContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link FsmParser#assignment}.
 	 * @param ctx the parse tree
@@ -274,6 +327,13 @@ public interface FsmVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFloatLiteral(FsmParser.FloatLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code HitLiteral}
+	 * labeled alternative in {@link FsmParser#e}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitHitLiteral(FsmParser.HitLiteralContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code DivExp}
 	 * labeled alternative in {@link FsmParser#e}.

@@ -3,6 +3,7 @@ package com.lksoft.yugen.fsm;
 import com.lksoft.yugen.FsmParser;
 import com.lksoft.yugen.fsm.visitor.FighterExpVisitor;
 import com.lksoft.yugen.stateless.AnimationDef;
+import com.lksoft.yugen.stateless.HitPack;
 import com.lksoft.yugen.stateless.PhysicsDef;
 
 /**
@@ -99,6 +100,7 @@ public enum Bop {
             case BOOL:
             case ANIM:
             case PHYSICS:
+            case HIT:
                 visitor.setError("Unexpected " + visitor.getResult().getType() +" type exp: " + left.getText());
                 break;
 
@@ -148,6 +150,7 @@ public enum Bop {
             case INT:
             case ANIM:
             case PHYSICS:
+            case HIT:
                 visitor.setError("Unexpected " + visitor.getResult().getType() +" type exp: " + left.getText());
                 return;
 
@@ -156,11 +159,13 @@ public enum Bop {
                     case AND:
                         if(visitor.getResult().getBoolValue()) {
                             right.accept(visitor);
+                            if( visitor.getError() != null ) return;
                         }
                         break;
                     case OR:
                         if( !visitor.getResult().getBoolValue()) {
                             right.accept(visitor);
+                            if( visitor.getError() != null ) return;
                         }
                         break;
                 }
@@ -293,6 +298,25 @@ public enum Bop {
                         break;
                 }
                 break;
+
+            case HIT:
+                HitPack.HitDef leftHit = visitor.getResult().getHitValue();
+                right.accept(visitor);
+                if( visitor.getError() != null ) return;
+                if( visitor.getResult().getType() != Type.HIT ){
+                    visitor.setError("Unexpected " + visitor.getResult().getType() +" type exp: " + right.getText());
+                    return;
+                }
+
+                switch (bop) {
+                    case EQ:
+                        visitor.setBoolResult(leftHit == visitor.getResult().getHitValue());
+                        break;
+                    case NEQ:
+                        visitor.setBoolResult(leftHit != visitor.getResult().getHitValue());
+                        break;
+                }
+                break;
         }
     }
 
@@ -307,6 +331,7 @@ public enum Bop {
             case BOOL:
             case ANIM:
             case PHYSICS:
+            case HIT:
                 visitor.setError("Unexpected " + visitor.getResult().getType() + " type exp: " + left.getText());
                 break;
 

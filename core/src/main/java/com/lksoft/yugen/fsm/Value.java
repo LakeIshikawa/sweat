@@ -1,6 +1,7 @@
 package com.lksoft.yugen.fsm;
 
 import com.lksoft.yugen.stateless.AnimationDef;
+import com.lksoft.yugen.stateless.HitPack;
 import com.lksoft.yugen.stateless.PhysicsDef;
 
 /**
@@ -14,6 +15,7 @@ public class Value {
     private int intValue;
     private AnimationDef animationValue;
     private PhysicsDef physicsValue;
+    private HitPack.HitDef hitValue;
 
     // Type result
     private Type type;
@@ -25,6 +27,31 @@ public class Value {
      */
     public Value(Type type, Object value) {
         set(type, value);
+    }
+
+    /**
+     * Copy constructor
+     * @param value
+     */
+    public Value(Value value){
+        copyFrom(value);
+    }
+
+    @Override
+    public boolean equals(Object other){
+        Value otherv = (Value) other;
+        if( otherv.getType() != getType() ) return false;
+        else switch (type){
+            case ID: return getIdValue().equals(otherv.getIdValue());
+            case STRING: return getStringValue().equals(otherv.getStringValue());
+            case BOOL: return getBoolValue() == otherv.getBoolValue();
+            case FLOAT: return getFloatValue() == otherv.getFloatValue();
+            case INT: return getIntValue() == otherv.getIntValue();
+            case ANIM: return getAnimationValue() == otherv.getAnimationValue();
+            case PHYSICS: return getPhysicsValue() == otherv.getPhysicsValue();
+            case HIT: return getHitValue() == otherv.getHitValue();
+        }
+        return false;
     }
 
     /**
@@ -42,6 +69,7 @@ public class Value {
             case INT: intValue = (int) value; break;
             case ANIM: animationValue = (AnimationDef) value; break;
             case PHYSICS: physicsValue = (PhysicsDef) value; break;
+            case HIT: hitValue= (HitPack.HitDef) value; break;
         }
     }
 
@@ -59,6 +87,7 @@ public class Value {
             case INT: intValue = value.getIntValue(); break;
             case ANIM: animationValue = value.getAnimationValue(); break;
             case PHYSICS: physicsValue = value.getPhysicsValue(); break;
+            case HIT: hitValue = value.getHitValue(); break;
         }
     }
 
@@ -120,6 +149,14 @@ public class Value {
     public void setPhysicsValue(PhysicsDef physicsValue) {
         this.physicsValue = physicsValue;
         type = Type.PHYSICS;
+    }
+
+    public HitPack.HitDef getHitValue(){
+        return hitValue;
+    }
+    public void setHitValue(HitPack.HitDef hit){
+        this.hitValue = hit;
+        type = Type.HIT;
     }
 
     public Type getType() {
