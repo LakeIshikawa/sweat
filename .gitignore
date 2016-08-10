@@ -71,3 +71,9 @@ Thumbs.db
 
 ## Raw resources folder
 rawres
+
+## Android libs
+android/libs/
+
+## Generated antlr4 sources
+core/gen/
