@@ -418,9 +418,9 @@ public class Fighter extends Sprite {
      */
     public void getRectWorld(Rectangle r) {
         if( flip ){
-            r.set(pos.x - (r.x + r.width), pos.y + r.y, r.width, r.height);
+            r.set(pos.x - scale*(r.x + r.width), pos.y + scale*r.y, scale*r.width, scale*r.height);
         } else {
-            r.set(pos.x + r.x, pos.y + r.y, r.width, r.height);
+            r.set(pos.x + scale*r.x, pos.y + scale*r.y, scale*r.width, scale*r.height);
         }
     }
 

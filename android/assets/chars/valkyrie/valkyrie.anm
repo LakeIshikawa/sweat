@@ -1516,6 +1516,24 @@ animations: {
 						rotation: 0
 						blendMode: NORMAL
 					}
+					{
+						spriteDef: S:test970
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+					{
+						spriteDef: S:test954
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: ADDITIVE
+					}
 				]
 				lengthTicks: 3
 				damageCollisions: [
@@ -1543,6 +1561,24 @@ animations: {
 						scaleY: 1
 						rotation: 0
 						blendMode: NORMAL
+					}
+					{
+						spriteDef: S:test971
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+					{
+						spriteDef: S:test955
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: ADDITIVE
 					}
 				]
 				lengthTicks: 3
@@ -1572,8 +1608,26 @@ animations: {
 						rotation: 0
 						blendMode: NORMAL
 					}
+					{
+						spriteDef: S:test972
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+					{
+						spriteDef: S:test956
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: ADDITIVE
+					}
 				]
-				lengthTicks: 3
+				lengthTicks: 30
 				damageCollisions: [
 					{
 						x: 102
@@ -1604,8 +1658,8 @@ animations: {
 					{
 						x: 101
 						y: 90
-						width: 84
-						height: 34
+						width: 122.00003
+						height: 29.000008
 					}
 				]
 			}

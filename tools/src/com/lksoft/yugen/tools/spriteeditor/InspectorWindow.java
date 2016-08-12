@@ -64,12 +64,12 @@ public class InspectorWindow extends VisWindow {
         } else {
             EventListener l = xSpinner.getListeners().first();
             xSpinner.removeListener(l);
-            xSpinner.setModel(new IntSpinnerModel(0, -100, spriteDef.region.originalWidth+100, 5));
+            xSpinner.setModel(new IntSpinnerModel(0, -5000, 5000, 5));
             xSpinner.addListener(l);
 
             l = ySpinner.getListeners().first();
             ySpinner.removeListener(l);
-            ySpinner.setModel(new IntSpinnerModel(0, -100, spriteDef.region.originalHeight+100, 5));
+            ySpinner.setModel(new IntSpinnerModel(0, -5000, 5000, 5));
             ySpinner.addListener(l);
 
             ((IntSpinnerModel) xSpinner.getModel()).setValue(spriteDef.originX);

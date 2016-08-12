@@ -75,36 +75,42 @@ public class InspectorWindow extends VisWindow {
         x.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                if( component == null ) return;
                 component.x = ((IntSpinnerModel)x.getModel()).getValue();
             }
         });
         y.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                if( component == null ) return;
                 component.y = ((IntSpinnerModel)y.getModel()).getValue();
             }
         });
         sx.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                if( component == null ) return;
                 component.scaleX = ((SimpleFloatSpinnerModel)sx.getModel()).getValue();
             }
         });
         sy.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                if( component == null ) return;
                 component.scaleY = ((SimpleFloatSpinnerModel)sy.getModel()).getValue();
             }
         });
         rot.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                if( component == null ) return;
                 component.rotation = ((SimpleFloatSpinnerModel)rot.getModel()).getValue();
             }
         });
         blendModeSelect.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                if( component == null ) return;
                 component.blendMode = blendModeSelect.getSelected();
             }
         });
@@ -139,12 +145,14 @@ public class InspectorWindow extends VisWindow {
             ((SimpleFloatSpinnerModel)sx.getModel()).setValue(0);
             ((SimpleFloatSpinnerModel)sy.getModel()).setValue(0);
             ((SimpleFloatSpinnerModel)rot.getModel()).setValue(0);
+            blendModeSelect.setSelected(BlendMode.NORMAL);
         } else {
             ((IntSpinnerModel)x.getModel()).setValue(component.x);
             ((IntSpinnerModel)y.getModel()).setValue(component.y);
             ((SimpleFloatSpinnerModel)sx.getModel()).setValue(component.scaleX);
             ((SimpleFloatSpinnerModel)sy.getModel()).setValue(component.scaleY);
             ((SimpleFloatSpinnerModel)rot.getModel()).setValue(component.rotation);
+            blendModeSelect.setSelected(component.blendMode);
         }
     }
 }
