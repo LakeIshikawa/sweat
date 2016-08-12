@@ -1,21 +1,20 @@
-package com.lksoft.yugen.tools.frameeditor;
+package com.lksoft.yugen.tools.spriteeditor;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.lksoft.yugen.stateless.Frame;
+import com.lksoft.yugen.stateless.SpriteDef;
 
 /**
  * Created by Lake on 04/08/2016.
  */
-public class FrameRenderer {
+public class SpriteDefRenderer {
 
-    // Current frame
-    private Frame frame;
+    // Current spriteDef
+    private SpriteDef spriteDef;
 
     // Viewport
     private Viewport viewport = new ScreenViewport();
@@ -29,11 +28,11 @@ public class FrameRenderer {
     private Vector2 touch = new Vector2();
 
     /**
-     * Sets frame to render
-     * @param frame A frame
+     * Sets spriteDef to render
+     * @param spriteDef A spriteDef
      */
-    public void setFrame(Frame frame){
-        this.frame = frame;
+    public void setSpriteDef(SpriteDef spriteDef){
+        this.spriteDef = spriteDef;
     }
 
     /**
@@ -44,8 +43,8 @@ public class FrameRenderer {
         batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
 
-        if( frame != null ) {
-            frame.draw(batch, 0, 0, 1, false);
+        if( spriteDef != null ) {
+            spriteDef.draw(batch, 0, 0, 1, 1, false, 0);
         }
 
         batch.end();

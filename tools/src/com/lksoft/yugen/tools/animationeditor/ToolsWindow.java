@@ -1,11 +1,11 @@
 package com.lksoft.yugen.tools.animationeditor;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.kotcrab.vis.ui.util.TableUtils;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 import com.kotcrab.vis.ui.widget.VisWindow;
-import com.lksoft.yugen.tools.frameeditor.FrameEditorScreen;
 
 /**
  * Created by Lake on 05/08/2016.
@@ -13,6 +13,9 @@ import com.lksoft.yugen.tools.frameeditor.FrameEditorScreen;
 public class ToolsWindow extends VisWindow {
     // Editor screen
     private AnimationEditorScreen editorScreen;
+
+    // Control button group
+    private ButtonGroup controlGroup;
 
     /**
      * Create tools window
@@ -23,21 +26,55 @@ public class ToolsWindow extends VisWindow {
         this.editorScreen = editorScreen;
         TableUtils.setSpacingDefaults(this);
 
+        final VisTextButton components = new VisTextButton("Regions", "toggle");
+        final VisTextButton collisions = new VisTextButton("CollRects", "toggle");
+        controlGroup = new ButtonGroup(components, collisions);
+        components.setChecked(true);
+
+        // Listener
+        ChangeListener toggleListener = new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if( controlGroup.getChecked() == components ){
+                    editorScreen.setControls(new ComponentControls(editorScreen));
+                } else {
+                    editorScreen.setControls(new CollisionControls(editorScreen));
+                }
+            }
+        };
+        components.addListener(toggleListener);
+        collisions.addListener(toggleListener);
+
         final VisTextButton copy = new VisTextButton("Copy");
         final VisTextButton paste = new VisTextButton("Paste");
+        final VisTextButton play = new VisTextButton("PLAY", "toggle");
+
+        add(components).growX();
+        add(collisions).growX();
         add(copy).growX();
         add(paste).growX();
+        add(play).growX();
 
         copy.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                editorScreen.copy();
+                editorScreen.getCurrentControls().copy();
             }
         });
         paste.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                editorScreen.paste();
+                editorScreen.getCurrentControls().paste();
+            }
+        });
+        play.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if( play.isChecked() ) {
+                    editorScreen.play();
+                } else {
+                    editorScreen.stop();
+                }
             }
         });
     }

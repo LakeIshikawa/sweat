@@ -1,13 +1,12 @@
 package com.lksoft.yugen.tools.animationeditor;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.util.dialog.Dialogs;
@@ -18,12 +17,11 @@ import com.kotcrab.vis.ui.widget.file.FileTypeFilter;
 import com.lksoft.yugen.stateless.*;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * Created by Lake on 07/06/2016.
  */
-public class AnimationEditorScreen implements Screen, InputProcessor {
+public class AnimationEditorScreen implements Screen {
 
     // Chooser Path
     private File path;
@@ -31,14 +29,12 @@ public class AnimationEditorScreen implements Screen, InputProcessor {
     // UI
     private Stage stage;
 
-    // Shape
-    private ShapeRenderer shapeRenderer = new ShapeRenderer();
-
     // GUI components
     private AnimationEditorMenuBar menuBar;
+
     private AnimationPackWindow animationPackWindow;
     private AnimationFrameWindow animationFrameWindow;
-    private PlaybackWindow playbackWindow;
+    private AnimationFrameComponentWindow animationFrameComponentWindow;
     private InspectorWindow inspectorWindow;
 
     // Current animations
@@ -52,17 +48,9 @@ public class AnimationEditorScreen implements Screen, InputProcessor {
     boolean playing = false;
     int ticks = 0;
 
-    // Dragging
-    private Vector2 touchPoint;
-    private Rectangle draggingRect;
-    private Rectangle hoveringRect;
-    private Rectangle hoveringCornerRect = new Rectangle();
-    private boolean hoveringCorner = false;
-    private Vector2 touchOffset;
+    // Controls
+    private Controls currentControls;
 
-    // Palette
-    private Array<Rectangle> paletteDamage;
-    private Array<Rectangle> paletteHit;
 
     /**
      * Create b1 stage editor
@@ -75,7 +63,7 @@ public class AnimationEditorScreen implements Screen, InputProcessor {
     @Override
     public void show() {
         stage = new Stage();
-        Gdx.input.setInputProcessor(new InputMultiplexer(stage, this));
+        setControls(new ComponentControls(this));
 
         // -- Create GUI components
         float w = stage.getViewport().getWorldWidth();
@@ -89,25 +77,25 @@ public class AnimationEditorScreen implements Screen, InputProcessor {
         animationPackWindow.setSize(300, h/2.15f);
         animationPackWindow.setPosition((w-5)-animationPackWindow.getWidth(), (h-30)-animationPackWindow.getHeight());
 
-        // Animation Frame window
+        // Animation SpriteDef window
         animationFrameWindow = new AnimationFrameWindow(this);
         animationFrameWindow.setSize(300, h/2.15f);
         animationFrameWindow.setPosition((w-5)-animationFrameWindow.getWidth(), 5);
 
-        // Playback window
-        playbackWindow = new PlaybackWindow(this);
-        playbackWindow.setSize(200, 60);
-        playbackWindow.setPosition(w/2-playbackWindow.getWidth(), 5);
+        // Animation Component window
+        animationFrameComponentWindow = new AnimationFrameComponentWindow(this);
+        animationFrameComponentWindow.setSize(300, h/2.15f);
+        animationFrameComponentWindow.setPosition(5, (h-30)- animationFrameComponentWindow.getHeight());
 
         // Inspector window
         inspectorWindow = new InspectorWindow(this);
-        inspectorWindow.setSize(200, 100);
+        inspectorWindow.setSize(300, 250);
         inspectorWindow.setPosition(5, 5);
 
         // Tools window
         ToolsWindow toolsWindow = new ToolsWindow(this);
-        toolsWindow.setSize(150, 60);
-        toolsWindow.setPosition(5, (h-30) - toolsWindow.getHeight());
+        toolsWindow.setSize(300, 60);
+        toolsWindow.setPosition(w/2 - toolsWindow.getWidth()/2, (h-30) - toolsWindow.getHeight());
 
         // Root with menu bar
         VisTable root = new VisTable(true);
@@ -118,12 +106,9 @@ public class AnimationEditorScreen implements Screen, InputProcessor {
         stage.addActor(root);
         stage.addActor(animationPackWindow);
         stage.addActor(animationFrameWindow);
-        stage.addActor(playbackWindow);
+        stage.addActor(animationFrameComponentWindow);
         stage.addActor(inspectorWindow);
         stage.addActor(toolsWindow);
-
-        // Autoshape
-        shapeRenderer.setAutoShapeType(true);
     }
 
     @Override
@@ -143,26 +128,8 @@ public class AnimationEditorScreen implements Screen, InputProcessor {
         if( animationFrameRenderer != null ) {
             animationFrameRenderer.render();
 
-            // Current rectangle
-            shapeRenderer.setProjectionMatrix(animationFrameRenderer.getViewport().getCamera().combined);
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            if( draggingRect != null ) {
-                shapeRenderer.setColor(Color.YELLOW);
-                shapeRenderer.rect(draggingRect.x, draggingRect.y, draggingRect.width, draggingRect.height);
-            }
-
-            // Hovering
-            if( hoveringRect != null ){
-                shapeRenderer.setColor(hoveringCorner ? Color.PURPLE : Color.CYAN);
-                shapeRenderer.rect(hoveringRect.x, hoveringRect.y, hoveringRect.width, hoveringRect.height);
-
-                // Resize corner
-                shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
-                shapeRenderer.setColor(Color.PURPLE);
-                shapeRenderer.rect(hoveringCornerRect.x, hoveringCornerRect.y, hoveringCornerRect.width, hoveringCornerRect.height);
-
-            }
-            shapeRenderer.end();
+            // Render controls
+            currentControls.render();
         }
 
         // Playback
@@ -203,176 +170,16 @@ public class AnimationEditorScreen implements Screen, InputProcessor {
         stage.dispose();
     }
 
-
-    @Override
-    public boolean keyDown(int keycode) {
-        switch (keycode){
-            case Input.Keys.FORWARD_DEL:
-                if( hoveringRect != null ){
-                    removeCollision(hoveringRect);
-                    hoveringRect = null;
-                }
-                break;
-        }
-        return true;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if( animationFrameRenderer == null ) return false;
-
-        touchPoint = new Vector2(animationFrameRenderer.getTouch(screenX, screenY));
-
-        // Start new rectangle
-        if( hoveringRect == null ) {
-            draggingRect = new Rectangle();
-        }
-        // Move or resize selected!
-        else {
-            touchOffset = new Vector2(touchPoint).sub(hoveringRect.x, hoveringRect.y);
-        }
-        return true;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        if( animationFrameRenderer == null ) return false;
-
-        // Add rectangle
-        if( touchPoint != null && hoveringRect == null ){
-            Vector2 touch = animationFrameRenderer.getTouch(screenX, screenY);
-
-            float x = Math.min(touchPoint.x, touch.x);
-            float y = Math.min(touchPoint.y, touch.y);
-            float w = Math.abs(touchPoint.x - touch.x);
-            float h = Math.abs(touchPoint.y - touch.y);
-            if( w<=1 || h<=1 ) return false;
-            addCollision(new Rectangle(x, y, w, h), button == Input.Buttons.LEFT);
-        }
-
-        touchPoint = null;
-        draggingRect = null;
-        return true;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        if( animationFrameRenderer == null ) return false;
-
-        if( touchPoint != null ) {
-            Vector2 touch = animationFrameRenderer.getTouch(screenX, screenY);
-
-            // New rectangle
-            if( draggingRect != null ) {
-                float x = Math.min(touchPoint.x, touch.x);
-                float y = Math.min(touchPoint.y, touch.y);
-                float w = Math.abs(touchPoint.x - touch.x);
-                float h = Math.abs(touchPoint.y - touch.y);
-                draggingRect.set(x, y, w, h);
-            }
-
-            // Dragging selection
-            else if( hoveringRect != null ){
-                // Resize
-                if( hoveringCorner ){
-                    hoveringRect.setSize(touch.x - hoveringRect.x, touch.y - hoveringRect.y);
-                }
-                // Move
-                else {
-                    hoveringRect.setPosition(touch.x - touchOffset.x, touch.y - touchOffset.y);
-                }
-
-                // Update corner
-                hoveringCornerRect.set(
-                        hoveringRect.x + hoveringRect.width - 20,
-                        hoveringRect.y + hoveringRect.height - 20,
-                        20, 20);
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        if( animationFrameRenderer == null ) return false;
-
-        // Check hovering
-        hoveringRect = null;
-        Vector2 touch = animationFrameRenderer.getTouch(screenX, screenY);
-        AnimationFrame frame = animationFrameWindow.getSelectedFrame();
-        if( frame == null ) return false;
-
-        for( Rectangle r : frame.damageCollisions ){
-            if( r.contains(touch) ){
-                hoveringRect = r;
-            }
-        }
-        for( Rectangle r : frame.hitCollisions ){
-            if( r.contains(touch) ){
-                hoveringRect = r;
-            }
-        }
-
-        if( hoveringRect != null ){
-            hoveringCornerRect.set(
-                    hoveringRect.x + hoveringRect.width - 20,
-                    hoveringRect.y + hoveringRect.height - 20,
-                    20, 20);
-        }
-
-        hoveringCorner = hoveringCornerRect.contains(touch);
-        return true;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
-        return false;
-    }
-
-
-    // Add collision rectangle to current frame
-    private void addCollision(Rectangle rectangle, boolean damage) {
+    // Add collision rectangle to current spriteDef
+    void addCollision(Rectangle rectangle, boolean damage) {
         if( damage ) animationFrameWindow.getSelectedFrame().damageCollisions.add(rectangle);
         else animationFrameWindow.getSelectedFrame().hitCollisions.add(rectangle);
     }
 
-    // Remove collision rectangle from current frame
-    private void removeCollision(Rectangle rectangle) {
+    // Remove collision rectangle from current spriteDef
+    void removeCollision(Rectangle rectangle) {
         animationFrameWindow.getSelectedFrame().damageCollisions.removeValue(rectangle, true);
         animationFrameWindow.getSelectedFrame().hitCollisions.removeValue(rectangle, true);
-    }
-
-    // Copy rectangles
-    public void copy() {
-        paletteDamage = new Array<>();
-        paletteHit = new Array<>();
-
-        for( Rectangle r : animationFrameWindow.getSelectedFrame().damageCollisions ){
-            paletteDamage.add(new Rectangle(r));
-        }
-        for( Rectangle r : animationFrameWindow.getSelectedFrame().hitCollisions ){
-            paletteHit.add(new Rectangle(r));
-        }
-    }
-
-    // PAste rectangles
-    public void paste() {
-        for( Rectangle r : paletteDamage ){
-            animationFrameWindow.getSelectedFrame().damageCollisions.add(new Rectangle(r));
-        }
-        for( Rectangle r : paletteHit ){
-            animationFrameWindow.getSelectedFrame().hitCollisions.add(new Rectangle(r));
-        }
     }
 
     // Set the current animdef
@@ -387,7 +194,9 @@ public class AnimationEditorScreen implements Screen, InputProcessor {
         animationPackWindow.setAnimationPack(animationPack);
 
         // Select first animation def
-        selectAnimationDef(animationPack.getAnimations().first());
+        if( animationPack.getAnimations().size > 0 ) {
+            selectAnimationDef(animationPack.getAnimations().first());
+        }
     }
 
     // Selects the specified animation def
@@ -403,11 +212,23 @@ public class AnimationEditorScreen implements Screen, InputProcessor {
         else selectFrame(def.getFrames().first());
     }
 
-    // Selects the specified frame
+    // Selects the specified spriteDef
     void selectFrame(AnimationFrame frame){
         animationFrameWindow.setSelected(frame);
         animationFrameRenderer.setAnimationFrame(frame == null ? null : frame);
         inspectorWindow.setFrame(frame);
+
+        // Populate component window
+        animationFrameComponentWindow.setAnimationFrame(frame);
+        if( frame.components.size>0 ) {
+            selectComponent(frame.components.first());
+        }
+    }
+
+    // Selects the specified component
+    void selectComponent(AnimationFrame.Component component){
+        animationFrameComponentWindow.setSelected(component);
+        inspectorWindow.setComponent(component);
     }
 
     // Play the animation
@@ -445,13 +266,39 @@ public class AnimationEditorScreen implements Screen, InputProcessor {
     public void addFrame() {
         if( animationPackWindow.getAnimationPack() == null ) return;
 
-        FramePicker picker = new FramePicker(animationPackWindow.getAnimationPack().getFramePack(),
+        FramePicker picker = new FramePicker(animationPackWindow.getAnimationPack().getSpritePack(),
                 new FramePicker.PickListener() {
                     @Override
-                    public void onFramePicked(Frame frame) {
+                    public void onFramePicked(SpriteDef frame) {
                         AnimationFrame newFrame = new AnimationFrame(frame, 3);
                         animationFrameWindow.addFrame(newFrame);
                         selectFrame(newFrame);
+                    }
+
+                    @Override
+                    public void onCancel() {}
+                });
+        picker.show(stage);
+    }
+
+    // Remove component
+    public void removeComponent(AnimationFrame.Component region){
+        animationFrameComponentWindow.removeComponent(region);
+        selectComponent(null);
+    }
+
+    // Add new component
+    public void addComponent() {
+        if( animationPackWindow.getAnimationPack() == null ) return;
+        if( animationFrameWindow.getSelectedFrame() == null ) return;
+
+        FramePicker picker = new FramePicker(animationPackWindow.getAnimationPack().getSpritePack(),
+                new FramePicker.PickListener() {
+                    @Override
+                    public void onFramePicked(SpriteDef frame) {
+                        AnimationFrame.Component newComponent = new AnimationFrame.Component(frame);
+                        animationFrameComponentWindow.addComponent(newComponent);
+                        selectComponent(newComponent);
                     }
 
                     @Override
@@ -468,7 +315,7 @@ public class AnimationEditorScreen implements Screen, InputProcessor {
         chooser.setMultiSelectionEnabled(false);
         chooser.setDirectory(path);
         FileTypeFilter filter = new FileTypeFilter(false);
-        filter.addRule("FramePack file", "frm");
+        filter.addRule("SpritePack file", "frm");
         chooser.setFileTypeFilter(filter);
         chooser.setListener(new FileChooserListener() {
             @Override
@@ -480,10 +327,10 @@ public class AnimationEditorScreen implements Screen, InputProcessor {
 
                 // Load stuff
                 TextureAtlas tAtlas = new TextureAtlas(atlas);
-                FramePack framePack = new FramePackReader(frm).read(tAtlas);
+                SpritePack spritePack = new SpritePackReader(frm).read(tAtlas);
 
                 // Create new stage
-                setAnimationPack(new AnimationPack(framePack), anm);
+                setAnimationPack(new AnimationPack(spritePack), anm);
             }
 
             @Override
@@ -511,10 +358,9 @@ public class AnimationEditorScreen implements Screen, InputProcessor {
                 FileHandle frm = new FileHandle(files.first().pathWithoutExtension() + ".frm");
                 FileHandle atlasHandle = new FileHandle(files.first().pathWithoutExtension() + ".atlas");
                 TextureAtlas atlas = new TextureAtlas(atlasHandle);
-                FramePack framePack = new FramePackReader(frm).read(atlas);
+                SpritePack spritePack = new SpritePackReader(frm).read(atlas);
 
-                AnimationPackReader reader = new AnimationPackReader(files.first());
-                setAnimationPack(reader.read(framePack), files.first());
+                setAnimationPack(AnimationPack.read(files.first(), spritePack), files.first());
             }
 
             @Override
@@ -529,13 +375,30 @@ public class AnimationEditorScreen implements Screen, InputProcessor {
     void save() {
         if( animationPackWindow.getAnimationPack() == null ) return;
 
-        AnimationPackWriter writer = new AnimationPackWriter(anmFile.file());
-        try {
-            writer.write(animationPackWindow.getAnimationPack());
-            Dialogs.showOKDialog(stage, "Success", "Animation Pack saved.");
-        } catch (IOException e) {
-            e.printStackTrace();
-            Dialogs.showErrorDialog(stage, "Could not write file.  Check permissions?");
-        }
+        animationPackWindow.getAnimationPack().write(anmFile);
+        Dialogs.showOKDialog(stage, "Success", "Animation Pack saved.");
+    }
+
+
+    // Accessors
+    public AnimationPackWindow getAnimationPackWindow() {
+        return animationPackWindow;
+    }
+    public AnimationFrameWindow getAnimationFrameWindow() {
+        return animationFrameWindow;
+    }
+    public AnimationFrameComponentWindow getAnimationFrameComponentWindow() {
+        return animationFrameComponentWindow;
+    }
+    public InspectorWindow getInspectorWindow() {
+        return inspectorWindow;
+    }
+    public AnimationFrameRenderer getAnimationFrameRenderer() {
+        return animationFrameRenderer;
+    }
+    public Controls getCurrentControls() { return currentControls; }
+    public void setControls(Controls controls){
+        this.currentControls = controls;
+        Gdx.input.setInputProcessor(new InputMultiplexer(stage, currentControls));
     }
 }

@@ -11,7 +11,7 @@ import com.kotcrab.vis.ui.widget.spinner.IntSpinnerModel;
 import com.kotcrab.vis.ui.widget.spinner.SimpleFloatSpinnerModel;
 import com.kotcrab.vis.ui.widget.spinner.Spinner;
 import com.lksoft.yugen.stateless.AnimationDef;
-import com.lksoft.yugen.stateless.SpriteDef;
+import com.lksoft.yugen.stateless.StageSpriteDef;
 
 /**
  * Created by Lake on 10/06/2016.
@@ -29,7 +29,7 @@ public class SpriteDefWindow extends VisWindow {
     private Spinner layer;
 
     // State
-    private SpriteDef currentDef;
+    private StageSpriteDef currentDef;
 
     /**
      * Create sprite def window
@@ -117,12 +117,12 @@ public class SpriteDefWindow extends VisWindow {
 
     /**
      * Set view to sprite def
-     * @param spriteDef
+     * @param stageSpriteDef
      */
-    public void setSpriteDef(SpriteDef spriteDef){
-        currentDef = spriteDef;
+    public void setSpriteDef(StageSpriteDef stageSpriteDef){
+        currentDef = stageSpriteDef;
 
-        if( spriteDef == null ){
+        if( stageSpriteDef == null ){
             name.setText("");
             resource.setText("");
             ((IntSpinnerModel) startPosX.getModel()).setValue(0);
@@ -131,13 +131,13 @@ public class SpriteDefWindow extends VisWindow {
             ((SimpleFloatSpinnerModel) scrollFactorY.getModel()).setValue(0);
             ((IntSpinnerModel) layer.getModel()).setValue(0);
         } else {
-            name.setText(spriteDef.getName());
-            resource.setText(spriteDef.getResource().getName());
-            ((IntSpinnerModel) startPosX.getModel()).setValue(spriteDef.getStartX());
-            ((IntSpinnerModel) startPosY.getModel()).setValue(spriteDef.getStartY());
-            ((SimpleFloatSpinnerModel) scrollFactorX.getModel()).setValue(spriteDef.getScrollFactorX());
-            ((SimpleFloatSpinnerModel) scrollFactorY.getModel()).setValue(spriteDef.getScrollFactorY());
-            ((IntSpinnerModel) layer.getModel()).setValue(spriteDef.getLayer());
+            name.setText(stageSpriteDef.getName());
+            resource.setText(stageSpriteDef.getResource().getName());
+            ((IntSpinnerModel) startPosX.getModel()).setValue(stageSpriteDef.getStartX());
+            ((IntSpinnerModel) startPosY.getModel()).setValue(stageSpriteDef.getStartY());
+            ((SimpleFloatSpinnerModel) scrollFactorX.getModel()).setValue(stageSpriteDef.getScrollFactorX());
+            ((SimpleFloatSpinnerModel) scrollFactorY.getModel()).setValue(stageSpriteDef.getScrollFactorY());
+            ((IntSpinnerModel) layer.getModel()).setValue(stageSpriteDef.getLayer());
         }
     }
 }

@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.lksoft.yugen.stateless.SpriteDef;
+import com.lksoft.yugen.stateless.StageSpriteDef;
 import com.lksoft.yugen.stateless.StageDef;
 
 /**
@@ -53,13 +53,13 @@ public class StageDefRenderer {
      * Render the stage layout
      * @param selection
      */
-    public void render(SpriteDef selection) {
+    public void render(StageSpriteDef selection) {
         // Draw sprites
         batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
 
         for(int l = 0; l< stageDef.getLayers().length; l++ ) {
-            for (SpriteDef def : stageDef.getLayers()[l]) {
+            for (StageSpriteDef def : stageDef.getLayers()[l]) {
                 def.getResource().getFrameAt(0).draw(batch, def.getStartX(), def.getStartY(), 1, false);
             }
         }

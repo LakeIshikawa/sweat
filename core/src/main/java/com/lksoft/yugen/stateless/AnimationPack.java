@@ -1,24 +1,33 @@
 package com.lksoft.yugen.stateless;
 
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.ObjectMap;
 
 /**
  * Created by Lake on 08/06/2016.
  */
-public class AnimationPack {
+public class AnimationPack implements Json.Serializable {
+    // Cache for json parsing (is this the only way?)
+    public static SpritePack currentSpritePack;
+
     // AnimationPack
     private ObjectMap<String, AnimationDef> animations = new ObjectMap<>();
 
-    // FramePack
-    private FramePack framePack;
+    // SpritePack
+    private SpritePack spritePack;
+
+    // For JSON
+    public AnimationPack(){}
 
     /**
      * Create an empty animation pack from sprites factory
-     * @param framePack The framePack factory
+     * @param spritePack The spritePack factory
      */
-    public AnimationPack(FramePack framePack){
-        this.framePack = framePack;
+    public AnimationPack(SpritePack spritePack){
+        this.spritePack = spritePack;
     }
 
     /**
@@ -42,15 +51,15 @@ public class AnimationPack {
      * @param name The unique name id
      * @return The animation sequence or null if not exist
      */
-    public AnimationDef getAnimationDef(String name){
+    public AnimationDef getAnimationDef(String name) {
         AnimationDef sequence = animations.get(name);
         if( sequence != null ) return sequence;
 
-        // Try single frame
-        Frame frame = framePack.getFrame(name);
-        if( frame != null ){
+        // Try single spriteDef
+        SpriteDef spriteDef = spritePack.getSpriteDef(name);
+        if( spriteDef != null ){
             sequence = new AnimationDef(name);
-            sequence.addFrame(new AnimationFrame(frame, -1));
+            sequence.addFrame(new AnimationFrame(spriteDef, -1));
             animations.put(name, sequence);
         }
 
@@ -67,16 +76,54 @@ public class AnimationPack {
     }
 
     /**
-     * @return FramePack
+     * @return SpritePack
      */
-    public FramePack getFramePack() {
-        return framePack;
+    public SpritePack getSpritePack() {
+        return spritePack;
     }
 
     /**
      * Dispose associated resources
      */
     public void dispose() {
-        framePack.dispose();
+        spritePack.dispose();
+    }
+
+    @Override
+    public void write(Json json) {
+        // Animations
+        json.writeValue("animations", animations, ObjectMap.class, AnimationDef.class);
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonData) {
+        spritePack = currentSpritePack;
+        animations = json.readValue("animations", ObjectMap.class, AnimationDef.class, jsonData);
+    }
+
+    /**
+     * Reads an animation pack from file
+     * @param anm .anm file
+     * @param spritePack A loaded sprite pack
+     * @return A loaded animation pack
+     */
+    public static AnimationPack read(FileHandle anm, SpritePack spritePack) {
+        Json json = new Json();
+        json.setIgnoreUnknownFields(true);
+
+        currentSpritePack = spritePack;
+        AnimationPack res = json.fromJson(AnimationPack.class, anm);
+        return res;
+    }
+
+    /**
+     * Serialize to .anm file
+     * @param anm
+     */
+    public void write(FileHandle anm) {
+        Json json = new Json();
+        json.setIgnoreUnknownFields(true);
+        String jstring = json.prettyPrint(this);
+        anm.writeString(jstring, false);
     }
 }

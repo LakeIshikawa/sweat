@@ -1,24 +1,23 @@
-package com.lksoft.yugen.tools.frameeditor;
+package com.lksoft.yugen.tools.spriteeditor;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.kotcrab.vis.ui.util.TableUtils;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 import com.kotcrab.vis.ui.widget.VisWindow;
-import com.lksoft.yugen.tools.animationeditor.AnimationEditorScreen;
 
 /**
  * Created by Lake on 05/08/2016.
  */
 public class ToolsWindow extends VisWindow {
     // Editor screen
-    private FrameEditorScreen editorScreen;
+    private SpriteEditorScreen editorScreen;
 
     /**
      * Create tools window
      * @param editorScreen
      */
-    public ToolsWindow(final FrameEditorScreen editorScreen) {
+    public ToolsWindow(final SpriteEditorScreen editorScreen) {
         super("Tools");
         this.editorScreen = editorScreen;
         TableUtils.setSpacingDefaults(this);

@@ -1,140 +1,2560 @@
-[Anim backhop]
-test026 2 [-84.0,-13.0,145.0,121.0];||
-test068 2 [-74.0,-5.0,130.0,89.0];[-77.0,84.0,100.0,117.0];||
-loopstart
-test069 4 [-55.0,-1.0,116.0,77.0];[-88.0,75.0,95.0,119.0];||
-
-[Anim backhopland]
-test070 4 [-59.0,2.0,124.0,66.0];[-76.0,68.0,109.0,118.0];||
-test071 3 [-59.0,2.0,124.0,66.0];[-94.0,69.0,161.0,71.0];[-37.0,139.0,61.0,43.0];||
-
-[Anim brake]
-test064 4 [-36.0,-11.0,67.0,95.0];[-27.0,83.0,81.0,107.0];||
-test065 3 [-83.0,-4.0,155.0,168.0];||
-test066 3 [-87.0,-5.0,155.0,174.0];||
-test065 3 [-83.0,-7.0,155.0,173.0];||
-test066 3 [-83.0,-5.0,161.0,170.0];||
-test067 5 [-42.0,-7.0,89.0,215.0];||
-test025 4 [-50.0,-9.0,107.0,112.0];[-41.0,104.0,85.0,94.0];||
-
-[Anim crouch2stand]
-test006 7 [-50.0,-9.0,107.0,112.0];[-41.0,104.0,81.0,101.0];||
-
-[Anim crouching]
-test006 90 [-50.0,-9.0,107.0,112.0];[-41.0,104.0,81.0,101.0];||
-test009 8 [-50.0,-9.0,107.0,112.0];[-41.0,104.0,81.0,101.0];||
-
-[Anim crouchTurn]
-test025 2 [-50.0,-9.0,107.0,112.0];[-41.0,104.0,81.0,101.0];||
-
-[Anim damageSHM]
-test379 5 
-test378 4 
-loopstart
-test381 3 
-
-[Anim falling]
-test052 3 [-83.0,164.0,161.0,70.0];[-31.0,-1.0,71.0,165.0];||
-test053 3 [-84.0,164.0,160.0,72.0];[-31.0,-1.0,71.0,165.0];||
-test054 3 [-83.0,164.0,159.0,71.0];[-31.0,-1.0,71.0,165.0];||
-
-[Anim idle]
-test017 7 [-64.0,-12.0,133.0,64.0];[-36.000023,52.0,74.00005,134.00002];||
-test018 7 [-64.0,-12.0,133.0,64.0];[-36.000023,52.0,74.00005,134.00002];||
-test019 7 [-64.0,-12.0,133.0,64.0];[-36.000023,52.0,74.00005,134.00002];||
-test020 7 [-64.0,-12.0,133.0,64.0];[-36.000023,52.0,74.00005,134.00002];||
-test021 7 [-64.0,-12.0,133.0,64.0];[-36.000023,52.0,74.00005,134.00002];||
-test022 7 [-64.0,-12.0,133.0,64.0];[-36.000023,52.0,74.00005,134.00002];||
-test023 7 [-64.0,-12.0,133.0,64.0];[-36.000023,52.0,74.00005,134.00002];||
-test024 7 [-64.0,-12.0,133.0,64.0];[-36.000023,52.0,74.00005,134.00002];||
-
-[Anim jumping]
-test045 5 [-97.0,132.0,165.0,76.0];[-45.0,-33.0,71.0,165.0];||
-test046 3 [-97.0,132.0,165.0,76.0];[-44.0,6.0,70.0,126.0];||
-test047 3 [-93.0,58.0,152.0,139.0];||
-test048 3 [-94.0,70.0,154.0,130.0];||
-test049 3 [-94.0,70.0,154.0,130.0];||
-test050 3 [-94.0,58.0,164.0,147.0];||
-test051 3 [-85.0,131.0,165.0,76.0];[-30.0,5.0,70.0,126.0];||
-loopstart
-test052 3 [-87.0,164.0,165.0,76.0];[-31.0,-1.0,71.0,165.0];||
-test053 3 [-87.0,164.0,165.0,76.0];[-31.0,-1.0,71.0,165.0];||
-test054 3 [-87.0,164.0,165.0,76.0];[-31.0,-1.0,71.0,165.0];||
-
-[Anim jumpingBwd]
-test058 10 [-97.0,132.0,165.0,76.0];[-31.0,-20.0,75.0,152.0];||
-test059 5 [-105.0,138.0,169.0,62.0];[-58.0,4.0,96.0,134.0];||
-test057 5 [-97.0,55.0,162.0,144.0];||
-test047 5 [-90.0,59.0,151.0,142.0];||
-test048 5 [-93.0,73.0,153.0,132.0];||
-test049 5 [-93.0,73.0,153.0,132.0];||
-loopstart
-test052 3 [-87.0,164.0,165.0,76.0];[-31.0,-1.0,71.0,165.0];||
-test053 3 [-87.0,164.0,165.0,76.0];[-31.0,-1.0,71.0,165.0];||
-test054 3 [-87.0,164.0,165.0,76.0];[-31.0,-1.0,71.0,165.0];||
-
-[Anim jumpingFwd]
-test055 7 [-61.0,75.0,127.0,142.0];[-78.0,-3.0,88.0,78.0];||
-test056 4 [-86.0,41.0,145.0,162.0];||
-test057 5 [-85.0,57.0,140.0,150.0];||
-test048 5 [-96.0,71.0,150.0,135.0];||
-test049 5 [-93.0,73.0,143.0,131.0];||
-test050 5 [-93.0,57.0,154.0,146.0];||
-loopstart
-test052 3 [-87.0,164.0,165.0,76.0];[-31.0,-1.0,71.0,165.0];||
-test053 3 [-87.0,164.0,165.0,76.0];[-31.0,-1.0,71.0,165.0];||
-test054 3 [-87.0,164.0,165.0,76.0];[-31.0,-1.0,71.0,165.0];||
-
-[Anim jumpstart]
-test026 5 [-82.0,-18.0,148.0,122.0];||
-
-[Anim landing]
-test028 2 [-64.0,-12.0,135.0,94.0];[-41.0,83.0,87.0,106.0];||
-test027 3 [-68.0,-19.0,143.0,140.0];||
-test026 3 [-74.0,-18.0,142.0,124.0];||
-test027 3 [-68.0,-19.0,143.0,140.0];||
-
-[Anim midpunch]
-test117 3 [-51.0,-12.0,162.0,95.0];[-14.0,83.0,87.0,106.0];||
-test118 3 [-51.0,-12.0,162.0,95.0];[4.0,83.0,87.0,106.0];||
-test119 3 [102.0,91.0,73.0,30.0];[-55.0,-8.0,167.0,69.0];[-16.0,62.0,89.0,88.0];[72.0,103.0,38.0,41.0];||[101.0,90.0,84.0,34.0];
-test120 3 [-55.0,-8.0,167.0,69.0];[0.0,62.0,71.0,75.0];[71.0,94.0,51.0,80.0];||
-test121 5 [-55.0,-8.0,167.0,69.0];[0.0,62.0,71.0,75.0];[71.0,94.0,57.0,46.0];[41.0,136.0,34.0,45.0];||
-test122 3 [-55.0,-8.0,167.0,69.0];[0.0,62.0,71.0,75.0];[71.0,94.0,57.0,46.0];[41.0,136.0,34.0,45.0];||
-test123 2 [-55.0,-8.0,167.0,69.0];[0.0,62.0,71.0,75.0];[71.0,94.0,57.0,46.0];[41.0,136.0,33.0,27.0];||
-test124 2 [-51.0,-12.0,170.0,96.0];[-7.0,84.0,98.0,88.0];||
-test125 1 [-51.0,-12.0,162.0,95.0];[-14.0,83.0,87.0,106.0];||
-
-[Anim running]
-test060 3 [-33.0,-11.0,71.0,95.0];[-29.0,85.0,86.0,98.0];||
-loopstart
-test061 3 [-22.0,22.0,121.0,139.0];[-85.0,-11.0,63.0,74.0];||
-test062 3 [-22.0,22.0,121.0,139.0];[-85.0,-11.0,63.0,74.0];||
-test063 3 [-22.0,22.0,121.0,139.0];[-85.0,-11.0,63.0,74.0];||
-
-[Anim stand2crouch]
-test006 7 [-64.0,-12.0,135.0,94.0];[-41.0,83.0,82.0,121.0];||
-
-[Anim turn]
-test025 2 [-64.0,-12.0,135.0,94.0];[-41.0,83.0,88.0,120.0];||
-
-[Anim walkbwd]
-test037 7 [-87.0,-12.0,145.0,72.0];[-49.0,61.0,83.0,134.0];||
-test038 7 [-69.0,-12.0,125.0,73.0];[-49.0,61.0,83.0,134.0];||
-test039 7 [-48.0,-18.0,89.0,214.0];||
-test040 7 [-40.0,-14.0,87.0,214.0];||
-test041 7 [-31.0,-14.0,89.0,214.0];||
-test042 7 [-40.0,-14.0,89.0,214.0];||
-test043 7 [-42.0,-14.0,89.0,214.0];||
-test044 7 [-48.0,-12.0,110.0,95.0];[-31.0,83.0,85.0,111.0];||
-
-[Anim walkfwd]
-test029 7 [-69.0,-12.0,154.0,95.0];[-33.0,83.0,87.0,106.0];||
-test030 7 [-45.0,-12.0,108.0,207.0];||
-test031 7 [-45.0,-12.0,97.0,208.0];||
-test032 7 [-45.0,-12.0,95.0,209.0];||
-test033 7 [-45.0,-12.0,99.0,208.0];||
-test034 7 [-45.0,-12.0,92.0,210.0];||
-test035 7 [-45.0,-12.0,95.0,205.0];||
-test036 7 [-69.0,-12.0,124.0,95.0];[-47.0,83.0,87.0,106.0];||
-
+{
+animations: {
+	landing: {
+		name: landing
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:test028
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 2
+				damageCollisions: [
+					{
+						x: -64
+						y: -12
+						width: 135
+						height: 94
+					}
+					{
+						x: -41
+						y: 83
+						width: 87
+						height: 106
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test027
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -68
+						y: -19
+						width: 143
+						height: 140
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test026
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -74
+						y: -18
+						width: 142
+						height: 124
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test027
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -68
+						y: -19
+						width: 143
+						height: 140
+					}
+				]
+			}
+		]
+	}
+	backhop: {
+		name: backhop
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:test026
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 2
+				damageCollisions: [
+					{
+						x: -84
+						y: -13
+						width: 145
+						height: 121
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test068
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 2
+				damageCollisions: [
+					{
+						x: -74
+						y: -5
+						width: 130
+						height: 89
+					}
+					{
+						x: -77
+						y: 84
+						width: 100
+						height: 117
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test069
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 4
+				damageCollisions: [
+					{
+						x: -55
+						y: -1
+						width: 116
+						height: 77
+					}
+					{
+						x: -88
+						y: 75
+						width: 95
+						height: 119
+					}
+				]
+			}
+		]
+		loopStartPos: 2
+	}
+	walkbwd: {
+		name: walkbwd
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:test037
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -87
+						y: -12
+						width: 145
+						height: 72
+					}
+					{
+						x: -49
+						y: 61
+						width: 83
+						height: 134
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test038
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -69
+						y: -12
+						width: 125
+						height: 73
+					}
+					{
+						x: -49
+						y: 61
+						width: 83
+						height: 134
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test039
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -48
+						y: -18
+						width: 89
+						height: 214
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test040
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -40
+						y: -14
+						width: 87
+						height: 214
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test041
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -31
+						y: -14
+						width: 89
+						height: 214
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test042
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -40
+						y: -14
+						width: 89
+						height: 214
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test043
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -42
+						y: -14
+						width: 89
+						height: 214
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test044
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -48
+						y: -12
+						width: 110
+						height: 95
+					}
+					{
+						x: -31
+						y: 83
+						width: 85
+						height: 111
+					}
+				]
+			}
+		]
+	}
+	falling: {
+		name: falling
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:test052
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -83
+						y: 164
+						width: 161
+						height: 70
+					}
+					{
+						x: -31
+						y: -1
+						width: 71
+						height: 165
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test053
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -84
+						y: 164
+						width: 160
+						height: 72
+					}
+					{
+						x: -31
+						y: -1
+						width: 71
+						height: 165
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test054
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -83
+						y: 164
+						width: 159
+						height: 71
+					}
+					{
+						x: -31
+						y: -1
+						width: 71
+						height: 165
+					}
+				]
+			}
+		]
+	}
+	damageSHM: {
+		name: damageSHM
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:test379
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 5
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test378
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 4
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test381
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+			}
+		]
+		loopStartPos: 2
+	}
+	walkfwd: {
+		name: walkfwd
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:test029
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -69
+						y: -12
+						width: 154
+						height: 95
+					}
+					{
+						x: -33
+						y: 83
+						width: 87
+						height: 106
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test030
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -45
+						y: -12
+						width: 108
+						height: 207
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test031
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -45
+						y: -12
+						width: 97
+						height: 208
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test032
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -45
+						y: -12
+						width: 95
+						height: 209
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test033
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -45
+						y: -12
+						width: 99
+						height: 208
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test034
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -45
+						y: -12
+						width: 92
+						height: 210
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test035
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -45
+						y: -12
+						width: 95
+						height: 205
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test036
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -69
+						y: -12
+						width: 124
+						height: 95
+					}
+					{
+						x: -47
+						y: 83
+						width: 87
+						height: 106
+					}
+				]
+			}
+		]
+	}
+	idle: {
+		name: idle
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:test017
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -64
+						y: -12
+						width: 133
+						height: 64
+					}
+					{
+						x: -36
+						y: 52
+						width: 74
+						height: 134
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test018
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -64
+						y: -12
+						width: 133
+						height: 64
+					}
+					{
+						x: -36
+						y: 52
+						width: 74
+						height: 134
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test019
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -64
+						y: -12
+						width: 133
+						height: 64
+					}
+					{
+						x: -36
+						y: 52
+						width: 74
+						height: 134
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test020
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -64
+						y: -12
+						width: 133
+						height: 64
+					}
+					{
+						x: -36
+						y: 52
+						width: 74
+						height: 134
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test021
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -64
+						y: -12
+						width: 133
+						height: 64
+					}
+					{
+						x: -36
+						y: 52
+						width: 74
+						height: 134
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test022
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -64
+						y: -12
+						width: 133
+						height: 64
+					}
+					{
+						x: -36
+						y: 52
+						width: 74
+						height: 134
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test023
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -64
+						y: -12
+						width: 133
+						height: 64
+					}
+					{
+						x: -36
+						y: 52
+						width: 74
+						height: 134
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test024
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -64
+						y: -12
+						width: 133
+						height: 64
+					}
+					{
+						x: -36
+						y: 52
+						width: 74
+						height: 134
+					}
+				]
+			}
+		]
+	}
+	stand2crouch: {
+		name: stand2crouch
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:test006
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -64
+						y: -12
+						width: 135
+						height: 94
+					}
+					{
+						x: -41
+						y: 83
+						width: 82
+						height: 121
+					}
+				]
+			}
+		]
+	}
+	crouchTurn: {
+		name: crouchTurn
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:test025
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 2
+				damageCollisions: [
+					{
+						x: -50
+						y: -9
+						width: 107
+						height: 112
+					}
+					{
+						x: -41
+						y: 104
+						width: 81
+						height: 101
+					}
+				]
+			}
+		]
+	}
+	jumpingBwd: {
+		name: jumpingBwd
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:test058
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 10
+				damageCollisions: [
+					{
+						x: -97
+						y: 132
+						width: 165
+						height: 76
+					}
+					{
+						x: -31
+						y: -20
+						width: 75
+						height: 152
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test059
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 5
+				damageCollisions: [
+					{
+						x: -105
+						y: 138
+						width: 169
+						height: 62
+					}
+					{
+						x: -58
+						y: 4
+						width: 96
+						height: 134
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test057
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 5
+				damageCollisions: [
+					{
+						x: -97
+						y: 55
+						width: 162
+						height: 144
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test047
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 5
+				damageCollisions: [
+					{
+						x: -90
+						y: 59
+						width: 151
+						height: 142
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test048
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 5
+				damageCollisions: [
+					{
+						x: -93
+						y: 73
+						width: 153
+						height: 132
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test049
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 5
+				damageCollisions: [
+					{
+						x: -93
+						y: 73
+						width: 153
+						height: 132
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test052
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -87
+						y: 164
+						width: 165
+						height: 76
+					}
+					{
+						x: -31
+						y: -1
+						width: 71
+						height: 165
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test053
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -87
+						y: 164
+						width: 165
+						height: 76
+					}
+					{
+						x: -31
+						y: -1
+						width: 71
+						height: 165
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test054
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -87
+						y: 164
+						width: 165
+						height: 76
+					}
+					{
+						x: -31
+						y: -1
+						width: 71
+						height: 165
+					}
+				]
+			}
+		]
+		loopStartPos: 6
+	}
+	crouch2stand: {
+		name: crouch2stand
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:test006
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -50
+						y: -9
+						width: 107
+						height: 112
+					}
+					{
+						x: -41
+						y: 104
+						width: 81
+						height: 101
+					}
+				]
+			}
+		]
+	}
+	jumpingFwd: {
+		name: jumpingFwd
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:test055
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 7
+				damageCollisions: [
+					{
+						x: -61
+						y: 75
+						width: 127
+						height: 142
+					}
+					{
+						x: -78
+						y: -3
+						width: 88
+						height: 78
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test056
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 4
+				damageCollisions: [
+					{
+						x: -86
+						y: 41
+						width: 145
+						height: 162
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test057
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 5
+				damageCollisions: [
+					{
+						x: -85
+						y: 57
+						width: 140
+						height: 150
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test048
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 5
+				damageCollisions: [
+					{
+						x: -96
+						y: 71
+						width: 150
+						height: 135
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test049
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 5
+				damageCollisions: [
+					{
+						x: -93
+						y: 73
+						width: 143
+						height: 131
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test050
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 5
+				damageCollisions: [
+					{
+						x: -93
+						y: 57
+						width: 154
+						height: 146
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test052
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -87
+						y: 164
+						width: 165
+						height: 76
+					}
+					{
+						x: -31
+						y: -1
+						width: 71
+						height: 165
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test053
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -87
+						y: 164
+						width: 165
+						height: 76
+					}
+					{
+						x: -31
+						y: -1
+						width: 71
+						height: 165
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test054
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -87
+						y: 164
+						width: 165
+						height: 76
+					}
+					{
+						x: -31
+						y: -1
+						width: 71
+						height: 165
+					}
+				]
+			}
+		]
+		loopStartPos: 6
+	}
+	midpunch: {
+		name: midpunch
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:test117
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -51
+						y: -12
+						width: 162
+						height: 95
+					}
+					{
+						x: -14
+						y: 83
+						width: 87
+						height: 106
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test118
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -51
+						y: -12
+						width: 162
+						height: 95
+					}
+					{
+						x: 4
+						y: 83
+						width: 87
+						height: 106
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test119
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: 102
+						y: 91
+						width: 73
+						height: 30
+					}
+					{
+						x: -55
+						y: -8
+						width: 167
+						height: 69
+					}
+					{
+						x: -16
+						y: 62
+						width: 89
+						height: 88
+					}
+					{
+						x: 72
+						y: 103
+						width: 38
+						height: 41
+					}
+				]
+				hitCollisions: [
+					{
+						x: 101
+						y: 90
+						width: 84
+						height: 34
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test120
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -55
+						y: -8
+						width: 167
+						height: 69
+					}
+					{
+						y: 62
+						width: 71
+						height: 75
+					}
+					{
+						x: 71
+						y: 94
+						width: 51
+						height: 80
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test121
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 5
+				damageCollisions: [
+					{
+						x: -55
+						y: -8
+						width: 167
+						height: 69
+					}
+					{
+						y: 62
+						width: 71
+						height: 75
+					}
+					{
+						x: 71
+						y: 94
+						width: 57
+						height: 46
+					}
+					{
+						x: 41
+						y: 136
+						width: 34
+						height: 45
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test122
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -55
+						y: -8
+						width: 167
+						height: 69
+					}
+					{
+						y: 62
+						width: 71
+						height: 75
+					}
+					{
+						x: 71
+						y: 94
+						width: 57
+						height: 46
+					}
+					{
+						x: 41
+						y: 136
+						width: 34
+						height: 45
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test123
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 2
+				damageCollisions: [
+					{
+						x: -55
+						y: -8
+						width: 167
+						height: 69
+					}
+					{
+						y: 62
+						width: 71
+						height: 75
+					}
+					{
+						x: 71
+						y: 94
+						width: 57
+						height: 46
+					}
+					{
+						x: 41
+						y: 136
+						width: 33
+						height: 27
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test124
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 2
+				damageCollisions: [
+					{
+						x: -51
+						y: -12
+						width: 170
+						height: 96
+					}
+					{
+						x: -7
+						y: 84
+						width: 98
+						height: 88
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test125
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 1
+				damageCollisions: [
+					{
+						x: -51
+						y: -12
+						width: 162
+						height: 95
+					}
+					{
+						x: -14
+						y: 83
+						width: 87
+						height: 106
+					}
+				]
+			}
+		]
+	}
+	crouching: {
+		name: crouching
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:test006
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 90
+				damageCollisions: [
+					{
+						x: -50
+						y: -9
+						width: 107
+						height: 112
+					}
+					{
+						x: -41
+						y: 104
+						width: 81
+						height: 101
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test009
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 8
+				damageCollisions: [
+					{
+						x: -50
+						y: -9
+						width: 107
+						height: 112
+					}
+					{
+						x: -41
+						y: 104
+						width: 81
+						height: 101
+					}
+				]
+			}
+		]
+	}
+	brake: {
+		name: brake
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:test064
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 4
+				damageCollisions: [
+					{
+						x: -36
+						y: -11
+						width: 67
+						height: 95
+					}
+					{
+						x: -27
+						y: 83
+						width: 81
+						height: 107
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test065
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -83
+						y: -4
+						width: 155
+						height: 168
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test066
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -87
+						y: -5
+						width: 155
+						height: 174
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test065
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -83
+						y: -7
+						width: 155
+						height: 173
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test066
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -83
+						y: -5
+						width: 161
+						height: 170
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test067
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 5
+				damageCollisions: [
+					{
+						x: -42
+						y: -7
+						width: 89
+						height: 215
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test025
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 4
+				damageCollisions: [
+					{
+						x: -50
+						y: -9
+						width: 107
+						height: 112
+					}
+					{
+						x: -41
+						y: 104
+						width: 85
+						height: 94
+					}
+				]
+			}
+		]
+	}
+	backhopland: {
+		name: backhopland
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:test070
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 4
+				damageCollisions: [
+					{
+						x: -59
+						y: 2
+						width: 124
+						height: 66
+					}
+					{
+						x: -76
+						y: 68
+						width: 109
+						height: 118
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test071
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -59
+						y: 2
+						width: 124
+						height: 66
+					}
+					{
+						x: -94
+						y: 69
+						width: 161
+						height: 71
+					}
+					{
+						x: -37
+						y: 139
+						width: 61
+						height: 43
+					}
+				]
+			}
+		]
+	}
+	jumpstart: {
+		name: jumpstart
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:test026
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 5
+				damageCollisions: [
+					{
+						x: -82
+						y: -18
+						width: 148
+						height: 122
+					}
+				]
+			}
+		]
+	}
+	jumping: {
+		name: jumping
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:test045
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 5
+				damageCollisions: [
+					{
+						x: -97
+						y: 132
+						width: 165
+						height: 76
+					}
+					{
+						x: -45
+						y: -33
+						width: 71
+						height: 165
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test046
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -97
+						y: 132
+						width: 165
+						height: 76
+					}
+					{
+						x: -44
+						y: 6
+						width: 70
+						height: 126
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test047
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -93
+						y: 58
+						width: 152
+						height: 139
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test048
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -94
+						y: 70
+						width: 154
+						height: 130
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test049
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -94
+						y: 70
+						width: 154
+						height: 130
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test050
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -94
+						y: 58
+						width: 164
+						height: 147
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test051
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -85
+						y: 131
+						width: 165
+						height: 76
+					}
+					{
+						x: -30
+						y: 5
+						width: 70
+						height: 126
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test052
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -87
+						y: 164
+						width: 165
+						height: 76
+					}
+					{
+						x: -31
+						y: -1
+						width: 71
+						height: 165
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test053
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -87
+						y: 164
+						width: 165
+						height: 76
+					}
+					{
+						x: -31
+						y: -1
+						width: 71
+						height: 165
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test054
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -87
+						y: 164
+						width: 165
+						height: 76
+					}
+					{
+						x: -31
+						y: -1
+						width: 71
+						height: 165
+					}
+				]
+			}
+		]
+		loopStartPos: 7
+	}
+	turn: {
+		name: turn
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:test025
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 2
+				damageCollisions: [
+					{
+						x: -64
+						y: -12
+						width: 135
+						height: 94
+					}
+					{
+						x: -41
+						y: 83
+						width: 88
+						height: 120
+					}
+				]
+			}
+		]
+	}
+	running: {
+		name: running
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:test060
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -33
+						y: -11
+						width: 71
+						height: 95
+					}
+					{
+						x: -29
+						y: 85
+						width: 86
+						height: 98
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test061
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -22
+						y: 22
+						width: 121
+						height: 139
+					}
+					{
+						x: -85
+						y: -11
+						width: 63
+						height: 74
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test062
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -22
+						y: 22
+						width: 121
+						height: 139
+					}
+					{
+						x: -85
+						y: -11
+						width: 63
+						height: 74
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test063
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -22
+						y: 22
+						width: 121
+						height: 139
+					}
+					{
+						x: -85
+						y: -11
+						width: 63
+						height: 74
+					}
+				]
+			}
+		]
+		loopStartPos: 1
+	}
+}
+}

@@ -73,18 +73,18 @@ public class StageDefReader {
 
         // Load animationPack
         TextureAtlas atlas = new TextureAtlas(stageDef.getAtlasFile());
-        FramePack framePack =new FramePackReader(stageDef.getFrmFile()).read(atlas);
-        AnimationPack animationPack = new AnimationPackReader(stageDef.getAnmFile()).read(framePack);
+        SpritePack spritePack =new SpritePackReader(stageDef.getFrmFile()).read(atlas);
+        AnimationPack animationPack = AnimationPack.read(stageDef.getAnmFile(), spritePack);
         stageDef.setAnimationPack(animationPack);
 
         // Sprites
-        SpriteDef curSprite = null;
+        StageSpriteDef curSprite = null;
         for( String line : lines ) {
             line = line.trim();
 
             if (line.startsWith("[Sprite")) {
                 String name = line.substring(8, line.indexOf("]"));
-                curSprite = new SpriteDef(name);
+                curSprite = new StageSpriteDef(name);
                 stageDef.addSpriteDef(curSprite);
             }
             else if( line.startsWith("start") ){

@@ -1,4 +1,4 @@
-package com.lksoft.yugen.tools.frameeditor;
+package com.lksoft.yugen.tools.spriteeditor;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -8,7 +8,7 @@ import java.io.File;
 /**
  * Created by Lake on 07/06/2016.
  */
-public class FrameEditorLauncher {
+public class SpriteEditorLauncher {
     public static void main (String[] arg) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.width = 1280;
@@ -16,6 +16,6 @@ public class FrameEditorLauncher {
 
         File path = new File(".");
         if( arg.length > 0 ) path = new File(arg[0]);
-        new LwjglApplication(new FrameEditor(path), config);
+        new LwjglApplication(new SpriteEditor(path), config);
     }
 }

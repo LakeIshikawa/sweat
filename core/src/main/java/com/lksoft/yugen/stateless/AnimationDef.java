@@ -11,6 +11,9 @@ public class AnimationDef implements Comparable<AnimationDef> {
     private Array<AnimationFrame> frames = new Array<>();
     private int loopStartPos = 0;
 
+    // For json
+    public AnimationDef(){}
+
     /**
      * Create an animation
      * @param name Script name of the animation
@@ -70,9 +73,9 @@ public class AnimationDef implements Comparable<AnimationDef> {
     }
 
     /**
-     * Gets the frame for the specified number of ticks
+     * Gets the spriteDef for the specified number of ticks
      * @param ticks Time in ticks
-     * @return The frame for that time, or null if not existing
+     * @return The spriteDef for that time, or null if not existing
      */
     public AnimationFrame getFrameAt(int ticks) {
         int acc = 0;

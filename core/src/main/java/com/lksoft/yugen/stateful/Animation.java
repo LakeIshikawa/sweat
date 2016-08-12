@@ -32,7 +32,7 @@ public class Animation {
     }
 
     /**
-     * Frame update
+     * SpriteDef update
      */
     public void update(){
         ticks = getTicks() + 1;
@@ -42,7 +42,7 @@ public class Animation {
             if( getTicks() >= getLength() ) {
                 ticks = getLoopTime();
             }
-            // If last frame, update cycle
+            // If last spriteDef, update cycle
             if( getTicks() >= getLength()-1 ) {
                 cycles++;
             }

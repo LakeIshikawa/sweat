@@ -1,4 +1,4 @@
-package com.lksoft.yugen.tools.frameeditor;
+package com.lksoft.yugen.tools.spriteeditor;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -9,16 +9,16 @@ import com.kotcrab.vis.ui.widget.MenuItem;
 /**
  * Created by Lake on 04/08/2016.
  */
-public class FrameEditorMenuBar extends MenuBar {
+public class SpriteEditorMenuBar extends MenuBar {
 
-    private FrameEditorScreen editorScreen;
+    private SpriteEditorScreen editorScreen;
 
     /**
      * Create the main manu bar
-     * @param frameEditorScreen
+     * @param spriteEditorScreen
      */
-    public FrameEditorMenuBar(FrameEditorScreen frameEditorScreen) {
-        this.editorScreen = frameEditorScreen;
+    public SpriteEditorMenuBar(SpriteEditorScreen spriteEditorScreen) {
+        this.editorScreen = spriteEditorScreen;
 
         Menu fileMenu = new Menu("File");
         fileMenu.addItem(new MenuItem("New", new ChangeListener() {

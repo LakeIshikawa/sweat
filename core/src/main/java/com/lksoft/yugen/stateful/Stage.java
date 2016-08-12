@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.lksoft.yugen.stateless.SpriteDef;
+import com.lksoft.yugen.stateless.StageSpriteDef;
 import com.lksoft.yugen.stateless.StageDef;
 
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ public class Stage {
             p1.setFacing(false);
 
             // Calculate scale factor
-            int oh = p1.getFighterDef().getAnimationPack().getAnimationDef("idle").getFrameAt(0).frame.region.originalHeight;
+            int oh = p1.getFighterDef().getAnimationPack().getAnimationDef("idle").getFrameAt(0).components.get(0).spriteDef.region.originalHeight;
             float scale =  p1.getFighterDef().getScale() * (stageDef.getFightersHeight() / oh);
             p1.scale = scale;
 
@@ -72,7 +72,7 @@ public class Stage {
             p2.setFacing(true);
 
             // Calculate scale factor
-            int oh = p2.getFighterDef().getAnimationPack().getAnimationDef("idle").getFrameAt(0).frame.region.originalHeight;
+            int oh = p2.getFighterDef().getAnimationPack().getAnimationDef("idle").getFrameAt(0).components.get(0).spriteDef.region.originalHeight;
             float scale =  p2.getFighterDef().getScale() * (stageDef.getFightersHeight() / oh);
             p2.scale = scale;
         }
@@ -80,14 +80,14 @@ public class Stage {
         // Create the sprites
         for(int i = 0; i< stageDef.getLayers().length; i++ ) {
             layers[i] = new ArrayList<>();
-            for (SpriteDef def : stageDef.getLayers()[i]) {
+            for (StageSpriteDef def : stageDef.getLayers()[i]) {
                 layers[i].add(new StageSprite(def, this));
             }
         }
     }
 
     /**
-     * Frame update
+     * SpriteDef update
      */
     public void update(){
         // Update fighters

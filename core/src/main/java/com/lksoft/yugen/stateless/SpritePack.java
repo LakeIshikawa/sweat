@@ -9,17 +9,17 @@ import java.util.Comparator;
 /**
  * Created by Lake on 08/06/2016.
  */
-public class FramePack {
+public class SpritePack {
     // Atlas
     private TextureAtlas atlas;
-    // Frame definitions
-    private ObjectMap<String, Frame> frameDefs = new ObjectMap<>();
+    // SpriteDef definitions
+    private ObjectMap<String, SpriteDef> frameDefs = new ObjectMap<>();
 
     /**
-     * Create an empty frame pack
+     * Create an empty spriteDef pack
      * @param atlas
      */
-    public FramePack(TextureAtlas atlas){
+    public SpritePack(TextureAtlas atlas){
         this.atlas = atlas;
     }
 
@@ -38,22 +38,22 @@ public class FramePack {
     }
 
     /**
-     * Obtains b1 frame by id
-     * @param id Frame id
-     * @return The frame object or null if not present
+     * Obtains b1 spriteDef by id
+     * @param id SpriteDef id
+     * @return The spriteDef object or null if not present
      */
-    public Frame getFrame(String id){
+    public SpriteDef getSpriteDef(String id){
         return frameDefs.get(id);
     }
 
     /**
      * @return All frames in an array
      */
-    public Array<Frame> getFrames(){
-        Array<Frame> res = frameDefs.values().toArray();
-        res.sort(new Comparator<Frame>() {
+    public Array<SpriteDef> getSpriteDefs(){
+        Array<SpriteDef> res = frameDefs.values().toArray();
+        res.sort(new Comparator<SpriteDef>() {
             @Override
-            public int compare(Frame o1, Frame o2) {
+            public int compare(SpriteDef o1, SpriteDef o2) {
                 return o1.region.name.toLowerCase().compareTo(o2.region.name.toLowerCase());
             }
         });
@@ -61,21 +61,21 @@ public class FramePack {
     }
 
     /**
-     * Adds a frame
-     * @param frame
+     * Adds a spriteDef
+     * @param spriteDef
      */
-    public void addFrame(Frame frame){
+    public void addSpriteDef(SpriteDef spriteDef){
         // No overwriting
-        if( !frameDefs.containsKey(frame.region.name) ) {
-            frameDefs.put(frame.region.name, frame);
+        if( !frameDefs.containsKey(spriteDef.region.name) ) {
+            frameDefs.put(spriteDef.region.name, spriteDef);
         }
     }
 
     /**
-     * Removes a frame
+     * Removes a spriteDef
      * @param name
      */
-    public void removeFrame(String name) {
+    public void removeSpriteDef(String name) {
         frameDefs.remove(name);
     }
 }

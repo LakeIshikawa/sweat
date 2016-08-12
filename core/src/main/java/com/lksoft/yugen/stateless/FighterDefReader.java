@@ -58,8 +58,8 @@ public class FighterDefReader {
 
         // Load animationPack
         TextureAtlas atlas = new TextureAtlas(fighterDef.getAtlas());
-        FramePack framePack = new FramePackReader(fighterDef.getFrm()).read(atlas);
-        AnimationPack animationPack = new AnimationPackReader(fighterDef.getAnm()).read(framePack);
+        SpritePack spritePack = new SpritePackReader(fighterDef.getFrm()).read(atlas);
+        AnimationPack animationPack = AnimationPack.read(fighterDef.getAnm(), spritePack);
         fighterDef.setAnimationPack(animationPack);
 
         // Load hit pack

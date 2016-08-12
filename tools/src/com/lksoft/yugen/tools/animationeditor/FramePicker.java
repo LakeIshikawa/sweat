@@ -9,8 +9,8 @@ import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.VisUI;
 import com.kotcrab.vis.ui.util.adapter.ArrayAdapter;
 import com.kotcrab.vis.ui.widget.*;
-import com.lksoft.yugen.stateless.Frame;
-import com.lksoft.yugen.stateless.FramePack;
+import com.lksoft.yugen.stateless.SpriteDef;
+import com.lksoft.yugen.stateless.SpritePack;
 
 /**
  * Created by Lake on 06/08/2016.
@@ -23,16 +23,16 @@ public class FramePicker extends VisWindow {
     /**
      * Creates an animation picker
      */
-    public FramePicker(FramePack framePack, final PickListener listener) {
-        super("Pick frame");
+    public FramePicker(SpritePack spritePack, final PickListener listener) {
+        super("Pick spriteDef");
         setModal(true);
 
         icon = new VisImage();
 
-        final ListView<Frame> frameList = new ListView<>(new FramesAdapter(framePack.getFrames()));
-        frameList.setItemClickListener(new ListView.ItemClickListener<Frame>() {
+        final ListView<SpriteDef> frameList = new ListView<>(new FramesAdapter(spritePack.getSpriteDefs()));
+        frameList.setItemClickListener(new ListView.ItemClickListener<SpriteDef>() {
             @Override
-            public void clicked(Frame item) {
+            public void clicked(SpriteDef item) {
                 icon.setDrawable(new TextureRegionDrawable(item.region));
             }
         });
@@ -50,7 +50,7 @@ public class FramePicker extends VisWindow {
         choose.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Array<Frame> selection = ((ArrayAdapter)frameList.getAdapter()).getSelection();
+                Array<SpriteDef> selection = ((ArrayAdapter)frameList.getAdapter()).getSelection();
                 if(selection.size > 0) {
                     listener.onFramePicked(selection.first());
                 }
@@ -82,19 +82,19 @@ public class FramePicker extends VisWindow {
         stage.addActor(this);
     }
 
-    // Adapter for Frame array
-    private class FramesAdapter extends ArrayAdapter<Frame, VisTable> {
+    // Adapter for SpriteDef array
+    private class FramesAdapter extends ArrayAdapter<SpriteDef, VisTable> {
         private final Drawable bg = VisUI.getSkin().getDrawable("window-bg");
         private final Drawable selection = VisUI.getSkin().getDrawable("list-selection");
 
         // Create adapter
-        public FramesAdapter(Array<Frame> frames) {
+        public FramesAdapter(Array<SpriteDef> frames) {
             super(frames);
             setSelectionMode(SelectionMode.SINGLE);
         }
 
         @Override
-        protected VisTable createView(Frame item) {
+        protected VisTable createView(SpriteDef item) {
             VisLabel label = new VisLabel(item.region.name);
 
             VisTable table = new VisTable();
@@ -121,7 +121,7 @@ public class FramePicker extends VisWindow {
     // Pick listener interface
     public interface PickListener {
 
-        void onFramePicked(Frame frame);
+        void onFramePicked(SpriteDef spriteDef);
         void onCancel();
     }
 }

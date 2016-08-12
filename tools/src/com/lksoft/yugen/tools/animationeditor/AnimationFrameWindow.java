@@ -30,7 +30,7 @@ public class AnimationFrameWindow extends VisWindow {
      * @param animationEditorScreen
      */
     public AnimationFrameWindow(AnimationEditorScreen animationEditorScreen) {
-        super("FramePack");
+        super("Frames");
         this.editorScreen = animationEditorScreen;
         TableUtils.setSpacingDefaults(this);
 
@@ -122,7 +122,7 @@ public class AnimationFrameWindow extends VisWindow {
     }
 
     /**
-     * @return Currently selected frame
+     * @return Currently selected spriteDef
      */
     public AnimationFrame getSelectedFrame() {
         if( getAdapter().getSelection().size == 0 ) return null;
@@ -130,7 +130,7 @@ public class AnimationFrameWindow extends VisWindow {
     }
 
     /**
-     * @return Frame next to currently selected
+     * @return SpriteDef next to currently selected
      */
     public AnimationFrame getNextFrame() {
         AnimationFrame current = getSelectedFrame();
@@ -144,7 +144,7 @@ public class AnimationFrameWindow extends VisWindow {
     }
 
     /**
-     * Adds a new frame to current position
+     * Adds a new spriteDef to current position
      * @param newFrame
      */
     public void addFrame(AnimationFrame newFrame) {
@@ -152,7 +152,7 @@ public class AnimationFrameWindow extends VisWindow {
     }
 
     /**
-     * Remove the specified frame
+     * Remove the specified spriteDef
      */
     public void removeFrame(AnimationFrame frame) {
         getAdapter().remove(frame);
@@ -177,7 +177,7 @@ public class AnimationFrameWindow extends VisWindow {
         private final Drawable bg = VisUI.getSkin().getDrawable("window-bg");
         private final Drawable selection = VisUI.getSkin().getDrawable("list-selection");
 
-        // Backing frame
+        // Backing spriteDef
         private AnimationDef animationDef;
 
         public AnimationDefAdapter(AnimationDef def) {
@@ -187,7 +187,7 @@ public class AnimationFrameWindow extends VisWindow {
 
         @Override
         protected VisTable createView(AnimationFrame item) {
-            VisLabel label = new VisLabel(item.frame.region.name);
+            VisLabel label = new VisLabel(item.components.get(0).spriteDef.region.name);
             // Loop start
             if( animationDef.getFrames().indexOf(item, true) == animationDef.getLoopStartPos()) {
                 label.setColor(Color.GREEN);
@@ -274,7 +274,7 @@ public class AnimationFrameWindow extends VisWindow {
         }
 
         /**
-         * Moves specified frame up in the order
+         * Moves specified spriteDef up in the order
          * @param frame
          */
         public void moveUp(AnimationFrame frame) {
@@ -287,7 +287,7 @@ public class AnimationFrameWindow extends VisWindow {
         }
 
         /**
-         * Moves specified frame down in the order
+         * Moves specified spriteDef down in the order
          * @param frame
          */
         public void moveDown(AnimationFrame frame) {
@@ -300,7 +300,7 @@ public class AnimationFrameWindow extends VisWindow {
         }
 
         /**
-         * Sets the loop start to specified frame
+         * Sets the loop start to specified spriteDef
          * @param frame
          */
         public void setLoopStart(AnimationFrame frame) {

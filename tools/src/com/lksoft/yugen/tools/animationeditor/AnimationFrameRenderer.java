@@ -14,7 +14,7 @@ import com.lksoft.yugen.stateless.AnimationFrame;
  */
 public class AnimationFrameRenderer {
 
-    // Current frame
+    // Current spriteDef
     private AnimationFrame frame;
 
     // Viewport
@@ -29,8 +29,8 @@ public class AnimationFrameRenderer {
     private Vector2 touch = new Vector2();
 
     /**
-     * Sets frame to render
-     * @param frame A frame
+     * Sets spriteDef to render
+     * @param frame A spriteDef
      */
     public void setAnimationFrame(AnimationFrame frame){
         this.frame = frame;
@@ -53,6 +53,18 @@ public class AnimationFrameRenderer {
         // Geometry
         shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+
+        // Origin
+        shapeRenderer.setColor(Color.WHITE);
+        shapeRenderer.line(-10, 0, 10, 0);
+        shapeRenderer.line(0, -10, 0, 10);
+
+        // Origin of every component
+        shapeRenderer.setColor(Color.ORANGE);
+        for(AnimationFrame.Component c : frame.components ){
+            shapeRenderer.line(c.x-10, c.y, c.x+10, c.y);
+            shapeRenderer.line(c.x, c.y-10, c.x, c.y+10);
+        }
 
         // Collision
         for(Rectangle r : frame.damageCollisions){

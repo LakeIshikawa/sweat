@@ -28,7 +28,7 @@ public class Sprite {
     }
 
     /**
-     * Frame update
+     * SpriteDef update
      */
     public void update() {
         animation.update();

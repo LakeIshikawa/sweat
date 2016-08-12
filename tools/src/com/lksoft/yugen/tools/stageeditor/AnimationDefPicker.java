@@ -2,7 +2,6 @@ package com.lksoft.yugen.tools.stageeditor;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -12,7 +11,6 @@ import com.kotcrab.vis.ui.util.adapter.ArrayAdapter;
 import com.kotcrab.vis.ui.widget.*;
 import com.lksoft.yugen.stateless.AnimationDef;
 import com.lksoft.yugen.stateless.AnimationPack;
-import com.lksoft.yugen.stateless.Frame;
 
 /**
  * Created by Lake on 06/08/2016.
@@ -35,7 +33,7 @@ public class AnimationDefPicker extends VisWindow {
         animList.setItemClickListener(new ListView.ItemClickListener<AnimationDef>() {
             @Override
             public void clicked(AnimationDef item) {
-                icon.setDrawable(new TextureRegionDrawable(item.getFrameAt(0).frame.region));
+                icon.setDrawable(new TextureRegionDrawable(item.getFrameAt(0).components.get(0).spriteDef.region));
             }
         });
 
@@ -85,7 +83,7 @@ public class AnimationDefPicker extends VisWindow {
         stage.addActor(this);
     }
 
-    // Adapter for Frame array
+    // Adapter for SpriteDef array
     private class AnimationsDefAdapter extends ArrayAdapter<AnimationDef, VisTable> {
         private final Drawable bg = VisUI.getSkin().getDrawable("window-bg");
         private final Drawable selection = VisUI.getSkin().getDrawable("list-selection");

@@ -1,6 +1,6 @@
 package com.lksoft.yugen.tools.stageeditor;
 
-import com.lksoft.yugen.stateless.SpriteDef;
+import com.lksoft.yugen.stateless.StageSpriteDef;
 import com.lksoft.yugen.stateless.StageDef;
 
 import java.io.BufferedWriter;
@@ -55,7 +55,7 @@ public class StageDefWriter {
 
         // Sprite defs
         for( int l=0; l<def.getLayers().length; l++ ) {
-            for (SpriteDef s : def.getLayers()[l]) {
+            for (StageSpriteDef s : def.getLayers()[l]) {
                 bw.write("[Sprite " + s.getName() + "]\n");
                 bw.write("start = " + s.getStartX() + "," + s.getStartY() + "\n");
                 bw.write("scrollFactor = " + s.getScrollFactorX() + "," + s.getScrollFactorY() + "\n");

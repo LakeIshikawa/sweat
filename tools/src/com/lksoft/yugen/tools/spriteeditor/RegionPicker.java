@@ -1,4 +1,4 @@
-package com.lksoft.yugen.tools.frameeditor;
+package com.lksoft.yugen.tools.spriteeditor;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -23,7 +23,7 @@ public class RegionPicker extends VisWindow {
      * Creates an animation picker
      */
     public RegionPicker(TextureAtlas atlas, final PickListener listener) {
-        super("Pick frame");
+        super("Pick spriteDef");
         setModal(true);
 
         icon = new VisImage();
@@ -81,7 +81,7 @@ public class RegionPicker extends VisWindow {
         stage.addActor(this);
     }
 
-    // Adapter for Frame array
+    // Adapter for SpriteDef array
     private class RegionAdapter extends ArrayAdapter<TextureAtlas.AtlasRegion, VisTable> {
         private final Drawable bg = VisUI.getSkin().getDrawable("window-bg");
         private final Drawable selection = VisUI.getSkin().getDrawable("list-selection");

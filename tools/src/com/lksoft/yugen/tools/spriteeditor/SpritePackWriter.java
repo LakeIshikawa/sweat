@@ -1,7 +1,7 @@
-package com.lksoft.yugen.tools.frameeditor;
+package com.lksoft.yugen.tools.spriteeditor;
 
-import com.lksoft.yugen.stateless.Frame;
-import com.lksoft.yugen.stateless.FramePack;
+import com.lksoft.yugen.stateless.SpriteDef;
+import com.lksoft.yugen.stateless.SpritePack;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * Created by Lake on 08/06/2016.
  */
-public class FramePackWriter {
+public class SpritePackWriter {
 
     // Output file
     private File file;
@@ -20,19 +20,19 @@ public class FramePackWriter {
      * Creates pack writer
      * @param file Output file
      */
-    public FramePackWriter(File file) {
+    public SpritePackWriter(File file) {
         this.file = file;
     }
 
     /**
-     * Serialize the specified frame pack
+     * Serialize the specified spriteDef pack
      * @param pack Animation pack to serialize
      */
-    public void write(FramePack pack) throws IOException {
+    public void write(SpritePack pack) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 
         // Animations
-        for(Frame def : pack.getFrames()) {
+        for(SpriteDef def : pack.getSpriteDefs()) {
             bw.write(def.region.name);
             bw.write(" ");
             bw.write("" + def.originX + " " + (def.region.originalHeight - def.originY));

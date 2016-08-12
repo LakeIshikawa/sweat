@@ -39,7 +39,7 @@ public class StageDef {
     private int p2StartX = 70;
 
     // Sprite definitions
-    private Array<SpriteDef> layers[] = new Array[10];
+    private Array<StageSpriteDef> layers[] = new Array[10];
 
     /**
      * Create b1 new stage
@@ -62,7 +62,7 @@ public class StageDef {
     }
 
     // Change layer of sprite def
-    public void changeLayer(SpriteDef currentDef, int layer) {
+    public void changeLayer(StageSpriteDef currentDef, int layer) {
         if( layer == currentDef.getLayer() ) return;
 
         layers[currentDef.getLayer()].removeValue(currentDef, true);
@@ -174,12 +174,12 @@ public class StageDef {
         this.fightersHeight = fightersHeight;
     }
 
-    public Array<SpriteDef>[] getLayers() {
+    public Array<StageSpriteDef>[] getLayers() {
         return layers;
     }
 
-    public void addSpriteDef(SpriteDef spriteDef) {
-        layers[spriteDef.getLayer()].add(spriteDef);
+    public void addSpriteDef(StageSpriteDef stageSpriteDef) {
+        layers[stageSpriteDef.getLayer()].add(stageSpriteDef);
     }
 
     public FileHandle getFrmFile() {

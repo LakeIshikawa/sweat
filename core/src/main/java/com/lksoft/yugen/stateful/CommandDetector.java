@@ -69,7 +69,7 @@ public class CommandDetector {
     }
 
     /**
-     * Frame update
+     * SpriteDef update
      */
     public void update(){
         InputState last = history.removeLast();

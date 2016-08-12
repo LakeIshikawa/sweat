@@ -1,12 +1,9 @@
-package com.lksoft.yugen.tools.frameeditor;
+package com.lksoft.yugen.tools.spriteeditor;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
@@ -15,9 +12,9 @@ import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.file.FileChooser;
 import com.kotcrab.vis.ui.widget.file.FileChooserListener;
 import com.kotcrab.vis.ui.widget.file.FileTypeFilter;
-import com.lksoft.yugen.stateless.Frame;
-import com.lksoft.yugen.stateless.FramePack;
-import com.lksoft.yugen.stateless.FramePackReader;
+import com.lksoft.yugen.stateless.SpriteDef;
+import com.lksoft.yugen.stateless.SpritePack;
+import com.lksoft.yugen.stateless.SpritePackReader;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +22,7 @@ import java.io.IOException;
 /**
  * Created by Lake on 07/06/2016.
  */
-public class FrameEditorScreen implements Screen, InputProcessor {
+public class SpriteEditorScreen implements Screen, InputProcessor {
 
     // Chooser Path
     private File path;
@@ -34,12 +31,12 @@ public class FrameEditorScreen implements Screen, InputProcessor {
     private Stage stage;
 
     // GUI components
-    private FrameEditorMenuBar menuBar;
-    private FramePackWindow framePackWindow;
+    private SpriteEditorMenuBar menuBar;
+    private SpritePackWindow spritePackWindow;
     private InspectorWindow inspectorWindow;
 
     // Current animations
-    private FrameRenderer frameRenderer;
+    private SpriteDefRenderer spriteDefRenderer;
     private FileHandle frmFile;
 
     // Screen size info
@@ -49,10 +46,10 @@ public class FrameEditorScreen implements Screen, InputProcessor {
     private Vector2 palette;
 
     /**
-     * Create frame editor
+     * Create spriteDef editor
      * @param path
      */
-    public FrameEditorScreen(File path){
+    public SpriteEditorScreen(File path){
         this.path = path;
     }
 
@@ -66,12 +63,12 @@ public class FrameEditorScreen implements Screen, InputProcessor {
         float h = stage.getViewport().getWorldHeight();
 
         // Menus!
-        menuBar = new FrameEditorMenuBar(this);
+        menuBar = new SpriteEditorMenuBar(this);
 
         // Animation pack window
-        framePackWindow = new FramePackWindow(this);
-        framePackWindow.setSize(300, h - 30);
-        framePackWindow.setPosition((w-5)- framePackWindow.getWidth(), 5);
+        spritePackWindow = new SpritePackWindow(this);
+        spritePackWindow.setSize(300, h - 30);
+        spritePackWindow.setPosition((w-5)- spritePackWindow.getWidth(), 5);
 
         // Inspector window
         inspectorWindow = new InspectorWindow(this);
@@ -79,7 +76,7 @@ public class FrameEditorScreen implements Screen, InputProcessor {
         inspectorWindow.setPosition(5, 5);
 
         // Tool window
-        ToolsWindow toolsWindow = new ToolsWindow(this);
+        com.lksoft.yugen.tools.spriteeditor.ToolsWindow toolsWindow = new com.lksoft.yugen.tools.spriteeditor.ToolsWindow(this);
         toolsWindow.pack();
         toolsWindow.setPosition( w/2 - toolsWindow.getWidth()/2, 5);
 
@@ -90,7 +87,7 @@ public class FrameEditorScreen implements Screen, InputProcessor {
         root.setFillParent(true);
 
         stage.addActor(root);
-        stage.addActor(framePackWindow);
+        stage.addActor(spritePackWindow);
         stage.addActor(inspectorWindow);
         stage.addActor(toolsWindow);
     }
@@ -98,7 +95,7 @@ public class FrameEditorScreen implements Screen, InputProcessor {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
-        if( frameRenderer != null ) frameRenderer.resize(width, height);
+        if( spriteDefRenderer != null ) spriteDefRenderer.resize(width, height);
         lastW = width;
         lastH = height;
     }
@@ -109,8 +106,8 @@ public class FrameEditorScreen implements Screen, InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // Render stage layout
-        if( frameRenderer != null ) {
-            frameRenderer.render();
+        if( spriteDefRenderer != null ) {
+            spriteDefRenderer.render();
         }
 
         // Render ui
@@ -138,48 +135,48 @@ public class FrameEditorScreen implements Screen, InputProcessor {
         stage.dispose();
     }
 
-    // Set the current frame pack
-    private void setFramePack(FramePack pack, FileHandle frmFile) {
+    // Set the current spriteDef pack
+    private void setFramePack(SpritePack pack, FileHandle frmFile) {
         this.frmFile = frmFile;
 
         // Create renderer
-        frameRenderer = new FrameRenderer();
-        frameRenderer.resize(lastW, lastH);
+        spriteDefRenderer = new SpriteDefRenderer();
+        spriteDefRenderer.resize(lastW, lastH);
 
         // Update GUI
-        framePackWindow.setFramePack(pack);
+        spritePackWindow.setFramePack(pack);
 
         // Select first animation def
-        selectFrame(pack.getFrames().first());
+        selectFrame(pack.getSpriteDefs().first());
     }
 
-    // Selects the specified frame
-    void selectFrame(Frame frame) {
+    // Selects the specified spriteDef
+    void selectFrame(SpriteDef spriteDef) {
         // Set window selection
-        framePackWindow.setSelected(frame);
+        spritePackWindow.setSelected(spriteDef);
         // Renderer
-        frameRenderer.setFrame(frame);
+        spriteDefRenderer.setSpriteDef(spriteDef);
         // Inspector
-        inspectorWindow.setFrame(frame);
+        inspectorWindow.setSpriteDef(spriteDef);
     }
 
-    // Remove frame
-    void removeFrame(Frame frame) {
-        framePackWindow.removeFrame(frame);
+    // Remove spriteDef
+    void removeFrame(SpriteDef spriteDef) {
+        spritePackWindow.removeFrame(spriteDef);
         selectFrame(null);
     }
 
-    // Choose region and add new frame
+    // Choose region and add new spriteDef
     public void addFrame() {
-        if( framePackWindow.getFramePack() == null ) return;
+        if( spritePackWindow.getFramePack() == null ) return;
 
-        RegionPicker picker = new RegionPicker(framePackWindow.getFramePack().getAtlas(),
-                new RegionPicker.PickListener() {
+        com.lksoft.yugen.tools.spriteeditor.RegionPicker picker = new com.lksoft.yugen.tools.spriteeditor.RegionPicker(spritePackWindow.getFramePack().getAtlas(),
+                new com.lksoft.yugen.tools.spriteeditor.RegionPicker.PickListener() {
                     @Override
                     public void onRegionPicked(TextureAtlas.AtlasRegion region) {
-                        Frame newFrame = new Frame(region, region.originalWidth/2, region.originalHeight);
-                        framePackWindow.addFrame(newFrame);
-                        selectFrame(newFrame);
+                        SpriteDef newSpriteDef = new SpriteDef(region, region.originalWidth/2, region.originalHeight);
+                        spritePackWindow.addFrame(newSpriteDef);
+                        selectFrame(newSpriteDef);
                     }
 
                     @Override
@@ -190,33 +187,33 @@ public class FrameEditorScreen implements Screen, InputProcessor {
 
     // Set origin
     private void setOrigin(int x, int y) {
-        framePackWindow.getSelected().originX = x;
-        framePackWindow.getSelected().originY = y;
-        inspectorWindow.setFrame(framePackWindow.getSelected());
+        spritePackWindow.getSelected().originX = x;
+        spritePackWindow.getSelected().originY = y;
+        inspectorWindow.setSpriteDef(spritePackWindow.getSelected());
     }
 
     // Copy
     public void copy() {
-        if( framePackWindow.getFramePack() == null ) return;
-        palette= new Vector2(framePackWindow.getSelected().originX, framePackWindow.getSelected().originY);
+        if( spritePackWindow.getFramePack() == null ) return;
+        palette= new Vector2(spritePackWindow.getSelected().originX, spritePackWindow.getSelected().originY);
     }
 
-    // Paste to cur frame
+    // Paste to cur spriteDef
     public void paste() {
-        if( framePackWindow.getFramePack() == null || palette == null ) return;
-        framePackWindow.getSelected().originX = (int) palette.x;
-        framePackWindow.getSelected().originY = (int) palette.y;
-        inspectorWindow.setFrame(framePackWindow.getSelected());
+        if( spritePackWindow.getFramePack() == null || palette == null ) return;
+        spritePackWindow.getSelected().originX = (int) palette.x;
+        spritePackWindow.getSelected().originY = (int) palette.y;
+        inspectorWindow.setSpriteDef(spritePackWindow.getSelected());
     }
 
     // Paste to all frames
     public void pasteToAll() {
-        if( framePackWindow.getFramePack() == null || palette == null ) return;
-        for( Frame f : framePackWindow.getFramePack().getFrames() ){
+        if( spritePackWindow.getFramePack() == null || palette == null ) return;
+        for( SpriteDef f : spritePackWindow.getFramePack().getSpriteDefs() ){
             f.originX = (int) palette.x;
             f.originY = (int) palette.y;
         }
-        inspectorWindow.setFrame(framePackWindow.getSelected());
+        inspectorWindow.setSpriteDef(spritePackWindow.getSelected());
     }
 
     // Create new pack
@@ -239,8 +236,8 @@ public class FrameEditorScreen implements Screen, InputProcessor {
                 // Load stuff
                 TextureAtlas tAtlas = new TextureAtlas(atlas);
 
-                // Create new frame pack
-                setFramePack(new FramePack(tAtlas), frm);
+                // Create new spriteDef pack
+                setFramePack(new SpritePack(tAtlas), frm);
             }
 
             @Override
@@ -258,7 +255,7 @@ public class FrameEditorScreen implements Screen, InputProcessor {
         chooser.setMultiSelectionEnabled(false);
         chooser.setDirectory(path);
         FileTypeFilter filter = new FileTypeFilter(false);
-        filter.addRule("Frame pack files", "frm");
+        filter.addRule("SpriteDef pack files", "frm");
         chooser.setFileTypeFilter(filter);
         chooser.setListener(new FileChooserListener() {
 
@@ -268,8 +265,8 @@ public class FrameEditorScreen implements Screen, InputProcessor {
                 FileHandle atlasHandle = new FileHandle(files.first().pathWithoutExtension() + ".atlas");
                 TextureAtlas atlas = new TextureAtlas(atlasHandle);
 
-                FramePack framePack = new FramePackReader(files.first()).read(atlas);
-                setFramePack(framePack, files.first());
+                SpritePack spritePack = new SpritePackReader(files.first()).read(atlas);
+                setFramePack(spritePack, files.first());
             }
 
             @Override
@@ -282,12 +279,12 @@ public class FrameEditorScreen implements Screen, InputProcessor {
 
     // Save pack
     void save() {
-        if( framePackWindow.getFramePack() == null ) return;
+        if( spritePackWindow.getFramePack() == null ) return;
 
-        FramePackWriter writer = new FramePackWriter(frmFile.file());
+        SpritePackWriter writer = new SpritePackWriter(frmFile.file());
         try {
-            writer.write(framePackWindow.getFramePack());
-            Dialogs.showOKDialog(stage, "Success", "Frame Pack saved.");
+            writer.write(spritePackWindow.getFramePack());
+            Dialogs.showOKDialog(stage, "Success", "SpriteDef Pack saved.");
         } catch (IOException e) {
             e.printStackTrace();
             Dialogs.showErrorDialog(stage, "Could not write file.  Check permissions?");
@@ -311,7 +308,7 @@ public class FrameEditorScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        Vector2 touch = frameRenderer.getTouch(screenX, screenY);
+        Vector2 touch = spriteDefRenderer.getTouch(screenX, screenY);
         setOrigin((int)-touch.x, (int)-touch.y);
         return true;
     }
@@ -323,7 +320,7 @@ public class FrameEditorScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        Vector2 touch = frameRenderer.getTouch(screenX, screenY);
+        Vector2 touch = spriteDefRenderer.getTouch(screenX, screenY);
         setOrigin((int)-touch.x, (int)-touch.y);
         return true;
     }

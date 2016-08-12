@@ -40,7 +40,7 @@ public class StageEditorScreen implements Screen, InputProcessor {
     private int lastW, lastH;
 
     // Selection
-    private SpriteDef selection;
+    private StageSpriteDef selection;
     // Dragging
     private Vector2 clickOffset;
 
@@ -147,7 +147,7 @@ public class StageEditorScreen implements Screen, InputProcessor {
             case Input.Keys.MINUS:
                 if( selection == null ) break;
 
-                Array<SpriteDef> defs = getCurrentStageDef().getLayers()[selection.getLayer()];
+                Array<StageSpriteDef> defs = getCurrentStageDef().getLayers()[selection.getLayer()];
                 int pos = defs.indexOf(selection, true);
                 int newpos = Math.max(0, pos + (keycode==Input.Keys.PLUS ? 1 : -1));
                 if( newpos<0 || newpos > defs.size-1 ) break;
@@ -193,10 +193,10 @@ public class StageEditorScreen implements Screen, InputProcessor {
             Vector2 touch = stageRenderer.getTouch(screenX, screenY);
 
             // Get first intersecting sprite
-            Array<SpriteDef>[] layers = getCurrentStageDef().getLayers();
+            Array<StageSpriteDef>[] layers = getCurrentStageDef().getLayers();
             boolean found = false;
             for( int l=layers.length-1; l>=0; l-- ) {
-                Array<SpriteDef> dfs = layers[l];
+                Array<StageSpriteDef> dfs = layers[l];
                 for (int i = dfs.size - 1; i >= 0; i--) {
                     if (dfs.get(i).getBounds().contains(touch)) {
                         selection = dfs.get(i);
@@ -270,12 +270,10 @@ public class StageEditorScreen implements Screen, InputProcessor {
                 FileHandle frm = new FileHandle(files.first().pathWithoutExtension() + ".frm");
                 FileHandle atlasHandle = new FileHandle(files.first().pathWithoutExtension() + ".atlas");
                 TextureAtlas atlas = new TextureAtlas(atlasHandle);
-                FramePack framePack = new FramePackReader(frm).read(atlas);
-
-                AnimationPackReader reader = new AnimationPackReader(files.first());
+                SpritePack spritePack = new SpritePackReader(frm).read(atlas);
 
                 // Create new stage
-                setLayout(new StageDef(reader.read(framePack), files.first(), frm, atlasHandle));
+                setLayout(new StageDef(AnimationPack.read(files.first(), spritePack), files.first(), frm, atlasHandle));
             }
 
             @Override
@@ -293,7 +291,7 @@ public class StageEditorScreen implements Screen, InputProcessor {
         AnimationDefPicker picker = new AnimationDefPicker(getCurrentStageDef().getAnimationPack(), new AnimationDefPicker.PickListener() {
             @Override
             public void onFramePicked(AnimationDef frame) {
-                getCurrentStageDef().addSpriteDef(new SpriteDef(frame));
+                getCurrentStageDef().addSpriteDef(new StageSpriteDef(frame));
             }
 
             @Override
