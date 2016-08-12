@@ -55,13 +55,13 @@ public class InspectorWindow extends VisWindow {
 
         // Component
         VisTable row = new VisTable();
-        row.add(x = new Spinner("x", new IntSpinnerModel(0, -1000, 1000, 10))).growX();
-        row.add(y = new Spinner("y", new IntSpinnerModel(0, -1000, 1000, 10))).growX();
+        row.add(x = new Spinner("x", new IntSpinnerModel(0, -1000, 1000, 1))).growX();
+        row.add(y = new Spinner("y", new IntSpinnerModel(0, -1000, 1000, 1))).growX();
         add(row).colspan(2).growX().row();
 
         row = new VisTable();
-        row.add(sx = new Spinner("sx", new SimpleFloatSpinnerModel(1, -1, 1, 0.1f))).growX();
-        row.add(sy = new Spinner("sy", new SimpleFloatSpinnerModel(1, -1, 1, 0.1f))).growX();
+        row.add(sx = new Spinner("sx", new SimpleFloatSpinnerModel(1, 0, 10, 0.1f))).growX();
+        row.add(sy = new Spinner("sy", new SimpleFloatSpinnerModel(1, 0, 10, 0.1f))).growX();
         add(row).colspan(2).growX().row();
 
         row = new VisTable();
