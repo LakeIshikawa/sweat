@@ -1,0 +1,24 @@
+State init (S)
+	[Enter]
+	camera_width = 320
+	camera_height = 240
+	camera_offset_y = 90
+	fighters_height = 200
+
+	area_r = 768
+	area_l = -768
+	area_t = 500
+	area_b = -200
+
+	p1_start_x = -70
+	p2_start_x = 70
+
+	bg = loadFSM("shared/stagesprite.fsm", animpack, "bg")
+	bg{pos.x = 4}
+	bg{pos.x = 367}
+	bg{scrollFactor.x = 0.15}
+	bg{scrollFactor.y = 0}
+	bg{layer = 0}
+	bg{anim = A:king001}
+
+	
