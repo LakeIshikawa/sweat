@@ -1,24 +1,29 @@
+include("shared/stage.fsm")
+
 State init (S)
 	[Enter]
-	camera_width = 320
-	camera_height = 240
-	camera_offset_y = 90
-	fighters_height = 200
+	camera_width = 320.0
+	camera_height = 240.0
+	camera_offset_y = 90.0
+	fighters_height = 200.0
 
-	area_r = 768
-	area_l = -768
-	area_t = 500
-	area_b = -200
+	area_r = 768.0
+	area_l = -768.0
+	area_t = 500.0
+	area_b = -200.0
 
-	p1_start_x = -70
-	p2_start_x = 70
+	p1_start_x = -70.0
+	p1_start_y = 0.0
+	p2_start_x = 70.0
+	p2_start_y = 0.0
 
-	bg = loadFSM("shared/stagesprite.fsm", animpack, "bg")
-	bg{pos.x = 4}
-	bg{pos.x = 367}
+	stagepack = animpack
+	bg = createFSM("bg")
+	bg{animpack = stagepack}
+	bg{pos.x = 4.0}
+	bg{pos.y = 367.0}
 	bg{scrollFactor.x = 0.15}
-	bg{scrollFactor.y = 0}
+	bg{scrollFactor.y = 0.0}
 	bg{layer = 0}
 	bg{anim = A:king001}
-
-	
+	->setup

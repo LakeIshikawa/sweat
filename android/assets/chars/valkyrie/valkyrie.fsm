@@ -2,7 +2,7 @@ include("shared/fighter.fsm")
 
 State init (S)
 	[Enter]
-	scale = 0.9
+	scale = 0.8
 	speed.walk.fwd.x = 6.0
 	speed.walk.bwd.x = -4.0
 	speed.air.fwd.x = 3.0
@@ -15,4 +15,4 @@ State init (S)
 	standing.friction.x = 0.4
 	crouching.friction.x = 0.65
 	air.gravity.y = -0.6
-	-> idle
+	-> setup

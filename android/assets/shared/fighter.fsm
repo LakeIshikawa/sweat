@@ -1,4 +1,4 @@
-State idle
+State setup
 	[Enter]
 	// Position
 	S = 0  // Standing
@@ -11,6 +11,12 @@ State idle
 	PhyCrouching = 2 // Crouching
 	PhyAir = 3 	 // Airing
 
+	// Other player
+	opponent = (name == "p1") ? getFSM("p2") : getFSM("p1")
+	-> idle
+
+State idle
+	[Enter]
 	status = S
 	physics = PhyStanding
 	priority = 0
@@ -19,7 +25,7 @@ State idle
 	layer = 5
 
 	// Face
-	[Trigger !facingP2()]
+	[Trigger !facing(opponent)]
 	-> turn
 
 	// Walk
@@ -50,7 +56,7 @@ State walk
 	anim = A:walkbwd
 
 	// Face
-	[Trigger !facingP2()]
+	[Trigger !facing(opponent)]
 	-> turn
 
 	// Stop walking
@@ -205,14 +211,14 @@ State airDamage
 // --
 Stateless
 	// Run
-	[Trigger ctrl && (stype() == "S") && has(A:running) && C:run]
+	[Trigger ctrl && (status == S) && has(A:running) && C:run]
 		-> running
 	// Back-hop
-	[Trigger ctrl && (stype() == "S") && has(A:backhop) && C:backhop]
+	[Trigger ctrl && (status == S) && has(A:backhop) && C:backhop]
 		-> backhop
 		
 	// Middle-punch
-	[Trigger ctrl && (stype() == "S") && has(A:midpunch) && keypress("B1")]
+	[Trigger ctrl && (status == S) && has(A:midpunch) && keypress("B1")]
 		-> midpunch
 
 	// Standing physics
@@ -241,7 +247,7 @@ Stateless
 		pauseP2(hitget("pausetime"))
 
 		// Air damage
-		if(stype() == "A"){
+		if(status == A){
 			anim = A:damageFall
 			vel.x = hitget("air.velocity.x") * (facing ? -1.0 : 1.0)
 			vel.y = 0.0
@@ -263,7 +269,7 @@ Stateless
 		slidetime = hitget("ground.slidetime")
 	
 		// Ground Damages
-		if( stype() == "S" ){
+		if( status == S ){
 			switch hitget("damageanim.type") {
 				"L": { if(hitget("damageanim.height") == "H") { anim = A:damageSHL } else { anim = A:damageSLL } }
 				"M": { if(hitget("damageanim.height") == "H") { anim = A:damageSHM } else { anim = A:damageSLM } }

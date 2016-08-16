@@ -16,6 +16,6 @@ public class ClearHit implements Functions.Function {
 
     @Override
     public void execute(FighterExpVisitor evaluator, FsmParser.FcallContext fcall) {
-        evaluator.getFsm().setCurrentHit(null);
+        evaluator.getTargetFsm().setCurrentHit(null);
     }
 }

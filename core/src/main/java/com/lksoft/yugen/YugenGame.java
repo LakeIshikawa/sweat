@@ -14,18 +14,21 @@ import java.io.IOException;
 public class YugenGame extends Game {
     // Files to load for vs test mode
     private String fsmFile;
+    // Debug
+    private boolean debug;
 
     /**
      * Start yugen
      */
-    public YugenGame(String fsmFile) {
+    public YugenGame(String fsmFile, boolean debug) {
         this.fsmFile = fsmFile;
+        this.debug = debug;
     }
 
     @Override
 	public void create () {
         try {
-            Yugen yugen = new Yugen(Gdx.files.internal(fsmFile));
+            Yugen yugen = new Yugen(Gdx.files.internal(fsmFile), debug);
             // Set screen
             setScreen(new YugenScreen(yugen));
         } catch (IOException e) {

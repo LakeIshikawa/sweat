@@ -13,17 +13,14 @@ public class TestScreen implements Screen {
 
     // Screen to go back to
     private StageEditorScreen backTo;
-    // Stage
-    private Stage stage;
+
 
     /**
      * Create b1 test screen for b1 stage
      * @param stageEditorScreen
-     * @param stage
      */
-    public TestScreen(StageEditorScreen stageEditorScreen, Stage stage) {
+    public TestScreen(StageEditorScreen stageEditorScreen) {
         this.backTo = stageEditorScreen;
-        this.stage = stage;
     }
 
     @Override
@@ -33,9 +30,6 @@ public class TestScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        stage.update();
-        stage.render();
-
         // Go back
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             StageEditor.instance.setScreen(backTo);
@@ -44,7 +38,7 @@ public class TestScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        stage.resize(width, height);
+
     }
 
     @Override

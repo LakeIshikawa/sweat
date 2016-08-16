@@ -15,17 +15,9 @@ public class YugenScreen implements Screen {
     // The engine
     private Yugen yugen;
 
-    // Viewport
-    private YugenCamera camera = new YugenCamera();
     // Batch
     private SpriteBatch batch = new SpriteBatch();
-
-    // For collision check
-    private Rectangle p1Rect = new Rectangle();
-    private Rectangle p2Rect = new Rectangle();
-
-    // Debug rendering
-    private boolean debug = false;
+    // Shape batch
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
 
     /**
@@ -46,16 +38,21 @@ public class YugenScreen implements Screen {
         Gdx.gl.glClearColor(0, 0.7f, 0.7f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        batch.setProjectionMatrix(camera.getCamera().combined);
+        batch.setProjectionMatrix(yugen.getCamera().getCamera().combined);
         batch.begin();
         yugen.update();
-        yugen.render(batch, camera);
+        yugen.render(batch, yugen.getCamera());
         batch.end();
+
+        shapeRenderer.setProjectionMatrix(yugen.getCamera().getCamera().combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        yugen.renderDebug(shapeRenderer);
+        shapeRenderer.end();
     }
 
     @Override
     public void resize(int width, int height) {
-        camera.update(width, height);
+        yugen.getCamera().update(width, height);
     }
 
     @Override

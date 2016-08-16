@@ -35,7 +35,9 @@ public class Sprite {
      * SpriteDef update
      */
     public void update() {
-        animation.update();
+        if( animation != null ) {
+            animation.update();
+        }
 
         // Update motion
         vel.add(acc);
@@ -46,6 +48,7 @@ public class Sprite {
      * Render
      */
     public void render(SpriteBatch batch, YugenCamera camera) {
+        if( animation == null ) return;
         float x = pos.x + (camera.getCamera().position.x - camera.getInitPosition().x) * scrollFactor.x;
         float y = pos.y + (camera.getCamera().position.y - camera.getInitPosition().y) * scrollFactor.y;
         animation.draw(batch, x, y, scale, flip);

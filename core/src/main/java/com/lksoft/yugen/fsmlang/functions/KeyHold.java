@@ -2,10 +2,10 @@ package com.lksoft.yugen.fsmlang.functions;
 
 import com.badlogic.gdx.Gdx;
 import com.lksoft.yugen.FsmParser;
-import com.lksoft.yugen.fsmlang.visitor.FighterExpVisitor;
 import com.lksoft.yugen.fsmlang.Functions;
 import com.lksoft.yugen.fsmlang.Type;
 import com.lksoft.yugen.fsmlang.Value;
+import com.lksoft.yugen.fsmlang.visitor.FighterExpVisitor;
 import com.lksoft.yugen.stateless.Settings;
 
 /**
@@ -31,8 +31,13 @@ public class KeyHold implements Functions.Function {
             return;
         }
 
-        Settings.KeySettings keys = evaluator.getFsm().getKeySettings();
-        boolean facingRight = !evaluator.getFsm().flip;
+        Settings.KeySettings keys = evaluator.getTargetFsm().getKeySettings();
+        if( keys == null ) {
+            evaluator.setBoolResult(false);
+            return;
+        }
+
+        boolean facingRight = !evaluator.getTargetFsm().flip;
         switch (v.getStringValue()){
             case "U":  evaluator.setBoolResult(Gdx.input.isKeyPressed(keys.up)); break;
             case "D":  evaluator.setBoolResult(Gdx.input.isKeyPressed(keys.down)); break;

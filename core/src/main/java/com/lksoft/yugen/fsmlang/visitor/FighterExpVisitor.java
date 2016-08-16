@@ -14,6 +14,8 @@ import com.lksoft.yugen.stateless.CommandDef;
 import com.lksoft.yugen.stateless.HitPack;
 import com.lksoft.yugen.stateless.Settings;
 
+import java.util.Stack;
+
 /**
  * Created by Lake on 12/06/2016.
  */
@@ -26,17 +28,14 @@ public class FighterExpVisitor extends FsmBaseVisitor<Void>{
     private String error;
 
     // Fsm parent
-    private Fsm fsm;
-
-    // Fsm expression context
-    private Fsm fsmContext;
+    private Stack<Fsm> memory;
 
     /**
      * Create an expression evaluator
-     * @param fsm Fsm parent of the script
+     * @param memory The stack memory
      */
-    public FighterExpVisitor(Fsm fsm){
-        this.fsm = fsm;
+    public FighterExpVisitor(Stack<Fsm> memory){
+        this.memory = memory;
     }
 
     /**
@@ -166,7 +165,7 @@ public class FighterExpVisitor extends FsmBaseVisitor<Void>{
         if( function != null ){
             function.execute(this, ctx.fcall());
         } else {
-            setError("Unkown function: " + function.getSignature());
+            setError("Unkown function: " + ctx.fcall().ID().getText());
         }
         return null;
     }
@@ -179,15 +178,16 @@ public class FighterExpVisitor extends FsmBaseVisitor<Void>{
             return null;
         }
 
-        fsmContext = fsm;
+        memory.push(fsm);
         ctx.e().accept(this);
-        fsmContext = null;
+        memory.pop();
         return null;
     }
 
     @Override
     public Void visitFcall(FsmParser.FcallContext ctx) {
         if( ctx.elist() != null ) {
+            results.clear();
             ctx.elist().accept(this);
         }
         return null;
@@ -196,14 +196,14 @@ public class FighterExpVisitor extends FsmBaseVisitor<Void>{
     @Override
     public Void visitElistE(FsmParser.ElistEContext ctx) {
         ctx.e().accept(this);
-        getResults().insert(0, getResult());
+        getResults().add(new Value(getResult()));
         return null;
     }
 
     @Override
     public Void visitEListEElist(FsmParser.EListEElistContext ctx) {
         ctx.e().accept(this);
-        getResults().insert(0, getResult());
+        getResults().add(new Value(getResult()));
 
         ctx.elist().accept(this);
         return null;
@@ -291,39 +291,59 @@ public class FighterExpVisitor extends FsmBaseVisitor<Void>{
     // Get var value from memory
     private Value getVar(String name){
         Value res = null;
-        if( fsmContext != null ) res = fsmContext.getVar(name);
-        if( res == null ) res = fsm.getVar(name);
-        return res;
+        for( int i=memory.size()-1; i>=0; i-- ){
+            Fsm mem = memory.get(i);
+            res = mem.getVar(name);
+            if( res != null ) return res;
+        }
+
+        return null;
     }
 
     // Get animation from fsm
     private AnimationDef getAnimationDef(String name){
         AnimationDef res = null;
-        if( fsmContext != null ) res = fsmContext.getAnimationDef(name);
-        if( res == null ) res = fsm.getAnimationDef(name);
-        return res;
+        for( int i=memory.size()-1; i>=0; i++ ){
+            Fsm mem = memory.get(i);
+            res = mem.getAnimationDef(name);
+            if( res != null ) return res;
+        }
+
+        return null;
     }
 
     // Get hitdef from fsm
     private HitPack.HitDef getHitDef(String name){
         HitPack.HitDef res = null;
-        if( fsmContext != null ) res = fsmContext.getHitDef(name);
-        if( res == null ) res = fsm.getHitDef(name);
-        return res;
+        for( int i=memory.size()-1; i>=0; i++ ){
+            Fsm mem = memory.get(i);
+            res = mem.getHitDef(name);
+            if( res != null ) return res;
+        }
+
+        return null;
     }
 
     // Get command from fsm
     private CommandDef getCommand(String name){
         CommandDef res = null;
-        if( fsmContext != null ) res = fsmContext.getCommand(name);
-        if( res == null ) res = fsm.getCommand(name);
-        return res;
+        for( int i=memory.size()-1; i>=0; i++ ){
+            Fsm mem = memory.get(i);
+            res = mem.getCommand(name);
+            if( res != null ) return res;
+        }
+
+        return null;
     }
 
     // Match command from fsm
     private boolean matchCommand(CommandDef command){
-        if( fsmContext != null ) return fsmContext.matchCommand(command);
-        else return fsm.matchCommand(command);
+        return memory.peek().matchCommand(command);
+    }
+
+    // Get current topping memory
+    public Fsm getTargetFsm(){
+        return memory.peek();
     }
 
     // Get current result
@@ -356,9 +376,5 @@ public class FighterExpVisitor extends FsmBaseVisitor<Void>{
 
     public Array<Value> getResults() {
         return results;
-    }
-
-    public Fsm getFsm() {
-        return fsm;
     }
 }

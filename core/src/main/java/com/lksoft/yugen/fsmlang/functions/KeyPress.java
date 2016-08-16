@@ -31,8 +31,13 @@ public class KeyPress implements Functions.Function {
             return;
         }
 
-        Settings.KeySettings keys = evaluator.getFsm().getKeySettings();
-        boolean facingRight = !evaluator.getFsm().flip;
+        Settings.KeySettings keys = evaluator.getTargetFsm().getKeySettings();
+        if( keys == null ) {
+            evaluator.setBoolResult(false);
+            return;
+        }
+
+        boolean facingRight = !evaluator.getTargetFsm().flip;
         switch (v.getStringValue()){
             case "U":  evaluator.setBoolResult(Gdx.input.isKeyJustPressed(keys.up)); break;
             case "D":  evaluator.setBoolResult(Gdx.input.isKeyJustPressed(keys.down)); break;

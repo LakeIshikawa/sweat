@@ -1,8 +1,10 @@
 package com.lksoft.yugen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.lksoft.yugen.stateful.Fsm;
@@ -10,7 +12,6 @@ import com.lksoft.yugen.stateful.Sprite;
 import com.lksoft.yugen.stateless.FsmDef;
 import com.lksoft.yugen.stateless.FsmDefReader;
 import com.lksoft.yugen.stateless.Settings;
-import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.io.IOException;
 
@@ -29,18 +30,20 @@ public class Yugen {
     private ObjectMap<String, Fsm> fsms = new ObjectMap<>();
     private Array<Fsm>[] layers = new Array[10];
 
+    // Viewport
+    private YugenCamera camera = new YugenCamera();
 
-    // Accessors
-    public Settings getSettings() {
-        return settings;
-    }
+    // Debug
+    private boolean debug = false;
+    private boolean drawRects = false;
 
     /**
      * Create yugen engine
      * File "settings.def" must exist
      */
-    public Yugen(FileHandle mainFsm) throws IOException {
+    public Yugen(FileHandle mainFsm, boolean debug) throws IOException {
         i = this;
+        this.debug = debug;
 
         // Create layers
         for( int i=0; i<layers.length; i++ ){
@@ -65,6 +68,13 @@ public class Yugen {
 
         // Manage collisions
         checkCollisions();
+
+        // Debug keys
+        if( debug ){
+            if( Gdx.input.isKeyJustPressed(Input.Keys.NUM_1) ){
+                drawRects = !drawRects;
+            }
+        }
     }
 
     /**
@@ -80,6 +90,20 @@ public class Yugen {
     }
 
     /**
+     * Render debug
+     */
+    public void renderDebug(ShapeRenderer shapeRenderer) {
+        if( drawRects ) {
+            for (int i = 0; i < layers.length; i++) {
+                // Render bg sprites
+                for (Fsm fsm : layers[i]) {
+                    fsm.renderCollision(shapeRenderer);
+                }
+            }
+        }
+    }
+
+    /**
      * Load an FSM from file and register it with specified name
      * @param fsmFile File handle for .fsm file
      * @param name Registration name (use this with getFSM() to get the FSM back)
@@ -87,9 +111,31 @@ public class Yugen {
      */
     public Fsm loadFSM(FileHandle fsmFile, String name) throws IOException {
         FsmDef fsmDef = new FsmDefReader(fsmFile).read();
-        Fsm fsm = new Fsm(fsmDef);
+        Fsm fsm = new Fsm(fsmDef, name);
         fsms.put(name, fsm);
+        layers[fsm.getLayer()].add(fsm);
         return fsm;
+    }
+
+    /**
+     * Create an empty fsm
+     * @param name
+     * @return
+     */
+    public Fsm createFSM(String name) {
+        Fsm fsm = new Fsm(new FsmDef(), name);
+        fsms.put(name, fsm);
+        layers[fsm.getLayer()].add(fsm);
+        return fsm;
+    }
+
+    /**
+     * Destroy an fsm by name
+     * @param name
+     */
+    public void destroyFSM(String name) {
+        Fsm fsm = fsms.remove(name);
+        layers[fsm.getLayer()].removeValue(fsm, true);
     }
 
     /**
@@ -99,6 +145,14 @@ public class Yugen {
      */
     public Fsm getFSM(String name) {
         return fsms.get(name);
+    }
+
+    /**
+     * Change fsm layer
+     */
+    public void layerChanged(Fsm fsm, int oldLayer){
+        layers[oldLayer].removeValue(fsm, true);
+        layers[fsm.getLayer()].add(fsm);
     }
 
     /**
@@ -130,5 +184,16 @@ public class Yugen {
 //                }
 //            }
 //        }
+    }
+
+    // Accessors
+    public YugenCamera getCamera() {
+        return camera;
+    }
+    public Settings getSettings() {
+        return settings;
+    }
+    public boolean isDebug() {
+        return debug;
     }
 }

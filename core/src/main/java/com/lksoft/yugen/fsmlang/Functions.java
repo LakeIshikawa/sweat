@@ -46,15 +46,20 @@ public class Functions {
         registerFunction(new KeyHold());
         registerFunction(new KeyPress());
         registerFunction(new Abs());
-        registerFunction(new FacingP2());
+        registerFunction(new Facing());
         registerFunction(new Has());
-        registerFunction(new StateType());
         registerFunction(new IsHit());
         registerFunction(new HitHas());
         registerFunction(new HitGet());
         registerFunction(new StrHas());
         registerFunction(new ClearHit());
         registerFunction(new Pause());
-        registerFunction(new PauseP2());
+        registerFunction(new LoadFSM());
+        registerFunction(new CreateFSM());
+        registerFunction(new DestroyFSM());
+        registerFunction(new GetFSM());
+        registerFunction(new FrameHeight());
+        registerFunction(new InitCamera());
+        registerFunction(new SetCamera());
     }
 }

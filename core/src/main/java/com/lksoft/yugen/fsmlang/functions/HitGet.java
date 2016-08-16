@@ -25,7 +25,7 @@ public class HitGet implements Functions.Function {
 
         switch ( v.getType() ){
             case STRING:
-                Value value = evaluator.getFsm().getCurrentHit().get(evaluator.getResult().getStringValue());
+                Value value = evaluator.getTargetFsm().getCurrentHit().get(evaluator.getResult().getStringValue());
                 evaluator.getResult().copyFrom(value);
                 break;
 

@@ -26,12 +26,12 @@ public class FsmDef {
 
     // States
     private ObjectMap<String, FsmState> states = new ObjectMap<>();
-    private FsmState initialState;
+    private String initialState;
     // Stateless triggers
     private Array<FsmState.FighterTrigger> triggers = new Array<>();
 
-    // Package only constructor
-    FsmDef(){}
+    // Empty constructor
+    public FsmDef(){}
 
     /**
      * Disposes of associated resources.
@@ -107,10 +107,10 @@ public class FsmDef {
     public void setCommands(Commands commands) {
         this.commands = commands;
     }
-    public FsmState getInitialState() {
+    public String getInitialState() {
         return initialState;
     }
-    public void setInitialState(FsmState initialState) {
+    public void setInitialState(String initialState) {
         this.initialState = initialState;
     }
 }

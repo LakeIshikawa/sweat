@@ -1,10 +1,10 @@
 State init (S)
 	[Enter]
+
 	// Create stage and players fsm
-	stage = loadFSM("stages/lionking/lionking.fsm", "stage")
 	p1 = loadFSM("chars/valkyrie/valkyrie.fsm", "p1")
 	p2 = loadFSM("chars/valkyrie/valkyrie.fsm", "p2")
-	screen = loadFSM("shared/screens/battle.fsm", "screen")
+	stage = loadFSM("stages/lionking/lionking.fsm", "stage")
 	
 	// Destroy stage select fsm
-	destroy(this)
+	destroyFSM(name)

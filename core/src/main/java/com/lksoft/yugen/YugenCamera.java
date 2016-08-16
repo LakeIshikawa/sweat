@@ -33,6 +33,16 @@ public class YugenCamera extends FitViewport {
         getCamera().update();
     }
 
+    /**
+     * Set camera position
+     * @param x
+     * @param y
+     */
+    public void setPosition(int x, int y) {
+        getCamera().position.set(x, y, 0);
+        getCamera().update();
+    }
+
     // Accessor
     public Vector2 getInitPosition() {
         return initPosition;

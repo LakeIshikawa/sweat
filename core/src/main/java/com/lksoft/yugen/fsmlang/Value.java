@@ -2,6 +2,7 @@ package com.lksoft.yugen.fsmlang;
 
 import com.lksoft.yugen.stateful.Fsm;
 import com.lksoft.yugen.stateless.AnimationDef;
+import com.lksoft.yugen.stateless.AnimationPack;
 import com.lksoft.yugen.stateless.HitPack;
 import com.lksoft.yugen.stateless.Settings;
 
@@ -14,6 +15,7 @@ public class Value {
     private boolean boolValue;
     private float floatValue;
     private int intValue;
+    private AnimationPack animationPackValue;
     private AnimationDef animationValue;
     private HitPack.HitDef hitValue;
     private Settings.KeySettings keysValue;
@@ -53,6 +55,7 @@ public class Value {
             case HIT: return getHitValue() == otherv.getHitValue();
             case KEYS: return getKeysValue() == otherv.getKeysValue();
             case FSM: return getFsmValue() == otherv.getFsmValue();
+            case ANIMPACK: return getAnimPackValue() == otherv.getAnimPackValue();
         }
         return false;
     }
@@ -73,6 +76,8 @@ public class Value {
             case ANIM: animationValue = (AnimationDef) value; break;
             case HIT: hitValue= (HitPack.HitDef) value; break;
             case KEYS: keysValue= (Settings.KeySettings) value; break;
+            case FSM: fsmValue = (Fsm) value; break;
+            case ANIMPACK: animationPackValue= (AnimationPack) value; break;
         }
     }
 
@@ -91,6 +96,8 @@ public class Value {
             case ANIM: animationValue = value.getAnimationValue(); break;
             case HIT: hitValue = value.getHitValue(); break;
             case KEYS: keysValue = value.getKeysValue(); break;
+            case FSM: fsmValue = value.getFsmValue(); break;
+            case ANIMPACK: animationPackValue = value.getAnimPackValue(); break;
         }
     }
 
@@ -137,6 +144,14 @@ public class Value {
     public void setIntValue(int intValue) {
         this.intValue = intValue;
         type = Type.INT;
+    }
+
+    public AnimationPack getAnimPackValue() {
+        return animationPackValue;
+    }
+    public void setAnimationPackValue(AnimationPack animationPack) {
+        this.animationPackValue = animationPack;
+        type = Type.ANIM;
     }
 
     public AnimationDef getAnimationValue() {

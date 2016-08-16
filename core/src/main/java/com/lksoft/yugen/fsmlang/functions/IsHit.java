@@ -15,6 +15,6 @@ public class IsHit implements Functions.Function {
 
     @Override
     public void execute(FighterExpVisitor evaluator, FsmParser.FcallContext fcall) {
-        evaluator.setBoolResult(evaluator.getFsm().getCurrentHit() != null);
+        evaluator.setBoolResult(evaluator.getTargetFsm().getCurrentHit() != null);
     }
 }

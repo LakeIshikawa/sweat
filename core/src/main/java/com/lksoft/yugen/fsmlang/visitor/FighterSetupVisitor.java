@@ -37,7 +37,8 @@ public class FighterSetupVisitor extends FsmBaseVisitor<Void> {
         if( ctx.children == null ) return null;
 
         // Parse fsm
-        FileHandle fsm = Gdx.files.internal(ctx.STRING().getText());
+        String path = ctx.STRING().getText().replaceAll("\"", "");
+        FileHandle fsm = Gdx.files.internal(path);
         try {
             new FsmDefReader(fsm).read(fighter);
         } catch (IOException e) {
@@ -77,7 +78,7 @@ public class FighterSetupVisitor extends FsmBaseVisitor<Void> {
         ctx.triggers().accept(this);
 
         fighter.getStates().put(currentState.name, currentState);
-        fighter.setInitialState(currentState);
+        fighter.setInitialState(currentState.name);
         return null;
     }
 
@@ -135,6 +136,15 @@ public class FighterSetupVisitor extends FsmBaseVisitor<Void> {
     @Override
     public Void visitTrigel(FsmParser.TrigelContext ctx) {
         currentTrigger.addCondition(Integer.parseInt(ctx.INT().getText())-1, ctx.e());
+        return null;
+    }
+
+    @Override
+    public Void visitStatements(FsmParser.StatementsContext ctx) {
+        currentStatements.add(ctx.statement());
+        if( ctx.statements() != null ) {
+            ctx.statements().accept(this);
+        }
         return null;
     }
 }

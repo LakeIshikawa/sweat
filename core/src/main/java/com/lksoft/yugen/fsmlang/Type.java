@@ -10,6 +10,7 @@ public enum Type {
     FLOAT,
     INT,
 
+    ANIMPACK,
     ANIM,
     HIT,
     KEYS,

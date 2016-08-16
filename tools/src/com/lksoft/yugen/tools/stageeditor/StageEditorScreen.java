@@ -32,7 +32,7 @@ public class StageEditorScreen implements Screen, InputProcessor {
     private SpriteDefWindow spriteDefWindow;
 
     // Current stage
-    private StageDef currentStageDef;
+    //private StageDef currentStageDef;
     private StageDefRenderer stageRenderer;
     private String stageBaseName;
 
@@ -40,7 +40,7 @@ public class StageEditorScreen implements Screen, InputProcessor {
     private int lastW, lastH;
 
     // Selection
-    private StageSpriteDef selection;
+    //private StageSpriteDef selection;
     // Dragging
     private Vector2 clickOffset;
 
@@ -78,7 +78,7 @@ public class StageEditorScreen implements Screen, InputProcessor {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
-        if( stageRenderer != null ) stageRenderer.resize(width, height);
+        //if( stageRenderer != null ) stageRenderer.resize(width, height);
         lastW = width;
         lastH = height;
     }
@@ -95,7 +95,7 @@ public class StageEditorScreen implements Screen, InputProcessor {
 
         // Render stage layout
         if( stageRenderer != null ) {
-            stageRenderer.render(selection);
+            //stageRenderer.render(selection);
         }
 
         // Render ui
@@ -123,56 +123,56 @@ public class StageEditorScreen implements Screen, InputProcessor {
         stage.dispose();
     }
 
-    // Set the current stage layout
-    private void setLayout(StageDef stageDef) {
-        currentStageDef = stageDef;
-        stageRenderer = new StageDefRenderer(getCurrentStageDef());
-        stageRenderer.resize(lastW, lastH);
-        stageBaseName = stageDef.getAnmFile().nameWithoutExtension();
-    }
-
-    public StageDef getCurrentStageDef() {
-        return currentStageDef;
-    }
+//    // Set the current stage layout
+//    private void setLayout(StageDef stageDef) {
+//        currentStageDef = stageDef;
+//        stageRenderer = new StageDefRenderer(getCurrentStageDef());
+//        stageRenderer.resize(lastW, lastH);
+//        stageBaseName = stageDef.getAnmFile().nameWithoutExtension();
+//    }
+//
+//    public StageDef getCurrentStageDef() {
+//        return currentStageDef;
+//    }
 
     @Override
     public boolean keyDown(int keycode) {
-        switch (keycode){
-            case Input.Keys.N: newStage(); break;
-            case Input.Keys.O: open(); break;
-            case Input.Keys.S: save(); break;
-            case Input.Keys.A: addSpriteDef(); break;
-
-            case Input.Keys.PLUS:
-            case Input.Keys.MINUS:
-                if( selection == null ) break;
-
-                Array<StageSpriteDef> defs = getCurrentStageDef().getLayers()[selection.getLayer()];
-                int pos = defs.indexOf(selection, true);
-                int newpos = Math.max(0, pos + (keycode==Input.Keys.PLUS ? 1 : -1));
-                if( newpos<0 || newpos > defs.size-1 ) break;
-
-                defs.removeIndex(pos);
-                defs.insert(newpos, selection);
-                break;
-
-            case Input.Keys.ESCAPE:
-                selection = null;
-                spriteDefWindow.setSpriteDef(null);
-                break;
-
-            case Input.Keys.SPACE:
-                StageEditor.instance.setScreen(
-                        new TestScreen(
-                                this,
-                                new com.lksoft.yugen.stateful.Stage(getCurrentStageDef(), null, null, new ManualCamera(getCurrentStageDef()))));
-                break;
-
-            case Input.Keys.RIGHT: stageRenderer.moveCamera(10, 0); break;
-            case Input.Keys.LEFT: stageRenderer.moveCamera(-10, 0); break;
-            case Input.Keys.UP: stageRenderer.moveCamera(0, 10); break;
-            case Input.Keys.DOWN: stageRenderer.moveCamera(0,-10); break;
-        }
+//        switch (keycode){
+//            case Input.Keys.N: newStage(); break;
+//            case Input.Keys.O: open(); break;
+//            case Input.Keys.S: save(); break;
+//            case Input.Keys.A: addSpriteDef(); break;
+//
+//            case Input.Keys.PLUS:
+//            case Input.Keys.MINUS:
+//                if( selection == null ) break;
+//
+//                Array<StageSpriteDef> defs = getCurrentStageDef().getLayers()[selection.getLayer()];
+//                int pos = defs.indexOf(selection, true);
+//                int newpos = Math.max(0, pos + (keycode==Input.Keys.PLUS ? 1 : -1));
+//                if( newpos<0 || newpos > defs.size-1 ) break;
+//
+//                defs.removeIndex(pos);
+//                defs.insert(newpos, selection);
+//                break;
+//
+//            case Input.Keys.ESCAPE:
+//                selection = null;
+//                spriteDefWindow.setSpriteDef(null);
+//                break;
+//
+//            case Input.Keys.SPACE:
+//                StageEditor.instance.setScreen(
+//                        new TestScreen(
+//                                this,
+//                                new com.lksoft.yugen.stateful.Stage(getCurrentStageDef(), null, null, new ManualCamera(getCurrentStageDef()))));
+//                break;
+//
+//            case Input.Keys.RIGHT: stageRenderer.moveCamera(10, 0); break;
+//            case Input.Keys.LEFT: stageRenderer.moveCamera(-10, 0); break;
+//            case Input.Keys.UP: stageRenderer.moveCamera(0, 10); break;
+//            case Input.Keys.DOWN: stageRenderer.moveCamera(0,-10); break;
+//        }
         return true;
     }
 
@@ -189,33 +189,33 @@ public class StageEditorScreen implements Screen, InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         // Selection
-        if( getCurrentStageDef() != null ){
-            Vector2 touch = stageRenderer.getTouch(screenX, screenY);
-
-            // Get first intersecting sprite
-            Array<StageSpriteDef>[] layers = getCurrentStageDef().getLayers();
-            boolean found = false;
-            for( int l=layers.length-1; l>=0; l-- ) {
-                Array<StageSpriteDef> dfs = layers[l];
-                for (int i = dfs.size - 1; i >= 0; i--) {
-                    if (dfs.get(i).getBounds().contains(touch)) {
-                        selection = dfs.get(i);
-                        spriteDefWindow.setSpriteDef(selection);
-                        found = true;
-                        clickOffset = new Vector2(touch);
-                        clickOffset.sub(dfs.get(i).getStartX(), dfs.get(i).getStartY());
-                        break;
-                    }
-                }
-            }
-
-            // Clear selection if click on nothing
-            if(!found) {
-                selection = null;
-                spriteDefWindow.setSpriteDef(null);
-                stage.unfocusAll();
-            }
-        }
+//        if( getCurrentStageDef() != null ){
+//            Vector2 touch = stageRenderer.getTouch(screenX, screenY);
+//
+//            // Get first intersecting sprite
+//            Array<StageSpriteDef>[] layers = getCurrentStageDef().getLayers();
+//            boolean found = false;
+//            for( int l=layers.length-1; l>=0; l-- ) {
+//                Array<StageSpriteDef> dfs = layers[l];
+//                for (int i = dfs.size - 1; i >= 0; i--) {
+//                    if (dfs.get(i).getBounds().contains(touch)) {
+//                        selection = dfs.get(i);
+//                        spriteDefWindow.setSpriteDef(selection);
+//                        found = true;
+//                        clickOffset = new Vector2(touch);
+//                        clickOffset.sub(dfs.get(i).getStartX(), dfs.get(i).getStartY());
+//                        break;
+//                    }
+//                }
+//            }
+//
+//            // Clear selection if click on nothing
+//            if(!found) {
+//                selection = null;
+//                spriteDefWindow.setSpriteDef(null);
+//                stage.unfocusAll();
+//            }
+//        }
         return true;
     }
 
@@ -226,20 +226,20 @@ public class StageEditorScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        // Dragging
-        if( clickOffset != null ){
-            Vector2 place = stageRenderer.getTouch(screenX, screenY);
-            place.sub(clickOffset);
-
-            if( selection != null ) {
-                selection.setStartX((int) place.x);
-                selection.setStartY((int) place.y);
-                spriteDefWindow.setSpriteDef(selection);
-            }
-        }
-        else{
-            clickOffset = null;
-        }
+//        // Dragging
+//        if( clickOffset != null ){
+//            Vector2 place = stageRenderer.getTouch(screenX, screenY);
+//            place.sub(clickOffset);
+//
+//            if( selection != null ) {
+//                selection.setStartX((int) place.x);
+//                selection.setStartY((int) place.y);
+//                spriteDefWindow.setSpriteDef(selection);
+//            }
+//        }
+//        else{
+//            clickOffset = null;
+//        }
         return true;
     }
 
@@ -273,7 +273,7 @@ public class StageEditorScreen implements Screen, InputProcessor {
                 SpritePack spritePack = new SpritePackReader(frm).read(atlas);
 
                 // Create new stage
-                setLayout(new StageDef(AnimationPack.read(files.first(), spritePack), files.first(), frm, atlasHandle));
+                //setLayout(new StageDef(AnimationPack.read(files.first(), spritePack), files.first(), frm, atlasHandle));
             }
 
             @Override
@@ -286,18 +286,18 @@ public class StageEditorScreen implements Screen, InputProcessor {
 
     // Add sprite def
     void addSpriteDef() {
-        if( currentStageDef == null ) return;
-
-        AnimationDefPicker picker = new AnimationDefPicker(getCurrentStageDef().getAnimationPack(), new AnimationDefPicker.PickListener() {
-            @Override
-            public void onFramePicked(AnimationDef frame) {
-                getCurrentStageDef().addSpriteDef(new StageSpriteDef(frame));
-            }
-
-            @Override
-            public void onCancel() {}
-        });
-        picker.show(stage);
+//        if( currentStageDef == null ) return;
+//
+//        AnimationDefPicker picker = new AnimationDefPicker(getCurrentStageDef().getAnimationPack(), new AnimationDefPicker.PickListener() {
+//            @Override
+//            public void onFramePicked(AnimationDef frame) {
+//                getCurrentStageDef().addSpriteDef(new StageSpriteDef(frame));
+//            }
+//
+//            @Override
+//            public void onCancel() {}
+//        });
+        //picker.show(stage);
     }
 
     // Open stage
@@ -313,8 +313,8 @@ public class StageEditorScreen implements Screen, InputProcessor {
 
             @Override
             public void selected(Array<FileHandle> files) {
-                StageDefReader reader = new StageDefReader(files.first());
-                setLayout(reader.read());
+//                StageDefReader reader = new StageDefReader(files.first());
+//                setLayout(reader.read());
             }
 
             @Override
@@ -327,14 +327,14 @@ public class StageEditorScreen implements Screen, InputProcessor {
 
     // Save stage
     void save() {
-        if( getCurrentStageDef() == null ) return;
-        StageDefWriter writer = new StageDefWriter(new File(getCurrentStageDef().getAnmFile().parent().path(), stageBaseName+".stg"));
-        try {
-            writer.write(getCurrentStageDef());
-            Dialogs.showOKDialog(stage, "Success", "Stage saved.");
-        } catch (IOException e) {
-            e.printStackTrace();
-            Dialogs.showErrorDialog(stage, "Could not write file.  Check permissions?");
-        }
+//        if( getCurrentStageDef() == null ) return;
+//        StageDefWriter writer = new StageDefWriter(new File(getCurrentStageDef().getAnmFile().parent().path(), stageBaseName+".stg"));
+//        try {
+//            writer.write(getCurrentStageDef());
+//            Dialogs.showOKDialog(stage, "Success", "Stage saved.");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            Dialogs.showErrorDialog(stage, "Could not write file.  Check permissions?");
+//        }
     }
 }

@@ -24,15 +24,11 @@ public class Abs implements Functions.Function {
         Value v = evaluator.getResults().get(0);
 
         switch (v.getType()){
-            case ID:
-            case STRING:
-            case BOOL:
-            case ANIM:
-            case PHYSICS:
-                evaluator.setError("abs function expects INT or FLOAT but got : " + v.getType());
-                return;
             case FLOAT: evaluator.setFloatResult(Math.abs(v.getFloatValue())); break;
             case INT: evaluator.setIntResult(Math.abs(v.getIntValue())); break;
+            default:
+                evaluator.setError("abs function expects INT or FLOAT but got : " + v.getType());
+                return;
         }
     }
 }

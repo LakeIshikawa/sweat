@@ -25,7 +25,7 @@ public class HitHas implements Functions.Function {
 
         switch ( v.getType() ){
             case STRING:
-                evaluator.setBoolResult(evaluator.getFsm().getHitDef(v.getStringValue()) != null);
+                evaluator.setBoolResult(evaluator.getTargetFsm().getHitDef(v.getStringValue()) != null);
                 break;
 
             default:

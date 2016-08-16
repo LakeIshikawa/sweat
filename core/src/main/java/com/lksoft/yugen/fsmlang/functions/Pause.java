@@ -26,7 +26,7 @@ public class Pause implements Functions.Function {
 
         switch ( v.getType() ){
             case INT:
-                evaluator.getFsm().setPause(v.getIntValue());
+                evaluator.getTargetFsm().setPause(v.getIntValue());
                 break;
 
             default:

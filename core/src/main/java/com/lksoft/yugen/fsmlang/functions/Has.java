@@ -28,11 +28,15 @@ public class Has implements Functions.Function {
             case ANIM:
                 evaluator.setBoolResult(v.getAnimationValue() != null);
                 break;
-
-            case PHYSICS:
-                evaluator.setBoolResult(v.getPhysicsValue() != null);
+            case HIT:
+                evaluator.setBoolResult(v.getHitValue() != null);
                 break;
-
+            case FSM:
+                evaluator.setBoolResult(v.getFsmValue() != null);
+                break;
+            case KEYS:
+                evaluator.setBoolResult(v.getKeysValue() != null);
+                break;
             default:
                 evaluator.setError("has function expects resource type but got:" + v.getType());
                 break;

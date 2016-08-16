@@ -3,18 +3,21 @@ package com.lksoft.yugen.fsmlang.visitor;
 import com.badlogic.gdx.Gdx;
 import com.lksoft.yugen.FsmBaseVisitor;
 import com.lksoft.yugen.FsmParser;
+import com.lksoft.yugen.Yugen;
 import com.lksoft.yugen.fsmlang.Functions;
 import com.lksoft.yugen.fsmlang.Type;
 import com.lksoft.yugen.fsmlang.Value;
 import com.lksoft.yugen.stateful.Fsm;
+
+import java.util.Stack;
 
 /**
  * Created by Lake on 11/06/2016.
  */
 public class FighterExecuteVisitor extends FsmBaseVisitor<Void> {
 
-    // Target fsm
-    private Fsm fsm;
+    // Fsm stack
+    private Stack<Fsm> fsmMemory = new Stack<>();
 
     // Expression evaluator
     FighterExpVisitor evaluator;
@@ -26,9 +29,16 @@ public class FighterExecuteVisitor extends FsmBaseVisitor<Void> {
      * Create execution visitor
      * @param fsm Fsm
      */
-    public FighterExecuteVisitor(Fsm fsm, FighterExpVisitor evaluator) {
-        this.fsm = fsm;
-        this.evaluator = evaluator;
+    public FighterExecuteVisitor(Fsm fsm) {
+        fsmMemory.push(fsm);
+        evaluator = new FighterExpVisitor(fsmMemory);
+    }
+
+    /**
+     * @return The evaluator
+     */
+    public FighterExpVisitor getEvaluator() {
+        return evaluator;
     }
 
     @Override
@@ -43,8 +53,10 @@ public class FighterExecuteVisitor extends FsmBaseVisitor<Void> {
         }
 
         // System assignments
+        Fsm fsm = fsmMemory.peek();
         switch (lhs){
             case "anim": if( !checkError(lhs, Type.ANIM, evaluator) ) fsm.changeAnimation(evaluator.getResult().getAnimationValue()); break;
+            case "animpack": if( !checkError(lhs, Type.ANIMPACK, evaluator) ) fsm.setAnimationPack(evaluator.getResult().getAnimPackValue()); break;
             case "keys": if( !checkError(lhs, Type.KEYS, evaluator) ) fsm.setKeySettings(evaluator.getResult().getKeysValue()); break;
             case "vel.x": if( !checkError(lhs, Type.FLOAT, evaluator) ) fsm.setVelX(evaluator.getResult().getFloatValue()); break;
             case "vel.y": if( !checkError(lhs, Type.FLOAT, evaluator) ) fsm.setVelY(evaluator.getResult().getFloatValue()); break;
@@ -53,6 +65,7 @@ public class FighterExecuteVisitor extends FsmBaseVisitor<Void> {
             case "facing": if( !checkError(lhs, Type.BOOL, evaluator) ) fsm.setFacing(evaluator.getResult().getBoolValue()); break;
             case "layer": if( !checkError(lhs, Type.INT, evaluator) ) fsm.setLayer(evaluator.getResult().getIntValue()); break;
             case "attackhit": if( !checkError(lhs, Type.HIT, evaluator) ) fsm.setAttackHit(evaluator.getResult().getHitValue()); break;
+            case "scale": if( !checkError(lhs, Type.FLOAT, evaluator) ) fsm.setScale(evaluator.getResult().getFloatValue()); break;
 
             // Set a variable if not a system assignment
             default:
@@ -64,8 +77,21 @@ public class FighterExecuteVisitor extends FsmBaseVisitor<Void> {
     }
 
     @Override
+    public Void visitFsmStatement(FsmParser.FsmStatementContext ctx){
+        Fsm fsm = Yugen.i.getFSM(ctx.ID().getText());
+        if( fsm == null ){
+            Gdx.app.error("FSM", "ERROR: Fsm not found" + ctx.ID().getText());
+        }
+
+        fsmMemory.push(fsm);
+        ctx.statement().accept(this);
+        fsmMemory.pop();
+        return null;
+    }
+
+    @Override
     public Void visitStateChangeStmt(FsmParser.StateChangeStmtContext ctx) {
-        fsm.changeState(ctx.ID().getText());
+        fsmMemory.peek().changeState(ctx.ID().getText());
         return null;
     }
 

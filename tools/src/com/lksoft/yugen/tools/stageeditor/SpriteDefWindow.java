@@ -28,7 +28,7 @@ public class SpriteDefWindow extends VisWindow {
     private Spinner layer;
 
     // State
-    private StageSpriteDef currentDef;
+    //private StageSpriteDef currentDef;
 
     /**
      * Create sprite def window
@@ -61,82 +61,82 @@ public class SpriteDefWindow extends VisWindow {
         add(table);
 
 
-        // Listeners
-        name.setTextFieldListener(new VisTextField.TextFieldListener() {
-            @Override
-            public void keyTyped(VisTextField textField, char c) {
-                if( currentDef != null ) currentDef.setName(name.getText());
-            }
-        });
-        resource.setTextFieldListener(new VisTextField.TextFieldListener() {
-            @Override
-            public void keyTyped(VisTextField textField, char c) {
-                if( currentDef != null ){
-                    AnimationDef sequence = stageEditorScreen.getCurrentStageDef().getAnimationPack().getAnimationDef(resource.getText());
-                    if( sequence != null ){
-                        currentDef.setResource(sequence);
-                    }
-                }
-            }
-        });
-        startPosX.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if( currentDef != null ) currentDef.setStartX(((IntSpinnerModel)startPosX.getModel()).getValue());
-            }
-        });
-        startPosY.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if( currentDef != null ) currentDef.setStartY(((IntSpinnerModel)startPosY.getModel()).getValue());
-            }
-        });
-        scrollFactorX.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if( currentDef != null ) currentDef.setScrollFactorX(((SimpleFloatSpinnerModel)scrollFactorX.getModel()).getValue());
-            }
-        });
-        scrollFactorY.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if( currentDef != null ) currentDef.setScrollFactorY(((SimpleFloatSpinnerModel)scrollFactorY.getModel()).getValue());
-            }
-        });
-        layer.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if( currentDef != null ) {
-                    stageEditorScreen.getCurrentStageDef().changeLayer(currentDef,
-                            ((IntSpinnerModel)layer.getModel()).getValue());
-                }
-            }
-        });
+//        // Listeners
+//        name.setTextFieldListener(new VisTextField.TextFieldListener() {
+//            @Override
+//            public void keyTyped(VisTextField textField, char c) {
+//                if( currentDef != null ) currentDef.setName(name.getText());
+//            }
+//        });
+//        resource.setTextFieldListener(new VisTextField.TextFieldListener() {
+//            @Override
+//            public void keyTyped(VisTextField textField, char c) {
+//                if( currentDef != null ){
+//                    AnimationDef sequence = stageEditorScreen.getCurrentStageDef().getAnimationPack().getAnimationDef(resource.getText());
+//                    if( sequence != null ){
+//                        currentDef.setResource(sequence);
+//                    }
+//                }
+//            }
+//        });
+//        startPosX.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                if( currentDef != null ) currentDef.setStartX(((IntSpinnerModel)startPosX.getModel()).getValue());
+//            }
+//        });
+//        startPosY.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                if( currentDef != null ) currentDef.setStartY(((IntSpinnerModel)startPosY.getModel()).getValue());
+//            }
+//        });
+//        scrollFactorX.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                if( currentDef != null ) currentDef.setScrollFactorX(((SimpleFloatSpinnerModel)scrollFactorX.getModel()).getValue());
+//            }
+//        });
+//        scrollFactorY.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                if( currentDef != null ) currentDef.setScrollFactorY(((SimpleFloatSpinnerModel)scrollFactorY.getModel()).getValue());
+//            }
+//        });
+//        layer.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                if( currentDef != null ) {
+//                    stageEditorScreen.getCurrentStageDef().changeLayer(currentDef,
+//                            ((IntSpinnerModel)layer.getModel()).getValue());
+//                }
+//            }
+//        });
     }
 
-    /**
-     * Set view to sprite def
-     * @param stageSpriteDef
-     */
-    public void setSpriteDef(StageSpriteDef stageSpriteDef){
-        currentDef = stageSpriteDef;
-
-        if( stageSpriteDef == null ){
-            name.setText("");
-            resource.setText("");
-            ((IntSpinnerModel) startPosX.getModel()).setValue(0);
-            ((IntSpinnerModel) startPosY.getModel()).setValue(0);
-            ((SimpleFloatSpinnerModel) scrollFactorX.getModel()).setValue(0);
-            ((SimpleFloatSpinnerModel) scrollFactorY.getModel()).setValue(0);
-            ((IntSpinnerModel) layer.getModel()).setValue(0);
-        } else {
-            name.setText(stageSpriteDef.getName());
-            resource.setText(stageSpriteDef.getResource().getName());
-            ((IntSpinnerModel) startPosX.getModel()).setValue(stageSpriteDef.getStartX());
-            ((IntSpinnerModel) startPosY.getModel()).setValue(stageSpriteDef.getStartY());
-            ((SimpleFloatSpinnerModel) scrollFactorX.getModel()).setValue(stageSpriteDef.getScrollFactorX());
-            ((SimpleFloatSpinnerModel) scrollFactorY.getModel()).setValue(stageSpriteDef.getScrollFactorY());
-            ((IntSpinnerModel) layer.getModel()).setValue(stageSpriteDef.getLayer());
-        }
-    }
+//    /**
+//     * Set view to sprite def
+//     * @param stageSpriteDef
+//     */
+//    public void setSpriteDef(StageSpriteDef stageSpriteDef){
+//        currentDef = stageSpriteDef;
+//
+//        if( stageSpriteDef == null ){
+//            name.setText("");
+//            resource.setText("");
+//            ((IntSpinnerModel) startPosX.getModel()).setValue(0);
+//            ((IntSpinnerModel) startPosY.getModel()).setValue(0);
+//            ((SimpleFloatSpinnerModel) scrollFactorX.getModel()).setValue(0);
+//            ((SimpleFloatSpinnerModel) scrollFactorY.getModel()).setValue(0);
+//            ((IntSpinnerModel) layer.getModel()).setValue(0);
+//        } else {
+//            name.setText(stageSpriteDef.getName());
+//            resource.setText(stageSpriteDef.getResource().getName());
+//            ((IntSpinnerModel) startPosX.getModel()).setValue(stageSpriteDef.getStartX());
+//            ((IntSpinnerModel) startPosY.getModel()).setValue(stageSpriteDef.getStartY());
+//            ((SimpleFloatSpinnerModel) scrollFactorX.getModel()).setValue(stageSpriteDef.getScrollFactorX());
+//            ((SimpleFloatSpinnerModel) scrollFactorY.getModel()).setValue(stageSpriteDef.getScrollFactorY());
+//            ((IntSpinnerModel) layer.getModel()).setValue(stageSpriteDef.getLayer());
+//        }
+//    }
 }

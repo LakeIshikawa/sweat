@@ -3,15 +3,14 @@ package com.lksoft.yugen.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.lksoft.yugen.YugenGame;
-import org.kohsuke.args4j.Argument;
-import org.kohsuke.args4j.CmdLineException;
-import org.kohsuke.args4j.CmdLineParser;
-import org.kohsuke.args4j.OptionHandlerFilter;
+import org.kohsuke.args4j.*;
 
 public class DesktopLauncher {
 
     @Argument
     private String fsm;
+    @Option(name = "-d", usage = "Draw debug info")
+    boolean debug;
 
 	public static void main (String[] args) {
 		DesktopLauncher launcher = new DesktopLauncher();
@@ -53,6 +52,6 @@ public class DesktopLauncher {
         config.width = 1280;
         config.height = 800;
 
-        new LwjglApplication(new YugenGame(fsm), config);
+        new LwjglApplication(new YugenGame(fsm, debug), config);
     }
 }

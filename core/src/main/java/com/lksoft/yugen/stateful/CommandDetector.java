@@ -72,6 +72,7 @@ public class CommandDetector {
      * SpriteDef update
      */
     public void update(){
+        if( fsm.getKeySettings() == null ) return;
         InputState last = history.removeLast();
         last.U = Gdx.input.isKeyPressed(fsm.getKeySettings().up);
         last.D = Gdx.input.isKeyPressed(fsm.getKeySettings().down);

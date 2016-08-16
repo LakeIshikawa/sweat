@@ -6,13 +6,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.lksoft.yugen.FsmParser;
+import com.lksoft.yugen.Yugen;
 import com.lksoft.yugen.fsmlang.Type;
 import com.lksoft.yugen.fsmlang.Value;
 import com.lksoft.yugen.fsmlang.visitor.FighterExecuteVisitor;
 import com.lksoft.yugen.fsmlang.visitor.FighterExpVisitor;
 import com.lksoft.yugen.stateless.*;
-
-import java.io.IOException;
 
 /**
  * Created by Lake on 11/06/2016.
@@ -22,8 +21,6 @@ public class Fsm extends Sprite {
     // Fsm def
     private FsmDef fsmDef;
 
-    // Fsm layer
-    private int layer = 5;
     // Current state
     private FsmState currentState;
 
@@ -43,7 +40,7 @@ public class Fsm extends Sprite {
     private CommandDetector commandDetector = new CommandDetector(this);
 
     // Expression evaluator
-    private FighterExpVisitor evaluator = new FighterExpVisitor(this);
+    private FighterExpVisitor evaluator;
     // Execution visitor (shared)
     private FighterExecuteVisitor executor;
 
@@ -57,25 +54,31 @@ public class Fsm extends Sprite {
     private boolean stateChanged;
 
     /**
-     * Create b1 fighter by parsing b1 .def script file
+     * Create an fsm from a def with a name
      */
-    public Fsm(FsmDef fsmDef) throws IOException {
+    public Fsm(FsmDef fsmDef, String name) {
         super(null);
         this.fsmDef = fsmDef;
-        this.executor = new FighterExecuteVisitor(this, evaluator);
+        this.executor = new FighterExecuteVisitor(this);
+        this.evaluator = executor.getEvaluator();
 
         // Set system variables
         setVar("ctrl", Type.BOOL, true);
         setVar("time", Type.INT, 0);
         setVar("statetime", Type.INT, 0);
+        setVar("name", Type.STRING, name);
+        setFacing(false);
+        setAnimationPack(fsmDef.getAnimationPack());
+        setPosX(0);
+        setPosY(0);
         setVelX(0);
         setVelY(0);
-        setLayer(layer);
-        setScrollFactorX(1);
-        setScrollFactorY(1);
+        setScrollFactorX(0);
+        setScrollFactorY(0);
 
-        // Set idle state
-        changeState("idle");
+        // Set layer
+        setVar("layer", Type.INT, 0);
+        setLayer(5);
     }
 
     /**
@@ -106,7 +109,9 @@ public class Fsm extends Sprite {
             case INT: setVar(name, value.getType(), value.getIntValue()); break;
             case ANIM: setVar(name, value.getType(), value.getAnimationValue()); break;
             case HIT: setVar(name, value.getType(), value.getHitValue()); break;
+            case FSM: setVar(name, value.getType(), value.getFsmValue()); break;
             case KEYS: setVar(name, value.getType(), value.getKeysValue()); break;
+            case ANIMPACK: setVar(name, value.getType(), value.getAnimPackValue()); break;
         }
     }
 
@@ -121,6 +126,11 @@ public class Fsm extends Sprite {
 
     @Override
     public void update(){
+        // Set initial state
+        if( currentState == null && fsmDef.getInitialState() != null ) {
+            changeState(fsmDef.getInitialState());
+        }
+
         // Pause!
         if( pauseTime > 0 ){
             pauseTime--;
@@ -133,32 +143,31 @@ public class Fsm extends Sprite {
         commandDetector.update();
 
         // Evaluate all triggers
-        for(FsmState.FighterTrigger t : currentState.triggers) {
-            t.run(executor, evaluator);
-            if( stateChanged ) break;
-        }
+        if( currentState != null ) {
+            for (FsmState.FighterTrigger t : currentState.triggers) {
+                t.run(executor, evaluator);
+                if (stateChanged) break;
+            }
 
-        // Also stateless triggers
-        for (FsmState.FighterTrigger t : getFsmDef().getTriggers()) {
-            t.run(executor, evaluator);
+            // Also stateless triggers
+            for (FsmState.FighterTrigger t : getFsmDef().getTriggers()) {
+                t.run(executor, evaluator);
+            }
         }
 
         super.update();
 
         // Update system vars
-        setVar("vel.x", Type.FLOAT, vel.x);
-        setVar("vel.y", Type.FLOAT, vel.y);
         setVar("pos.x", Type.FLOAT, pos.x);
         setVar("pos.y", Type.FLOAT, pos.y);
-        setVar("facing", Type.BOOL, flip);
-        setVar("scrollFactor.x", Type.FLOAT, scrollFactor.x);
-        setVar("scrollFactor.y", Type.FLOAT, scrollFactor.y);
-        setVar("animTime", Type.INT, animation.getTicks());
-        setVar("animCycles", Type.INT, animation.getCycles());
+        setVar("vel.x", Type.FLOAT, vel.x);
+        setVar("vel.y", Type.FLOAT, vel.y);
+        if( animation != null ) {
+            setVar("animTime", Type.INT, animation.getTicks());
+            setVar("animCycles", Type.INT, animation.getCycles());
+        }
         setVar("time", Type.INT, getVar("time").getIntValue()+1);
         setVar("statetime", Type.INT, getVar("statetime").getIntValue()+1);
-        setVar("layer", Type.INT, layer);
-        setVar("attackhit", Type.HIT, attackHit);
     }
 
     /**
@@ -166,6 +175,7 @@ public class Fsm extends Sprite {
      * @param shapeRenderer
      */
     public void renderCollision(ShapeRenderer shapeRenderer) {
+        if( animation == null ) return;
         shapeRenderer.setColor(Color.WHITE);
         for( Rectangle r : animation.getCurrentFrame().damageCollisions ){
             collRect.set(r);
@@ -194,7 +204,7 @@ public class Fsm extends Sprite {
         }
         stateChanged = true;
 
-        Gdx.app.log("FSM", "-> "+stateName);
+        Gdx.app.log(getVar("name").getStringValue(), "-> "+stateName);
 
         // Execute exit triggers
         if( currentState != null && currentState.exitTrigger != null ) {
@@ -212,6 +222,11 @@ public class Fsm extends Sprite {
             for (FsmParser.StatementContext s : currentState.enterTrigger) {
                 s.accept(executor);
             }
+        }
+
+        // Error
+        if( executor.getEvaluator().getError() != null ){
+            Gdx.app.error("FSM", executor.getEvaluator().getError());
         }
     }
 
@@ -235,6 +250,17 @@ public class Fsm extends Sprite {
      */
     public AnimationDef getAnimationDef(String animName){
         return getFsmDef().getAnimationPack().getAnimationDef(animName);
+    }
+
+    /**
+     * Sets the animation pack
+     * @param pack
+     */
+    public void setAnimationPack(AnimationPack pack){
+        if( pack != null ) {
+            fsmDef.setAnimationPack(pack);
+            setVar("animpack", Type.ANIMPACK, pack);
+        }
     }
 
     /**
@@ -314,10 +340,19 @@ public class Fsm extends Sprite {
     }
 
     /**
+     * Set scale
+     * @param scale
+     */
+    public void setScale(float scale){
+        this.scale = scale;
+        setVar("scale", Type.FLOAT, scale);
+    }
+
+    /**
      * @return Current layer
      */
     public int getLayer() {
-        return layer;
+        return getVar("layer").getIntValue();
     }
 
     /**
@@ -325,8 +360,9 @@ public class Fsm extends Sprite {
      * @param layer
      */
     public void setLayer(int layer) {
-        this.layer = layer;
+        int old = getLayer();
         setVar("layer", Type.INT, layer);
+        Yugen.i.layerChanged(this, old);
     }
 
     /**
