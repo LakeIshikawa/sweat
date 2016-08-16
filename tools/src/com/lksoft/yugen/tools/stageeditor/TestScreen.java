@@ -3,7 +3,6 @@ package com.lksoft.yugen.tools.stageeditor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.lksoft.yugen.stateful.Stage;
 
 /**
  * Created by Lake on 09/06/2016.

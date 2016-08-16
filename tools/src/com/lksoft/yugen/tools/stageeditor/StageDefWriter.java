@@ -1,8 +1,5 @@
 package com.lksoft.yugen.tools.stageeditor;
 
-import com.lksoft.yugen.stateless.StageSpriteDef;
-import com.lksoft.yugen.stateless.StageDef;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;

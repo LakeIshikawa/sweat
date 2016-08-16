@@ -1,81 +1,134 @@
 package com.lksoft.yugen;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.lksoft.yugen.screens.FightScreen;
-import com.lksoft.yugen.stateful.FightCamera;
-import com.lksoft.yugen.stateful.Fighter;
-import com.lksoft.yugen.stateful.Stage;
-import com.lksoft.yugen.stateless.*;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
+import com.lksoft.yugen.stateful.Fsm;
+import com.lksoft.yugen.stateful.Sprite;
+import com.lksoft.yugen.stateless.FsmDef;
+import com.lksoft.yugen.stateless.FsmDefReader;
+import com.lksoft.yugen.stateless.Settings;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.io.IOException;
-import java.util.HashMap;
 
-public class Yugen extends Game {
-    private static Yugen self;
-    public static Yugen i(){return self;}
-
-    // Files to load for vs test mode
-    private String stageFile;
-    private String p1File;
-    private String p2File;
+/**
+ * Created by Lake on 15/08/2016.
+ *
+ * Yugen engine
+ */
+public class Yugen {
+    public static Yugen i;
 
     // Settings
     private Settings settings;
 
-    // Physics
-    private HashMap<String, PhysicsDef> physics = new HashMap<>();
+    // Fsms (map and layers)
+    private ObjectMap<String, Fsm> fsms = new ObjectMap<>();
+    private Array<Fsm>[] layers = new Array[10];
 
-    /**
-     * Start normal mode
-     */
-    public Yugen() {
-        self = this;
-    }
 
-    /**
-     * Start vs mode
-     */
-    public Yugen(String stageFile, String p1File, String p2File) {
-        this();
-        this.stageFile = stageFile;
-        this.p1File = p1File;
-        this.p2File = p2File;
-    }
-
-    @Override
-	public void create () {
-        try {
-            // Parse settings
-            settings = new Settings(Gdx.files.internal("shared/settings.def"));
-
-            // Parse physics
-            FileHandle physicsFolder = Gdx.files.internal("shared/physics/");
-            for( FileHandle f : physicsFolder.list() ){
-                if( f.extension().equalsIgnoreCase("phy") ){
-                    physics.put(f.nameWithoutExtension(), new PhysicsDef(f));
-                }
-            }
-
-            // Set game mode
-            if( stageFile == null ){
-                // TODO Set title screen!
-            } else {
-                StageDef layout = new StageDefReader(Gdx.files.internal(stageFile)).read();
-                Fighter p1 = new Fighter(new FighterDefReader(Gdx.files.internal(p1File)).read());
-                Fighter p2 = new Fighter(new FighterDefReader(Gdx.files.internal(p2File)).read());
-                Stage stage = new Stage(layout, p1, p2, new FightCamera(layout));
-
-                setScreen(new FightScreen(stage));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-	}
-
+    // Accessors
     public Settings getSettings() {
         return settings;
     }
-    public PhysicsDef getPhysicsDef(String name){ return physics.get(name); }
+
+    /**
+     * Create yugen engine
+     * File "settings.def" must exist
+     */
+    public Yugen(FileHandle mainFsm) throws IOException {
+        i = this;
+
+        // Create layers
+        for( int i=0; i<layers.length; i++ ){
+            layers[i] = new Array<>();
+        }
+
+        // Parse settings
+        settings = new Settings(Gdx.files.internal("settings.def"));
+
+        // Load main fsm
+        loadFSM(mainFsm, "main");
+    }
+
+    /**
+     * Frame update
+     */
+    public void update() {
+        // Update fsms
+        for( Fsm fsm : fsms.values() ){
+            fsm.update();
+        }
+
+        // Manage collisions
+        checkCollisions();
+    }
+
+    /**
+     * Frame render
+     */
+    public void render(SpriteBatch batch, YugenCamera camera) {
+        for( int i=0; i<layers.length; i++ ) {
+            // Render bg sprites
+            for (Sprite s : layers[i]) {
+                s.render(batch, camera);
+            }
+        }
+    }
+
+    /**
+     * Load an FSM from file and register it with specified name
+     * @param fsmFile File handle for .fsm file
+     * @param name Registration name (use this with getFSM() to get the FSM back)
+     * @throws IOException
+     */
+    public Fsm loadFSM(FileHandle fsmFile, String name) throws IOException {
+        FsmDef fsmDef = new FsmDefReader(fsmFile).read();
+        Fsm fsm = new Fsm(fsmDef);
+        fsms.put(name, fsm);
+        return fsm;
+    }
+
+    /**
+     * Gets an fsm
+     * @param name
+     * @return
+     */
+    public Fsm getFSM(String name) {
+        return fsms.get(name);
+    }
+
+    /**
+     * Check for fsm collisions
+     */
+    private void checkCollisions() {
+//        // P1 to P2
+//        for(Rectangle r1 : getP1().animation.getCurrentFrame().hitCollisions ){
+//            p1Rect.set(r1);
+//            getP1().getRectWorld(p1Rect);
+//            for(Rectangle r2 : getP2().animation.getCurrentFrame().damageCollisions ){
+//                p2Rect.set(r2);
+//                getP2().getRectWorld(p2Rect);
+//                if (p1Rect.overlaps(p2Rect)){
+//                    getP2().setCurrentHit(getP1().getAttackHit());
+//                }
+//            }
+//        }
+//
+//        // P2 to P1
+//        for(Rectangle r2 : getP2().animation.getCurrentFrame().hitCollisions ){
+//            p2Rect.set(r2);
+//            getP2().getRectWorld(p2Rect);
+//            for(Rectangle r1 : getP1().animation.getCurrentFrame().damageCollisions ){
+//                p1Rect.set(r1);
+//                getP1().getRectWorld(p1Rect);
+//                if (p1Rect.overlaps(p2Rect)){
+//                    getP1().setCurrentHit(getP2().getAttackHit());
+//                }
+//            }
+//        }
+    }
 }

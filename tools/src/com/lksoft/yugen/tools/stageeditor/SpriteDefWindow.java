@@ -11,7 +11,6 @@ import com.kotcrab.vis.ui.widget.spinner.IntSpinnerModel;
 import com.kotcrab.vis.ui.widget.spinner.SimpleFloatSpinnerModel;
 import com.kotcrab.vis.ui.widget.spinner.Spinner;
 import com.lksoft.yugen.stateless.AnimationDef;
-import com.lksoft.yugen.stateless.StageSpriteDef;
 
 /**
  * Created by Lake on 10/06/2016.

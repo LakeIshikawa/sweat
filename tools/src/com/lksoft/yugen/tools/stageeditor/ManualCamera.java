@@ -2,9 +2,6 @@ package com.lksoft.yugen.tools.stageeditor;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.lksoft.yugen.stateful.Stage;
-import com.lksoft.yugen.stateful.StageCamera;
-import com.lksoft.yugen.stateless.StageDef;
 
 /**
  * Created by Lake on 09/06/2016.

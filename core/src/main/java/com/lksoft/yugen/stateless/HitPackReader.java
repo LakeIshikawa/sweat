@@ -3,8 +3,8 @@ package com.lksoft.yugen.stateless;
 import com.badlogic.gdx.files.FileHandle;
 import com.lksoft.yugen.FsmLexer;
 import com.lksoft.yugen.FsmParser;
-import com.lksoft.yugen.fsm.Value;
-import com.lksoft.yugen.fsm.visitor.FighterExpVisitor;
+import com.lksoft.yugen.fsmlang.Value;
+import com.lksoft.yugen.fsmlang.visitor.FighterExpVisitor;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 

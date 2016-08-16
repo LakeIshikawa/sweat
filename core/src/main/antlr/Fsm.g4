@@ -11,13 +11,14 @@ ANIM: 'A:' [a-zA-Z$_] [a-zA-Z0-9$_.]*;
 PHYSICS: 'P:' [a-zA-Z$_] [a-zA-Z0-9$_.]*;
 COMMAND: 'C:' [a-zA-Z$_] [a-zA-Z0-9$_.]*;
 HIT: 'H:' [a-zA-Z$_] [a-zA-Z0-9$_.]*;
+KEYS: 'K:' [a-zA-Z$_] [a-zA-Z0-9$_.]*;
 ID: [a-zA-Z$_] [a-zA-Z0-9$_.]*;
 INT : '-' ? [0-9]+;
 FLOAT: INT ? '.' [0-9]+;
 STRING: '"' ('\\"' | ~'"')* '"';
 
 fsm
-    : params statesOpt stateless
+    : includeOpt statesOpt stateless
     ;
 
 cmd
@@ -30,18 +31,9 @@ commandlist
     | commandline commandlist
     ;
 
-params
-    : 'Params' paramslist
+includeOpt
+    : 'include' '(' STRING ')'
     |
-    ;
-
-paramslist
-    : param
-    | param paramslist
-    ;
-
-param
-    : assignment
     ;
 
 stateless
@@ -60,7 +52,8 @@ states
     ;
 
 state
-    : 'State' ID '(' ID ')' triggers
+    : 'State' ID '(S)' triggers   #StateStart
+    | 'State' ID triggers               #StateNormal
     ;
 
 triggers:
@@ -99,6 +92,7 @@ statement
     | ite           #IteStmt
     | fcall         #FCallStmt
     | '->' ID       #StateChangeStmt
+    | ID '{' statement '}' #FsmStatement
     ;
 
 switchcase
@@ -133,6 +127,7 @@ e
     | PHYSICS   #PhysicsLiteral
     | COMMAND   #CommandLiteral
     | HIT       #HitLiteral
+    | KEYS      #KeysLiteral
     | e '?' e ':' e #CondExp
     | e '+' e   #AddExp
     | e '-' e   #SubExp
@@ -150,6 +145,7 @@ e
     | '!' e     #NotExp
     | '(' e ')' #ParExp
     | fcall     #FCallExp
+    | ID '{' e '}' #FsmExp
     ;
 
 fcall

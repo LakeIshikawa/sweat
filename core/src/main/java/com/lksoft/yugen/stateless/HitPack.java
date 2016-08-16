@@ -1,7 +1,7 @@
 package com.lksoft.yugen.stateless;
 
 import com.badlogic.gdx.utils.ObjectMap;
-import com.lksoft.yugen.fsm.Value;
+import com.lksoft.yugen.fsmlang.Value;
 
 /**
  * Created by Stallman on 09/08/2016.
@@ -51,5 +51,13 @@ public class HitPack {
      */
     public void set(String name, HitDef def){
         defs.put(name, def);
+    }
+
+    /**
+     * Merge (overwriting same-name hits)
+     * @param hitPack
+     */
+    public void merge(HitPack hitPack) {
+        defs.putAll(hitPack.defs);
     }
 }

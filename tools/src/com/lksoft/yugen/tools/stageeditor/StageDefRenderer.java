@@ -9,8 +9,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.lksoft.yugen.stateless.StageSpriteDef;
-import com.lksoft.yugen.stateless.StageDef;
 
 /**
  * Created by Lake on 08/06/2016.

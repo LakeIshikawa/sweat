@@ -1,0 +1,18 @@
+include("shared/fighter.fsm")
+
+State init (S)
+	[Enter]
+	scale = 0.9
+	speed.walk.fwd.x = 6.0
+	speed.walk.bwd.x = -4.0
+	speed.air.fwd.x = 3.0
+	speed.air.bwd.x = -2.0
+	speed.jump.up = 15.0
+	speed.run.fwd.x = 9.0
+	speed.backhop.x = -9.0
+	speed.backhop.y = 5.0
+	
+	standing.friction.x = 0.4
+	crouching.friction.x = 0.65
+	air.gravity.y = -0.6
+	-> idle

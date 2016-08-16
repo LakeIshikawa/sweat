@@ -4,7 +4,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.lksoft.yugen.FsmLexer;
 import com.lksoft.yugen.FsmParser;
-import com.lksoft.yugen.fsm.visitor.CommandsSetupVisitor;
+import com.lksoft.yugen.fsmlang.visitor.CommandsSetupVisitor;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
