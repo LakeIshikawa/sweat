@@ -9,9 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.lksoft.yugen.stateful.Fsm;
-import com.lksoft.yugen.stateful.Sprite;
-import com.lksoft.yugen.stateless.FsmDef;
-import com.lksoft.yugen.stateless.FsmDefReader;
+import com.lksoft.yugen.stateless.FsmReader;
 import com.lksoft.yugen.stateless.Settings;
 
 import java.io.IOException;
@@ -26,6 +24,9 @@ public class Yugen {
 
     // Settings
     private Settings settings;
+
+    // Map of FSM classes
+    private ObjectMap<String, Class> fsmClasses = new ObjectMap<>();
 
     // Fsms (map and layers)
     private ObjectMap<String, Fsm> fsms = new ObjectMap<>();
@@ -111,17 +112,43 @@ public class Yugen {
     }
 
     /**
+     * Load FSM class from .fsm file.
+     * This converts the .fsm files to java code and
+     * runtime-compiles it into a class. Oh yeah.
+     * @param fsmFile
+     * @return
+     * @throws IOException
+     */
+    public Class loadFSMClass(FileHandle fsmFile) throws IOException {
+        Class fsmClass = fsmClasses.get(fsmFile.path());
+        if( fsmClass == null ) {
+            fsmClass = new FsmReader(fsmFile).read();
+            fsmClasses.put(fsmFile.path(), fsmClass);
+        }
+        return fsmClass;
+    }
+
+    /**
      * Load an FSM from file and register it with specified name
      * @param fsmFile File handle for .fsm file
      * @param name Registration name (use this with getFSM() to get the FSM back)
      * @throws IOException
      */
     public Fsm loadFSM(FileHandle fsmFile, String name) throws IOException {
-        FsmDef fsmDef = new FsmDefReader(fsmFile).read();
-        Fsm fsm = new Fsm(fsmDef, name);
-        fsms.put(name, fsm);
-        layers[fsm.getLayer()].add(fsm);
-        return fsm;
+        Class fsmClass = loadFSMClass(fsmFile);
+
+        try {
+            Fsm fsm = (Fsm) fsmClass.newInstance();
+            fsm.setName(name);
+            fsms.put(name, fsm);
+            layers[fsm.getLayer()].add(fsm);
+            return fsm;
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -130,7 +157,8 @@ public class Yugen {
      * @return
      */
     public Fsm createFSM(String name) {
-        Fsm fsm = new Fsm(new FsmDef(), name);
+        Fsm fsm = new Fsm();
+        fsm.setName(name);
         fsms.put(name, fsm);
         layers[fsm.getLayer()].add(fsm);
         return fsm;

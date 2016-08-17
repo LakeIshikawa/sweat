@@ -4,11 +4,9 @@ grammar Fsm;
 WS:  [ \t\r\n\u000C]+ -> skip;
 COMMENT:   '/*' .*? '*/' -> skip;
 LINE_COMMENT:   '//' ~[\r\n]* -> skip;
-
 KEY: 'F' | 'B' | 'D' | 'U' | 'B1'| 'B2'| 'B3'| 'B4'| 'B5'| 'B6';
 BOOL: 'true' | 'false';
 ANIM: 'A:' [a-zA-Z$_] [a-zA-Z0-9$_.]*;
-PHYSICS: 'P:' [a-zA-Z$_] [a-zA-Z0-9$_.]*;
 COMMAND: 'C:' [a-zA-Z$_] [a-zA-Z0-9$_.]*;
 HIT: 'H:' [a-zA-Z$_] [a-zA-Z0-9$_.]*;
 KEYS: 'K:' [a-zA-Z$_] [a-zA-Z0-9$_.]*;
@@ -87,7 +85,7 @@ statements
     ;
 
 statement
-    : assignment    #AssignmentStmt
+    : ID '=' e      #AssignmentStmt
     | switchcase    #SwitchStmt
     | ite           #IteStmt
     | fcall         #FCallStmt
@@ -113,10 +111,6 @@ ite
     | 'if' e '{' statements '}' 'else' '{' statements '}'   #IfThenElse
     ;
 
-assignment
-    : ID '=' e
-    ;
-
 e
     : INT       #IntLiteral
     | FLOAT     #FloatLiteral
@@ -124,7 +118,6 @@ e
     | ID        #IdLiteral
     | BOOL      #BoolLiteral
     | ANIM      #AnimLiteral
-    | PHYSICS   #PhysicsLiteral
     | COMMAND   #CommandLiteral
     | HIT       #HitLiteral
     | KEYS      #KeysLiteral

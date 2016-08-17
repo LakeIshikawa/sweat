@@ -1,7 +1,6 @@
 package com.lksoft.yugen.stateless;
 
 import com.badlogic.gdx.utils.ObjectMap;
-import com.lksoft.yugen.fsmlang.Value;
 
 /**
  * Created by Stallman on 09/08/2016.
@@ -12,7 +11,7 @@ public class HitPack {
      * A hit definition
      */
     public static class HitDef {
-        private ObjectMap<String, Value> values = new ObjectMap<>();
+        private ObjectMap<String, Object> values = new ObjectMap<>();
         private String name;
 
         public HitDef(String name){
@@ -23,11 +22,11 @@ public class HitPack {
             return name;
         }
 
-        public Value get(String name){
+        public Object get(String name){
             return values.get(name);
         }
 
-        public void set(String name, Value value){
+        public void set(String name, Object value){
             values.put(name, value);
         }
     }
