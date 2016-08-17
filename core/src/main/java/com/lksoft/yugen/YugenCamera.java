@@ -15,7 +15,7 @@ public class YugenCamera extends FitViewport {
      * Create a new camera with default size positioned to 0,0
      */
     public YugenCamera() {
-        super(640, 400);
+        super(640, 360);
     }
 
     /**

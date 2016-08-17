@@ -50,7 +50,7 @@ public class DesktopLauncher {
     private void launch() {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.width = 1280;
-        config.height = 800;
+        config.height = 720;
 
         new LwjglApplication(new YugenGame(fsm, debug), config);
     }
