@@ -22,6 +22,9 @@ public class Fsm extends Sprite {
     // Fsm def
     private FsmDef fsmDef;
 
+    // Active
+    private boolean active;
+
     // Current state
     private FsmState currentState;
     // Hit status
@@ -64,6 +67,7 @@ public class Fsm extends Sprite {
         setVar("time", Type.INT, 0);
         setVar("statetime", Type.INT, 0);
         setVar("name", Type.STRING, name);
+        setActive(true);
         setFacing(false);
         setAnimationPack(fsmDef.getAnimationPack());
         setPosX(0);
@@ -122,9 +126,12 @@ public class Fsm extends Sprite {
 
     @Override
     public void update(){
+        if( !active ) return;
+
         // Set initial state
         if( currentState == null && fsmDef.getInitialState() != null ) {
             changeState(fsmDef.getInitialState());
+            return;
         }
 
         // Pause!
@@ -171,7 +178,7 @@ public class Fsm extends Sprite {
      * @param shapeRenderer
      */
     public void renderCollision(ShapeRenderer shapeRenderer) {
-        if( animation == null ) return;
+        if( !active || animation == null ) return;
         shapeRenderer.setColor(Color.WHITE);
         for( Rectangle r : animation.getCurrentFrame().damageCollisions ){
             collRect.set(r);
@@ -333,6 +340,23 @@ public class Fsm extends Sprite {
     public void setFacing(boolean left){
         flip = left;
         setVar("facing", Type.BOOL, flip);
+    }
+
+    /**
+     * Set active.
+     * A non-active fsm won't update or render
+     * @param active
+     */
+    public void setActive(boolean active){
+        this.active = active;
+        setVar("active", Type.BOOL, active);
+    }
+
+    /**
+     * @return FSM active flag
+     */
+    public boolean isActive() {
+        return active;
     }
 
     /**

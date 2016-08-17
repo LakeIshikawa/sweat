@@ -24,6 +24,10 @@ State setup
 	// Collisions
 	p1{addCollisionTarget(p2)}
 	p2{addCollisionTarget(p1)}
+	
+	// Activate p1 and p2
+	p1{active = true}
+	p2{active = true}
 
 	// Camera
 	initCamera(0.0, stage{camera_offset_y}, stage{camera_width}, stage{camera_height})

@@ -66,6 +66,8 @@ public class FighterExecuteVisitor extends FsmBaseVisitor<Void> {
             case "layer": if( !checkError(lhs, Type.INT, evaluator) ) fsm.setLayer(evaluator.getResult().getIntValue()); break;
             case "attackhit": if( !checkError(lhs, Type.HIT, evaluator) ) fsm.setAttackHit(evaluator.getResult().getHitValue()); break;
             case "scale": if( !checkError(lhs, Type.FLOAT, evaluator) ) fsm.setScale(evaluator.getResult().getFloatValue()); break;
+            case "active": if( !checkError(lhs, Type.BOOL, evaluator) ) fsm.setActive(evaluator.getResult().getBoolValue()); break;
+
 
             // Set a variable if not a system assignment
             default:
@@ -80,7 +82,7 @@ public class FighterExecuteVisitor extends FsmBaseVisitor<Void> {
     public Void visitFsmStatement(FsmParser.FsmStatementContext ctx){
         Value v = evaluator.getVar(ctx.ID().getText());
         if( v == null || v.getType() != Type.FSM ){
-            Gdx.app.error("FSM", "ERROR: Fsm not found" + ctx.ID().getText());
+            Gdx.app.error("FSM", "ERROR: Fsm not found " + ctx.ID().getText());
             return null;
         }
 

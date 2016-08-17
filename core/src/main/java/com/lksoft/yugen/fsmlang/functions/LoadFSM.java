@@ -9,6 +9,7 @@ import com.lksoft.yugen.fsmlang.Functions;
 import com.lksoft.yugen.fsmlang.Type;
 import com.lksoft.yugen.fsmlang.Value;
 import com.lksoft.yugen.fsmlang.visitor.FighterExpVisitor;
+import com.lksoft.yugen.stateful.Fsm;
 
 import java.io.IOException;
 
@@ -29,7 +30,8 @@ public class LoadFSM extends Function {
     @Override
     public void execute(Array<Value> argValues, FighterExpVisitor evaluator) {
         try {
-            Yugen.i.loadFSM(Gdx.files.internal(argValues.get(0).getStringValue()), argValues.get(1).getStringValue());
+            Fsm fsm = Yugen.i.loadFSM(Gdx.files.internal(argValues.get(0).getStringValue()), argValues.get(1).getStringValue());
+            evaluator.setFsmResult(fsm);
         } catch (IOException e) {
             evaluator.setError("loadFSM: Can't find fsm file " + argValues.get(0).getStringValue());
         }

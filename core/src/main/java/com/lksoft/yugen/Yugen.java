@@ -88,8 +88,10 @@ public class Yugen {
     public void render(SpriteBatch batch, YugenCamera camera) {
         for( int i=0; i<layers.length; i++ ) {
             // Render bg sprites
-            for (Sprite s : layers[i]) {
-                s.render(batch, camera);
+            for (Fsm s : layers[i]) {
+                if( s.isActive() ) {
+                    s.render(batch, camera);
+                }
             }
         }
     }
