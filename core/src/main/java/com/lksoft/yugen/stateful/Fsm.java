@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.lksoft.yugen.FsmParser;
 import com.lksoft.yugen.Yugen;
@@ -23,21 +24,18 @@ public class Fsm extends Sprite {
 
     // Current state
     private FsmState currentState;
-
     // Hit status
     private HitPack.HitDef currentHit;
-
     // Attacking hit
     private HitPack.HitDef attackHit;
-
     // Keys
     private Settings.KeySettings keySettings;
-
     // The memory
     private ObjectMap<String, Value> memory = new ObjectMap<>();
-
     // Combo detector
     private CommandDetector commandDetector = new CommandDetector(this);
+    // Collision targets
+    private Array<Fsm> collisionTargets = new Array<>();
 
     // Expression evaluator
     private FighterExpVisitor evaluator;
@@ -49,7 +47,6 @@ public class Fsm extends Sprite {
 
     // Rectangle for collision rendering
     private Rectangle collRect = new Rectangle();
-
     // Flag for noticing statechange
     private boolean stateChanged;
 
@@ -76,9 +73,8 @@ public class Fsm extends Sprite {
         setScrollFactorX(0);
         setScrollFactorY(0);
 
-        // Set layer
-        setVar("layer", Type.INT, 0);
-        setLayer(5);
+        // Set default layer
+        setVar("layer", Type.INT, 5);
     }
 
     /**
@@ -451,10 +447,32 @@ public class Fsm extends Sprite {
         pauseTime = ticks;
     }
 
+    /**
+     * @return The FsmDef
+     */
     public FsmDef getFsmDef() {
         return fsmDef;
     }
+
+    /**
+     * @return Current state
+     */
     public FsmState getCurrentState(){
         return currentState;
+    }
+
+    /**
+     * Add a collision target
+     * @param fsm
+     */
+    public void addCollisionTarget(Fsm fsm){
+        collisionTargets.add(fsm);
+    }
+
+    /**
+     * @return All the collision targets
+     */
+    public Array<Fsm> getCollisionTargets(){
+        return collisionTargets;
     }
 }

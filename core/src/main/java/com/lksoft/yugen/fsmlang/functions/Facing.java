@@ -1,37 +1,31 @@
 package com.lksoft.yugen.fsmlang.functions;
 
+import com.badlogic.gdx.utils.Array;
 import com.lksoft.yugen.FsmParser;
+import com.lksoft.yugen.fsmlang.Function;
 import com.lksoft.yugen.fsmlang.Functions;
+import com.lksoft.yugen.fsmlang.Type;
 import com.lksoft.yugen.fsmlang.Value;
 import com.lksoft.yugen.fsmlang.visitor.FighterExpVisitor;
 
 /**
  * Created by Lake on 13/06/2016.
  */
-public class Facing implements Functions.Function {
+public class Facing extends Function {
 
     @Override
-    public String getSignature() {
+    public String getName() {
         return "facing";
     }
 
     @Override
-    public void execute(FighterExpVisitor evaluator, FsmParser.FcallContext fcall) {
-        // Evaluate ID arg
-        fcall.accept(evaluator);
-        if( evaluator.getError() != null ) return;
+    public Type[] getArgTypes() {
+        return new Type[]{Type.FSM};
+    }
 
-        // Take first arg
-        Value v = evaluator.getResults().get(0);
-
-        switch (v.getType()){
-            case FSM:
-                boolean leftOfOpp = evaluator.getTargetFsm().pos.x < v.getFsmValue().pos.x;
-                evaluator.setBoolResult(evaluator.getTargetFsm().flip ^ leftOfOpp);
-                break;
-            default:
-                evaluator.setError("facing function expects FSM but got : " + v.getType());
-                return;
-        }
+    @Override
+    public void execute(Array<Value> argValues, FighterExpVisitor evaluator) {
+        boolean leftOfOpp = evaluator.getTargetFsm().pos.x < argValues.get(0).getFsmValue().pos.x;
+        evaluator.setBoolResult(evaluator.getTargetFsm().flip ^ leftOfOpp);
     }
 }

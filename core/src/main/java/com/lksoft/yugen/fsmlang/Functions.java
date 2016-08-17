@@ -1,10 +1,7 @@
 package com.lksoft.yugen.fsmlang;
 
-import com.lksoft.yugen.FsmParser;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.lksoft.yugen.fsmlang.functions.*;
-import com.lksoft.yugen.fsmlang.visitor.FighterExpVisitor;
-
-import java.util.HashMap;
 
 /**
  * Created by Lake on 12/06/2016.
@@ -13,16 +10,8 @@ import java.util.HashMap;
  */
 public class Functions {
 
-    /**
-     * Fsm function interface
-     */
-    public interface Function{
-        String getSignature();
-        void execute(FighterExpVisitor evaluator, FsmParser.FcallContext fcall);
-    }
-
     // Functions map
-    final static private HashMap<String, Function> functions = new HashMap<>();
+    final static private ObjectMap<String, Function> functions = new ObjectMap<>();
 
     /**
      * Register b1 function
@@ -34,11 +23,11 @@ public class Functions {
 
     /**
      * Get registered function
-     * @param name Function name
+     * @param signature Function signature
      * @return The function or null
      */
-    public static Function getFunction(String name){
-        return functions.get(name);
+    public static Function getFunction(String signature){
+        return functions.get(signature);
     }
 
     // System functions
@@ -47,7 +36,9 @@ public class Functions {
         registerFunction(new KeyPress());
         registerFunction(new Abs());
         registerFunction(new Facing());
-        registerFunction(new Has());
+        registerFunction(new HasAnim());
+        registerFunction(new HasHit());
+        registerFunction(new HasKeys());
         registerFunction(new IsHit());
         registerFunction(new HitHas());
         registerFunction(new HitGet());
@@ -61,5 +52,6 @@ public class Functions {
         registerFunction(new FrameHeight());
         registerFunction(new InitCamera());
         registerFunction(new SetCamera());
+        registerFunction(new AddCollisionTarget());
     }
 }

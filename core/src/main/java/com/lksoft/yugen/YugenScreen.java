@@ -38,16 +38,20 @@ public class YugenScreen implements Screen {
         Gdx.gl.glClearColor(0, 0.7f, 0.7f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        batch.setProjectionMatrix(yugen.getCamera().getCamera().combined);
-        batch.begin();
         yugen.update();
-        yugen.render(batch, yugen.getCamera());
-        batch.end();
 
-        shapeRenderer.setProjectionMatrix(yugen.getCamera().getCamera().combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        yugen.renderDebug(shapeRenderer);
-        shapeRenderer.end();
+        // No camera init, no party
+        if( yugen.getCamera().getInitPosition() != null ) {
+            batch.setProjectionMatrix(yugen.getCamera().getCamera().combined);
+            batch.begin();
+            yugen.render(batch, yugen.getCamera());
+            batch.end();
+
+            shapeRenderer.setProjectionMatrix(yugen.getCamera().getCamera().combined);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            yugen.renderDebug(shapeRenderer);
+            shapeRenderer.end();
+        }
     }
 
     @Override

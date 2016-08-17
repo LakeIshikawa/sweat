@@ -1,7 +1,7 @@
 package com.lksoft.yugen.fsmlang.functions;
 
-import com.lksoft.yugen.FsmParser;
-import com.lksoft.yugen.fsmlang.Functions;
+import com.badlogic.gdx.utils.Array;
+import com.lksoft.yugen.fsmlang.Function;
 import com.lksoft.yugen.fsmlang.Type;
 import com.lksoft.yugen.fsmlang.Value;
 import com.lksoft.yugen.fsmlang.visitor.FighterExpVisitor;
@@ -9,28 +9,20 @@ import com.lksoft.yugen.fsmlang.visitor.FighterExpVisitor;
 /**
  * Created by Stallman on 10/08/2016.
  */
-public class StrHas implements Functions.Function {
+public class StrHas extends Function {
 
     @Override
-    public String getSignature() {
+    public String getName() {
         return "strhas";
     }
 
     @Override
-    public void execute(FighterExpVisitor evaluator, FsmParser.FcallContext fcall) {
-        // Evaluate arg
-        fcall.accept(evaluator);
-        if( evaluator.getError() != null ) return;
+    public Type[] getArgTypes() {
+        return new Type[]{Type.STRING, Type.STRING};
+    }
 
-        // Take first arg
-        Value v1 = evaluator.getResults().get(0);
-        Value v2 = evaluator.getResults().get(1);
-
-        if( v1.getType() != Type.STRING || v2.getType() != Type.STRING ){
-            evaluator.setError("strhas function expects string, string type but got:" + v1.getType()+","+v2.getType());
-            return;
-        }
-
-        evaluator.setBoolResult(v1.getStringValue().contains(v2.getStringValue()));
+    @Override
+    public void execute(Array<Value> argValues, FighterExpVisitor evaluator) {
+        evaluator.setBoolResult(argValues.get(0).getStringValue().contains(argValues.get(0).getStringValue()));
     }
 }

@@ -1,37 +1,28 @@
 package com.lksoft.yugen.fsmlang.functions;
 
-import com.lksoft.yugen.FsmParser;
-import com.lksoft.yugen.fsmlang.Functions;
+import com.badlogic.gdx.utils.Array;
+import com.lksoft.yugen.fsmlang.Function;
+import com.lksoft.yugen.fsmlang.Type;
 import com.lksoft.yugen.fsmlang.Value;
 import com.lksoft.yugen.fsmlang.visitor.FighterExpVisitor;
 
 /**
  * Created by Lake on 13/06/2016.
  */
-public class Pause implements Functions.Function {
+public class Pause extends Function {
 
     @Override
-    public String getSignature() {
+    public String getName() {
         return "pause";
     }
 
     @Override
-    public void execute(FighterExpVisitor evaluator, FsmParser.FcallContext fcall) {
-        // Evaluate arg
-        fcall.accept(evaluator);
-        if( evaluator.getError() != null ) return;
+    public Type[] getArgTypes() {
+        return new Type[]{Type.INT};
+    }
 
-        // Take first arg
-        Value v = evaluator.getResults().get(0);
-
-        switch ( v.getType() ){
-            case INT:
-                evaluator.getTargetFsm().setPause(v.getIntValue());
-                break;
-
-            default:
-                evaluator.setError("pause function expects int type but got:" + v.getType());
-                break;
-        }
+    @Override
+    public void execute(Array<Value> argValues, FighterExpVisitor evaluator) {
+        evaluator.getTargetFsm().setPause(argValues.get(0).getIntValue());
     }
 }

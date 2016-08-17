@@ -1,36 +1,27 @@
 package com.lksoft.yugen.fsmlang.functions;
 
-import com.lksoft.yugen.FsmParser;
-import com.lksoft.yugen.fsmlang.Functions;
+import com.badlogic.gdx.utils.Array;
+import com.lksoft.yugen.fsmlang.Function;
+import com.lksoft.yugen.fsmlang.Type;
 import com.lksoft.yugen.fsmlang.Value;
 import com.lksoft.yugen.fsmlang.visitor.FighterExpVisitor;
 
 /**
  * Created by Stallman on 10/08/2016.
  */
-public class HitHas implements Functions.Function {
+public class HitHas extends Function {
     @Override
-    public String getSignature() {
+    public String getName() {
         return "hithas";
     }
 
     @Override
-    public void execute(FighterExpVisitor evaluator, FsmParser.FcallContext fcall) {
-        // Evaluate arg
-        fcall.accept(evaluator);
-        if( evaluator.getError() != null ) return;
+    public Type[] getArgTypes() {
+        return new Type[]{Type.STRING};
+    }
 
-        // Take first arg
-        Value v = evaluator.getResults().get(0);
-
-        switch ( v.getType() ){
-            case STRING:
-                evaluator.setBoolResult(evaluator.getTargetFsm().getHitDef(v.getStringValue()) != null);
-                break;
-
-            default:
-                evaluator.setError("hithas function expects string type but got:" + v.getType());
-                break;
-        }
+    @Override
+    public void execute(Array<Value> argValues, FighterExpVisitor evaluator) {
+        evaluator.setBoolResult(evaluator.getTargetFsm().getHitDef(argValues.get(0).getStringValue()) != null);
     }
 }

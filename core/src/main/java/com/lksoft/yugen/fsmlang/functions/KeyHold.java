@@ -1,8 +1,8 @@
 package com.lksoft.yugen.fsmlang.functions;
 
 import com.badlogic.gdx.Gdx;
-import com.lksoft.yugen.FsmParser;
-import com.lksoft.yugen.fsmlang.Functions;
+import com.badlogic.gdx.utils.Array;
+import com.lksoft.yugen.fsmlang.Function;
 import com.lksoft.yugen.fsmlang.Type;
 import com.lksoft.yugen.fsmlang.Value;
 import com.lksoft.yugen.fsmlang.visitor.FighterExpVisitor;
@@ -11,26 +11,20 @@ import com.lksoft.yugen.stateless.Settings;
 /**
  * Created by Lake on 13/06/2016.
  */
-public class KeyHold implements Functions.Function {
+public class KeyHold extends Function {
 
     @Override
-    public String getSignature() {
+    public String getName() {
         return "keyhold";
     }
 
     @Override
-    public void execute(FighterExpVisitor evaluator, FsmParser.FcallContext fcall) {
-        // Evaluate ID arg
-        fcall.accept(evaluator);
-        // Take first arg
-        Value v = evaluator.getResults().get(0);
-        if( evaluator.getError() != null ) return;
+    public Type[] getArgTypes() {
+        return new Type[]{Type.STRING};
+    }
 
-        if( v.getType() != Type.STRING ){
-            evaluator.setError("keyhold function expects String type but got: "+ v.getType());
-            return;
-        }
-
+    @Override
+    public void execute(Array<Value> argValues, FighterExpVisitor evaluator) {
         Settings.KeySettings keys = evaluator.getTargetFsm().getKeySettings();
         if( keys == null ) {
             evaluator.setBoolResult(false);
@@ -38,7 +32,7 @@ public class KeyHold implements Functions.Function {
         }
 
         boolean facingRight = !evaluator.getTargetFsm().flip;
-        switch (v.getStringValue()){
+        switch (argValues.get(0).getStringValue()){
             case "U":  evaluator.setBoolResult(Gdx.input.isKeyPressed(keys.up)); break;
             case "D":  evaluator.setBoolResult(Gdx.input.isKeyPressed(keys.down)); break;
             case "B1": evaluator.setBoolResult(Gdx.input.isKeyPressed(keys.b1)); break;

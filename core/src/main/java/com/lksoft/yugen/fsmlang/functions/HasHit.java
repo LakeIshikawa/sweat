@@ -7,21 +7,22 @@ import com.lksoft.yugen.fsmlang.Value;
 import com.lksoft.yugen.fsmlang.visitor.FighterExpVisitor;
 
 /**
- * Created by Lake on 13/06/2016.
+ * Created by Lake on 18/06/2016.
  */
-public class Abs extends Function {
+public class HasHit extends Function {
+
     @Override
     public String getName() {
-        return "abs";
+        return "has";
     }
 
     @Override
     public Type[] getArgTypes() {
-        return new Type[]{Type.FLOAT};
+        return new Type[]{Type.HIT};
     }
 
     @Override
-    public void execute(Array<Value> values, FighterExpVisitor evaluator) {
-        evaluator.setFloatResult(Math.abs(values.get(0).getFloatValue()));
+    public void execute(Array<Value> argValues, FighterExpVisitor evaluator) {
+        evaluator.setBoolResult(argValues.get(0).getHitValue() != null);
     }
 }

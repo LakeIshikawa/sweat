@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 public class YugenCamera extends FitViewport {
 
     // Init position
-    private Vector2 initPosition = new Vector2();
+    private Vector2 initPosition;
 
     /**
      * Create a new camera with default size positioned to 0,0
@@ -28,7 +28,7 @@ public class YugenCamera extends FitViewport {
      */
     public void init(int x, int y, int worldWidth, int worldHeight){
         setWorldSize(worldWidth, worldHeight);
-        initPosition.set(x, y);
+        initPosition = new Vector2(x, y);
         getCamera().position.set(x, y, 0);
         getCamera().update();
     }

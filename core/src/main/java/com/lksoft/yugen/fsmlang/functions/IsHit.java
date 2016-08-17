@@ -1,20 +1,27 @@
 package com.lksoft.yugen.fsmlang.functions;
 
-import com.lksoft.yugen.FsmParser;
-import com.lksoft.yugen.fsmlang.Functions;
+import com.badlogic.gdx.utils.Array;
+import com.lksoft.yugen.fsmlang.Function;
+import com.lksoft.yugen.fsmlang.Type;
+import com.lksoft.yugen.fsmlang.Value;
 import com.lksoft.yugen.fsmlang.visitor.FighterExpVisitor;
 
 /**
  * Created by Stallman on 10/08/2016.
  */
-public class IsHit implements Functions.Function {
+public class IsHit extends Function {
     @Override
-    public String getSignature() {
+    public String getName() {
         return "ishit";
     }
 
     @Override
-    public void execute(FighterExpVisitor evaluator, FsmParser.FcallContext fcall) {
+    public Type[] getArgTypes() {
+        return new Type[0];
+    }
+
+    @Override
+    public void execute(Array<Value> argValues, FighterExpVisitor evaluator) {
         evaluator.setBoolResult(evaluator.getTargetFsm().getCurrentHit() != null);
     }
 }

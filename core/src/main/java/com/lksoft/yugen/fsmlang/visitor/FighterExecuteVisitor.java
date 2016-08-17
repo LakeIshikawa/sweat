@@ -78,12 +78,13 @@ public class FighterExecuteVisitor extends FsmBaseVisitor<Void> {
 
     @Override
     public Void visitFsmStatement(FsmParser.FsmStatementContext ctx){
-        Fsm fsm = Yugen.i.getFSM(ctx.ID().getText());
-        if( fsm == null ){
+        Value v = evaluator.getVar(ctx.ID().getText());
+        if( v == null || v.getType() != Type.FSM ){
             Gdx.app.error("FSM", "ERROR: Fsm not found" + ctx.ID().getText());
+            return null;
         }
 
-        fsmMemory.push(fsm);
+        fsmMemory.push(v.getFsmValue());
         ctx.statement().accept(this);
         fsmMemory.pop();
         return null;
@@ -180,12 +181,11 @@ public class FighterExecuteVisitor extends FsmBaseVisitor<Void> {
 
     @Override
     public Void visitFCallStmt(FsmParser.FCallStmtContext ctx) {
-        // Execute
-        Functions.Function function = Functions.getFunction(ctx.fcall().ID().getText());
-        if( function != null ){
-            function.execute(evaluator, ctx.fcall());
-        } else {
-            evaluator.setError("Unkown function: " + ctx.fcall().ID().getText());
+        ctx.fcall().accept(evaluator);
+        // Error
+        if( evaluator.getError() != null ){
+            Gdx.app.error("FSM", "ERROR: " + evaluator.getError());
+            return null;
         }
         return null;
     }

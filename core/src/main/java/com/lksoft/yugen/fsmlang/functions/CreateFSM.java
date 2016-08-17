@@ -1,44 +1,28 @@
 package com.lksoft.yugen.fsmlang.functions;
 
-import com.badlogic.gdx.Gdx;
-import com.lksoft.yugen.FsmParser;
+import com.badlogic.gdx.utils.Array;
 import com.lksoft.yugen.Yugen;
-import com.lksoft.yugen.fsmlang.Functions;
+import com.lksoft.yugen.fsmlang.Function;
 import com.lksoft.yugen.fsmlang.Type;
 import com.lksoft.yugen.fsmlang.Value;
 import com.lksoft.yugen.fsmlang.visitor.FighterExpVisitor;
-import com.lksoft.yugen.stateful.Fsm;
-import com.lksoft.yugen.stateless.FsmDef;
-
-import java.io.IOException;
 
 /**
  * Created by Stallman on 16/08/2016.
  */
-public class CreateFSM implements Functions.Function {
+public class CreateFSM extends Function {
     @Override
-    public String getSignature() {
+    public String getName() {
         return "createFSM";
     }
 
     @Override
-    public void execute(FighterExpVisitor evaluator, FsmParser.FcallContext fcall) {
-        // Evaluate ID arg
-        fcall.accept(evaluator);
-        if( evaluator.getError() != null ) return;
+    public Type[] getArgTypes() {
+        return new Type[]{Type.STRING};
+    }
 
-        // 1-arg
-        if( evaluator.getResults().size == 1 ) {
-            Value name = evaluator.getResults().get(0);
-            if (name.getType() != Type.STRING) {
-                evaluator.setError("createFSM expects 1 STRING but got : " + name.getType());
-                return;
-            }
-
-            Yugen.i.createFSM(name.getStringValue());
-        }
-        else {
-            evaluator.setError("createFSM: wrong number of parameters");
-        }
+    @Override
+    public void execute(Array<Value> argValues, FighterExpVisitor evaluator) {
+        evaluator.setFsmResult(Yugen.i.createFSM(argValues.get(0).getStringValue()));
     }
 }

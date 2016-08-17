@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.lksoft.yugen.stateful.Fsm;
@@ -36,6 +37,10 @@ public class Yugen {
     // Debug
     private boolean debug = false;
     private boolean drawRects = false;
+
+    // Collisions
+    private Rectangle f1Rect = new Rectangle();
+    private Rectangle f2Rect = new Rectangle();
 
     /**
      * Create yugen engine
@@ -159,31 +164,21 @@ public class Yugen {
      * Check for fsm collisions
      */
     private void checkCollisions() {
-//        // P1 to P2
-//        for(Rectangle r1 : getP1().animation.getCurrentFrame().hitCollisions ){
-//            p1Rect.set(r1);
-//            getP1().getRectWorld(p1Rect);
-//            for(Rectangle r2 : getP2().animation.getCurrentFrame().damageCollisions ){
-//                p2Rect.set(r2);
-//                getP2().getRectWorld(p2Rect);
-//                if (p1Rect.overlaps(p2Rect)){
-//                    getP2().setCurrentHit(getP1().getAttackHit());
-//                }
-//            }
-//        }
-//
-//        // P2 to P1
-//        for(Rectangle r2 : getP2().animation.getCurrentFrame().hitCollisions ){
-//            p2Rect.set(r2);
-//            getP2().getRectWorld(p2Rect);
-//            for(Rectangle r1 : getP1().animation.getCurrentFrame().damageCollisions ){
-//                p1Rect.set(r1);
-//                getP1().getRectWorld(p1Rect);
-//                if (p1Rect.overlaps(p2Rect)){
-//                    getP1().setCurrentHit(getP2().getAttackHit());
-//                }
-//            }
-//        }
+        for( Fsm f1 : fsms.values() ){
+            for( Fsm f2 : f1.getCollisionTargets() ){
+                for(Rectangle r1 : f1.animation.getCurrentFrame().hitCollisions ){
+                    f1Rect.set(r1);
+                    f1.getRectWorld(f1Rect);
+                    for(Rectangle r2 : f2.animation.getCurrentFrame().damageCollisions ){
+                        f2Rect.set(r2);
+                        f2.getRectWorld(f2Rect);
+                        if (f1Rect.overlaps(f2Rect)){
+                            f2.setCurrentHit(f1.getAttackHit());
+                        }
+                    }
+                }
+            }
+        }
     }
 
     // Accessors

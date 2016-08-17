@@ -1,7 +1,9 @@
 package com.lksoft.yugen.fsmlang.functions;
 
+import com.badlogic.gdx.utils.Array;
 import com.lksoft.yugen.FsmParser;
 import com.lksoft.yugen.Yugen;
+import com.lksoft.yugen.fsmlang.Function;
 import com.lksoft.yugen.fsmlang.Functions;
 import com.lksoft.yugen.fsmlang.Type;
 import com.lksoft.yugen.fsmlang.Value;
@@ -10,33 +12,20 @@ import com.lksoft.yugen.fsmlang.visitor.FighterExpVisitor;
 /**
  * Created by Stallman on 16/08/2016.
  */
-public class InitCamera implements Functions.Function {
+public class InitCamera extends Function {
     @Override
-    public String getSignature() {
+    public String getName() {
         return "initCamera";
     }
 
     @Override
-    public void execute(FighterExpVisitor evaluator, FsmParser.FcallContext fcall) {
-        // Evaluate ID arg
-        fcall.accept(evaluator);
-        if( evaluator.getError() != null ) return;
+    public Type[] getArgTypes() {
+        return new Type[]{Type.FLOAT, Type.FLOAT, Type.FLOAT, Type.FLOAT};
+    }
 
-        // 2-args
-        if( evaluator.getResults().size == 4 ) {
-            Value px = evaluator.getResults().get(0);
-            Value py = evaluator.getResults().get(1);
-            Value ww = evaluator.getResults().get(2);
-            Value wh = evaluator.getResults().get(3);
-            if (px.getType() != Type.FLOAT || py.getType() != Type.FLOAT || ww.getType() != Type.FLOAT || wh.getType() != Type.FLOAT) {
-                evaluator.setError("initCamera expects 4 FLOAT but got : " + px.getType() + "," + py.getType() + "," + ww.getType() +"," + wh.getType());
-                return;
-            }
-
-            Yugen.i.getCamera().init((int)px.getFloatValue(), (int)py.getFloatValue(), (int)ww.getFloatValue(), (int)wh.getFloatValue());
-        }
-        else {
-            evaluator.setError("loadFSM: wrong number of parameters");
-        }
+    @Override
+    public void execute(Array<Value> argValues, FighterExpVisitor evaluator) {
+        Yugen.i.getCamera().init((int)argValues.get(0).getFloatValue(), (int)argValues.get(1).getFloatValue(),
+                (int)argValues.get(2).getFloatValue(), (int)argValues.get(3).getFloatValue());
     }
 }

@@ -4,10 +4,7 @@ import com.badlogic.gdx.utils.Array;
 import com.lksoft.yugen.FsmBaseVisitor;
 import com.lksoft.yugen.FsmParser;
 import com.lksoft.yugen.Yugen;
-import com.lksoft.yugen.fsmlang.Bop;
-import com.lksoft.yugen.fsmlang.Functions;
-import com.lksoft.yugen.fsmlang.Type;
-import com.lksoft.yugen.fsmlang.Value;
+import com.lksoft.yugen.fsmlang.*;
 import com.lksoft.yugen.stateful.Fsm;
 import com.lksoft.yugen.stateless.AnimationDef;
 import com.lksoft.yugen.stateless.CommandDef;
@@ -22,7 +19,11 @@ import java.util.Stack;
 public class FighterExpVisitor extends FsmBaseVisitor<Void>{
     // Results
     private Value result = new Value(Type.BOOL, false);
-    private Array<Value> results = new Array<>();
+
+    // Argvalues
+    private Stack<Value> argStack = new Stack<>();
+    private Stack<Integer> argNum = new Stack<>();
+    private Array<Value> argValues = new Array<>();
 
     // Error
     private String error;
@@ -44,7 +45,8 @@ public class FighterExpVisitor extends FsmBaseVisitor<Void>{
      */
     public void evaluate(FsmParser.EContext e){
         error = null;
-        getResults().clear();
+        argStack.clear();
+        argNum.clear();
         e.accept(this);
     }
 
@@ -159,18 +161,6 @@ public class FighterExpVisitor extends FsmBaseVisitor<Void>{
     }
 
     @Override
-    public Void visitFCallExp(FsmParser.FCallExpContext ctx) {
-        // Execute
-        Functions.Function function = Functions.getFunction(ctx.fcall().ID().getText());
-        if( function != null ){
-            function.execute(this, ctx.fcall());
-        } else {
-            setError("Unkown function: " + ctx.fcall().ID().getText());
-        }
-        return null;
-    }
-
-    @Override
     public Void visitFsmExp(FsmParser.FsmExpContext ctx){
         Fsm fsm = Yugen.i.getFSM(ctx.ID().getText());
         if( fsm == null ){
@@ -186,24 +176,49 @@ public class FighterExpVisitor extends FsmBaseVisitor<Void>{
 
     @Override
     public Void visitFcall(FsmParser.FcallContext ctx) {
+        // Evaluate arguments
+        argNum.push(0);
         if( ctx.elist() != null ) {
-            results.clear();
             ctx.elist().accept(this);
         }
+        if( getError() != null ) return null;
+
+        // Get number of arguments
+        int args = argNum.pop();
+        // Make signature
+        String signature = ctx.ID().getText();
+        argValues.clear();
+        for( int i=0; i<args; i++ ){
+            Value v = argStack.pop();
+            argValues.insert(0, v);
+            signature += v.getType().getIdChar();
+        }
+
+        // Find function
+        Function f = Functions.getFunction(signature);
+
+        if( f == null ){
+            setError("Unkown function: " + signature);
+            return null;
+        }
+
+        f.execute(argValues, this);
         return null;
     }
 
     @Override
     public Void visitElistE(FsmParser.ElistEContext ctx) {
         ctx.e().accept(this);
-        getResults().add(new Value(getResult()));
+        argStack.push(new Value(getResult()));
+        argNum.push(argNum.pop()+1);
         return null;
     }
 
     @Override
     public Void visitEListEElist(FsmParser.EListEElistContext ctx) {
         ctx.e().accept(this);
-        getResults().add(new Value(getResult()));
+        argStack.push(new Value(getResult()));
+        argNum.push(argNum.pop()+1);
 
         ctx.elist().accept(this);
         return null;
@@ -289,7 +304,7 @@ public class FighterExpVisitor extends FsmBaseVisitor<Void>{
     }
 
     // Get var value from memory
-    private Value getVar(String name){
+    Value getVar(String name){
         Value res = null;
         for( int i=memory.size()-1; i>=0; i-- ){
             Fsm mem = memory.get(i);
@@ -373,8 +388,4 @@ public class FighterExpVisitor extends FsmBaseVisitor<Void>{
     public void setHitResult(HitPack.HitDef hit) {result.setHitValue(hit);}
     public void setKeysResult(Settings.KeySettings keys) {result.setKeysValue(keys);}
     public void setFsmResult(Fsm fsm) {result.setFsmValue(fsm);}
-
-    public Array<Value> getResults() {
-        return results;
-    }
 }

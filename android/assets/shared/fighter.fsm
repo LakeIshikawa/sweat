@@ -25,8 +25,8 @@ State idle
 	layer = 5
 
 	// Face
-	[Trigger !facing(opponent)]
-	-> turn
+//	[Trigger !facing(opponent)]
+//	-> turn
 
 	// Walk
 	[Trigger 
@@ -243,8 +243,9 @@ Stateless
 	// Standing Damage
 	[Trigger ishit() && !(keyhold("B") && strhas(hitget("guardflag"), "S"))]
 		// Set pause
-		pause(hitget("pausetime"))
-		pauseP2(hitget("pausetime"))
+		ptime = hitget("pausetime")
+		pause(ptime)
+		opponent{pause(ptime)}
 
 		// Air damage
 		if(status == A){
