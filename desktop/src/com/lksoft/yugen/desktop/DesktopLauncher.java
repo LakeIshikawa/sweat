@@ -9,8 +9,8 @@ public class DesktopLauncher {
 
     @Argument
     private String fsm;
-    @Option(name = "-d", usage = "Draw debug info")
-    boolean debug;
+    @Option(name = "-d", usage = "Debug mode")
+    private boolean debug;
 
 	public static void main (String[] args) {
 		DesktopLauncher launcher = new DesktopLauncher();
@@ -31,7 +31,7 @@ public class DesktopLauncher {
             // you'll get this exception. this will report
             // an error message.
             System.err.println(e.getMessage());
-            System.err.print("Usage: YugenGame");
+            System.err.print("Usage: Yugen");
             parser.printSingleLineUsage(System.err);
             System.err.println();
             // print the list of available options
@@ -39,7 +39,7 @@ public class DesktopLauncher {
             System.err.println();
 
             // print option sample. This is useful some time
-            System.err.println("  Example: image-undistorter "+parser.printExample(OptionHandlerFilter.ALL));
+            System.err.println("  Example: Yugen "+parser.printExample(OptionHandlerFilter.ALL));
             System.exit(1);
         }
     }
