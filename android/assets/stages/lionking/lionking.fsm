@@ -22,8 +22,27 @@ State init (S)
 	bg{animpack = stagepack}
 	bg{pos.x = 4.0}
 	bg{pos.y = 367.0}
-	bg{scrollFactor.x = 0.15}
-	bg{scrollFactor.y = 0.0}
+	bg{scrollfactor.x = 0.15}
+	bg{scrollfactor.y = 0.0}
 	bg{layer = 0}
 	bg{anim = A:king001}
+	
+	l1 = createFSM("l1")
+	l1{animpack = stagepack}
+	l1{pos.x = 75.0}
+	l1{pos.y = 182.0}
+	l1{scrollfactor.x = 0.1}
+	l1{scrollfactor.y = 0.0}
+	l1{layer = 0}
+	l1{anim = A:king003}
+	
+	l2 = createFSM("l2")
+	l2{animpack = stagepack}
+	l2{pos.x = -50.0}
+	l2{pos.y = 105.0}
+	l2{scrollfactor.x = 0.05}
+	l2{scrollfactor.y = 0.0}
+	l2{layer = 0}
+	l2{anim = A:king002}
+	
 	->setup

@@ -62,6 +62,8 @@ public class FighterExecuteVisitor extends FsmBaseVisitor<Void> {
             case "vel.y": if( !checkError(lhs, Type.FLOAT, evaluator) ) fsm.setVelY(evaluator.getResult().getFloatValue()); break;
             case "pos.x": if( !checkError(lhs, Type.FLOAT, evaluator) ) fsm.setPosX(evaluator.getResult().getFloatValue()); break;
             case "pos.y": if( !checkError(lhs, Type.FLOAT, evaluator) ) fsm.setPosY(evaluator.getResult().getFloatValue()); break;
+            case "scrollfactor.x": if( !checkError(lhs, Type.FLOAT, evaluator) ) fsm.setScrollFactorX(evaluator.getResult().getFloatValue()); break;
+            case "scrollfactor.y": if( !checkError(lhs, Type.FLOAT, evaluator) ) fsm.setScrollFactorY(evaluator.getResult().getFloatValue()); break;
             case "facing": if( !checkError(lhs, Type.BOOL, evaluator) ) fsm.setFacing(evaluator.getResult().getBoolValue()); break;
             case "layer": if( !checkError(lhs, Type.INT, evaluator) ) fsm.setLayer(evaluator.getResult().getIntValue()); break;
             case "attackhit": if( !checkError(lhs, Type.HIT, evaluator) ) fsm.setAttackHit(evaluator.getResult().getHitValue()); break;
