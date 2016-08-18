@@ -10,6 +10,6 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new YugenGame("stages/lionking/lionking.stg", "chars/valkyrie/valkyrie.def", "chars/valkyrie/valkyrie.def"), config);
+		initialize(new YugenGame("shared/screens/StageSelect", false, false), config);
 	}
 }

@@ -32,6 +32,9 @@ public class Stage extends Fsm<Stage, StageState, Object> {
     public StageState getInitialState(){
         return StageState.INIT;
     }
+
+    @Override
+    public void statelessUpdate(){}
 }
 
 /**
@@ -54,13 +57,17 @@ enum StageState implements State<Stage> {
             p2.pos.set(stage.p2_start_x, stage.p2_start_y);
 
             // Set scale and facing direction
-            p1.scale *= stage.fighters_height / p1.frameHeight(p1.getAnimation("idle"));
-            p2.scale *= stage.fighters_height / p2.frameHeight(p2.getAnimation("idle"));
+            p1.scale *= (float)stage.fighters_height / p1.frameHeight(p1.getAnimation("idle"));
+            p2.scale *= (float)stage.fighters_height / p2.frameHeight(p2.getAnimation("idle"));
             p2.flip = true;
 
             // Add collisionts
             p1.addCollisionTarget(p2);
             p2.addCollisionTarget(p1);
+
+            // Activate
+            p1.setActive(true);
+            p2.setActive(true);
 
             // Init camera
             stage.initCamera(0, stage.camera_offset_y, stage.camera_width, stage.camera_height);

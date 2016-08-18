@@ -13,6 +13,7 @@ public class StageSelect extends Fsm<StageSelect, StageSelectState, Object> {
     public StageSelectState getInitialState(){
         return StageSelectState.INIT;
     }
+    public void statelessUpdate() {}
 }
 
 /**

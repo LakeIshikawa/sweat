@@ -86,10 +86,8 @@ project(":ios") {
 
 project(":core") {
     apply plugin: "java"
-    apply plugin: 'antlr'
 
     dependencies {
-        antlr "org.antlr:antlr4:4.5.3"
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"

@@ -167,6 +167,8 @@ public class Yugen {
             protected State getInitialState() {
                 return null;
             }
+            @Override
+            protected void statelessUpdate() {}
         };
         fsm.setName(name);
         fsms.put(name, fsm);
@@ -205,8 +207,10 @@ public class Yugen {
      */
     private void checkCollisions() {
         for( Fsm f1 : fsms.values() ){
+            if( f1.animation == null ) continue;
             for( Object o : f1.getCollisionTargets() ){
                 Fsm f2 = (Fsm) o;
+                if( f2.animation == null ) continue;
                 for(Rectangle r1 : f1.animation.getCurrentFrame().hitCollisions ){
                     f1Rect.set(r1);
                     f1.getRectWorld(f1Rect);

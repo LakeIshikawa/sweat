@@ -33,12 +33,6 @@ public abstract class Fsm<FsmClass, StateClass extends State<FsmClass>, HitClass
     private boolean ctrl = true;
     // State time
     private int statetime = 0;
-    // Current state
-    private int currentState = -1;
-    // Anim time
-    private int animTime;
-    // Anim cycles
-    private int animCycles;
 
     // Hit status
     private HitClass hit;
@@ -89,6 +83,9 @@ public abstract class Fsm<FsmClass, StateClass extends State<FsmClass>, HitClass
 
         // Update state machine
         stateMachine.update();
+        statetime++;
+        // Stateless update
+        statelessUpdate();
 
         // Update sprite
         super.update();
@@ -137,10 +134,12 @@ public abstract class Fsm<FsmClass, StateClass extends State<FsmClass>, HitClass
 
     // FSM API
     protected abstract StateClass getInitialState();
-    protected void changeState(StateClass newState){
-        stateMachine.changeState(newState);
-    }
+    protected abstract void statelessUpdate();
 
+    public void changeState(StateClass newState){
+        stateMachine.changeState(newState);
+        statetime = 0;
+    }
 
     public void setActive(boolean active) {
         this.active = active;
@@ -154,7 +153,7 @@ public abstract class Fsm<FsmClass, StateClass extends State<FsmClass>, HitClass
     public void setName(String name) {
         this.name = name;
     }
-    public boolean getCtrl() {
+    public boolean isCtrl() {
         return ctrl;
     }
     public void setCtrl(boolean ctrl) {
@@ -166,8 +165,9 @@ public abstract class Fsm<FsmClass, StateClass extends State<FsmClass>, HitClass
         if( def == null ) return;
         if(animation != null &&  def == animation.getAnimationDef() ) return;
         animation = new Animation(def);
-        animTime = 0;
-        animCycles = 0;
+    }
+    public void setAnimation(String name){
+        setAnimation(getAnimation(name));
     }
     public AnimationPack getAnimationPack() { return animationPack; }
     public void setAnimationPack(AnimationPack pack){
@@ -193,6 +193,15 @@ public abstract class Fsm<FsmClass, StateClass extends State<FsmClass>, HitClass
     public void setAttackHit(HitClass attackHit) { this.attackHit = attackHit; }
     public Settings.KeySettings getKeySettings(){ return keySettings; }
     public void setKeySettings(Settings.KeySettings settings){ this.keySettings = settings; }
+    public int getStatetime() {
+        return statetime;
+    }
+    public int getAnimTime() {
+        return animation.getTotalTime();
+    }
+    public int getAnimCycles() {
+        return animation.getCycles();
+    }
 
     /**
      * Read and set animation pack to current pack
