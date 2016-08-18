@@ -1,7 +1,11 @@
 package com.lksoft.yugen.stateful;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
+import com.badlogic.gdx.ai.fsm.State;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -13,10 +17,14 @@ import java.io.IOException;
 /**
  * Created by Lake on 11/06/2016.
  */
-public class Fsm extends Sprite {
+public abstract class Fsm<FsmClass, StateClass extends State<FsmClass>, HitClass> extends Sprite {
+
+    // The state machine
+    private DefaultStateMachine<FsmClass, StateClass> stateMachine =
+            (DefaultStateMachine<FsmClass, StateClass>) new DefaultStateMachine<>((FsmClass)this);
 
     // Active
-    private boolean active;
+    private boolean active = true;
     // Name
     private String name;
     // Layer
@@ -33,15 +41,13 @@ public class Fsm extends Sprite {
     private int animCycles;
 
     // Hit status
-    private HitPack.HitDef currentHit;
+    private HitClass hit;
     // Attacking hit
-    private HitPack.HitDef attackHit;
+    private HitClass attackHit;
     // Keys
     private Settings.KeySettings keySettings;
     // AnimationPack
     private AnimationPack animationPack;
-    // Hit pack
-    private HitPack hitPack;
     // Commands
     private Commands commands;
 
@@ -67,10 +73,9 @@ public class Fsm extends Sprite {
     public void update(){
         if( !active ) return;
 
-        // Set initial state
-        if( currentState == -1 && getInitialState() != -1 ) {
+        // Set initial state if needed
+        if( stateMachine.getCurrentState() == null ){
             changeState(getInitialState());
-            return;
         }
 
         // Pause!
@@ -82,8 +87,8 @@ public class Fsm extends Sprite {
         // Update input
         commandDetector.update();
 
-        // Update fsm step
-        updateFsm();
+        // Update state machine
+        stateMachine.update();
 
         // Update sprite
         super.update();
@@ -131,10 +136,10 @@ public class Fsm extends Sprite {
 
 
     // FSM API
-    // The script-defined updation
-    protected void updateFsm() {}
-    protected int getInitialState() {return -1;}
-    protected void changeState(int newState){}
+    protected abstract StateClass getInitialState();
+    protected void changeState(StateClass newState){
+        stateMachine.changeState(newState);
+    }
 
 
     public void setActive(boolean active) {
@@ -155,6 +160,7 @@ public class Fsm extends Sprite {
     public void setCtrl(boolean ctrl) {
         this.ctrl = ctrl;
     }
+    public AnimationDef getAnimation(String name){ return animationPack.getAnimationDef(name);}
     public AnimationDef getAnimation(){ return animation.getAnimationDef(); }
     public void setAnimation(AnimationDef def){
         if( def == null ) return;
@@ -177,23 +183,37 @@ public class Fsm extends Sprite {
         this.layer = layer;
         Yugen.i.layerChanged(this, old);
     }
-    public void setCurrentHit(HitPack.HitDef hit){
-        this.currentHit = hit;
+    public void setHit(HitClass hit){
+        this.hit = hit;
     }
-    public HitPack.HitDef getCurrentHit(){
-        return currentHit;
+    public HitClass getHit(){
+        return hit;
     }
-    public HitPack.HitDef getAttackHit() { return attackHit; }
-    public void setAttackHit(HitPack.HitDef attackHit) { this.attackHit = attackHit; }
+    public HitClass getAttackHit() { return attackHit; }
+    public void setAttackHit(HitClass attackHit) { this.attackHit = attackHit; }
     public Settings.KeySettings getKeySettings(){ return keySettings; }
     public void setKeySettings(Settings.KeySettings settings){ this.keySettings = settings; }
+
+    /**
+     * Read and set animation pack to current pack
+     * @param path
+     */
+    public void loadAnimationPack(String path){
+        FileHandle anm = Gdx.files.internal(path);
+        FileHandle frm = new FileHandle(anm.pathWithoutExtension() + ".frm");
+        FileHandle atlasHandle = new FileHandle(anm.pathWithoutExtension() + ".atlas");
+        TextureAtlas atlas = new TextureAtlas(atlasHandle);
+        SpritePack spritePack = new SpritePackReader(frm).read(atlas);
+
+        this.animationPack = AnimationPack.read(anm, spritePack);
+    }
 
     /**
      * Match specified command agains input
      * @param commandDef The command def to match
      * @return true if matching input
      */
-    protected boolean matchCommand(CommandDef commandDef) {
+    public boolean matchCommand(CommandDef commandDef) {
         boolean match = commandDetector.matchCommand(commandDef);
         if( match ){
             commandDetector.clearHistory();
@@ -202,26 +222,18 @@ public class Fsm extends Sprite {
     }
 
     /**
-     * @param value
-     * @return Abs of value
-     */
-    protected float abs(float value){
-        return Math.abs(value);
-    }
-
-    /**
      * Add a collision target
      * @param fsm
      */
-    protected void addCollisionTarget(Fsm fsm){
+    public void addCollisionTarget(Fsm fsm){
         collisionTargets.add(fsm);
     }
 
     /**
      * Clear current hit
      */
-    protected void clearHit(){
-        setCurrentHit(null);
+    public void clearHit(){
+        setHit(null);
     }
 
     /**
@@ -230,7 +242,7 @@ public class Fsm extends Sprite {
      * @param name
      * @return
      */
-    protected Fsm loadFSM(String path, String name){
+    public Fsm loadFSM(String path, String name){
         try {
             return Yugen.i.loadFSM(Gdx.files.internal(path), name);
         } catch (IOException e) {
@@ -244,7 +256,7 @@ public class Fsm extends Sprite {
      * @param name
      * @return
      */
-    protected Fsm createFSM(String name){
+    public Fsm createFSM(String name){
         return Yugen.i.createFSM(name);
     }
 
@@ -253,7 +265,7 @@ public class Fsm extends Sprite {
      * @param name
      * @return
      */
-    protected void destroyFSM(String name){
+    public void destroyFSM(String name){
         Yugen.i.destroyFSM(name);
     }
 
@@ -262,7 +274,7 @@ public class Fsm extends Sprite {
      * @param name
      * @return The fsm
      */
-    protected Fsm getFSM(String name){
+    public Fsm getFSM(String name){
         return Yugen.i.getFSM(name);
     }
 
@@ -271,7 +283,7 @@ public class Fsm extends Sprite {
      * @param fsm
      * @return
      */
-    protected boolean facing(Fsm fsm){
+    public boolean facing(Fsm fsm){
         boolean leftOfOpp = pos.x < fsm.pos.x;
         return flip ^ leftOfOpp;
     }
@@ -281,33 +293,15 @@ public class Fsm extends Sprite {
      * @param anim
      * @return
      */
-    protected int frameHeight(AnimationDef anim){
+    public int frameHeight(AnimationDef anim){
         return anim.getFrameAt(0).components.get(0).spriteDef.region.originalHeight;
-    }
-
-    /**
-     * Gets a property from a hitdef
-     * @param name
-     * @return
-     */
-    protected Object hitGet(String name){
-        return currentHit.get(name);
-    }
-
-    /**
-     * Checks for hit property existance
-     * @param name
-     * @return
-     */
-    protected boolean hitHas(String name){
-        return currentHit.get(name) != null;
     }
 
     /**
      * @return Wether the fsm has been hit
      */
-    protected boolean isHit(){
-        return currentHit != null;
+    public boolean isHit(){
+        return hit != null;
     }
 
     /**
@@ -317,7 +311,7 @@ public class Fsm extends Sprite {
      * @param ww
      * @param wh
      */
-    protected void initCamera(int x, int y, int ww, int wh){
+    public void initCamera(int x, int y, int ww, int wh){
         Yugen.i.getCamera().init(x, y, ww, wh);
     }
 
@@ -326,7 +320,7 @@ public class Fsm extends Sprite {
      * @param x
      * @param y
      */
-    protected void setCamera(int x, int y){
+    public void setCamera(int x, int y){
         Yugen.i.getCamera().setPosition(x, y);
     }
 
@@ -335,7 +329,7 @@ public class Fsm extends Sprite {
      * @param key
      * @return
      */
-    protected boolean keyHold(String key){
+    public boolean keyHold(String key){
         if( keySettings == null ) return false;
 
         boolean facingRight = !flip;
@@ -367,7 +361,7 @@ public class Fsm extends Sprite {
      * @param key
      * @return
      */
-    protected boolean keyPress(String key){
+    public boolean keyPress(String key){
         if( keySettings == null ) return false;
 
         boolean facingRight = !flip;
@@ -398,17 +392,14 @@ public class Fsm extends Sprite {
      * Pause the FSM for the specified number of ticks
      * @param ticks
      */
-    protected void pause(int ticks){
+    public void pause(int ticks){
         pauseTime = ticks;
     }
 
     /**
-     * Substring check
-     * @param string
-     * @param sub
-     * @return
+     * @return Yugen settings
      */
-    protected boolean strHas(String string, String sub){
-        return string.contains(sub);
+    public Settings getSettings(){
+        return Yugen.i.getSettings();
     }
 }

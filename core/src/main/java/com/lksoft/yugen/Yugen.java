@@ -2,6 +2,7 @@ package com.lksoft.yugen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -47,9 +48,13 @@ public class Yugen {
      * Create yugen engine
      * File "settings.def" must exist
      */
-    public Yugen(FileHandle mainFsm, boolean debug) throws IOException {
+    public Yugen(FileHandle mainFsm, boolean debug, boolean compileScripts) throws IOException {
         i = this;
         this.debug = debug;
+
+        if( compileScripts ){
+            ScriptCompiler.compileScripts();
+        }
 
         // Create layers
         for( int i=0; i<layers.length; i++ ){
@@ -122,7 +127,7 @@ public class Yugen {
     public Class loadFSMClass(FileHandle fsmFile) throws IOException {
         Class fsmClass = fsmClasses.get(fsmFile.path());
         if( fsmClass == null ) {
-            fsmClass = new FsmReader(fsmFile).read();
+            fsmClass = FsmReader.get().read(fsmFile);
             fsmClasses.put(fsmFile.path(), fsmClass);
         }
         return fsmClass;
@@ -157,7 +162,12 @@ public class Yugen {
      * @return
      */
     public Fsm createFSM(String name) {
-        Fsm fsm = new Fsm();
+        Fsm fsm = new Fsm() {
+            @Override
+            protected State getInitialState() {
+                return null;
+            }
+        };
         fsm.setName(name);
         fsms.put(name, fsm);
         layers[fsm.getLayer()].add(fsm);
@@ -195,7 +205,8 @@ public class Yugen {
      */
     private void checkCollisions() {
         for( Fsm f1 : fsms.values() ){
-            for( Fsm f2 : f1.getCollisionTargets() ){
+            for( Object o : f1.getCollisionTargets() ){
+                Fsm f2 = (Fsm) o;
                 for(Rectangle r1 : f1.animation.getCurrentFrame().hitCollisions ){
                     f1Rect.set(r1);
                     f1.getRectWorld(f1Rect);
@@ -203,7 +214,7 @@ public class Yugen {
                         f2Rect.set(r2);
                         f2.getRectWorld(f2Rect);
                         if (f1Rect.overlaps(f2Rect)){
-                            f2.setCurrentHit(f1.getAttackHit());
+                            f2.setHit(f1.getAttackHit());
                         }
                     }
                 }

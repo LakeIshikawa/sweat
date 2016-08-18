@@ -2,11 +2,6 @@ package com.lksoft.yugen.stateless;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.lksoft.yugen.FsmLexer;
-import com.lksoft.yugen.FsmParser;
-import com.lksoft.yugen.fsmlang.visitor.CommandsSetupVisitor;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
 
 import java.io.IOException;
 
@@ -23,14 +18,7 @@ public class Commands {
      * @param cmdFile .cmd file
      */
     public Commands(FileHandle cmdFile) throws IOException {
-        // Parse script
-        FsmLexer lexer = new FsmLexer(new ANTLRInputStream(cmdFile.read()));
-        FsmParser parser = new FsmParser(new CommonTokenStream(lexer));
-        FsmParser.CmdContext commands = parser.cmd();
 
-        // Create params and states
-        CommandsSetupVisitor visitor = new CommandsSetupVisitor(this);
-        commands.accept(visitor);
     }
 
     /**

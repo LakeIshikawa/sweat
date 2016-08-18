@@ -10,19 +10,22 @@ public class YugenGame extends Game {
     private String fsmFile;
     // Debug
     private boolean debug;
+    // Compile scripts
+    boolean compileScripts;
 
     /**
      * Start yugen
      */
-    public YugenGame(String fsmFile, boolean debug) {
+    public YugenGame(String fsmFile, boolean debug, boolean compileScripts) {
         this.fsmFile = fsmFile;
         this.debug = debug;
+        this.compileScripts = compileScripts;
     }
 
     @Override
 	public void create () {
         try {
-            Yugen yugen = new Yugen(Gdx.files.internal(fsmFile), debug);
+            Yugen yugen = new Yugen(Gdx.files.internal(fsmFile), debug, compileScripts);
             // Set screen
             setScreen(new YugenScreen(yugen));
         } catch (IOException e) {

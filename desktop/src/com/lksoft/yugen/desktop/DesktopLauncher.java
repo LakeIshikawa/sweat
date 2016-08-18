@@ -52,6 +52,6 @@ public class DesktopLauncher {
         config.width = 1280;
         config.height = 720;
 
-        new LwjglApplication(new YugenGame(fsm, debug), config);
+        new LwjglApplication(new YugenGame(fsm, debug, true), config);
     }
 }
