@@ -140,7 +140,7 @@ public class Fsm extends Sprite {
     public void setActive(boolean active) {
         this.active = active;
     }
-    public boolean isActive() {
+    public boolean getActive() {
         return active;
     }
     public String getName() {

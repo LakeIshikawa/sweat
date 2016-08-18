@@ -29,9 +29,7 @@ State idle
 	-> turn
 
 	// Walk
-	[Trigger 
-		1: keyhold("F") || keyhold("B")
-		1: !(keyhold("F") && keyhold("B"))]
+	[Trigger (keyhold("F") || keyhold("B")) && !(keyhold("F") && keyhold("B"))]
 	-> walk
 	
 	// Jump
@@ -60,9 +58,7 @@ State walk
 	-> turn
 
 	// Stop walking
-	[Trigger 
-		1: !(keyhold("F") || keyhold("B"))
-		2: keyhold("F") && keyhold("B")]
+	[Trigger (!(keyhold("F") || keyhold("B"))) || (keyhold("F") && keyhold("B")]
 	-> idle
 
 	// Jump

@@ -57,7 +57,7 @@ public class SymbolTableVisitor extends FsmBaseVisitor<Class> {
     @Override public Class visitIdLiteral(FsmParser.IdLiteralContext ctx) { return symbolTable.get(ctx.ID().getText()); }
     @Override public Class visitFloatLiteral(FsmParser.FloatLiteralContext ctx) { return Float.class; }
     @Override public Class visitHitLiteral(FsmParser.HitLiteralContext ctx) { return HitPack.HitDef.class; }
-    @Override public Class visitFsmExp(FsmParser.FsmExpContext ctx) { return ctx.e().accept(this); }
+    @Override public Class visitFsmIdExp(FsmParser.FsmIdExpContext ctx) { return ctx.ID().accept(this); }
     @Override public Class visitKeysLiteral(FsmParser.KeysLiteralContext ctx) { return Settings.KeySettings.class; }
     @Override public Class visitDivExp(FsmParser.DivExpContext ctx) {
         Class left = ctx.e(0).accept(this);

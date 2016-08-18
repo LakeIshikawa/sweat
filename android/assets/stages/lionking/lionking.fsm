@@ -17,15 +17,14 @@ State init (S)
 	p2_start_x = 130.0
 	p2_start_y = 0.0
 
-	stagepack = animpack
 	bg = createFSM("bg")
-	bg{animpack = stagepack}
-	bg{pos.x = 4.0}
-	bg{pos.y = 367.0}
-	bg{scrollfactor.x = 0.15}
-	bg{scrollfactor.y = 0.0}
-	bg{layer = 0}
-	bg{anim = A:king001}
+	bg{animpack} = animpack
+	bg{pos.x} = 4.0
+	bg{pos.y} = 367.0
+	bg{scrollfactor.x} = 0.15
+	bg{scrollfactor.y} = 0.0
+	bg{layer} = 0
+	bg{anim} = A:king001
 	
 	l1 = createFSM("l1")
 	l1{animpack = stagepack}

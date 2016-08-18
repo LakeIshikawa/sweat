@@ -90,7 +90,7 @@ public class Yugen {
         for( int i=0; i<layers.length; i++ ) {
             // Render bg sprites
             for (Fsm s : layers[i]) {
-                if( s.isActive() ) {
+                if( s.getActive() ) {
                     s.render(batch, camera);
                 }
             }

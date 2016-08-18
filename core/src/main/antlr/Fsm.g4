@@ -62,16 +62,6 @@ triggers:
 trigger:
     '[' ID ']' statementsOpt #SystemTrigger
     | '[' 'Trigger' e ']' statementsOpt #SingleCondTrigger
-    | '[' 'Trigger' triglist ']' statementsOpt #MultiCondTrigger
-    ;
-
-triglist
-    : trigel
-    | trigel triglist
-    ;
-
-trigel
-    : INT ':' e
     ;
 
 statementsOpt
@@ -86,11 +76,12 @@ statements
 
 statement
     : ID '=' e      #AssignmentStmt
+    | ID '{' ID '}' '=' e #FsmAssignmentStmt
     | switchcase    #SwitchStmt
     | ite           #IteStmt
     | fcall         #FCallStmt
+    | ID '{' fcall '}' #FsmFCallStmt
     | '->' ID       #StateChangeStmt
-    | ID '{' statement '}' #FsmStatement
     ;
 
 switchcase
@@ -138,7 +129,8 @@ e
     | '!' e     #NotExp
     | '(' e ')' #ParExp
     | fcall     #FCallExp
-    | ID '{' e '}' #FsmExp
+    | ID '{' ID '}' #FsmIdExp
+    | ID '{' fcall '}' #FsmFCallExp
     ;
 
 fcall
