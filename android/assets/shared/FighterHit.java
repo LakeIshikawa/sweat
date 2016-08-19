@@ -26,13 +26,13 @@ public class FighterHit {
     }
 
     // Fields
-    public int damage;
-    public String guardflags;
-    public int pausetime;
-    public DamageAnimType damageAnimType;
-    public DamageAnimHeight damageAnimHeight;
-    public boolean fall;
-    public float ground_velocity;
-    public int ground_slidetime;
-    public float air_velocity;
+    public int damage = 20;
+    public String guardflags = "SC";
+    public int pausetime  = 12;
+    public DamageAnimType damageAnimType = DamageAnimType.MEDIUM;
+    public DamageAnimHeight damageAnimHeight = DamageAnimHeight.HIGH;
+    public boolean fall = false;
+    public float ground_velocity = -7f;
+    public int ground_slidetime = 10;
+    public float air_velocity = -5f;
 }

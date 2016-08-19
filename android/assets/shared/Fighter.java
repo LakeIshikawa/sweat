@@ -45,11 +45,12 @@ public class Fighter extends Fsm<Fighter, State<Fighter>, FighterHit> {
     public State<Fighter> backhopland= FighterState.BACKHOPLAND;
     public State<Fighter> groundDamage = FighterState.GROUNDDAMAGE;
     public State<Fighter> airDamage = FighterState.AIRDAMAGE;
-    public State<Fighter> midpunch = FighterState.MIDPUNCH;
+    public State<Fighter> shmpunch = FighterState.SHMPUNCH;
 
 
     // Default hits
-    public FighterHit midpunchHit = new FighterHit();
+    public FighterHit shmpunchHit = new FighterHit();
+    public FighterHit slmpunchHit = new FighterHit();
 
     // Basilar commands
     public CommandDef runCmd = CommandDef.parse("{10} < ~F, !F >");
@@ -80,6 +81,11 @@ public class Fighter extends Fsm<Fighter, State<Fighter>, FighterHit> {
     // Initialization
     public Fighter() {
         setActive(false);
+
+        // -- Default hit values
+        // Punches
+        shmpunchHit.damageAnimHeight = FighterHit.DamageAnimHeight.HIGH;
+        slmpunchHit.damageAnimHeight = FighterHit.DamageAnimHeight.LOW;
     }
 
     @Override
@@ -130,9 +136,9 @@ public class Fighter extends Fsm<Fighter, State<Fighter>, FighterHit> {
             }
 
             // Normal attacks
-            if( standing && getAnimation("midpunch") != null && keyPress("B1") ){
+            if( standing && getAnimation("shmpunch") != null && keyPress("B1") ){
                 setCtrl(false);
-                changeState(midpunch);
+                changeState(shmpunch);
                 return;
             }
         }
@@ -428,23 +434,6 @@ enum FighterState implements State<Fighter> {
         }
     },
 
-    MIDPUNCH {
-        public void enter(Fighter f){
-            f.setLayer(6);
-            f.setAnimation("midpunch");
-            f.vel.x = 0;
-            f.setCtrl(false);
-            f.setAttackHit(f.midpunchHit);
-        }
-
-        public void update(Fighter f) {
-            if( f.getAnimCycles() == 1 ){
-                f.changeState(f.idle);
-                return;
-            }
-        }
-    },
-
     GROUNDDAMAGE {
         public void enter(Fighter f){
             f.physics = Fighter.Physics.NONE;
@@ -464,6 +453,23 @@ enum FighterState implements State<Fighter> {
         public void update(Fighter f) {
             if( f.pos.y < 0 ){
                 f.changeState(f.landing);
+                return;
+            }
+        }
+    },
+
+    SHMPUNCH {
+        public void enter(Fighter f){
+            f.setLayer(6);
+            f.setAnimation("shmpunch");
+            f.vel.x = 0;
+            f.setCtrl(false);
+            f.setAttackHit(f.midpunchHit);
+        }
+
+        public void update(Fighter f) {
+            if( f.getAnimCycles() == 1 ){
+                f.changeState(f.idle);
                 return;
             }
         }
