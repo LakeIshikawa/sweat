@@ -14,6 +14,7 @@ import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.file.FileChooser;
 import com.kotcrab.vis.ui.widget.file.FileChooserListener;
 import com.kotcrab.vis.ui.widget.file.FileTypeFilter;
+import com.lksoft.yugen.stateless.AnimationPack;
 import com.lksoft.yugen.stateless.*;
 
 import java.io.File;

@@ -3,14 +3,15 @@ package com.lksoft.yugen.stateful;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
 import com.badlogic.gdx.ai.fsm.State;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.lksoft.yugen.Yugen;
-import com.lksoft.yugen.stateless.*;
+import com.lksoft.yugen.stateless.AnimationDef;
+import com.lksoft.yugen.stateless.AnimationPack;
+import com.lksoft.yugen.stateless.CommandDef;
+import com.lksoft.yugen.stateless.Settings;
 
 import java.io.IOException;
 
@@ -59,6 +60,12 @@ public abstract class Fsm<FsmClass, StateClass extends State<FsmClass>, HitClass
      */
     public Fsm() {
         super(null);
+
+        // Load animation pack if specified
+        FsmResources resources = getClass().getAnnotation(FsmResources.class);
+        if( resources != null && resources.anm() != null ){
+            loadAnimationPack(resources.anm());
+        }
     }
 
     @Override
@@ -129,6 +136,14 @@ public abstract class Fsm<FsmClass, StateClass extends State<FsmClass>, HitClass
         return collisionTargets;
     }
 
+    /**
+     * Dispose FSM resouces
+     */
+    public void dispose(){
+        if( animationPack != null ){
+            animationPack.release();
+        }
+    }
 
     // FSM API
     protected abstract StateClass getInitialState();
@@ -206,13 +221,7 @@ public abstract class Fsm<FsmClass, StateClass extends State<FsmClass>, HitClass
      * @param path
      */
     public void loadAnimationPack(String path){
-        FileHandle anm = Gdx.files.internal(path);
-        FileHandle frm = new FileHandle(anm.pathWithoutExtension() + ".frm");
-        FileHandle atlasHandle = new FileHandle(anm.pathWithoutExtension() + ".atlas");
-        TextureAtlas atlas = new TextureAtlas(atlasHandle);
-        SpritePack spritePack = new SpritePackReader(frm).read(atlas);
-
-        this.animationPack = AnimationPack.read(anm, spritePack);
+        this.animationPack = Yugen.i.loadAnimationPack(path);
     }
 
     /**

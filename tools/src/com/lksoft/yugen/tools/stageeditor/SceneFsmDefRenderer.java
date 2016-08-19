@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  *
  * Renderer for stage layout
  */
-public class StageDefRenderer {
+public class SceneFsmDefRenderer {
     // Some colors
     private static final Color FLOOR = Color.GREEN;
     private static final Color ORIGIN = Color.BLACK;
@@ -42,7 +42,7 @@ public class StageDefRenderer {
 //     * Create b1 renderer for b1 stage layout
 //     * @param stageDef The stage layout to render
 //     */
-//    public StageDefRenderer(StageDef stageDef) {
+//    public SceneFsmDefRenderer(StageDef stageDef) {
 //        this.stageDef = stageDef;
 //        shapeRenderer.setAutoShapeType(true);
 //    }

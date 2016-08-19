@@ -3,19 +3,18 @@ package com.lksoft.yugen.tools.stageeditor;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
-import com.kotcrab.vis.ui.util.dialog.Dialogs;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.file.FileChooser;
 import com.kotcrab.vis.ui.widget.file.FileChooserListener;
 import com.kotcrab.vis.ui.widget.file.FileTypeFilter;
-import com.lksoft.yugen.stateless.*;
+import com.lksoft.yugen.stateless.AnimationPack;
+import com.lksoft.yugen.stateless.SceneDef;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * Created by Lake on 07/06/2016.
@@ -28,19 +27,22 @@ public class StageEditorScreen implements Screen, InputProcessor {
     // UI
     private Stage stage;
 
+    // Animation packs
+    private ObjectMap<String, AnimationPack> animationPacks = new ObjectMap<>();
+
     // Sprite def window
-    private SpriteDefWindow spriteDefWindow;
+    private SceneFsmDefWindow sceneFsmDefWindow;
 
     // Current stage
-    //private StageDef currentStageDef;
-    private StageDefRenderer stageRenderer;
+    private SceneDef currentSceneDef;
+    private SceneFsmDefRenderer stageRenderer;
     private String stageBaseName;
 
     // Screen size info
     private int lastW, lastH;
 
     // Selection
-    //private StageSpriteDef selection;
+    private SceneDef.SceneFsmDef selection;
     // Dragging
     private Vector2 clickOffset;
 
@@ -52,6 +54,21 @@ public class StageEditorScreen implements Screen, InputProcessor {
         this.stagesPath = stagesPath;
     }
 
+    // Accessors
+    public SceneDef getCurrentSceneDef(){
+        return currentSceneDef;
+    }
+
+    // Load anim pack
+    public AnimationPack loadAnimationPack(FileHandle path){
+        AnimationPack pack = animationPacks.get(path.path());
+        if( pack == null ){
+            pack = AnimationPack.read(path);
+            animationPacks.put(path.path(), pack);
+        }
+        return pack;
+    }
+
     @Override
     public void show() {
         stage = new Stage();
@@ -61,9 +78,9 @@ public class StageEditorScreen implements Screen, InputProcessor {
         StageEditorMenuBar menuBar = new StageEditorMenuBar(this);
 
         // Create sprite def window
-        spriteDefWindow = new SpriteDefWindow(this);
-        spriteDefWindow.pack();
-        spriteDefWindow.setPosition(stage.getViewport().getWorldWidth()-spriteDefWindow.getWidth(), 0);
+        sceneFsmDefWindow = new SceneFsmDefWindow(this);
+        sceneFsmDefWindow.pack();
+        sceneFsmDefWindow.setPosition(stage.getViewport().getWorldWidth()- sceneFsmDefWindow.getWidth(), 0);
 
         // Root with menu bar
         VisTable root = new VisTable(true);
@@ -72,7 +89,7 @@ public class StageEditorScreen implements Screen, InputProcessor {
         root.setFillParent(true);
 
         stage.addActor(root);
-        stage.addActor(spriteDefWindow);
+        stage.addActor(sceneFsmDefWindow);
     }
 
     @Override
@@ -125,14 +142,14 @@ public class StageEditorScreen implements Screen, InputProcessor {
 
 //    // Set the current stage layout
 //    private void setLayout(StageDef stageDef) {
-//        currentStageDef = stageDef;
-//        stageRenderer = new StageDefRenderer(getCurrentStageDef());
+//        currentSceneDef = stageDef;
+//        stageRenderer = new SceneFsmDefRenderer(getCurrentStageDef());
 //        stageRenderer.resize(lastW, lastH);
 //        stageBaseName = stageDef.getAnmFile().nameWithoutExtension();
 //    }
 //
 //    public StageDef getCurrentStageDef() {
-//        return currentStageDef;
+//        return currentSceneDef;
 //    }
 
     @Override
@@ -158,7 +175,7 @@ public class StageEditorScreen implements Screen, InputProcessor {
 //
 //            case Input.Keys.ESCAPE:
 //                selection = null;
-//                spriteDefWindow.setSpriteDef(null);
+//                sceneFsmDefWindow.setSpriteDef(null);
 //                break;
 //
 //            case Input.Keys.SPACE:
@@ -200,7 +217,7 @@ public class StageEditorScreen implements Screen, InputProcessor {
 //                for (int i = dfs.size - 1; i >= 0; i--) {
 //                    if (dfs.get(i).getBounds().contains(touch)) {
 //                        selection = dfs.get(i);
-//                        spriteDefWindow.setSpriteDef(selection);
+//                        sceneFsmDefWindow.setSpriteDef(selection);
 //                        found = true;
 //                        clickOffset = new Vector2(touch);
 //                        clickOffset.sub(dfs.get(i).getStartX(), dfs.get(i).getStartY());
@@ -212,7 +229,7 @@ public class StageEditorScreen implements Screen, InputProcessor {
 //            // Clear selection if click on nothing
 //            if(!found) {
 //                selection = null;
-//                spriteDefWindow.setSpriteDef(null);
+//                sceneFsmDefWindow.setSpriteDef(null);
 //                stage.unfocusAll();
 //            }
 //        }
@@ -234,7 +251,7 @@ public class StageEditorScreen implements Screen, InputProcessor {
 //            if( selection != null ) {
 //                selection.setStartX((int) place.x);
 //                selection.setStartY((int) place.y);
-//                spriteDefWindow.setSpriteDef(selection);
+//                sceneFsmDefWindow.setSpriteDef(selection);
 //            }
 //        }
 //        else{
@@ -255,38 +272,39 @@ public class StageEditorScreen implements Screen, InputProcessor {
 
     // Create new stage
     void newStage() {
-        // Show file chooser
-        final FileChooser chooser = new FileChooser(FileChooser.Mode.OPEN);
-        chooser.setSelectionMode(FileChooser.SelectionMode.FILES);
-        chooser.setMultiSelectionEnabled(false);
-        chooser.setDirectory(stagesPath);
-        FileTypeFilter filter = new FileTypeFilter(false);
-        filter.addRule("Animation pack files", "anm");
-        chooser.setFileTypeFilter(filter);
-        chooser.setListener(new FileChooserListener() {
-            @Override
-            public void selected(Array<FileHandle> files) {
-                // Read frm and atlas
-                FileHandle frm = new FileHandle(files.first().pathWithoutExtension() + ".frm");
-                FileHandle atlasHandle = new FileHandle(files.first().pathWithoutExtension() + ".atlas");
-                TextureAtlas atlas = new TextureAtlas(atlasHandle);
-                SpritePack spritePack = new SpritePackReader(frm).read(atlas);
+//        // Show file chooser
+//        final FileChooser chooser = new FileChooser(FileChooser.Mode.OPEN);
+//        chooser.setSelectionMode(FileChooser.SelectionMode.FILES);
+//        chooser.setMultiSelectionEnabled(false);
+//        chooser.setDirectory(stagesPath);
+//        FileTypeFilter filter = new FileTypeFilter(false);
+//        filter.addRule("Animation pack files", "anm");
+//        chooser.setFileTypeFilter(filter);
+//        chooser.setListener(new FileChooserListener() {
+//            @Override
+//            public void selected(Array<FileHandle> files) {
+//                // Read frm and atlas
+//                FileHandle frm = new FileHandle(files.first().pathWithoutExtension() + ".frm");
+//                FileHandle atlasHandle = new FileHandle(files.first().pathWithoutExtension() + ".atlas");
+//                TextureAtlas atlas = new TextureAtlas(atlasHandle);
+//                SpritePack spritePack = new SpritePackReader(frm).read(atlas);
+//
+//                // Create new stage
+//                //setLayout(new StageDef(AnimationPack.read(files.first(), spritePack), files.first(), frm, atlasHandle));
+//            }
+//
+//            @Override
+//            public void canceled() {
+//            }
+//        });
+//
+//        stage.addActor(chooser);
 
-                // Create new stage
-                //setLayout(new StageDef(AnimationPack.read(files.first(), spritePack), files.first(), frm, atlasHandle));
-            }
-
-            @Override
-            public void canceled() {
-            }
-        });
-
-        stage.addActor(chooser);
     }
 
     // Add sprite def
     void addSpriteDef() {
-//        if( currentStageDef == null ) return;
+//        if( currentSceneDef == null ) return;
 //
 //        AnimationDefPicker picker = new AnimationDefPicker(getCurrentStageDef().getAnimationPack(), new AnimationDefPicker.PickListener() {
 //            @Override
@@ -307,7 +325,7 @@ public class StageEditorScreen implements Screen, InputProcessor {
         chooser.setMultiSelectionEnabled(false);
         chooser.setDirectory(stagesPath);
         FileTypeFilter filter = new FileTypeFilter(false);
-        filter.addRule("Stage files", "stg");
+        filter.addRule("Scene files", "scn");
         chooser.setFileTypeFilter(filter);
         chooser.setListener(new FileChooserListener() {
 

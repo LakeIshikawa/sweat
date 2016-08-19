@@ -464,7 +464,7 @@ enum FighterState implements State<Fighter> {
             f.setAnimation("shmpunch");
             f.vel.x = 0;
             f.setCtrl(false);
-            f.setAttackHit(f.midpunchHit);
+            f.setAttackHit(f.shmpunchHit);
         }
 
         public void update(Fighter f) {

@@ -1,7 +1,5 @@
 package com.lksoft.yugen.tools.stageeditor;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.kotcrab.vis.ui.util.TableUtils;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTable;
@@ -10,38 +8,38 @@ import com.kotcrab.vis.ui.widget.VisWindow;
 import com.kotcrab.vis.ui.widget.spinner.IntSpinnerModel;
 import com.kotcrab.vis.ui.widget.spinner.SimpleFloatSpinnerModel;
 import com.kotcrab.vis.ui.widget.spinner.Spinner;
-import com.lksoft.yugen.stateless.AnimationDef;
+import com.lksoft.yugen.stateless.SceneDef;
 
 /**
  * Created by Lake on 10/06/2016.
  */
-public class SpriteDefWindow extends VisWindow {
+public class SceneFsmDefWindow extends VisWindow {
 
     // Editor
     private StageEditorScreen stageEditorScreen;
 
     // Widgets
-    private VisTextField name;
+    private VisTextField fsmScript;
     private VisTextField resource;
     private Spinner startPosX, startPosY;
     private Spinner scrollFactorX, scrollFactorY;
     private Spinner layer;
 
     // State
-    //private StageSpriteDef currentDef;
+    private SceneDef.SceneFsmDef currentDef;
 
     /**
      * Create sprite def window
      * @param stageEditorScreen
      */
-    public SpriteDefWindow(final StageEditorScreen stageEditorScreen) {
+    public SceneFsmDefWindow(final StageEditorScreen stageEditorScreen) {
         super("Sprite definition");
         this.stageEditorScreen = stageEditorScreen;
         TableUtils.setSpacingDefaults(this);
 
         VisTable table = new VisTable();
         table.add(new VisLabel("Name:"));
-        table.add(name = new VisTextField());
+        table.add(fsmScript = new VisTextField());
         table.row();
         table.add(new VisLabel("Resource:"));
         table.add(resource = new VisTextField());
@@ -61,18 +59,18 @@ public class SpriteDefWindow extends VisWindow {
         add(table);
 
 
-//        // Listeners
-//        name.setTextFieldListener(new VisTextField.TextFieldListener() {
-//            @Override
-//            public void keyTyped(VisTextField textField, char c) {
-//                if( currentDef != null ) currentDef.setName(name.getText());
-//            }
-//        });
+        // Listeners
+        fsmScript.setTextFieldListener(new VisTextField.TextFieldListener() {
+            @Override
+            public void keyTyped(VisTextField textField, char c) {
+                if( currentDef != null ) currentDef.scriptPath = fsmScript.getText();
+            }
+        });
 //        resource.setTextFieldListener(new VisTextField.TextFieldListener() {
 //            @Override
 //            public void keyTyped(VisTextField textField, char c) {
 //                if( currentDef != null ){
-//                    AnimationDef sequence = stageEditorScreen.getCurrentStageDef().getAnimationPack().getAnimationDef(resource.getText());
+//                    AnimationDef sequence = stageEditorScreen.getCurrentSceneDef().getAnimationPack().getAnimationDef(resource.getText());
 //                    if( sequence != null ){
 //                        currentDef.setResource(sequence);
 //                    }
@@ -122,7 +120,7 @@ public class SpriteDefWindow extends VisWindow {
 //        currentDef = stageSpriteDef;
 //
 //        if( stageSpriteDef == null ){
-//            name.setText("");
+//            fsmScript.setText("");
 //            resource.setText("");
 //            ((IntSpinnerModel) startPosX.getModel()).setValue(0);
 //            ((IntSpinnerModel) startPosY.getModel()).setValue(0);
@@ -130,7 +128,7 @@ public class SpriteDefWindow extends VisWindow {
 //            ((SimpleFloatSpinnerModel) scrollFactorY.getModel()).setValue(0);
 //            ((IntSpinnerModel) layer.getModel()).setValue(0);
 //        } else {
-//            name.setText(stageSpriteDef.getName());
+//            fsmScript.setText(stageSpriteDef.getName());
 //            resource.setText(stageSpriteDef.getResource().getName());
 //            ((IntSpinnerModel) startPosX.getModel()).setValue(stageSpriteDef.getStartX());
 //            ((IntSpinnerModel) startPosY.getModel()).setValue(stageSpriteDef.getStartY());

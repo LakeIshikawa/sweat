@@ -1,19 +1,18 @@
 package chars.yui;
 
-import com.badlogic.gdx.ai.fsm.State;
-import com.badlogic.gdx.ai.msg.Telegram;
-import com.lksoft.yugen.stateful.Fsm;
-import com.lksoft.yugen.stateless.AnimationPack;
+import com.lksoft.yugen.stateful.FsmResources;
 import shared.Fighter;
 
 /**
  * Valkyrie fighter
  */
+@FsmResources(
+        anm = "chars/yui/yui.anm"
+)
 public class Yui extends Fighter {
 
     // Initialization
     public Yui(){
         scale = 1.0f;
-        loadAnimationPack("chars/yui/yui.anm");
     }
 }

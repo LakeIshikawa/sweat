@@ -2,14 +2,15 @@ package com.lksoft.yugen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.lksoft.yugen.stateless.AnimationPack;
 import com.lksoft.yugen.stateful.Fsm;
+import com.lksoft.yugen.stateful.NonFsm;
 import com.lksoft.yugen.stateless.FsmReader;
 import com.lksoft.yugen.stateless.Settings;
 
@@ -32,6 +33,9 @@ public class Yugen {
     // Fsms (map and layers)
     private ObjectMap<String, Fsm> fsms = new ObjectMap<>();
     private Array<Fsm>[] layers = new Array[10];
+
+    // Loaded animation packs
+    private ObjectMap<String, AnimationPack> animationPacks = new ObjectMap<>();
 
     // Viewport
     private YugenCamera camera = new YugenCamera();
@@ -162,14 +166,7 @@ public class Yugen {
      * @return
      */
     public Fsm createFSM(String name) {
-        Fsm fsm = new Fsm() {
-            @Override
-            protected State getInitialState() {
-                return null;
-            }
-            @Override
-            protected void statelessUpdate() {}
-        };
+        Fsm fsm = new NonFsm();
         fsm.setName(name);
         fsms.put(name, fsm);
         layers[fsm.getLayer()].add(fsm);
@@ -200,6 +197,21 @@ public class Yugen {
     public void layerChanged(Fsm fsm, int oldLayer){
         layers[oldLayer].removeValue(fsm, true);
         layers[fsm.getLayer()].add(fsm);
+    }
+
+    /**
+     * Load an animation pack
+     * @param path Path of the .anm file
+     * @return Loaded animation pack
+     */
+    public AnimationPack loadAnimationPack(String path){
+        AnimationPack pack = animationPacks.get(path);
+        if( pack == null || pack.isDisposed() ){
+            pack = AnimationPack.read(Gdx.files.internal(path));
+            animationPacks.put(path, pack);
+        }
+
+        return pack;
     }
 
     /**
