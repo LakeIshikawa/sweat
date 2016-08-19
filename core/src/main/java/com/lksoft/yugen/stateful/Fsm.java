@@ -42,8 +42,6 @@ public abstract class Fsm<FsmClass, StateClass extends State<FsmClass>, HitClass
     private Settings.KeySettings keySettings;
     // AnimationPack
     private AnimationPack animationPack;
-    // Commands
-    private Commands commands;
 
     // Combo detector
     private CommandDetector commandDetector = new CommandDetector(this);

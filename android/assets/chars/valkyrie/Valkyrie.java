@@ -17,7 +17,7 @@ public class Valkyrie extends Fighter {
         scale = 0.8f;
         loadAnimationPack("chars/valkyrie/valkyrie.anm");
 
-        // Set hits
+        // Middle punch
         midpunch.damage = 20;
         midpunch.guardflags = "SC";
         midpunch.pausetime = 12;

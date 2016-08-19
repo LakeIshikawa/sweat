@@ -4,13 +4,14 @@ import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.math.Vector2;
 import com.lksoft.yugen.stateful.Fsm;
+import com.lksoft.yugen.stateless.CommandDef;
 
 /**
  * Fighter base class
  */
 public class Fighter extends Fsm<Fighter, State<Fighter>, FighterHit> {
     // Constants
-    protected enum FightPosition {
+    public enum FightPosition {
         STANDING("S"),
         CROUCHING("C"),
         AIR("A");
@@ -22,7 +23,7 @@ public class Fighter extends Fsm<Fighter, State<Fighter>, FighterHit> {
     }
 
     // Physics
-    protected enum Physics{
+    public enum Physics{
         NONE,
         STANDING,
         CROUCHING,
@@ -30,29 +31,33 @@ public class Fighter extends Fsm<Fighter, State<Fighter>, FighterHit> {
     }
 
     // Default hits
-    protected FighterHit midpunch = new FighterHit();
+    public FighterHit midpunch = new FighterHit();
+
+    // Basilar commands
+    public CommandDef runCmd = CommandDef.parse("{10} < ~F, !F >");
+    public CommandDef backhopCmd = CommandDef.parse("{10} < ~B, !B >");
 
     // Default parameters
-    protected float speed_walk_fwd = 6.0f;
-    protected float speed_walk_bwd = -4.0f;
-    protected float speed_air_fwd = 3.0f;
-    protected float speed_air_bwd = -2.0f;
-    protected float speed_jump_up = 15.0f;
-    protected float speed_run_fwd = 9.0f;
-    protected Vector2 speed_backhop = new Vector2(-9.0f, 5.0f);
-    protected float standing_friction = 0.4f;
-    protected float crouching_friction = 0.65f;
-    protected float air_gravity_y = -0.6f;
+    public float speed_walk_fwd = 6.0f;
+    public float speed_walk_bwd = -4.0f;
+    public float speed_air_fwd = 3.0f;
+    public float speed_air_bwd = -2.0f;
+    public float speed_jump_up = 15.0f;
+    public float speed_run_fwd = 9.0f;
+    public Vector2 speed_backhop = new Vector2(-9.0f, 5.0f);
+    public float standing_friction = 0.4f;
+    public float crouching_friction = 0.65f;
+    public float air_gravity_y = -0.6f;
 
     // FightPosition
-    protected FightPosition fightPosition;
-    protected Physics physics;
+    public FightPosition fightPosition;
+    public Physics physics;
 
     // References
-    protected Fsm opponent;
+    public Fsm opponent;
 
     // Temp
-    protected int slidetime;
+    public int slidetime;
 
     // Initialization
     public Fighter() {
@@ -66,6 +71,9 @@ public class Fighter extends Fsm<Fighter, State<Fighter>, FighterHit> {
 
     @Override
     public void statelessUpdate(){
+        boolean standing = fightPosition == FightPosition.STANDING;
+        boolean crouching = fightPosition == FightPosition.CROUCHING;
+
         // Physics
         switch (physics){
             case STANDING:
@@ -87,12 +95,28 @@ public class Fighter extends Fsm<Fighter, State<Fighter>, FighterHit> {
                 break;
         }
 
-        // Normal attacks
-        boolean standing = fightPosition == FightPosition.STANDING;
-        boolean crouching = fightPosition == FightPosition.CROUCHING;
-        if( isCtrl() && standing && getAnimation("midpunch") != null && keyPress("B1") ){
-            changeState(FighterState.MIDPUNCH);
-            return;
+        // Special and normal commands
+        if( isCtrl() ){
+            // Run
+            if( standing && getAnimation("running") != null && matchCommand(runCmd) ){
+                setCtrl(false);
+                changeState(FighterState.RUNNING);
+                return;
+            }
+
+            // Backhop
+            if( standing && getAnimation("backhop") != null && matchCommand(backhopCmd) ){
+                setCtrl(false);
+                changeState(FighterState.BACKHOP);
+                return;
+            }
+
+            // Normal attacks
+            if( standing && getAnimation("midpunch") != null && keyPress("B1") ){
+                setCtrl(false);
+                changeState(FighterState.MIDPUNCH);
+                return;
+            }
         }
 
         // Hit check
@@ -333,6 +357,49 @@ enum FighterState implements State<Fighter> {
     CROUCH2STAND {
         public void enter(Fighter f){
             f.setAnimation("crouch2stand");
+        }
+
+        public void update(Fighter f) {
+            if( f.getAnimCycles() == 1 ){
+                f.changeState(IDLE);
+                return;
+            }
+        }
+    },
+
+    RUNNING {
+        public void enter(Fighter f){
+            f.setAnimation("running");
+            f.vel.x = f.speed_run_fwd * (f.flip?-1:1);
+        }
+
+        public void update(Fighter f) {
+            if( !f.keyHold("F") ){
+                f.changeState(IDLE);
+                return;
+            }
+        }
+    },
+
+    BACKHOP {
+        public void enter(Fighter f){
+            f.setAnimation("backhop");
+            f.vel.x = f.speed_backhop.x * (f.flip?-1:1);
+            f.vel.y = f.speed_backhop.y;
+            f.physics = Fighter.Physics.AIR;
+        }
+
+        public void update(Fighter f) {
+            if( f.pos.y < 0 ){
+                f.changeState(BACKHOPLAND);
+                return;
+            }
+        }
+    },
+
+    BACKHOPLAND {
+        public void enter(Fighter f){
+            f.setAnimation("backhopland");
         }
 
         public void update(Fighter f) {
