@@ -30,8 +30,26 @@ public class Fighter extends Fsm<Fighter, State<Fighter>, FighterHit> {
         AIR
     }
 
+    // Default states
+    public State<Fighter> idle = FighterState.IDLE;
+    public State<Fighter> walk = FighterState.WALK;
+    public State<Fighter> turn = FighterState.TURN;
+    public State<Fighter> jumpstart = FighterState.JUMPSTART;
+    public State<Fighter> jumping = FighterState.JUMPING;
+    public State<Fighter> landing = FighterState.LANDING;
+    public State<Fighter> stand2crouch = FighterState.STAND2CROUCH;
+    public State<Fighter> crouching = FighterState.CROUCHING;
+    public State<Fighter> crouch2stand = FighterState.CROUCH2STAND;
+    public State<Fighter> running = FighterState.RUNNING;
+    public State<Fighter> backhop = FighterState.BACKHOP;
+    public State<Fighter> backhopland= FighterState.BACKHOPLAND;
+    public State<Fighter> groundDamage = FighterState.GROUNDDAMAGE;
+    public State<Fighter> airDamage = FighterState.AIRDAMAGE;
+    public State<Fighter> midpunch = FighterState.MIDPUNCH;
+
+
     // Default hits
-    public FighterHit midpunch = new FighterHit();
+    public FighterHit midpunchHit = new FighterHit();
 
     // Basilar commands
     public CommandDef runCmd = CommandDef.parse("{10} < ~F, !F >");
@@ -66,7 +84,7 @@ public class Fighter extends Fsm<Fighter, State<Fighter>, FighterHit> {
 
     @Override
     public State<Fighter> getInitialState(){
-        return FighterState.IDLE;
+        return idle;
     }
 
     @Override
@@ -100,21 +118,21 @@ public class Fighter extends Fsm<Fighter, State<Fighter>, FighterHit> {
             // Run
             if( standing && getAnimation("running") != null && matchCommand(runCmd) ){
                 setCtrl(false);
-                changeState(FighterState.RUNNING);
+                changeState(running);
                 return;
             }
 
             // Backhop
             if( standing && getAnimation("backhop") != null && matchCommand(backhopCmd) ){
                 setCtrl(false);
-                changeState(FighterState.BACKHOP);
+                changeState(backhop);
                 return;
             }
 
             // Normal attacks
             if( standing && getAnimation("midpunch") != null && keyPress("B1") ){
                 setCtrl(false);
-                changeState(FighterState.MIDPUNCH);
+                changeState(midpunch);
                 return;
             }
         }
@@ -142,7 +160,7 @@ public class Fighter extends Fsm<Fighter, State<Fighter>, FighterHit> {
                     vel.x = getHit().air_velocity * (flip ? -1 : 1);
                     vel.y = 0;
                     clearHit();
-                    changeState(FighterState.AIRDAMAGE);
+                    changeState(airDamage);
                     return;
                 }
 
@@ -152,7 +170,7 @@ public class Fighter extends Fsm<Fighter, State<Fighter>, FighterHit> {
                     vel.x = getHit().air_velocity * (flip ? -1 : 1);
                     vel.y = 15f;
                     clearHit();
-                    changeState(FighterState.AIRDAMAGE);
+                    changeState(airDamage);
                     return;
                 }
 
@@ -163,7 +181,7 @@ public class Fighter extends Fsm<Fighter, State<Fighter>, FighterHit> {
                 String animName = "damage" + fightPosition.idchar + getHit().damageAnimHeight.idchar + getHit().damageAnimType.idchar;
                 setAnimation(animName);
                 clearHit();
-                changeState(FighterState.GROUNDDAMAGE);
+                changeState(groundDamage);
                 return;
             }
         }
@@ -191,25 +209,25 @@ enum FighterState implements State<Fighter> {
         public void update(Fighter f) {
             // Turn
             if( !f.facing(f.opponent) ){
-                f.changeState(TURN);
+                f.changeState(f.turn);
                 return;
             }
 
             // Walk
             if( f.keyHold("F") ^ f.keyHold("B") ){
-                f.changeState(WALK);
+                f.changeState(f.walk);
                 return;
             }
 
             // Jump
             if( f.keyHold("U") ){
-                f.changeState(JUMPSTART);
+                f.changeState(f.jumpstart);
                 return;
             }
 
             // Crouch
             if( f.keyHold("D") ){
-                f.changeState(STAND2CROUCH);
+                f.changeState(f.stand2crouch);
                 return;
             }
         }
@@ -235,24 +253,24 @@ enum FighterState implements State<Fighter> {
 
             // Turn
             if( !f.facing(f.opponent) ){
-                f.changeState(TURN);
+                f.changeState(f.turn);
                 return;
             }
 
             // Stop walking
             if( !(f.keyHold("F") ^ f.keyHold("B")) ){
-                f.changeState(IDLE);
+                f.changeState(f.idle);
             }
 
             // Jump
             if( f.keyHold("U") ){
-                f.changeState(JUMPSTART);
+                f.changeState(f.jumpstart);
                 return;
             }
 
             // Crouch
             if( f.keyHold("D") ){
-                f.changeState(STAND2CROUCH);
+                f.changeState(f.stand2crouch);
                 return;
             }
         }
@@ -266,7 +284,7 @@ enum FighterState implements State<Fighter> {
         public void update(Fighter f) {
             if( f.getAnimCycles() == 1 ){
                 f.flip = !f.flip;
-                f.changeState(IDLE);
+                f.changeState(f.idle);
                 return;
             }
         }
@@ -287,7 +305,7 @@ enum FighterState implements State<Fighter> {
 
                 // Jump
                 f.vel.y = f.speed_jump_up;
-                f.changeState(JUMPING);
+                f.changeState(f.jumping);
                 return;
             }
         }
@@ -309,7 +327,7 @@ enum FighterState implements State<Fighter> {
 
             // Landing
             if( f.pos.y < 0 ){
-                f.changeState(LANDING);
+                f.changeState(f.landing);
                 return;
             }
         }
@@ -322,7 +340,7 @@ enum FighterState implements State<Fighter> {
 
         public void update(Fighter f) {
             if( f.getAnimCycles() == 1 ){
-                f.changeState(IDLE);
+                f.changeState(f.idle);
             }
         }
     },
@@ -335,7 +353,7 @@ enum FighterState implements State<Fighter> {
         }
         public void update(Fighter f) {
             if( f.getAnimCycles() == 1 ){
-                f.changeState(CROUCHING);
+                f.changeState(f.crouching);
                 return;
             }
         }
@@ -348,7 +366,7 @@ enum FighterState implements State<Fighter> {
 
         public void update(Fighter f) {
             if( !f.keyHold("D") ){
-                f.changeState(CROUCH2STAND);
+                f.changeState(f.crouch2stand);
                 return;
             }
         }
@@ -361,7 +379,7 @@ enum FighterState implements State<Fighter> {
 
         public void update(Fighter f) {
             if( f.getAnimCycles() == 1 ){
-                f.changeState(IDLE);
+                f.changeState(f.idle);
                 return;
             }
         }
@@ -375,7 +393,7 @@ enum FighterState implements State<Fighter> {
 
         public void update(Fighter f) {
             if( !f.keyHold("F") ){
-                f.changeState(IDLE);
+                f.changeState(f.idle);
                 return;
             }
         }
@@ -391,7 +409,7 @@ enum FighterState implements State<Fighter> {
 
         public void update(Fighter f) {
             if( f.pos.y < 0 ){
-                f.changeState(BACKHOPLAND);
+                f.changeState(f.backhopland);
                 return;
             }
         }
@@ -404,7 +422,7 @@ enum FighterState implements State<Fighter> {
 
         public void update(Fighter f) {
             if( f.getAnimCycles() == 1 ){
-                f.changeState(IDLE);
+                f.changeState(f.idle);
                 return;
             }
         }
@@ -416,12 +434,12 @@ enum FighterState implements State<Fighter> {
             f.setAnimation("midpunch");
             f.vel.x = 0;
             f.setCtrl(false);
-            f.setAttackHit(f.midpunch);
+            f.setAttackHit(f.midpunchHit);
         }
 
         public void update(Fighter f) {
             if( f.getAnimCycles() == 1 ){
-                f.changeState(IDLE);
+                f.changeState(f.idle);
                 return;
             }
         }
@@ -433,7 +451,7 @@ enum FighterState implements State<Fighter> {
         }
         public void update(Fighter f) {
             if( f.getStatetime() == f.slidetime ){
-                f.changeState(IDLE);
+                f.changeState(f.idle);
             }
         }
     },
@@ -445,7 +463,7 @@ enum FighterState implements State<Fighter> {
         }
         public void update(Fighter f) {
             if( f.pos.y < 0 ){
-                f.changeState(LANDING);
+                f.changeState(f.landing);
                 return;
             }
         }

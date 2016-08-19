@@ -18,13 +18,13 @@ public class Valkyrie extends Fighter {
         loadAnimationPack("chars/valkyrie/valkyrie.anm");
 
         // Middle punch
-        midpunch.damage = 20;
-        midpunch.guardflags = "SC";
-        midpunch.pausetime = 12;
-        midpunch.damageAnimType = FighterHit.DamageAnimType.MEDIUM;
-        midpunch.damageAnimHeight = FighterHit.DamageAnimHeight.HIGH;
-        midpunch.ground_velocity = -7f;
-        midpunch.ground_slidetime = 10;
-        midpunch.air_velocity = -5f;
+        midpunchHit.damage = 20;
+        midpunchHit.guardflags = "SC";
+        midpunchHit.pausetime = 12;
+        midpunchHit.damageAnimType = FighterHit.DamageAnimType.MEDIUM;
+        midpunchHit.damageAnimHeight = FighterHit.DamageAnimHeight.HIGH;
+        midpunchHit.ground_velocity = -7f;
+        midpunchHit.ground_slidetime = 10;
+        midpunchHit.air_velocity = -5f;
     }
 }
