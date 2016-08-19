@@ -355,13 +355,7 @@ public class AnimationEditorScreen implements Screen {
 
             @Override
             public void selected(Array<FileHandle> files) {
-                // Read frm and atlas
-                FileHandle frm = new FileHandle(files.first().pathWithoutExtension() + ".frm");
-                FileHandle atlasHandle = new FileHandle(files.first().pathWithoutExtension() + ".atlas");
-                TextureAtlas atlas = new TextureAtlas(atlasHandle);
-                SpritePack spritePack = new SpritePackReader(frm).read(atlas);
-
-                setAnimationPack(AnimationPack.read(files.first(), spritePack), files.first());
+                setAnimationPack(AnimationPack.read(files.first()), files.first());
             }
 
             @Override
