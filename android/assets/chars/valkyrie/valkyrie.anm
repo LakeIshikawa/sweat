@@ -1,5 +1,104 @@
 {
 animations: {
+	landing: {
+		name: landing
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:test028
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 2
+				damageCollisions: [
+					{
+						x: -64
+						y: -12
+						width: 135
+						height: 94
+					}
+					{
+						x: -41
+						y: 83
+						width: 87
+						height: 106
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test027
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -68
+						y: -19
+						width: 143
+						height: 140
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test026
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -74
+						y: -18
+						width: 142
+						height: 124
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test027
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+				damageCollisions: [
+					{
+						x: -68
+						y: -19
+						width: 143
+						height: 140
+					}
+				]
+			}
+		]
+	}
 	backhop: {
 		name: backhop
 		frames: [
@@ -83,39 +182,6 @@ animations: {
 			}
 		]
 		loopStartPos: 2
-	}
-	crouchTurn: {
-		name: crouchTurn
-		frames: [
-			{
-				components: [
-					{
-						spriteDef: S:test025
-						x: 0
-						y: 0
-						scaleX: 1
-						scaleY: 1
-						rotation: 0
-						blendMode: NORMAL
-					}
-				]
-				lengthTicks: 2
-				damageCollisions: [
-					{
-						x: -50
-						y: -9
-						width: 107
-						height: 112
-					}
-					{
-						x: -41
-						y: 104
-						width: 81
-						height: 101
-					}
-				]
-			}
-		]
 	}
 	walkbwd: {
 		name: walkbwd
@@ -908,13 +974,13 @@ animations: {
 			}
 		]
 	}
-	landing: {
-		name: landing
+	crouchTurn: {
+		name: crouchTurn
 		frames: [
 			{
 				components: [
 					{
-						spriteDef: S:test028
+						spriteDef: S:test025
 						x: 0
 						y: 0
 						scaleX: 1
@@ -926,82 +992,16 @@ animations: {
 				lengthTicks: 2
 				damageCollisions: [
 					{
-						x: -64
-						y: -12
-						width: 135
-						height: 94
+						x: -50
+						y: -9
+						width: 107
+						height: 112
 					}
 					{
 						x: -41
-						y: 83
-						width: 87
-						height: 106
-					}
-				]
-			}
-			{
-				components: [
-					{
-						spriteDef: S:test027
-						x: 0
-						y: 0
-						scaleX: 1
-						scaleY: 1
-						rotation: 0
-						blendMode: NORMAL
-					}
-				]
-				lengthTicks: 3
-				damageCollisions: [
-					{
-						x: -68
-						y: -19
-						width: 143
-						height: 140
-					}
-				]
-			}
-			{
-				components: [
-					{
-						spriteDef: S:test026
-						x: 0
-						y: 0
-						scaleX: 1
-						scaleY: 1
-						rotation: 0
-						blendMode: NORMAL
-					}
-				]
-				lengthTicks: 3
-				damageCollisions: [
-					{
-						x: -74
-						y: -18
-						width: 142
-						height: 124
-					}
-				]
-			}
-			{
-				components: [
-					{
-						spriteDef: S:test027
-						x: 0
-						y: 0
-						scaleX: 1
-						scaleY: 1
-						rotation: 0
-						blendMode: NORMAL
-					}
-				]
-				lengthTicks: 3
-				damageCollisions: [
-					{
-						x: -68
-						y: -19
-						width: 143
-						height: 140
+						y: 104
+						width: 81
+						height: 101
 					}
 				]
 			}
@@ -1502,8 +1502,69 @@ animations: {
 		]
 		loopStartPos: 6
 	}
-	midpunch: {
-		name: midpunch
+	crouching: {
+		name: crouching
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:test006
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 90
+				damageCollisions: [
+					{
+						x: -50
+						y: -9
+						width: 107
+						height: 112
+					}
+					{
+						x: -41
+						y: 104
+						width: 81
+						height: 101
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test009
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 8
+				damageCollisions: [
+					{
+						x: -50
+						y: -9
+						width: 107
+						height: 112
+					}
+					{
+						x: -41
+						y: 104
+						width: 81
+						height: 101
+					}
+				]
+			}
+		]
+	}
+	punchSHM: {
+		name: punchSHM
 		frames: [
 			{
 				components: [
@@ -1866,67 +1927,6 @@ animations: {
 						y: 83
 						width: 87
 						height: 106
-					}
-				]
-			}
-		]
-	}
-	crouching: {
-		name: crouching
-		frames: [
-			{
-				components: [
-					{
-						spriteDef: S:test006
-						x: 0
-						y: 0
-						scaleX: 1
-						scaleY: 1
-						rotation: 0
-						blendMode: NORMAL
-					}
-				]
-				lengthTicks: 90
-				damageCollisions: [
-					{
-						x: -50
-						y: -9
-						width: 107
-						height: 112
-					}
-					{
-						x: -41
-						y: 104
-						width: 81
-						height: 101
-					}
-				]
-			}
-			{
-				components: [
-					{
-						spriteDef: S:test009
-						x: 0
-						y: 0
-						scaleX: 1
-						scaleY: 1
-						rotation: 0
-						blendMode: NORMAL
-					}
-				]
-				lengthTicks: 8
-				damageCollisions: [
-					{
-						x: -50
-						y: -9
-						width: 107
-						height: 112
-					}
-					{
-						x: -41
-						y: 104
-						width: 81
-						height: 101
 					}
 				]
 			}

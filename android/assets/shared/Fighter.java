@@ -45,11 +45,11 @@ public class Fighter extends Fsm<Fighter, State<Fighter>, FighterHit> {
     public State<Fighter> backhopland= FighterState.BACKHOPLAND;
     public State<Fighter> groundDamage = FighterState.GROUNDDAMAGE;
     public State<Fighter> airDamage = FighterState.AIRDAMAGE;
-    public State<Fighter> shmpunch = FighterState.SHMPUNCH;
+    public State<Fighter> punchSHM = FighterState.PUNCHSHM;
 
 
     // Default hits
-    public FighterHit shmpunchHit = new FighterHit();
+    public FighterHit punchSHMhit = new FighterHit();
     public FighterHit slmpunchHit = new FighterHit();
 
     // Basilar commands
@@ -84,7 +84,7 @@ public class Fighter extends Fsm<Fighter, State<Fighter>, FighterHit> {
 
         // -- Default hit values
         // Punches
-        shmpunchHit.damageAnimHeight = FighterHit.DamageAnimHeight.HIGH;
+        punchSHMhit.damageAnimHeight = FighterHit.DamageAnimHeight.HIGH;
         slmpunchHit.damageAnimHeight = FighterHit.DamageAnimHeight.LOW;
     }
 
@@ -136,9 +136,9 @@ public class Fighter extends Fsm<Fighter, State<Fighter>, FighterHit> {
             }
 
             // Normal attacks
-            if( standing && getAnimation("shmpunch") != null && keyPress("B1") ){
+            if( standing && getAnimation("punchSHM") != null && keyPress("B1") ){
                 setCtrl(false);
-                changeState(shmpunch);
+                changeState(punchSHM);
                 return;
             }
         }
@@ -458,13 +458,13 @@ enum FighterState implements State<Fighter> {
         }
     },
 
-    SHMPUNCH {
+    PUNCHSHM {
         public void enter(Fighter f){
             f.setLayer(6);
-            f.setAnimation("shmpunch");
+            f.setAnimation("punchSHM");
             f.vel.x = 0;
             f.setCtrl(false);
-            f.setAttackHit(f.shmpunchHit);
+            f.setAttackHit(f.punchSHMhit);
         }
 
         public void update(Fighter f) {

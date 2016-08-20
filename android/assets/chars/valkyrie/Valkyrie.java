@@ -16,6 +16,6 @@ public class Valkyrie extends Fighter {
         scale = 0.8f;
 
         // Middle punch
-        shmpunchHit.damage = 30;
+        punchSHMhit.damage = 30;
     }
 }

@@ -14,7 +14,6 @@ import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.file.FileChooser;
 import com.kotcrab.vis.ui.widget.file.FileChooserListener;
 import com.kotcrab.vis.ui.widget.file.FileTypeFilter;
-import com.lksoft.yugen.stateless.AnimationPack;
 import com.lksoft.yugen.stateless.*;
 
 import java.io.File;
@@ -208,6 +207,9 @@ public class AnimationEditorScreen implements Screen {
         // Populate frames window
         animationFrameWindow.setAnimationDef(def);
 
+        // Inspector
+        inspectorWindow.setAnimationDef(def);
+
         // Select first frame
         if( def == null || def.getFrames().size == 0 ) selectFrame(null);
         else selectFrame(def.getFrames().first());
@@ -255,6 +257,11 @@ public class AnimationEditorScreen implements Screen {
     void removeAnimationDef(AnimationDef def) {
         animationPackWindow.removeAnimationDef(def);
         selectAnimationDef(null);
+    }
+
+    // Set animation def name
+    public void setAnimationDefName(String name) {
+        animationPackWindow.renameSelected(name);
     }
 
     // Remove frame
