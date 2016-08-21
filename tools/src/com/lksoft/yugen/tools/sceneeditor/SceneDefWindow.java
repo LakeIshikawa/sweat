@@ -111,7 +111,7 @@ public class SceneDefWindow extends VisWindow {
     /**
      * @return Currently selected fsm
      */
-    public SceneDef.SceneFsmDef getSelectedComponent() {
+    public SceneDef.SceneFsmDef getSelected() {
         if( getAdapter().getSelection().size == 0 ) return null;
         return getAdapter().getSelection().first();
     }

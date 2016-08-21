@@ -48,16 +48,11 @@ public class Yugen {
      * File "settings.def" must exist
      */
     public Yugen(FileHandle mainFsm, boolean debug, boolean compileScripts) throws IOException {
-        i = this;
+        super();
         this.debug = debug;
 
         if( compileScripts ){
             ScriptCompiler.compileScripts();
-        }
-
-        // Create layers
-        for( int i=0; i<layers.length; i++ ){
-            layers[i] = new Array<>();
         }
 
         // Parse settings
@@ -65,6 +60,18 @@ public class Yugen {
 
         // Load main fsm
         loadFSM(mainFsm, "main");
+    }
+
+    /**
+     * Create Yugen engine without loading any script
+     */
+    public Yugen(){
+        i = this;
+
+        // Create layers
+        for( int i=0; i<layers.length; i++ ){
+            layers[i] = new Array<>();
+        }
     }
 
     /**
@@ -90,7 +97,7 @@ public class Yugen {
     /**
      * Frame render
      */
-    public void render(SpriteBatch batch, YugenCamera camera) {
+    public void render(SpriteBatch batch) {
         for( int i=0; i<layers.length; i++ ) {
             // Render bg sprites
             for (Fsm s : layers[i]) {
@@ -127,7 +134,7 @@ public class Yugen {
         try {
             Fsm fsm = (Fsm) fsmClass.newInstance();
             fsm.setName(name);
-            fsms.put(name, fsm);
+            fsms.put(fsm.getName(), fsm);
             layers[fsm.getLayer()].add(fsm);
             return fsm;
         } catch (InstantiationException e) {
@@ -158,6 +165,16 @@ public class Yugen {
     public void destroyFSM(String name) {
         Fsm fsm = fsms.remove(name);
         layers[fsm.getLayer()].removeValue(fsm, true);
+        fsm.dispose();
+    }
+
+    /**
+     * Remove all fsms
+     */
+    public void clear() {
+        for( Fsm fsm : fsms.values() ){
+            destroyFSM(fsm.getName());
+        }
     }
 
     /**
@@ -179,7 +196,7 @@ public class Yugen {
 
         // Load all scene fsms
         for(SceneDef.SceneFsmDef def : scene.layout){
-            Fsm fsm = loadFSM(Gdx.files.internal(def.scriptPath), scnFile.pathWithoutExtension() + def.animation); // TODO Only one fsm per animation is ungood.
+            Fsm fsm = loadFSM(Gdx.files.internal(def.scriptPath), uniquefy(scnFile.pathWithoutExtension() + def.animation));
             fsm.setAnimation(def.animation);
             fsm.pos.set(def.x, def.y);
             fsm.scrollFactor.set(def.scrollFactorX, def.scrollFactorY);
@@ -220,6 +237,21 @@ public class Yugen {
                 }
             }
         }
+    }
+
+    /**
+     * Uniquefy a name
+     * @param name
+     * @return Uniquefied name
+     */
+    public String uniquefy(String name) {
+        String res = name;
+        int i=1;
+        while(fsms.containsKey(name)){
+            res = name + "_" + i;
+            i++;
+        }
+        return res;
     }
 
     // Accessors

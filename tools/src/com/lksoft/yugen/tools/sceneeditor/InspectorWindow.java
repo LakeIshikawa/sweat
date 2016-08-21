@@ -59,7 +59,7 @@ public class InspectorWindow extends VisWindow {
         add(scrollFactorY = new Spinner("y", new SimpleFloatSpinnerModel(0, -5, 5, 0.1f, 4))).growX();
         row();
         add(new VisLabel("Z Layer: ")).left();;
-        add(layer = new Spinner("", new IntSpinnerModel(0, 0, 1, 1))).colspan(2).growX();
+        add(layer = new Spinner("", new IntSpinnerModel(0, 0, 10, 1))).colspan(2).growX();
         row();
 
         fsmScript.setDisabled(true);

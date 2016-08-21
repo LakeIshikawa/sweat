@@ -46,6 +46,9 @@ public class SceneEditorScreen implements Screen, InputProcessor {
     // Dragging
     private Vector2 clickOffset;
     private Rectangle bounds = new Rectangle();
+    // Camera controls
+    private Vector2 panTouchPos;
+    private Vector2 camStartPos;
 
     /**
      * Create b1 stage editor
@@ -62,6 +65,9 @@ public class SceneEditorScreen implements Screen, InputProcessor {
 
     @Override
     public void show() {
+        // Don't reinitialize if coming back from test screen
+        if( sceneDefWindow != null ) return;
+
         stage = new Stage();
         Gdx.input.setInputProcessor(new InputMultiplexer(stage, this));
 
@@ -165,17 +171,13 @@ public class SceneEditorScreen implements Screen, InputProcessor {
                 inspectorWindow.setFsmDef(null);
                 break;
 
-//            case Input.Keys.SPACE:
-//                SceneEditor.instance.setScreen(
-//                        new TestScreen(
-//                                this,
-//                                new com.lksoft.yugen.stateful.Stage(getCurrentStageDef(), null, null, new ManualCamera(getCurrentStageDef()))));
-//                break;
+            case Input.Keys.SPACE:
+                // Save
+                if( getCurrentSceneDef() == null ) break;
+                getCurrentSceneDef().write(currentSceneFile);
 
-            case Input.Keys.RIGHT: stageRenderer.moveCamera(10, 0); break;
-            case Input.Keys.LEFT: stageRenderer.moveCamera(-10, 0); break;
-            case Input.Keys.UP: stageRenderer.moveCamera(0, 10); break;
-            case Input.Keys.DOWN: stageRenderer.moveCamera(0,-10); break;
+                SceneEditor.instance.setScreen(new SceneTestScreen(this, currentSceneFile));
+                break;
         }
         return true;
     }
@@ -192,43 +194,64 @@ public class SceneEditorScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if( getCurrentSceneDef() == null ) return false;
+
+        // Middle button = pan
+        if( button == Input.Buttons.MIDDLE ){
+            panTouchPos = new Vector2(screenX, screenY);
+            camStartPos = new Vector2(stageRenderer.getCameraPos().x, stageRenderer.getCameraPos().y);
+            return true;
+        }
+
         // Selection
-        if( getCurrentSceneDef() != null ){
-            Vector2 touch = stageRenderer.getTouch(screenX, screenY);
+        Vector2 touch = stageRenderer.getTouch(screenX, screenY);
 
-            // Get first intersecting sprite
-            boolean found = false;
-            for( int l=getCurrentSceneDef().layout.size-1; l>=0; l-- ) {
-                SceneDef.SceneFsmDef fsmDef = getCurrentSceneDef().layout.get(l);
+        // Get first intersecting sprite
+        boolean found = false;
+        for( int l=getCurrentSceneDef().layout.size-1; l>=0; l-- ) {
+            SceneDef.SceneFsmDef fsmDef = getCurrentSceneDef().layout.get(l);
 
-                fsmDef.getBounds(bounds);
+            fsmDef.getBounds(bounds);
 
-                if (bounds.contains(touch)) {
-                    select(fsmDef);
-                    found = true;
-                    clickOffset = new Vector2(touch);
-                    clickOffset.sub(fsmDef.x, fsmDef.y);
-                    break;
-                }
+            if (bounds.contains(touch)) {
+                select(fsmDef);
+                found = true;
+                clickOffset = new Vector2(touch);
+                clickOffset.sub(fsmDef.x, fsmDef.y);
+                break;
             }
+        }
 
-            // Clear selection if click on nothing
-            if(!found) {
-                selection = null;
-                inspectorWindow.setFsmDef(null);
-                stage.unfocusAll();
-            }
+        // Clear selection if click on nothing
+        if(!found) {
+            selection = null;
+            inspectorWindow.setFsmDef(null);
+            stage.unfocusAll();
         }
         return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        // Middle button = pan
+        if( button == Input.Buttons.MIDDLE ){
+            panTouchPos = null;
+            return true;
+        }
+
         return false;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+        // Middle button = pan
+        if( panTouchPos != null ){
+            Vector2 curPos = new Vector2(panTouchPos);
+            curPos.sub(new Vector2(screenX, screenY));
+            stageRenderer.setCameraPos(camStartPos.x + curPos.x, camStartPos.y - curPos.y);
+            return true;
+        }
+
         // Dragging
         if( clickOffset != null ){
             Vector2 place = stageRenderer.getTouch(screenX, screenY);
@@ -253,6 +276,9 @@ public class SceneEditorScreen implements Screen, InputProcessor {
 
     @Override
     public boolean scrolled(int amount) {
+        if( sceneDefWindow.getSceneDef() == null ) return false;
+
+        stageRenderer.zoom(amount);
         return false;
     }
 

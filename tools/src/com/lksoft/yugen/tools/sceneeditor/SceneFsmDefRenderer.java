@@ -3,10 +3,12 @@ package com.lksoft.yugen.tools.sceneeditor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -22,9 +24,9 @@ import java.util.Comparator;
  */
 public class SceneFsmDefRenderer {
     // Some colors
-    private static final Color FLOOR = Color.GREEN;
-    private static final Color ORIGIN = Color.BLACK;
-    private static final Color CAMERA = Color.WHITE;
+    public static final Color FLOOR = Color.GREEN;
+    public static final Color ORIGIN = Color.BLACK;
+    public static final Color CAMERA = Color.WHITE;
     private static final Color SELECTION = new Color(0, 0, 1, 0.3f);
 
 
@@ -134,21 +136,27 @@ public class SceneFsmDefRenderer {
     }
 
     /**
-     * Moves the camera relative to current position
-     * @param dx
-     * @param dy
-     */
-    public void moveCamera(int dx, int dy) {
-        viewport.getCamera().translate(dx, dy, 0);
-        viewport.getCamera().update();
-    }
-
-    /**
      * @return Unprojected touch position
      */
     public Vector2 getTouch(int x, int y) {
         touch.x = x;
         touch.y = y;
         return viewport.unproject(touch);
+    }
+
+    // Gets current camera position
+    public Vector3 getCameraPos() {
+        return viewport.getCamera().position;
+    }
+
+    // Sets camera position
+    public void setCameraPos(float x, float y){
+        viewport.getCamera().position.set(x, y, 0);
+        viewport.getCamera().update();
+    }
+
+    public void zoom(int amount) {
+        ((OrthographicCamera)viewport.getCamera()).zoom += 0.05f * amount;
+        viewport.getCamera().update();
     }
 }

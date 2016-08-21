@@ -5,7 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 
 /**
  * Created by Lake on 11/06/2016.
@@ -44,7 +43,7 @@ public class YugenScreen implements Screen {
         if( yugen.getCamera().getInitPosition() != null ) {
             batch.setProjectionMatrix(yugen.getCamera().getCamera().combined);
             batch.begin();
-            yugen.render(batch, yugen.getCamera());
+            yugen.render(batch);
             batch.end();
 
             shapeRenderer.setProjectionMatrix(yugen.getCamera().getCamera().combined);
