@@ -25,7 +25,7 @@ public class Sprite {
     public Animation animation;
 
     /**
-     * Create b1 sprite from an animation resource
+     * Create b1 sprite from an animation animation
      */
     public Sprite(Animation animation) {
         this.animation = animation;

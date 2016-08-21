@@ -32,7 +32,7 @@ public class FsmReader {
      */
     public Class read(FileHandle classFile) throws IOException {
         try {
-            return loader.loadClass(classFile.path().replace("/", "."));
+            return loader.loadClass(classFile.pathWithoutExtension().replace("/", "."));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

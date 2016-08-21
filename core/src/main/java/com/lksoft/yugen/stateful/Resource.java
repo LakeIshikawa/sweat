@@ -8,14 +8,14 @@ public abstract class Resource {
     private int users = 0;
 
     /**
-     * Use this resource
+     * Use this animation
      */
     public void use(){
         users++;
     }
 
     /**
-     * Releases the resource
+     * Releases the animation
      */
     public void release(){
         users--;
@@ -25,14 +25,14 @@ public abstract class Resource {
     }
 
     /**
-     * @return Whether the resource has been disposed
+     * @return Whether the animation has been disposed
      */
     public boolean isDisposed(){
         return users <= 0;
     }
 
     /**
-     * Disposes the resource
+     * Disposes the animation
      */
     protected abstract void dispose();
 }

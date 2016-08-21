@@ -22,9 +22,9 @@ public class StageSelect extends Fsm<StageSelect, StageSelectState, Object> {
 enum StageSelectState implements State<StageSelect>{
     INIT(){
         public void enter(StageSelect fsm){
-            fsm.loadFSM("chars/valkyrie/Valkyrie", "p1");
-            fsm.loadFSM("chars/valkyrie/Valkyrie", "p2");
-            fsm.loadFSM("stages/lionking/Lionking", "stage");
+            fsm.loadFSM("chars/valkyrie/Valkyrie.java", "p1");
+            fsm.loadFSM("chars/valkyrie/Valkyrie.java", "p2");
+            fsm.loadFSM("stages/lionking/Lionking.java", "stage");
 
             fsm.destroyFSM(fsm.getName());
         }

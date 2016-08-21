@@ -1,8 +1,14 @@
 package com.lksoft.yugen.stateless;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import com.lksoft.yugen.Resources;
+import com.lksoft.yugen.stateful.FsmResources;
+
+import java.io.IOException;
 
 /**
  * Created by Stallman on 19/08/2016.
@@ -12,11 +18,43 @@ public class SceneDef {
     // An fsm definition
     public static class SceneFsmDef {
         public String scriptPath;
-        public String resource;
+        public String animation;
         public int x,y;
         public float scrollFactorX;
         public float scrollFactorY;
         public int layer;
+
+        // Load Animation Def
+        public AnimationDef loadAnimationDef(){
+            return loadAnimationPack().getAnimationDef(animation);
+        }
+
+        // Load AnimationPack for this def
+        public AnimationPack loadAnimationPack(){
+            try {
+                Class<?> scriptClass = Resources.loadFSMClass(Gdx.files.internal(scriptPath));
+                FsmResources res = scriptClass.getAnnotation(FsmResources.class);
+                return Resources.loadAnimationPack(res.anm());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        // Get frame bounds
+        public void getBounds(Rectangle bounds) {
+            AnimationFrame.Component c = loadAnimationDef().getFrames().first().components.first();
+            int dx = x + c.x - c.spriteDef.originX;
+            int dy = y + c.y - c.spriteDef.originY;
+            int w = c.spriteDef.region.originalWidth;
+            int h = c.spriteDef.region.originalHeight;
+            bounds.set(dx, dy, w ,h);
+        }
+
+        // Get script file name
+        public CharSequence getScriptFileName() {
+            return Gdx.files.internal(scriptPath).nameWithoutExtension();
+        }
     }
 
     // A list of fsm definitions
@@ -51,6 +89,7 @@ public class SceneDef {
     public void write(FileHandle scnFile){
         Json json = new Json();
         json.setIgnoreUnknownFields(true);
-        json.toJson(this, SceneDef.class, scnFile);
+        String jstring = json.prettyPrint(this);
+        scnFile.writeString(jstring, false);
     }
 }

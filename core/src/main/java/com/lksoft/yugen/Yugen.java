@@ -8,13 +8,14 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.lksoft.yugen.stateless.AnimationPack;
 import com.lksoft.yugen.stateful.Fsm;
 import com.lksoft.yugen.stateful.NonFsm;
-import com.lksoft.yugen.stateless.FsmReader;
+import com.lksoft.yugen.stateless.SceneDef;
 import com.lksoft.yugen.stateless.Settings;
 
 import java.io.IOException;
+
+import static com.lksoft.yugen.Resources.loadFSMClass;
 
 /**
  * Created by Lake on 15/08/2016.
@@ -27,15 +28,9 @@ public class Yugen {
     // Settings
     private Settings settings;
 
-    // Map of FSM classes
-    private ObjectMap<String, Class> fsmClasses = new ObjectMap<>();
-
     // Fsms (map and layers)
     private ObjectMap<String, Fsm> fsms = new ObjectMap<>();
     private Array<Fsm>[] layers = new Array[10];
-
-    // Loaded animation packs
-    private ObjectMap<String, AnimationPack> animationPacks = new ObjectMap<>();
 
     // Viewport
     private YugenCamera camera = new YugenCamera();
@@ -121,23 +116,6 @@ public class Yugen {
     }
 
     /**
-     * Load FSM class from .fsm file.
-     * This converts the .fsm files to java code and
-     * runtime-compiles it into a class. Oh yeah.
-     * @param fsmFile
-     * @return
-     * @throws IOException
-     */
-    public Class loadFSMClass(FileHandle fsmFile) throws IOException {
-        Class fsmClass = fsmClasses.get(fsmFile.path());
-        if( fsmClass == null ) {
-            fsmClass = FsmReader.get().read(fsmFile);
-            fsmClasses.put(fsmFile.path(), fsmClass);
-        }
-        return fsmClass;
-    }
-
-    /**
      * Load an FSM from file and register it with specified name
      * @param fsmFile File handle for .fsm file
      * @param name Registration name (use this with getFSM() to get the FSM back)
@@ -192,26 +170,32 @@ public class Yugen {
     }
 
     /**
-     * Change fsm layer
+     * Load a scene
+     * @param scnFile
+     * @return
      */
-    public void layerChanged(Fsm fsm, int oldLayer){
-        layers[oldLayer].removeValue(fsm, true);
-        layers[fsm.getLayer()].add(fsm);
+    public SceneDef loadScene(FileHandle scnFile) throws IOException {
+        SceneDef scene = SceneDef.read(scnFile);
+
+        // Load all scene fsms
+        for(SceneDef.SceneFsmDef def : scene.layout){
+            Fsm fsm = loadFSM(Gdx.files.internal(def.scriptPath), scnFile.pathWithoutExtension() + def.animation); // TODO Only one fsm per animation is ungood.
+            fsm.setAnimation(def.animation);
+            fsm.pos.set(def.x, def.y);
+            fsm.scrollFactor.set(def.scrollFactorX, def.scrollFactorY);
+            fsm.setLayer(def.layer);
+        }
+
+        return scene;
     }
 
     /**
-     * Load an animation pack
-     * @param path Path of the .anm file
-     * @return Loaded animation pack
+     * Change fsm layer
      */
-    public AnimationPack loadAnimationPack(String path){
-        AnimationPack pack = animationPacks.get(path);
-        if( pack == null || pack.isDisposed() ){
-            pack = AnimationPack.read(Gdx.files.internal(path));
-            animationPacks.put(path, pack);
+    public void layerChanged(Fsm fsm, int oldLayer){
+        if( layers[oldLayer].removeValue(fsm, true) ) {
+            layers[fsm.getLayer()].add(fsm);
         }
-
-        return pack;
     }
 
     /**

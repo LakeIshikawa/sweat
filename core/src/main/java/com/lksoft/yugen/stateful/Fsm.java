@@ -7,11 +7,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.lksoft.yugen.Resources;
 import com.lksoft.yugen.Yugen;
-import com.lksoft.yugen.stateless.AnimationDef;
-import com.lksoft.yugen.stateless.AnimationPack;
-import com.lksoft.yugen.stateless.CommandDef;
-import com.lksoft.yugen.stateless.Settings;
+import com.lksoft.yugen.stateless.*;
 
 import java.io.IOException;
 
@@ -221,7 +219,7 @@ public abstract class Fsm<FsmClass, StateClass extends State<FsmClass>, HitClass
      * @param path
      */
     public void loadAnimationPack(String path){
-        this.animationPack = Yugen.i.loadAnimationPack(path);
+        this.animationPack = Resources.loadAnimationPack(path);
     }
 
     /**
@@ -292,6 +290,20 @@ public abstract class Fsm<FsmClass, StateClass extends State<FsmClass>, HitClass
      */
     public Fsm getFSM(String name){
         return Yugen.i.getFSM(name);
+    }
+
+    /**
+     * Load a scene
+     * @param name
+     * @return The scene
+     */
+    public SceneDef loadScene(String name){
+        try {
+            return Yugen.i.loadScene(Gdx.files.internal(name));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**

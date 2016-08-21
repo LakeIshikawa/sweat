@@ -1,5 +1,81 @@
 {
 animations: {
+	ground: {
+		name: ground
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:king000
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+			}
+		]
+	}
+	bg0: {
+		name: bg0
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:king001
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+			}
+		]
+	}
+	bg1: {
+		name: bg1
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:king002
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+			}
+		]
+	}
+	bg2: {
+		name: bg2
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:king003
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 3
+			}
+		]
+	}
 	lion: {
 		name: lion
 		frames: [

@@ -1,4 +1,4 @@
-package com.lksoft.yugen.tools.stageeditor;
+package com.lksoft.yugen.tools.sceneeditor;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -12,15 +12,15 @@ import com.badlogic.gdx.Screen;
 public class TestScreen implements Screen {
 
     // Screen to go back to
-    private StageEditorScreen backTo;
+    private SceneEditorScreen backTo;
 
 
     /**
      * Create b1 test screen for b1 stage
-     * @param stageEditorScreen
+     * @param sceneEditorScreen
      */
-    public TestScreen(StageEditorScreen stageEditorScreen) {
-        this.backTo = stageEditorScreen;
+    public TestScreen(SceneEditorScreen sceneEditorScreen) {
+        this.backTo = sceneEditorScreen;
     }
 
     @Override
@@ -32,7 +32,7 @@ public class TestScreen implements Screen {
     public void render(float delta) {
         // Go back
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-            StageEditor.instance.setScreen(backTo);
+            SceneEditor.instance.setScreen(backTo);
         }
     }
 

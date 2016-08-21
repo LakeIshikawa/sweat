@@ -6,9 +6,7 @@ import com.lksoft.yugen.stateful.FsmResources;
 /**
  * Valkyrie fighter
  */
-@FsmResources(
-        anm = "chars/valkyrie/valkyrie.anm"
-)
+@FsmResources(anm = "chars/valkyrie/valkyrie.anm")
 public class Valkyrie extends Fighter {
 
     // Initialization

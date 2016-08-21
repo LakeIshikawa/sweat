@@ -5,28 +5,22 @@ import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.math.Vector2;
 import com.lksoft.yugen.Yugen;
 import com.lksoft.yugen.stateful.Fsm;
+import com.lksoft.yugen.stateless.SceneDef;
 
 /**
  * Fighter base class
  */
 public class Stage extends Fsm<Stage, StageState, Object> {
-    int camera_width = 640;
-    int camera_height = 360;
-    int camera_offset_y = 155;
-    int fighters_height = 200;
-
-    int area_r = 768;
-    int area_l = -768;
-    int area_t = 500;
-    int area_b = -200;
-
     int p1_start_x = -130;
     int p1_start_y = 0;
     int p2_start_x = 130;
     int p2_start_y = 0;
 
+    int fighters_height = 200;
+
     // References
     Fsm p1, p2;
+    SceneDef scene;
 
     @Override
     public StageState getInitialState(){
@@ -43,6 +37,11 @@ public class Stage extends Fsm<Stage, StageState, Object> {
 enum StageState implements State<Stage> {
     INIT() {
         public void enter(Stage stage){
+            // Load scene
+            StageResources stageResources = stage.getClass().getAnnotation(StageResources.class);
+            stage.scene = stage.loadScene(stageResources.scn());
+
+            // Set players
             Fsm p1 = stage.getFSM("p1");
             Fsm p2 = stage.getFSM("p2");
             stage.p1 = p1;
@@ -70,11 +69,12 @@ enum StageState implements State<Stage> {
             p2.setActive(true);
 
             // Init camera
-            stage.initCamera(0, stage.camera_offset_y, stage.camera_width, stage.camera_height);
+            stage.initCamera(stage.scene.camera_x, stage.scene.camera_y,
+                    stage.scene.camera_width, stage.scene.camera_height);
         }
 
         public void update(Stage stage) {
-            stage.setCamera((int)(stage.p1.pos.x + stage.p2.pos.x)/2, stage.camera_offset_y);
+            stage.setCamera((int)(stage.p1.pos.x + stage.p2.pos.x)/2, stage.scene.camera_y);
         }
     };
 

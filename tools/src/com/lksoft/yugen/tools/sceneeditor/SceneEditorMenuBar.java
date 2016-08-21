@@ -1,4 +1,4 @@
-package com.lksoft.yugen.tools.stageeditor;
+package com.lksoft.yugen.tools.sceneeditor;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -9,15 +9,15 @@ import com.kotcrab.vis.ui.widget.MenuItem;
 /**
  * Created by Lake on 04/08/2016.
  */
-public class StageEditorMenuBar extends MenuBar {
+public class SceneEditorMenuBar extends MenuBar {
 
-    private StageEditorScreen editorScreen;
+    private SceneEditorScreen editorScreen;
 
     /**
      * Create the main manu bar
      * @param animationEditorScreen
      */
-    public StageEditorMenuBar(StageEditorScreen animationEditorScreen) {
+    public SceneEditorMenuBar(SceneEditorScreen animationEditorScreen) {
         this.editorScreen = animationEditorScreen;
 
         Menu fileMenu = new Menu("File");
@@ -41,11 +41,11 @@ public class StageEditorMenuBar extends MenuBar {
         }));
         addMenu(fileMenu);
 
-        Menu spritesMenu = new Menu("Sprites");
+        Menu spritesMenu = new Menu("Fsm");
         spritesMenu.addItem(new MenuItem("Add", new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                editorScreen.addSpriteDef();
+                editorScreen.addFsm();
             }
         }));
         addMenu(spritesMenu);

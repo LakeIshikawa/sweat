@@ -223,7 +223,7 @@ public class AnimationEditorScreen implements Screen {
 
         // Populate component window
         animationFrameComponentWindow.setAnimationFrame(frame);
-        if( frame.components.size>0 ) {
+        if( frame != null && frame.components.size>0 ) {
             selectComponent(frame.components.first());
         }
     }

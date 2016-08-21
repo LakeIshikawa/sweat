@@ -3,7 +3,7 @@ apply plugin: "java"
 sourceCompatibility = 1.7
 sourceSets.main.java.srcDirs = [ "src/" ]
 
-project.ext.SEmainClassName = "com.lksoft.yugen.tools.stageeditor.StageEditorLauncher"
+project.ext.SEmainClassName = "com.lksoft.yugen.tools.stageeditor.SceneEditorLauncher"
 project.ext.assetsDir = new File("./assets");
 
 task runSE(dependsOn: classes, type: JavaExec) {
