@@ -1,15 +1,17 @@
 package com.lksoft.yugen.stateless;
 
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.lksoft.yugen.stateful.Resource;
 
 /**
  * Created by Lake on 08/06/2016.
  */
-public class AnimationPack implements Json.Serializable {
+public class AnimationPack extends Resource implements Json.Serializable {
     // Cache for json parsing (is this the only way?)
     public static SpritePack currentSpritePack;
 
@@ -20,7 +22,9 @@ public class AnimationPack implements Json.Serializable {
     private SpritePack spritePack;
 
     // For JSON
-    public AnimationPack(){}
+    public AnimationPack(){
+        use();
+    }
 
     /**
      * Create an empty animation pack from sprites factory
@@ -28,6 +32,7 @@ public class AnimationPack implements Json.Serializable {
      */
     public AnimationPack(SpritePack spritePack){
         this.spritePack = spritePack;
+        use();
     }
 
     /**
@@ -82,9 +87,7 @@ public class AnimationPack implements Json.Serializable {
         return spritePack;
     }
 
-    /**
-     * Dispose associated resources
-     */
+    @Override
     public void dispose() {
         spritePack.dispose();
     }
@@ -104,10 +107,14 @@ public class AnimationPack implements Json.Serializable {
     /**
      * Reads an animation pack from file
      * @param anm .anm file
-     * @param spritePack A loaded sprite pack
      * @return A loaded animation pack
      */
-    public static AnimationPack read(FileHandle anm, SpritePack spritePack) {
+    public static AnimationPack read(FileHandle anm) {
+        FileHandle frm = new FileHandle(anm.pathWithoutExtension() + ".frm");
+        FileHandle atlasHandle = new FileHandle(anm.pathWithoutExtension() + ".atlas");
+        TextureAtlas atlas = new TextureAtlas(atlasHandle);
+        SpritePack spritePack = new SpritePackReader(frm).read(atlas);
+
         Json json = new Json();
         json.setIgnoreUnknownFields(true);
 

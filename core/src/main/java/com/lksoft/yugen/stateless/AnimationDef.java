@@ -37,6 +37,9 @@ public class AnimationDef implements Comparable<AnimationDef> {
     public String getName() {
         return name;
     }
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public void setLoopStartPos(int loopStartPos) {
         this.loopStartPos = loopStartPos;

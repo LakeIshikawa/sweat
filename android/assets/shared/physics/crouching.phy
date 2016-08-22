@@ -1,7 +1,0 @@
-// Apply friction
-[Trigger true]
-	vel.x = vel.x * crouching.friction.x
-
-// Stop if velocity is low
-[Trigger abs(vel.x) < 0.1]
-	vel.x = 0.0

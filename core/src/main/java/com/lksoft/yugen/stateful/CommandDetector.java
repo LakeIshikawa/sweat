@@ -45,8 +45,8 @@ public class CommandDetector {
         }
     }
 
-    // Fighter
-    private Fighter fighter;
+    // Fsm
+    private Fsm fsm;
 
     // Last 60 frames of input
     private LinkedList<InputState> history = new LinkedList<>();
@@ -57,10 +57,10 @@ public class CommandDetector {
 
     /**
      * Create detector for specified key settings
-     * @param fighter
+     * @param fsm
      */
-    public CommandDetector(Fighter fighter){
-        this.fighter = fighter;
+    public CommandDetector(Fsm fsm){
+        this.fsm = fsm;
 
         // Pre-allocate all input frames
         for( int i=0; i<60; i++ ){
@@ -72,19 +72,20 @@ public class CommandDetector {
      * SpriteDef update
      */
     public void update(){
+        if( fsm.getKeySettings() == null ) return;
         InputState last = history.removeLast();
-        last.U = Gdx.input.isKeyPressed(fighter.getKeySettings().up);
-        last.D = Gdx.input.isKeyPressed(fighter.getKeySettings().down);
-        last.B1 = Gdx.input.isKeyPressed(fighter.getKeySettings().b1);
-        last.B2 = Gdx.input.isKeyPressed(fighter.getKeySettings().b2);
-        last.B3 = Gdx.input.isKeyPressed(fighter.getKeySettings().b3);
-        last.B4 = Gdx.input.isKeyPressed(fighter.getKeySettings().b4);
-        last.B5 = Gdx.input.isKeyPressed(fighter.getKeySettings().b5);
-        last.B6 = Gdx.input.isKeyPressed(fighter.getKeySettings().b6);
+        last.U = Gdx.input.isKeyPressed(fsm.getKeySettings().up);
+        last.D = Gdx.input.isKeyPressed(fsm.getKeySettings().down);
+        last.B1 = Gdx.input.isKeyPressed(fsm.getKeySettings().b1);
+        last.B2 = Gdx.input.isKeyPressed(fsm.getKeySettings().b2);
+        last.B3 = Gdx.input.isKeyPressed(fsm.getKeySettings().b3);
+        last.B4 = Gdx.input.isKeyPressed(fsm.getKeySettings().b4);
+        last.B5 = Gdx.input.isKeyPressed(fsm.getKeySettings().b5);
+        last.B6 = Gdx.input.isKeyPressed(fsm.getKeySettings().b6);
 
-        boolean l = Gdx.input.isKeyPressed(fighter.getKeySettings().left);
-        boolean r = Gdx.input.isKeyPressed(fighter.getKeySettings().right);
-        boolean facingRight = !fighter.flip;
+        boolean l = Gdx.input.isKeyPressed(fsm.getKeySettings().left);
+        boolean r = Gdx.input.isKeyPressed(fsm.getKeySettings().right);
+        boolean facingRight = !fsm.flip;
         last.F = (facingRight && r) || (!facingRight && l);
         last.B = (facingRight && l) || (!facingRight && r);
 

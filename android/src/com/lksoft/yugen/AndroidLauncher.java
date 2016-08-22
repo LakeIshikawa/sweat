@@ -4,13 +4,12 @@ import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.lksoft.yugen.Yugen;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new Yugen("stages/lionking/lionking.stg", "chars/valkyrie/valkyrie.def", "chars/valkyrie/valkyrie.def"), config);
+		initialize(new YugenGame("shared/screens/StageSelect", false, false), config);
 	}
 }

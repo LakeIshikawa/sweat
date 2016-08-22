@@ -3,13 +3,11 @@ package com.lksoft.yugen.tools.animationeditor;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.kotcrab.vis.ui.util.TableUtils;
-import com.kotcrab.vis.ui.widget.VisLabel;
-import com.kotcrab.vis.ui.widget.VisSelectBox;
-import com.kotcrab.vis.ui.widget.VisTable;
-import com.kotcrab.vis.ui.widget.VisWindow;
+import com.kotcrab.vis.ui.widget.*;
 import com.kotcrab.vis.ui.widget.spinner.IntSpinnerModel;
 import com.kotcrab.vis.ui.widget.spinner.SimpleFloatSpinnerModel;
 import com.kotcrab.vis.ui.widget.spinner.Spinner;
+import com.lksoft.yugen.stateless.AnimationDef;
 import com.lksoft.yugen.stateless.AnimationFrame;
 import com.lksoft.yugen.stateless.BlendMode;
 
@@ -17,29 +15,40 @@ import com.lksoft.yugen.stateless.BlendMode;
  * Created by Lake on 05/08/2016.
  */
 public class InspectorWindow extends VisWindow {
-    // Editor screen
-    private AnimationEditorScreen editorScreen;
 
+    // Current animation
+    private AnimationDef animationDef;
     // Current spriteDef
     private AnimationFrame frame;
     // Current component
     private AnimationFrame.Component component;
 
     // GUI components
+    private VisTextField animName;
     private VisLabel nameLabel;
     private Spinner ticksSpinner;
     private Spinner x, y, sx, sy, rot;
     private VisSelectBox<BlendMode> blendModeSelect;
 
     /**
-     * Create playback window
-     * @param animationEditorScreen
+     * Create inspector window
      */
-    public InspectorWindow(AnimationEditorScreen animationEditorScreen) {
+    public InspectorWindow(final AnimationEditorScreen editorScreen) {
         super("Inspector");
-        this.editorScreen = animationEditorScreen;
         TableUtils.setSpacingDefaults(this);
         top();
+
+        // Animation name
+        add(animName = new VisTextField()).colspan(2).growX().row();
+
+        animName.setTextFieldListener(new VisTextField.TextFieldListener() {
+            @Override
+            public void keyTyped(VisTextField textField, char c) {
+                if( animationDef != null ){
+                    editorScreen.setAnimationDefName(animName.getText());
+                }
+            }
+        });
 
         // Frame
         add(nameLabel = new VisLabel()).colspan(2).growX().row();
@@ -114,6 +123,20 @@ public class InspectorWindow extends VisWindow {
                 component.blendMode = blendModeSelect.getSelected();
             }
         });
+    }
+
+    /**
+     * Sets animationDef
+     * @param animationDef
+     */
+    public void setAnimationDef(AnimationDef animationDef){
+        this.animationDef = animationDef;
+
+        if( animationDef == null ){
+            animName.setText("");
+        } else {
+            animName.setText(animationDef.getName());
+        }
     }
 
     /**

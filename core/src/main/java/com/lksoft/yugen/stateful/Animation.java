@@ -14,6 +14,7 @@ public class Animation {
     private int length;
     private int loopTime;
     private int cycles;
+    private int totalTime;
 
     /**
      * Create an animation instance from b1 sequence
@@ -29,13 +30,15 @@ public class Animation {
 
         // Always needs at least one update call to work
         ticks = -1;
+        totalTime = -1;
     }
 
     /**
      * SpriteDef update
      */
     public void update(){
-        ticks = getTicks() + 1;
+        ticks++;
+        totalTime++;
 
         // End of animation
         if( getLength() != -1 ){
@@ -73,7 +76,7 @@ public class Animation {
     public int getLoopTime() {
         return loopTime;
     }
-
+    public int getTotalTime() { return totalTime; }
     public int getCycles() {
         return cycles;
     }

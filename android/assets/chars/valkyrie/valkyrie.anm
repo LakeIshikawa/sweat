@@ -1502,8 +1502,69 @@ animations: {
 		]
 		loopStartPos: 6
 	}
-	midpunch: {
-		name: midpunch
+	crouching: {
+		name: crouching
+		frames: [
+			{
+				components: [
+					{
+						spriteDef: S:test006
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 90
+				damageCollisions: [
+					{
+						x: -50
+						y: -9
+						width: 107
+						height: 112
+					}
+					{
+						x: -41
+						y: 104
+						width: 81
+						height: 101
+					}
+				]
+			}
+			{
+				components: [
+					{
+						spriteDef: S:test009
+						x: 0
+						y: 0
+						scaleX: 1
+						scaleY: 1
+						rotation: 0
+						blendMode: NORMAL
+					}
+				]
+				lengthTicks: 8
+				damageCollisions: [
+					{
+						x: -50
+						y: -9
+						width: 107
+						height: 112
+					}
+					{
+						x: -41
+						y: 104
+						width: 81
+						height: 101
+					}
+				]
+			}
+		]
+	}
+	punchSHM: {
+		name: punchSHM
 		frames: [
 			{
 				components: [
@@ -1627,7 +1688,7 @@ animations: {
 						blendMode: ADDITIVE
 					}
 				]
-				lengthTicks: 30
+				lengthTicks: 3
 				damageCollisions: [
 					{
 						x: 102
@@ -1866,67 +1927,6 @@ animations: {
 						y: 83
 						width: 87
 						height: 106
-					}
-				]
-			}
-		]
-	}
-	crouching: {
-		name: crouching
-		frames: [
-			{
-				components: [
-					{
-						spriteDef: S:test006
-						x: 0
-						y: 0
-						scaleX: 1
-						scaleY: 1
-						rotation: 0
-						blendMode: NORMAL
-					}
-				]
-				lengthTicks: 90
-				damageCollisions: [
-					{
-						x: -50
-						y: -9
-						width: 107
-						height: 112
-					}
-					{
-						x: -41
-						y: 104
-						width: 81
-						height: 101
-					}
-				]
-			}
-			{
-				components: [
-					{
-						spriteDef: S:test009
-						x: 0
-						y: 0
-						scaleX: 1
-						scaleY: 1
-						rotation: 0
-						blendMode: NORMAL
-					}
-				]
-				lengthTicks: 8
-				damageCollisions: [
-					{
-						x: -50
-						y: -9
-						width: 107
-						height: 112
-					}
-					{
-						x: -41
-						y: 104
-						width: 81
-						height: 101
 					}
 				]
 			}

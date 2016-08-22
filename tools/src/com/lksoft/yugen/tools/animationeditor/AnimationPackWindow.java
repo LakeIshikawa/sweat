@@ -105,6 +105,19 @@ public class AnimationPackWindow extends VisWindow {
     }
 
     /**
+     * Rename currently selected animdef to new name
+     * @param name
+     */
+    public void renameSelected(String name) {
+        if( getAdapter().getSelectionManager().getSelection().size > 0 ) {
+            AnimationDef def = getAdapter().getSelectionManager().getSelection().first();
+            removeAnimationDef(def);
+            def.setName(name);
+            addAnimationDef(def);
+        }
+    }
+
+    /**
      * @return Current animation pack
      */
     public AnimationPack getAnimationPack() {

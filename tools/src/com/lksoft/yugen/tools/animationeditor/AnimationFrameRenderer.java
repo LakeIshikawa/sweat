@@ -1,6 +1,7 @@
 package com.lksoft.yugen.tools.animationeditor;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -102,5 +103,12 @@ public class AnimationFrameRenderer {
         touch.x = x;
         touch.y = y;
         return viewport.unproject(touch);
+    }
+
+    /**
+     * @return The ortho camera
+     */
+    public OrthographicCamera getCamera() {
+        return (OrthographicCamera) viewport.getCamera();
     }
 }

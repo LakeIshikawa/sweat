@@ -15,6 +15,7 @@ import com.kotcrab.vis.ui.widget.file.FileChooser;
 import com.kotcrab.vis.ui.widget.file.FileChooserListener;
 import com.kotcrab.vis.ui.widget.file.FileTypeFilter;
 import com.lksoft.yugen.stateless.*;
+import com.lksoft.yugen.tools.CameraControls;
 
 import java.io.File;
 
@@ -51,7 +52,6 @@ public class AnimationEditorScreen implements Screen {
     // Controls
     private Controls currentControls;
 
-
     /**
      * Create b1 stage editor
      * @param path
@@ -63,7 +63,7 @@ public class AnimationEditorScreen implements Screen {
     @Override
     public void show() {
         stage = new Stage();
-        setControls(new ComponentControls(this));
+        Gdx.input.setInputProcessor(stage);
 
         // -- Create GUI components
         float w = stage.getViewport().getWorldWidth();
@@ -189,6 +189,7 @@ public class AnimationEditorScreen implements Screen {
         // Create renderer
         animationFrameRenderer = new AnimationFrameRenderer();
         animationFrameRenderer.resize(lastW, lastH);
+        setControls(new ComponentControls(this));
 
         // Update GUI
         animationPackWindow.setAnimationPack(animationPack);
@@ -207,6 +208,9 @@ public class AnimationEditorScreen implements Screen {
         // Populate frames window
         animationFrameWindow.setAnimationDef(def);
 
+        // Inspector
+        inspectorWindow.setAnimationDef(def);
+
         // Select first frame
         if( def == null || def.getFrames().size == 0 ) selectFrame(null);
         else selectFrame(def.getFrames().first());
@@ -220,7 +224,7 @@ public class AnimationEditorScreen implements Screen {
 
         // Populate component window
         animationFrameComponentWindow.setAnimationFrame(frame);
-        if( frame.components.size>0 ) {
+        if( frame != null && frame.components.size>0 ) {
             selectComponent(frame.components.first());
         }
     }
@@ -229,6 +233,11 @@ public class AnimationEditorScreen implements Screen {
     void selectComponent(AnimationFrame.Component component){
         animationFrameComponentWindow.setSelected(component);
         inspectorWindow.setComponent(component);
+    }
+
+    // Remove stage focus
+    public void unfocusStage() {
+        stage.unfocusAll();
     }
 
     // Play the animation
@@ -254,6 +263,11 @@ public class AnimationEditorScreen implements Screen {
     void removeAnimationDef(AnimationDef def) {
         animationPackWindow.removeAnimationDef(def);
         selectAnimationDef(null);
+    }
+
+    // Set animation def name
+    public void setAnimationDefName(String name) {
+        animationPackWindow.renameSelected(name);
     }
 
     // Remove frame
@@ -354,13 +368,7 @@ public class AnimationEditorScreen implements Screen {
 
             @Override
             public void selected(Array<FileHandle> files) {
-                // Read frm and atlas
-                FileHandle frm = new FileHandle(files.first().pathWithoutExtension() + ".frm");
-                FileHandle atlasHandle = new FileHandle(files.first().pathWithoutExtension() + ".atlas");
-                TextureAtlas atlas = new TextureAtlas(atlasHandle);
-                SpritePack spritePack = new SpritePackReader(frm).read(atlas);
-
-                setAnimationPack(AnimationPack.read(files.first(), spritePack), files.first());
+                setAnimationPack(AnimationPack.read(files.first()), files.first());
             }
 
             @Override
@@ -399,6 +407,6 @@ public class AnimationEditorScreen implements Screen {
     public Controls getCurrentControls() { return currentControls; }
     public void setControls(Controls controls){
         this.currentControls = controls;
-        Gdx.input.setInputProcessor(new InputMultiplexer(stage, currentControls));
+        Gdx.input.setInputProcessor(new InputMultiplexer(stage, new CameraControls(animationFrameRenderer.getCamera()), currentControls));
     }
 }

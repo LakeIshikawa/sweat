@@ -2,25 +2,15 @@ package com.lksoft.yugen.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.lksoft.yugen.Yugen;
-import org.kohsuke.args4j.CmdLineException;
-import org.kohsuke.args4j.CmdLineParser;
-import org.kohsuke.args4j.Option;
-import org.kohsuke.args4j.OptionHandlerFilter;
-
-import java.io.IOException;
+import com.lksoft.yugen.YugenGame;
+import org.kohsuke.args4j.*;
 
 public class DesktopLauncher {
 
-    @Option(name = "--stage", depends = {"--p1", "--p2"})
-    private String stage;
-
-    @Option(name = "--p1", depends = {"--stage", "--p2"})
-    private String p1;
-
-    @Option(name = "--p2", depends = {"--stage", "--p1"})
-    private String p2;
-
+    @Argument
+    private String fsm;
+    @Option(name = "-d", usage = "Debug mode")
+    private boolean debug;
 
 	public static void main (String[] args) {
 		DesktopLauncher launcher = new DesktopLauncher();
@@ -49,7 +39,7 @@ public class DesktopLauncher {
             System.err.println();
 
             // print option sample. This is useful some time
-            System.err.println("  Example: image-undistorter "+parser.printExample(OptionHandlerFilter.ALL));
+            System.err.println("  Example: Yugen "+parser.printExample(OptionHandlerFilter.ALL));
             System.exit(1);
         }
     }
@@ -62,10 +52,6 @@ public class DesktopLauncher {
         config.width = 1280;
         config.height = 720;
 
-        if( stage != null ) {
-            new LwjglApplication(new Yugen(stage, p1, p2), config);
-        } else {
-            new LwjglApplication(new Yugen(), config);
-        }
+        new LwjglApplication(new YugenGame(fsm, debug, true), config);
     }
 }

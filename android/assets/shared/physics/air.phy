@@ -1,8 +1,0 @@
-// Gravity
-[Trigger true]
-	vel.y = vel.y + air.gravity.y
-
-// Landing
-[Trigger pos.y < 0.0]
-	vel.y = 0.0
-	pos.y = 0.0
