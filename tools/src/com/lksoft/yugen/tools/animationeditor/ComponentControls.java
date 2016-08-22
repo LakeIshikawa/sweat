@@ -100,6 +100,9 @@ public class ComponentControls implements Controls {
                 return true;
             }
         }
+
+        // Click on nothing
+        editorScreen.unfocusStage();
         return false;
     }
 

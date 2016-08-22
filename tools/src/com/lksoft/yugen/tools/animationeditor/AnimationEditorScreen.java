@@ -15,6 +15,7 @@ import com.kotcrab.vis.ui.widget.file.FileChooser;
 import com.kotcrab.vis.ui.widget.file.FileChooserListener;
 import com.kotcrab.vis.ui.widget.file.FileTypeFilter;
 import com.lksoft.yugen.stateless.*;
+import com.lksoft.yugen.tools.CameraControls;
 
 import java.io.File;
 
@@ -51,7 +52,6 @@ public class AnimationEditorScreen implements Screen {
     // Controls
     private Controls currentControls;
 
-
     /**
      * Create b1 stage editor
      * @param path
@@ -63,7 +63,7 @@ public class AnimationEditorScreen implements Screen {
     @Override
     public void show() {
         stage = new Stage();
-        setControls(new ComponentControls(this));
+        Gdx.input.setInputProcessor(stage);
 
         // -- Create GUI components
         float w = stage.getViewport().getWorldWidth();
@@ -189,6 +189,7 @@ public class AnimationEditorScreen implements Screen {
         // Create renderer
         animationFrameRenderer = new AnimationFrameRenderer();
         animationFrameRenderer.resize(lastW, lastH);
+        setControls(new ComponentControls(this));
 
         // Update GUI
         animationPackWindow.setAnimationPack(animationPack);
@@ -232,6 +233,11 @@ public class AnimationEditorScreen implements Screen {
     void selectComponent(AnimationFrame.Component component){
         animationFrameComponentWindow.setSelected(component);
         inspectorWindow.setComponent(component);
+    }
+
+    // Remove stage focus
+    public void unfocusStage() {
+        stage.unfocusAll();
     }
 
     // Play the animation
@@ -401,6 +407,6 @@ public class AnimationEditorScreen implements Screen {
     public Controls getCurrentControls() { return currentControls; }
     public void setControls(Controls controls){
         this.currentControls = controls;
-        Gdx.input.setInputProcessor(new InputMultiplexer(stage, currentControls));
+        Gdx.input.setInputProcessor(new InputMultiplexer(stage, new CameraControls(animationFrameRenderer.getCamera()), currentControls));
     }
 }

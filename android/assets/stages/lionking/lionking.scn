@@ -48,4 +48,6 @@ layout: [
 	}
 ]
 camera_y: 155
+area_r: 590
+area_l: -690
 }

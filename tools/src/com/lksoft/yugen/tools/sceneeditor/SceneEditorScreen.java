@@ -14,6 +14,7 @@ import com.kotcrab.vis.ui.widget.file.FileChooserListener;
 import com.kotcrab.vis.ui.widget.file.FileTypeFilter;
 import com.lksoft.yugen.stateless.AnimationDef;
 import com.lksoft.yugen.stateless.SceneDef;
+import com.lksoft.yugen.tools.CameraControls;
 
 import java.io.File;
 
@@ -46,9 +47,6 @@ public class SceneEditorScreen implements Screen, InputProcessor {
     // Dragging
     private Vector2 clickOffset;
     private Rectangle bounds = new Rectangle();
-    // Camera controls
-    private Vector2 panTouchPos;
-    private Vector2 camStartPos;
 
     /**
      * Create b1 stage editor
@@ -157,6 +155,9 @@ public class SceneEditorScreen implements Screen, InputProcessor {
         sceneSettingsWindow.setSceneDef(sceneDef);
         stageRenderer = new SceneFsmDefRenderer(sceneDef);
         stageRenderer.resize(lastW, lastH);
+
+        Gdx.input.setInputProcessor(
+                new InputMultiplexer(stage, new CameraControls(stageRenderer.getCamera()), this));
     }
 
     @Override
@@ -196,13 +197,6 @@ public class SceneEditorScreen implements Screen, InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if( getCurrentSceneDef() == null ) return false;
 
-        // Middle button = pan
-        if( button == Input.Buttons.MIDDLE ){
-            panTouchPos = new Vector2(screenX, screenY);
-            camStartPos = new Vector2(stageRenderer.getCameraPos().x, stageRenderer.getCameraPos().y);
-            return true;
-        }
-
         // Selection
         Vector2 touch = stageRenderer.getTouch(screenX, screenY);
 
@@ -233,25 +227,11 @@ public class SceneEditorScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        // Middle button = pan
-        if( button == Input.Buttons.MIDDLE ){
-            panTouchPos = null;
-            return true;
-        }
-
         return false;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        // Middle button = pan
-        if( panTouchPos != null ){
-            Vector2 curPos = new Vector2(panTouchPos);
-            curPos.sub(new Vector2(screenX, screenY));
-            stageRenderer.setCameraPos(camStartPos.x + curPos.x, camStartPos.y - curPos.y);
-            return true;
-        }
-
         // Dragging
         if( clickOffset != null ){
             Vector2 place = stageRenderer.getTouch(screenX, screenY);
@@ -276,9 +256,6 @@ public class SceneEditorScreen implements Screen, InputProcessor {
 
     @Override
     public boolean scrolled(int amount) {
-        if( sceneDefWindow.getSceneDef() == null ) return false;
-
-        stageRenderer.zoom(amount);
         return false;
     }
 

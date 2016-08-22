@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -144,19 +143,10 @@ public class SceneFsmDefRenderer {
         return viewport.unproject(touch);
     }
 
-    // Gets current camera position
-    public Vector3 getCameraPos() {
-        return viewport.getCamera().position;
-    }
-
-    // Sets camera position
-    public void setCameraPos(float x, float y){
-        viewport.getCamera().position.set(x, y, 0);
-        viewport.getCamera().update();
-    }
-
-    public void zoom(int amount) {
-        ((OrthographicCamera)viewport.getCamera()).zoom += 0.05f * amount;
-        viewport.getCamera().update();
+    /**
+     * @return The ortho camera
+     */
+    public OrthographicCamera getCamera() {
+        return (OrthographicCamera) viewport.getCamera();
     }
 }
