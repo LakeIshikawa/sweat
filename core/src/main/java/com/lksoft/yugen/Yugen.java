@@ -48,7 +48,7 @@ public class Yugen {
      * File "settings.def" must exist
      */
     public Yugen(FileHandle mainFsm, boolean debug, boolean compileScripts) throws IOException {
-        super();
+        this();
         this.debug = debug;
 
         if( compileScripts ){
