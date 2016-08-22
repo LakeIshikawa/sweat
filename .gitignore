@@ -75,7 +75,6 @@ android/libs/
 
 ## Assets
 android/assets
-!android/assets/system
 
 ## Generated antlr4 sources
 core/gen/
