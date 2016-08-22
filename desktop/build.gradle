@@ -1,7 +1,18 @@
 apply plugin: "java"
 
+sourceSets{
+    main {
+        java.srcDirs = [ "src/", "dev/" ]
+    }
+    release {
+        compileClasspath = sourceSets.main.compileClasspath
+        runtimeClasspath = sourceSets.main.runtimeClasspath
+
+        java.srcDirs = [ "src", "../android/assets" ]
+    }
+}
+
 sourceCompatibility = 1.7
-sourceSets.main.java.srcDirs = [ "src/" ]
 
 project.ext.mainClassName = "com.lksoft.yugen.desktop.DesktopLauncher"
 project.ext.assetsDir = new File("../android/assets");
@@ -19,28 +30,26 @@ task dist(type: Jar) {
     from files(sourceSets.main.output.resourcesDir)
     from {configurations.compile.collect {zipTree(it)}}
     from files(project.assetsDir);
+
+    manifest {
+        attributes 'Main-Class': project.mainClassName
+    }
+
+    baseName = "YugenDev"
+}
+
+task distRelease(type: Jar) {
+    from files(sourceSets.release.output.classesDir)
+    from files(sourceSets.release.output.resourcesDir)
+    from {configurations.compile.collect {zipTree(it)}}
+    from files(project.assetsDir);
  
     manifest {
         attributes 'Main-Class': project.mainClassName
     }
+
+    baseName = "Yugen"
 }
 
 dist.dependsOn classes
-
-eclipse {
-    project {
-        name = appName + "-desktop"
-        linkedResource name: 'assets', type: '2', location: 'PARENT-1-PROJECT_LOC/android/assets'
-    }
-}
-
-task afterEclipseImport(description: "Post processing after project generation", group: "IDE") {
-  doLast {
-    def classpath = new XmlParser().parse(file(".classpath"))
-    new Node(classpath, "classpathentry", [ kind: 'src', path: 'assets' ]);
-    def writer = new FileWriter(file(".classpath"))
-    def printer = new XmlNodePrinter(new PrintWriter(writer))
-    printer.setPreserveWhitespace(true)
-    printer.print(classpath)
-  }
-}
+distRelease.dependsOn releaseClasses

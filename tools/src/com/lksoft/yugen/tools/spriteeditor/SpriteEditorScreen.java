@@ -231,7 +231,7 @@ public class SpriteEditorScreen implements Screen, InputProcessor {
             public void selected(Array<FileHandle> files) {
                 // Find the atlas
                 FileHandle atlas = files.first();
-                FileHandle frm = new FileHandle(atlas.pathWithoutExtension()+".frm");
+                FileHandle frm = Gdx.files.internal(atlas.pathWithoutExtension()+".frm");
 
                 // Load stuff
                 TextureAtlas tAtlas = new TextureAtlas(atlas);
@@ -262,7 +262,7 @@ public class SpriteEditorScreen implements Screen, InputProcessor {
             @Override
             public void selected(Array<FileHandle> files) {
                 // Read frm and atlas
-                FileHandle atlasHandle = new FileHandle(files.first().pathWithoutExtension() + ".atlas");
+                FileHandle atlasHandle = Gdx.files.internal(files.first().pathWithoutExtension() + ".atlas");
                 TextureAtlas atlas = new TextureAtlas(atlasHandle);
 
                 SpritePack spritePack = new SpritePackReader(files.first()).read(atlas);

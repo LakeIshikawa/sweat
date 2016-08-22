@@ -1,7 +1,6 @@
-package com.lksoft.yugen;
+package com.lksoft.yugen.desktop.dev;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
+import com.lksoft.yugen.desktop.IScriptCompiler;
 
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
@@ -16,19 +15,20 @@ import java.util.List;
 /**
  * Created by Stallman on 18/08/2016.
  */
-public class ScriptCompiler {
+public class ScriptCompiler implements IScriptCompiler {
 
     /**
      * Compile all scripts to class files
      */
-    public static void compileScripts() {
+    @Override
+    public void compileScripts() {
         // Scan for .java files
         List<File> files = new ArrayList<>();
-        FileHandle root = Gdx.files.internal(".");
+        File root = new File(".");
         scanJavaFiles(root, files);
 
         // Make output folder
-        File output = Gdx.files.internal("bin").file();
+        File output = new File("bin");
         output.mkdir();
 
         // Compile
@@ -48,13 +48,13 @@ public class ScriptCompiler {
     }
 
     // Get all java files in assets
-    private static void scanJavaFiles(FileHandle root, List<File> files) {
-        for( FileHandle f : root.list() ){
+    private void scanJavaFiles(File root, List<File> files) {
+        for( File f : root.listFiles() ){
             if( f.isDirectory() ) {
                 scanJavaFiles(f, files);
             } else {
-                if( f.extension().equalsIgnoreCase("java") ){
-                    files.add(f.file());
+                if( f.getAbsolutePath().endsWith(".java") ){
+                    files.add(f);
                 }
             }
         }

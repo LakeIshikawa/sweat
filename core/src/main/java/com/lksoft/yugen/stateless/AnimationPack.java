@@ -1,5 +1,6 @@
 package com.lksoft.yugen.stateless;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
@@ -110,8 +111,8 @@ public class AnimationPack extends Resource implements Json.Serializable {
      * @return A loaded animation pack
      */
     public static AnimationPack read(FileHandle anm) {
-        FileHandle frm = new FileHandle(anm.pathWithoutExtension() + ".frm");
-        FileHandle atlasHandle = new FileHandle(anm.pathWithoutExtension() + ".atlas");
+        FileHandle frm = Gdx.files.internal(anm.pathWithoutExtension() + ".frm");
+        FileHandle atlasHandle = Gdx.files.internal(anm.pathWithoutExtension() + ".atlas");
         TextureAtlas atlas = new TextureAtlas(atlasHandle);
         SpritePack spritePack = new SpritePackReader(frm).read(atlas);
 

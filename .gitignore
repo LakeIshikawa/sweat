@@ -60,10 +60,8 @@ nbactions.xml
 nb-configuration.xml
 
 ## Gradle
-
 .gradle
 gradle-app.setting
-build/
 
 ## OS Specific
 .DS_Store
@@ -74,6 +72,10 @@ rawres
 
 ## Android libs
 android/libs/
+
+## Assets
+android/assets
+!android/assets/system
 
 ## Generated antlr4 sources
 core/gen/

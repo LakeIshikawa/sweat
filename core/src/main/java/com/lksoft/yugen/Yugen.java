@@ -47,13 +47,9 @@ public class Yugen {
      * Create yugen engine
      * File "settings.def" must exist
      */
-    public Yugen(FileHandle mainFsm, boolean debug, boolean compileScripts) throws IOException {
+    public Yugen(FileHandle mainFsm, boolean debug) throws IOException {
         this();
         this.debug = debug;
-
-        if( compileScripts ){
-            ScriptCompiler.compileScripts();
-        }
 
         // Parse settings
         settings = new Settings(Gdx.files.internal("settings.def"));
