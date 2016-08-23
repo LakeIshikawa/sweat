@@ -130,7 +130,7 @@ public class Yugen {
 
         try {
             Fsm fsm = (Fsm) fsmClass.newInstance();
-            fsm.setName(name);
+            fsm.setName(uniquefy(name));
             fsms.put(fsm.getName(), fsm);
             layers[fsm.getLayer()].add(fsm);
             return fsm;
@@ -149,7 +149,7 @@ public class Yugen {
      */
     public Fsm createFSM(String name) {
         Fsm fsm = new NonFsm();
-        fsm.setName(name);
+        fsm.setName(uniquefy(name));
         fsms.put(name, fsm);
         layers[fsm.getLayer()].add(fsm);
         return fsm;
@@ -193,7 +193,7 @@ public class Yugen {
 
         // Load all scene fsms
         for(SceneDef.SceneFsmDef def : scene.layout){
-            Fsm fsm = loadFSM(Gdx.files.internal(def.scriptPath), uniquefy(scnFile.pathWithoutExtension() + def.animation));
+            Fsm fsm = loadFSM(Gdx.files.internal(def.scriptPath), scnFile.pathWithoutExtension() + def.animation);
             fsm.setAnimation(def.animation);
             fsm.pos.set(def.x, def.y);
             fsm.scrollFactor.set(def.scrollFactorX, def.scrollFactorY);

@@ -46,6 +46,8 @@ public class Resources {
         if( pack == null || pack.isDisposed() ){
             pack = AnimationPack.read(Gdx.files.internal(path));
             animationPacks.put(path, pack);
+        } else {
+            pack.use();
         }
 
         return pack;
