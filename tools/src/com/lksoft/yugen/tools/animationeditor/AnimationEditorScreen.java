@@ -272,10 +272,12 @@ public class AnimationEditorScreen implements Screen {
         FramePicker picker = new FramePicker(animationPackWindow.getAnimationPack().getSpritePack(),
                 new FramePicker.PickListener() {
                     @Override
-                    public void onFramePicked(SpriteDef frame) {
-                        AnimationFrame newFrame = new AnimationFrame(frame, 3);
-                        animationFrameWindow.addFrame(newFrame);
-                        selectFrame(newFrame);
+                    public void onFramePicked(Array<SpriteDef> frames) {
+                        for( SpriteDef frame : frames ) {
+                            AnimationFrame newFrame = new AnimationFrame(frame, 3);
+                            animationFrameWindow.addFrame(newFrame);
+                            selectFrame(newFrame);
+                        }
                     }
 
                     @Override
@@ -298,10 +300,12 @@ public class AnimationEditorScreen implements Screen {
         FramePicker picker = new FramePicker(animationPackWindow.getAnimationPack().getSpritePack(),
                 new FramePicker.PickListener() {
                     @Override
-                    public void onFramePicked(SpriteDef frame) {
-                        AnimationFrame.Component newComponent = new AnimationFrame.Component(frame);
-                        animationFrameComponentWindow.addComponent(newComponent);
-                        selectComponent(newComponent);
+                    public void onFramePicked(Array<SpriteDef> frames) {
+                        for( SpriteDef frame : frames ) {
+                            AnimationFrame.Component newComponent = new AnimationFrame.Component(frame);
+                            animationFrameComponentWindow.addComponent(newComponent);
+                            selectComponent(newComponent);
+                        }
                     }
 
                     @Override

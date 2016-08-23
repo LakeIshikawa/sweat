@@ -42,7 +42,9 @@ public class AnimationFrame {
 
         @Override
         public void write(Json json) {
-            json.writeValue("spriteDef", "S:"+spriteDef.region.name);
+            if( spriteDef != null ) {
+                json.writeValue("spriteDef", "S:" + spriteDef.region.name);
+            }
             json.writeValue("x", x);
             json.writeValue("y", y);
             json.writeValue("scaleX", scaleX);
@@ -53,7 +55,10 @@ public class AnimationFrame {
 
         @Override
         public void read(Json json, JsonValue jsonData) {
-            spriteDef = AnimationPack.currentSpritePack.getSpriteDef(json.readValue("spriteDef", String.class, jsonData).substring(2));
+            String spriteDefStr = json.readValue("spriteDef", String.class, jsonData);
+            if( spriteDefStr != null ) {
+                spriteDef = AnimationPack.currentSpritePack.getSpriteDef(spriteDefStr.substring(2));
+            }
             x = json.readValue("x", Integer.class, jsonData);
             y = json.readValue("y", Integer.class, jsonData);
             scaleX = json.readValue("scaleX", Float.class, jsonData);

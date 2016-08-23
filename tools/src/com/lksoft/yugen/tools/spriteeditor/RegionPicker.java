@@ -51,7 +51,7 @@ public class RegionPicker extends VisWindow {
             public void changed(ChangeEvent event, Actor actor) {
                 Array<TextureAtlas.AtlasRegion> selection = ((ArrayAdapter)regionList.getAdapter()).getSelection();
                 if(selection.size > 0) {
-                    listener.onRegionPicked(selection.first());
+                    listener.onRegionPicked(selection);
                 }
                 close();
             }
@@ -89,7 +89,7 @@ public class RegionPicker extends VisWindow {
         // Create adapter
         public RegionAdapter(Array<TextureAtlas.AtlasRegion> frames) {
             super(frames);
-            setSelectionMode(SelectionMode.SINGLE);
+            setSelectionMode(SelectionMode.MULTIPLE);
         }
 
         @Override
@@ -119,7 +119,7 @@ public class RegionPicker extends VisWindow {
 
     // Pick listener interface
     public interface PickListener {
-        void onRegionPicked(TextureAtlas.AtlasRegion region);
+        void onRegionPicked(Array<TextureAtlas.AtlasRegion> region);
         void onCancel();
     }
 }

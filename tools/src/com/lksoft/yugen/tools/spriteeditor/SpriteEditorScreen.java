@@ -64,7 +64,7 @@ public class SpriteEditorScreen implements Screen, InputProcessor {
 
         // Inspector window
         inspectorWindow = new InspectorWindow(this);
-        inspectorWindow.setSize(150, 60);
+        inspectorWindow.setSize(150, 180);
         inspectorWindow.setPosition(5, 5);
 
         // Tool window
@@ -162,13 +162,15 @@ public class SpriteEditorScreen implements Screen, InputProcessor {
     public void addFrame() {
         if( spritePackWindow.getFramePack() == null ) return;
 
-        com.lksoft.yugen.tools.spriteeditor.RegionPicker picker = new com.lksoft.yugen.tools.spriteeditor.RegionPicker(spritePackWindow.getFramePack().getAtlas(),
-                new com.lksoft.yugen.tools.spriteeditor.RegionPicker.PickListener() {
+        RegionPicker picker = new RegionPicker(spritePackWindow.getFramePack().getAtlas(),
+                new RegionPicker.PickListener() {
                     @Override
-                    public void onRegionPicked(TextureAtlas.AtlasRegion region) {
-                        SpriteDef newSpriteDef = new SpriteDef(region, region.originalWidth/2, region.originalHeight);
-                        spritePackWindow.addFrame(newSpriteDef);
-                        selectFrame(newSpriteDef);
+                    public void onRegionPicked(Array<TextureAtlas.AtlasRegion> regions) {
+                        for(TextureAtlas.AtlasRegion r : regions) {
+                            SpriteDef newSpriteDef = new SpriteDef(r, r.originalWidth / 2, r.originalHeight);
+                            spritePackWindow.addFrame(newSpriteDef);
+                            selectFrame(newSpriteDef);
+                        }
                     }
 
                     @Override

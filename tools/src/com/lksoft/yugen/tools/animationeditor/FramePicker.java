@@ -52,7 +52,7 @@ public class FramePicker extends VisWindow {
             public void changed(ChangeEvent event, Actor actor) {
                 Array<SpriteDef> selection = ((ArrayAdapter)frameList.getAdapter()).getSelection();
                 if(selection.size > 0) {
-                    listener.onFramePicked(selection.first());
+                    listener.onFramePicked(selection);
                 }
                 close();
             }
@@ -90,7 +90,7 @@ public class FramePicker extends VisWindow {
         // Create adapter
         public FramesAdapter(Array<SpriteDef> frames) {
             super(frames);
-            setSelectionMode(SelectionMode.SINGLE);
+            setSelectionMode(SelectionMode.MULTIPLE);
         }
 
         @Override
@@ -121,7 +121,7 @@ public class FramePicker extends VisWindow {
     // Pick listener interface
     public interface PickListener {
 
-        void onFramePicked(SpriteDef spriteDef);
+        void onFramePicked(Array<SpriteDef> spriteDef);
         void onCancel();
     }
 }

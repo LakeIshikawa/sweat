@@ -88,8 +88,11 @@ public class ComponentControls implements Controls {
 
         // Select component
         componentsReverse.clear();
-        componentsReverse.addAll(editorScreen.getAnimationFrameComponentWindow().getAnimationFrame().components);
-        componentsReverse.reverse();
+        AnimationFrame frame = editorScreen.getAnimationFrameComponentWindow().getAnimationFrame();
+        if( frame != null ) {
+            componentsReverse.addAll(frame.components);
+            componentsReverse.reverse();
+        }
 
         Vector2 touchPoint = editorScreen.getAnimationFrameRenderer().getTouch(screenX, screenY);
         for(AnimationFrame.Component c : componentsReverse){
