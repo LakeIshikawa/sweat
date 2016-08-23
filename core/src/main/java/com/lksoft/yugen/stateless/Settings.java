@@ -4,6 +4,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 
+import java.io.File;
+
 /**
  * Created by Lake on 12/06/2016.
  */
@@ -123,6 +125,9 @@ public class Settings {
     public String getMainFsm() {
         return mainFsm;
     }
+    public void setMainFsm(String mainFsm) {
+        this.mainFsm = mainFsm;
+    }
     public KeySettings getP1Keys() {
         return p1Keys;
     }
@@ -142,13 +147,12 @@ public class Settings {
 
     /**
      * Writes settings to file
-     * @param setFile
      */
-    public void write(FileHandle setFile){
+    public void write(File file){
         Json json = new Json();
         json.setIgnoreUnknownFields(true);
 
         String jstring = json.prettyPrint(this);
-        setFile.writeString(jstring, false);
+        new FileHandle(file).writeString(jstring, false);
     }
 }

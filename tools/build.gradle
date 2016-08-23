@@ -6,6 +6,7 @@ sourceSets.main.java.srcDirs = [ "src/" ]
 project.ext.SEmainClassName = "com.lksoft.yugen.tools.sceneeditor.SceneEditorLauncher"
 project.ext.AEmainClassName = "com.lksoft.yugen.tools.animationeditor.AnimationEditorLauncher"
 project.ext.SPREmainClassName = "com.lksoft.yugen.tools.spriteeditor.SpriteEditorLauncher"
+project.ext.SETEmainClassName = "com.lksoft.yugen.tools.settingseditor.SettingsEditorLauncher"
 
 project.ext.assetsDir = new File("./assets");
 
@@ -68,7 +69,24 @@ task distSPRE(type: Jar) {
     bat.write('java -jar ' + archiveName + ' > sprite-editor.log 2>&1')
 }
 
-task dist(dependsOn: [distSE, distAE, distSPRE]){
+task distSETE(type: Jar) {
+    from files(sourceSets.main.output.classesDir)
+    from files(sourceSets.main.output.resourcesDir)
+    from {configurations.compile.collect {zipTree(it)}}
+    from files(project.assetsDir);
+
+    manifest {
+        attributes 'Main-Class': project.SETEmainClassName
+    }
+
+    baseName = 'SettingsEditor'
+
+    // Create batch
+    File bat = new File(destinationDir, "settings-editor.bat")
+    bat.write('java -jar ' + archiveName + ' > settings-editor.log 2>&1')
+}
+
+task dist(dependsOn: [distSE, distAE, distSPRE, distSETE]){
 }
 
 distSE.dependsOn classes

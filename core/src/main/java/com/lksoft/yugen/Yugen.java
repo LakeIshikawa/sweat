@@ -23,6 +23,7 @@ import static com.lksoft.yugen.Resources.loadFSMClass;
  * Yugen engine
  */
 public class Yugen {
+    public final static String SETTINGS_FILE = "settings.json";
     public static Yugen i;
 
     // Settings
@@ -52,7 +53,7 @@ public class Yugen {
         this.debug = debug;
 
         // Parse settings
-        settings = Settings.read(Gdx.files.internal("settings.json"));
+        settings = Settings.read(Gdx.files.internal(SETTINGS_FILE));
 
         // Load main fsm
         loadFSM(Gdx.files.internal(settings.getMainFsm()), "main");
