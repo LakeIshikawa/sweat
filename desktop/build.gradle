@@ -26,8 +26,6 @@ task run(dependsOn: classes, type: JavaExec) {
 }
 
 task dist(type: Jar) {
-    delete("../android/assets/bin")
-    delete fileTree(dir: '../android/assets', include:'*.jar')
     from files(sourceSets.main.output.classesDir)
     from files(sourceSets.main.output.resourcesDir)
     from {configurations.compile.collect {zipTree(it)}}
@@ -49,7 +47,11 @@ task distRelease(type: Jar) {
     from files(sourceSets.release.output.resourcesDir)
     from {configurations.compile.collect {zipTree(it)}}
     from files(project.assetsDir);
- 
+    exclude '**/*.java'
+    exclude '**/.gitignore'
+    exclude '**/bin/**'
+    exclude '**/resources/**'
+
     manifest {
         attributes 'Main-Class': project.mainClassName
     }
