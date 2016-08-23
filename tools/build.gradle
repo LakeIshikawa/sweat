@@ -31,7 +31,7 @@ task distSE(type: Jar) {
 
     // Create batch
     File bat = new File(destinationDir, "scene-editor.bat")
-    bat.write('java -jar ' + archiveName)
+    bat.write('java -jar ' + archiveName + ' > scene-editor.log 2>&1' )
 }
 
 task distAE(type: Jar) {
@@ -48,7 +48,7 @@ task distAE(type: Jar) {
 
     // Create batch
     File bat = new File(destinationDir, "animation-editor.bat")
-    bat.write('java -jar ' + archiveName)
+    bat.write('java -jar ' + archiveName + ' > animation-editor.log 2>&1')
 }
 
 task distSPRE(type: Jar) {
@@ -65,7 +65,7 @@ task distSPRE(type: Jar) {
 
     // Create batch
     File bat = new File(destinationDir, "sprite-editor.bat")
-    bat.write('java -jar ' + archiveName)
+    bat.write('java -jar ' + archiveName + ' > sprite-editor.log 2>&1')
 }
 
 task dist(dependsOn: [distSE, distAE, distSPRE]){
