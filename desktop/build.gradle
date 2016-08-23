@@ -36,7 +36,7 @@ task dist(type: Jar) {
         attributes 'Main-Class': project.mainClassName
     }
 
-    baseName = "YugenDev"
+    baseName = "Yugen"
 }
 
 task distRelease(type: Jar) {
