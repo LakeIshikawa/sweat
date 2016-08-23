@@ -40,6 +40,7 @@ task dist(type: Jar) {
 
     // Write batch files
     File bat = new File(destinationDir, "yugen.bat")
+    destinationDir.mkdirs();
     bat.write('java -jar ' + archiveName + ' > yugen.log 2>&1')
 }
 
