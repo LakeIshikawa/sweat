@@ -11,21 +11,16 @@ import java.io.File;
 public class SpriteEditor extends Game {
     public static SpriteEditor instance;
 
-    // Stages path
-    private File path;
-
     /**
      * Create the sprite editor
-     * @param path Path to prompt for file open dir
      */
-    public SpriteEditor(File path){
-        this.path = path;
+    public SpriteEditor(){
         instance = this;
     }
 
     @Override
     public void create() {
         VisUI.load();
-        setScreen(new SpriteEditorScreen(path));
+        setScreen(new SpriteEditorScreen());
     }
 }

@@ -11,21 +11,16 @@ import java.io.File;
 public class SceneEditor extends Game {
     public static SceneEditor instance;
 
-    // Stages path
-    private File stagesPath;
-
     /**
      * Create the stage editor
-     * @param stagesPath Path to prompt for stage file open dir
      */
-    public SceneEditor(File stagesPath){
-        this.stagesPath = stagesPath;
+    public SceneEditor(){
         instance = this;
     }
 
     @Override
     public void create() {
         VisUI.load();
-        setScreen(new SceneEditorScreen(stagesPath));
+        setScreen(new SceneEditorScreen());
     }
 }

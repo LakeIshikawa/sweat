@@ -23,9 +23,6 @@ import java.io.File;
  */
 public class SceneEditorScreen implements Screen, InputProcessor {
 
-    // Stages path
-    private File rootPath;
-
     // UI
     private Stage stage;
 
@@ -48,15 +45,7 @@ public class SceneEditorScreen implements Screen, InputProcessor {
     private Vector2 clickOffset;
     private Rectangle bounds = new Rectangle();
 
-    /**
-     * Create b1 stage editor
-     * @param rootPath
-     */
-    public SceneEditorScreen(File rootPath){
-        this.rootPath = rootPath;
-    }
-
-    // Accessors
+     // Accessors
     public SceneDef getCurrentSceneDef(){
         return sceneDefWindow.getSceneDef();
     }
@@ -273,7 +262,7 @@ public class SceneEditorScreen implements Screen, InputProcessor {
         final FileChooser chooser = new FileChooser(FileChooser.Mode.OPEN);
         chooser.setSelectionMode(FileChooser.SelectionMode.FILES);
         chooser.setMultiSelectionEnabled(false);
-        chooser.setDirectory(rootPath);
+        chooser.setDirectory(new File("."));
         FileTypeFilter filter = new FileTypeFilter(false);
         filter.addRule("Fsm script file", "java");
         chooser.setFileTypeFilter(filter);
@@ -313,7 +302,7 @@ public class SceneEditorScreen implements Screen, InputProcessor {
         final FileChooser chooser = new FileChooser(FileChooser.Mode.OPEN);
         chooser.setSelectionMode(FileChooser.SelectionMode.FILES);
         chooser.setMultiSelectionEnabled(false);
-        chooser.setDirectory(rootPath);
+        chooser.setDirectory(new File("."));
         FileTypeFilter filter = new FileTypeFilter(false);
         filter.addRule("Fsm script file", "java");
         chooser.setFileTypeFilter(filter);
@@ -361,7 +350,7 @@ public class SceneEditorScreen implements Screen, InputProcessor {
         final FileChooser chooser = new FileChooser(FileChooser.Mode.SAVE);
         chooser.setSelectionMode(FileChooser.SelectionMode.FILES);
         chooser.setMultiSelectionEnabled(false);
-        chooser.setDirectory(rootPath);
+        chooser.setDirectory(new File("."));
         FileTypeFilter filter = new FileTypeFilter(false);
         filter.addRule("Scene files", "scn");
         chooser.setFileTypeFilter(filter);
@@ -387,7 +376,7 @@ public class SceneEditorScreen implements Screen, InputProcessor {
         final FileChooser chooser = new FileChooser(FileChooser.Mode.OPEN);
         chooser.setSelectionMode(FileChooser.SelectionMode.FILES);
         chooser.setMultiSelectionEnabled(false);
-        chooser.setDirectory(rootPath);
+        chooser.setDirectory(new File("."));
         FileTypeFilter filter = new FileTypeFilter(false);
         filter.addRule("Scene files", "scn");
         chooser.setFileTypeFilter(filter);

@@ -37,8 +37,6 @@ project(":desktop") {
 
     dependencies {
         compile project(":core")
-        compile "args4j:args4j:2.33"
-        compile "args4j:args4j-site:2.33"
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"

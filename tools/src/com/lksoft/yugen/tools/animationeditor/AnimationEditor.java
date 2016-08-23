@@ -11,21 +11,16 @@ import java.io.File;
 public class AnimationEditor extends Game {
     public static AnimationEditor instance;
 
-    // Stages path
-    private File path;
-
     /**
      * Create the animation editor
-     * @param path Path to prompt for file open dir
      */
-    public AnimationEditor(File path){
-        this.path = path;
+    public AnimationEditor(){
         instance = this;
     }
 
     @Override
     public void create() {
         VisUI.load();
-        setScreen(new AnimationEditorScreen(path));
+        setScreen(new AnimationEditorScreen());
     }
 }

@@ -13,9 +13,6 @@ public class AnimationEditorLauncher {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.width = 1280;
         config.height = 720;
-
-        File path = new File(".");
-        if( arg.length > 0 ) path = new File(arg[0]);
-        new LwjglApplication(new AnimationEditor(path), config);
+        new LwjglApplication(new AnimationEditor(), config);
     }
 }

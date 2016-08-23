@@ -24,9 +24,6 @@ import java.io.File;
  */
 public class AnimationEditorScreen implements Screen {
 
-    // Chooser Path
-    private File path;
-
     // UI
     private Stage stage;
 
@@ -51,14 +48,6 @@ public class AnimationEditorScreen implements Screen {
 
     // Controls
     private Controls currentControls;
-
-    /**
-     * Create b1 stage editor
-     * @param path
-     */
-    public AnimationEditorScreen(File path){
-        this.path = path;
-    }
 
     @Override
     public void show() {
@@ -327,7 +316,7 @@ public class AnimationEditorScreen implements Screen {
         final FileChooser chooser = new FileChooser(FileChooser.Mode.OPEN);
         chooser.setSelectionMode(FileChooser.SelectionMode.FILES);
         chooser.setMultiSelectionEnabled(false);
-        chooser.setDirectory(path);
+        chooser.setDirectory(new File("."));
         FileTypeFilter filter = new FileTypeFilter(false);
         filter.addRule("SpritePack file", "frm");
         chooser.setFileTypeFilter(filter);
@@ -360,7 +349,7 @@ public class AnimationEditorScreen implements Screen {
         final FileChooser chooser = new FileChooser(FileChooser.Mode.OPEN);
         chooser.setSelectionMode(FileChooser.SelectionMode.FILES);
         chooser.setMultiSelectionEnabled(false);
-        chooser.setDirectory(path);
+        chooser.setDirectory(new File("."));
         FileTypeFilter filter = new FileTypeFilter(false);
         filter.addRule("Animation pack files", "anm");
         chooser.setFileTypeFilter(filter);

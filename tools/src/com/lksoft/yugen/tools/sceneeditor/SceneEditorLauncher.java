@@ -13,9 +13,6 @@ public class SceneEditorLauncher {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.width = 1280;
         config.height = 720;
-
-        File stagesPath = new File(".");
-        if( arg.length > 0 ) stagesPath = new File(arg[0]);
-        new LwjglApplication(new SceneEditor(stagesPath), config);
+        new LwjglApplication(new SceneEditor(), config);
     }
 }

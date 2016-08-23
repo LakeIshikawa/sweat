@@ -1,6 +1,9 @@
 package com.lksoft.yugen.tools.spriteeditor;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -24,9 +27,6 @@ import java.io.IOException;
  */
 public class SpriteEditorScreen implements Screen, InputProcessor {
 
-    // Chooser Path
-    private File path;
-
     // UI
     private Stage stage;
 
@@ -44,14 +44,6 @@ public class SpriteEditorScreen implements Screen, InputProcessor {
 
     // Palette
     private Vector2 palette;
-
-    /**
-     * Create spriteDef editor
-     * @param path
-     */
-    public SpriteEditorScreen(File path){
-        this.path = path;
-    }
 
     @Override
     public void show() {
@@ -222,7 +214,7 @@ public class SpriteEditorScreen implements Screen, InputProcessor {
         final FileChooser chooser = new FileChooser(FileChooser.Mode.OPEN);
         chooser.setSelectionMode(FileChooser.SelectionMode.FILES);
         chooser.setMultiSelectionEnabled(false);
-        chooser.setDirectory(path);
+        chooser.setDirectory(new File("."));
         FileTypeFilter filter = new FileTypeFilter(false);
         filter.addRule("TextureAtlas file", "atlas");
         chooser.setFileTypeFilter(filter);
@@ -253,7 +245,7 @@ public class SpriteEditorScreen implements Screen, InputProcessor {
         final FileChooser chooser = new FileChooser(FileChooser.Mode.OPEN);
         chooser.setSelectionMode(FileChooser.SelectionMode.FILES);
         chooser.setMultiSelectionEnabled(false);
-        chooser.setDirectory(path);
+        chooser.setDirectory(new File("."));
         FileTypeFilter filter = new FileTypeFilter(false);
         filter.addRule("SpriteDef pack files", "frm");
         chooser.setFileTypeFilter(filter);

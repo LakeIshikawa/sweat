@@ -14,8 +14,6 @@ public class SpriteEditorLauncher {
         config.width = 1280;
         config.height = 720;
 
-        File path = new File(".");
-        if( arg.length > 0 ) path = new File(arg[0]);
-        new LwjglApplication(new SpriteEditor(path), config);
+        new LwjglApplication(new SpriteEditor(), config);
     }
 }
