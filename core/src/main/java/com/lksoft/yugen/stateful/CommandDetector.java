@@ -74,17 +74,17 @@ public class CommandDetector {
     public void update(){
         if( fsm.getKeySettings() == null ) return;
         InputState last = history.removeLast();
-        last.U = Gdx.input.isKeyPressed(fsm.getKeySettings().up);
-        last.D = Gdx.input.isKeyPressed(fsm.getKeySettings().down);
-        last.B1 = Gdx.input.isKeyPressed(fsm.getKeySettings().b1);
-        last.B2 = Gdx.input.isKeyPressed(fsm.getKeySettings().b2);
-        last.B3 = Gdx.input.isKeyPressed(fsm.getKeySettings().b3);
-        last.B4 = Gdx.input.isKeyPressed(fsm.getKeySettings().b4);
-        last.B5 = Gdx.input.isKeyPressed(fsm.getKeySettings().b5);
-        last.B6 = Gdx.input.isKeyPressed(fsm.getKeySettings().b6);
+        last.U = fsm.getKeySettings().up != null && Gdx.input.isKeyPressed(fsm.getKeySettings().up.key);
+        last.D = fsm.getKeySettings().down != null && Gdx.input.isKeyPressed(fsm.getKeySettings().down.key);
+        last.B1 = fsm.getKeySettings().b1 != null && Gdx.input.isKeyPressed(fsm.getKeySettings().b1.key);
+        last.B2 = fsm.getKeySettings().b2 != null && Gdx.input.isKeyPressed(fsm.getKeySettings().b2.key);
+        last.B3 = fsm.getKeySettings().b3 != null && Gdx.input.isKeyPressed(fsm.getKeySettings().b3.key);
+        last.B4 = fsm.getKeySettings().b4 != null && Gdx.input.isKeyPressed(fsm.getKeySettings().b4.key);
+        last.B5 = fsm.getKeySettings().b5 != null && Gdx.input.isKeyPressed(fsm.getKeySettings().b5.key);
+        last.B6 = fsm.getKeySettings().b6 != null && Gdx.input.isKeyPressed(fsm.getKeySettings().b6.key);
 
-        boolean l = Gdx.input.isKeyPressed(fsm.getKeySettings().left);
-        boolean r = Gdx.input.isKeyPressed(fsm.getKeySettings().right);
+        boolean l = fsm.getKeySettings().left != null && Gdx.input.isKeyPressed(fsm.getKeySettings().left.key);
+        boolean r = fsm.getKeySettings().right != null && Gdx.input.isKeyPressed(fsm.getKeySettings().right.key);
         boolean facingRight = !fsm.flip;
         last.F = (facingRight && r) || (!facingRight && l);
         last.B = (facingRight && l) || (!facingRight && r);

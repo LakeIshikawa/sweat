@@ -362,21 +362,21 @@ public abstract class Fsm<FsmClass, StateClass extends State<FsmClass>, HitClass
 
         boolean facingRight = !flip;
         switch (key){
-            case "U":  return Gdx.input.isKeyPressed(keySettings.up);
-            case "D":  return Gdx.input.isKeyPressed(keySettings.down);
-            case "B1": return Gdx.input.isKeyPressed(keySettings.b1);
-            case "B2": return Gdx.input.isKeyPressed(keySettings.b2);
-            case "B3": return Gdx.input.isKeyPressed(keySettings.b3);
-            case "B4": return Gdx.input.isKeyPressed(keySettings.b4);
-            case "B5": return Gdx.input.isKeyPressed(keySettings.b5);
-            case "B6": return Gdx.input.isKeyPressed(keySettings.b6);
+            case "U":  return keySettings.up != null && Gdx.input.isKeyPressed(keySettings.up.key);
+            case "D":  return keySettings.down != null && Gdx.input.isKeyPressed(keySettings.down.key);
+            case "B1": return keySettings.b1 != null && Gdx.input.isKeyPressed(keySettings.b1.key);
+            case "B2": return keySettings.b2 != null && Gdx.input.isKeyPressed(keySettings.b2.key);
+            case "B3": return keySettings.b3 != null && Gdx.input.isKeyPressed(keySettings.b3.key);
+            case "B4": return keySettings.b4 != null && Gdx.input.isKeyPressed(keySettings.b4.key);
+            case "B5": return keySettings.b5 != null && Gdx.input.isKeyPressed(keySettings.b5.key);
+            case "B6": return keySettings.b6 != null && Gdx.input.isKeyPressed(keySettings.b6.key);
             case "F":
-                boolean l = Gdx.input.isKeyPressed(keySettings.left);
-                boolean r = Gdx.input.isKeyPressed(keySettings.right);
+                boolean l = keySettings.left != null && Gdx.input.isKeyPressed(keySettings.left.key);
+                boolean r = keySettings.right != null && Gdx.input.isKeyPressed(keySettings.right.key);
                 return (facingRight && r) || (!facingRight && l);
             case "B":
-                l = Gdx.input.isKeyPressed(keySettings.left);
-                r = Gdx.input.isKeyPressed(keySettings.right);
+                l = keySettings.left != null && Gdx.input.isKeyPressed(keySettings.left.key);
+                r = keySettings.right!= null && Gdx.input.isKeyPressed(keySettings.right.key);
 
                 return (facingRight && l) || (!facingRight && r);
         }
@@ -394,21 +394,21 @@ public abstract class Fsm<FsmClass, StateClass extends State<FsmClass>, HitClass
 
         boolean facingRight = !flip;
         switch (key){
-            case "U":  return Gdx.input.isKeyJustPressed(keySettings.up);
-            case "D":  return Gdx.input.isKeyJustPressed(keySettings.down);
-            case "B1": return Gdx.input.isKeyJustPressed(keySettings.b1);
-            case "B2": return Gdx.input.isKeyJustPressed(keySettings.b2);
-            case "B3": return Gdx.input.isKeyJustPressed(keySettings.b3);
-            case "B4": return Gdx.input.isKeyJustPressed(keySettings.b4);
-            case "B5": return Gdx.input.isKeyJustPressed(keySettings.b5);
-            case "B6": return Gdx.input.isKeyJustPressed(keySettings.b6);
+            case "U":  return keySettings.up != null && Gdx.input.isKeyJustPressed(keySettings.up.key);
+            case "D":  return keySettings.down != null && Gdx.input.isKeyJustPressed(keySettings.down.key);
+            case "B1": return keySettings.b1 != null && Gdx.input.isKeyJustPressed(keySettings.b1.key);
+            case "B2": return keySettings.b2 != null && Gdx.input.isKeyJustPressed(keySettings.b2.key);
+            case "B3": return keySettings.b3 != null && Gdx.input.isKeyJustPressed(keySettings.b3.key);
+            case "B4": return keySettings.b4 != null && Gdx.input.isKeyJustPressed(keySettings.b4.key);
+            case "B5": return keySettings.b5 != null && Gdx.input.isKeyJustPressed(keySettings.b5.key);
+            case "B6": return keySettings.b6 != null && Gdx.input.isKeyJustPressed(keySettings.b6.key);
             case "F":
-                boolean l = Gdx.input.isKeyJustPressed(keySettings.left);
-                boolean r = Gdx.input.isKeyJustPressed(keySettings.right);
+                boolean l = keySettings.left != null && Gdx.input.isKeyJustPressed(keySettings.left.key);
+                boolean r = keySettings.right != null && Gdx.input.isKeyJustPressed(keySettings.right.key);
                 return (facingRight && r) || (!facingRight && l);
             case "B":
-                l = Gdx.input.isKeyJustPressed(keySettings.left);
-                r = Gdx.input.isKeyJustPressed(keySettings.right);
+                l = keySettings.left != null && Gdx.input.isKeyJustPressed(keySettings.left.key);
+                r = keySettings.right != null && Gdx.input.isKeyJustPressed(keySettings.right.key);
 
                 return (facingRight && l) || (!facingRight && r);
         }

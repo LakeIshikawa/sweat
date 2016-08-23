@@ -12,9 +12,6 @@ import org.kohsuke.args4j.OptionHandlerFilter;
 
 public class DesktopLauncher {
 
-    @Argument(required = true)
-    private String fsm;
-
 	public static void main (String[] args) {
 		DesktopLauncher launcher = new DesktopLauncher();
         launcher.parseArgs(args);
@@ -62,16 +59,16 @@ public class DesktopLauncher {
             compiler.compileScripts();
 
             System.out.println("Starting YUGEN in debug mode");
-            new LwjglApplication(new YugenGame(fsm, true), config);
+            new LwjglApplication(new YugenGame(true), config);
         } catch (ReflectionException e) {
             System.out.println("Starting YUGEN in normal mode");
-            new LwjglApplication(new YugenGame(fsm, false), config);
+            new LwjglApplication(new YugenGame(false), config);
         } catch (InstantiationException e) {
             System.out.println("Starting YUGEN in normal mode");
-            new LwjglApplication(new YugenGame(fsm, false), config);
+            new LwjglApplication(new YugenGame(false), config);
         } catch (IllegalAccessException e) {
             System.out.println("Starting YUGEN in normal mode");
-            new LwjglApplication(new YugenGame(fsm, false), config);
+            new LwjglApplication(new YugenGame(false), config);
         }
     }
 }
