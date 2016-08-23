@@ -3,7 +3,10 @@ apply plugin: "java"
 sourceCompatibility = 1.7
 sourceSets.main.java.srcDirs = [ "src/" ]
 
-project.ext.SEmainClassName = "com.lksoft.yugen.tools.stageeditor.SceneEditorLauncher"
+project.ext.SEmainClassName = "com.lksoft.yugen.tools.sceneeditor.SceneEditorLauncher"
+project.ext.AEmainClassName = "com.lksoft.yugen.tools.animationeditor.AnimationEditorLauncher"
+project.ext.SPREmainClassName = "com.lksoft.yugen.tools.spriteeditor.SpriteEditorLauncher"
+
 project.ext.assetsDir = new File("./assets");
 
 task runSE(dependsOn: classes, type: JavaExec) {
@@ -23,24 +26,49 @@ task distSE(type: Jar) {
     manifest {
         attributes 'Main-Class': project.SEmainClassName
     }
+
+    baseName = 'SceneEditor'
+
+    // Create batch
+    File bat = new File(destinationDir, "scene-editor.bat")
+    bat.write('java -jar ' + archiveName)
+}
+
+task distAE(type: Jar) {
+    from files(sourceSets.main.output.classesDir)
+    from files(sourceSets.main.output.resourcesDir)
+    from {configurations.compile.collect {zipTree(it)}}
+    from files(project.assetsDir);
+
+    manifest {
+        attributes 'Main-Class': project.AEmainClassName
+    }
+
+    baseName = 'AnimationEditor'
+
+    // Create batch
+    File bat = new File(destinationDir, "animation-editor.bat")
+    bat.write('java -jar ' + archiveName)
+}
+
+task distSPRE(type: Jar) {
+    from files(sourceSets.main.output.classesDir)
+    from files(sourceSets.main.output.resourcesDir)
+    from {configurations.compile.collect {zipTree(it)}}
+    from files(project.assetsDir);
+
+    manifest {
+        attributes 'Main-Class': project.SPREmainClassName
+    }
+
+    baseName = 'SpriteEditor'
+
+    // Create batch
+    File bat = new File(destinationDir, "sprite-editor.bat")
+    bat.write('java -jar ' + archiveName)
+}
+
+task dist(dependsOn: [distSE, distAE, distSPRE]){
 }
 
 distSE.dependsOn classes
-
-eclipse {
-    project {
-        name = appName + "-editor"
-        linkedResource name: 'assets', type: '2', location: 'PARENT-1-PROJECT_LOC/android/assets'
-    }
-}
-
-task afterEclipseImport(description: "Post processing after project generation", group: "IDE") {
-  doLast {
-    def classpath = new XmlParser().parse(file(".classpath"))
-    new Node(classpath, "classpathentry", [ kind: 'src', path: 'assets' ]);
-    def writer = new FileWriter(file(".classpath"))
-    def printer = new XmlNodePrinter(new PrintWriter(writer))
-    printer.setPreserveWhitespace(true)
-    printer.print(classpath)
-  }
-}

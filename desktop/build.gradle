@@ -37,6 +37,10 @@ task dist(type: Jar) {
     }
 
     baseName = "Yugen"
+
+    // Write batch files
+    File bat = new File(destinationDir, "yugen.bat")
+    bat.write('java -jar ' + archiveName)
 }
 
 task distRelease(type: Jar) {
