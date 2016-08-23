@@ -7,6 +7,7 @@ project.ext.SEmainClassName = "com.lksoft.yugen.tools.sceneeditor.SceneEditorLau
 project.ext.AEmainClassName = "com.lksoft.yugen.tools.animationeditor.AnimationEditorLauncher"
 project.ext.SPREmainClassName = "com.lksoft.yugen.tools.spriteeditor.SpriteEditorLauncher"
 project.ext.SETEmainClassName = "com.lksoft.yugen.tools.settingseditor.SettingsEditorLauncher"
+project.ext.TPmainClassName = "com.lksoft.yugen.tools.texturepacker.TexturePackerLauncher"
 
 project.ext.assetsDir = new File("./assets");
 
@@ -86,7 +87,24 @@ task distSETE(type: Jar) {
     bat.write('java -jar ' + archiveName + ' > settings-editor.log 2>&1')
 }
 
-task dist(dependsOn: [distSE, distAE, distSPRE, distSETE]){
+task distTP(type: Jar) {
+    from files(sourceSets.main.output.classesDir)
+    from files(sourceSets.main.output.resourcesDir)
+    from {configurations.compile.collect {zipTree(it)}}
+    from files(project.assetsDir);
+
+    manifest {
+        attributes 'Main-Class': project.TPmainClassName
+    }
+
+    baseName = 'TexturePacker'
+
+    // Create batch
+    File bat = new File(destinationDir, "texture-packer.bat")
+    bat.write('java -jar ' + archiveName + ' > texture-packer.log 2>&1')
+}
+
+task dist(dependsOn: [distSE, distAE, distSPRE, distSETE, distTP]){
 }
 
 distSE.dependsOn classes

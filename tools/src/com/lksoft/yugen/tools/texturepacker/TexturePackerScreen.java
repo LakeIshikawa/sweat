@@ -1,22 +1,20 @@
-package com.lksoft.yugen.tools.settingseditor;
+package com.lksoft.yugen.tools.texturepacker;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.lksoft.yugen.Yugen;
-import com.lksoft.yugen.stateless.Settings;
 
 /**
  * Created by Lake on 07/06/2016.
  */
-public class SettingsEditorScreen implements Screen {
+public class TexturePackerScreen implements Screen {
 
     // UI
     private Stage stage;
 
     // GUI components
-    private SettingsWindow settingsWindow;
+    private TexturePackerWindow texturePackerWindow;
 
     @Override
     public void show() {
@@ -28,15 +26,11 @@ public class SettingsEditorScreen implements Screen {
         float h = stage.getViewport().getWorldHeight();
 
         // Settings window
-        settingsWindow = new SettingsWindow(this);
-        settingsWindow.setSize(450, 500);
-        settingsWindow.setPosition(w/2-settingsWindow.getWidth()/2, h/2 - settingsWindow.getHeight()/2);
+        texturePackerWindow = new TexturePackerWindow(this);
+        texturePackerWindow.setSize(500, 150);
+        texturePackerWindow.setPosition(w/2- texturePackerWindow.getWidth()/2, h/2 - texturePackerWindow.getHeight()/2);
 
-        // Load settings
-        Settings settings = Settings.read(Gdx.files.internal(Yugen.SETTINGS_FILE));
-        settingsWindow.setSettings(settings);
-
-        stage.addActor(settingsWindow);
+        stage.addActor(texturePackerWindow);
     }
 
     @Override
