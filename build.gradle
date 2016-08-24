@@ -17,10 +17,6 @@ allprojects {
     apply plugin: "idea"
     apply plugin: 'build-version'
 
-    buildVersion {
-        integrationVersion = true
-    }
-
     version = buildVersion.version
 
     ext {
@@ -116,6 +112,30 @@ project(":tools") {
     }
 }
 
-tasks.eclipse.doLast {
-    delete ".project"
+task clean(){
+    doLast {
+        delete fileTree("build/")
+    }
+}
+
+task dist(type: Zip, dependsOn: ['clean', ':desktop:dist', 'tools:dist']){
+    from ('desktop/build/libs/')
+    from ('tools/build/libs/')
+    destinationDir file('build/dist/')
+
+    buildVersion{
+        isRelease = true
+    }
+    archiveName = "YUGEN-${buildVersion.version}.zip"
+}
+
+task distSnapshot(type: Zip, dependsOn: ['clean', ':desktop:dist', 'tools:dist']){
+    from ('desktop/build/libs/')
+    from ('tools/build/libs/')
+    destinationDir file('build/dist/')
+
+    buildVersion{
+        isRelease = false
+    }
+    archiveName = "YUGEN-${buildVersion.version}.zip"
 }

@@ -31,10 +31,12 @@ task distSE(type: Jar) {
 
     baseName = 'SceneEditor'
 
-    // Create batch
-    File bat = new File(destinationDir, "scene-editor.bat")
-    destinationDir.mkdirs();
-    bat.write('java -jar ' + archiveName + ' > scene-editor.log 2>&1' )
+    doLast {
+        // Create batch
+        File bat = new File(destinationDir, "scene-editor.bat")
+        destinationDir.mkdirs();
+        bat.write('java -jar ' + archiveName + ' > scene-editor.log 2>&1')
+    }
 }
 
 task distAE(type: Jar) {
@@ -49,10 +51,12 @@ task distAE(type: Jar) {
 
     baseName = 'AnimationEditor'
 
-    // Create batch
-    File bat = new File(destinationDir, "animation-editor.bat")
-    destinationDir.mkdirs();
-    bat.write('java -jar ' + archiveName + ' > animation-editor.log 2>&1')
+    doLast {
+        // Create batch
+        File bat = new File(destinationDir, "animation-editor.bat")
+        destinationDir.mkdirs();
+        bat.write('java -jar ' + archiveName + ' > animation-editor.log 2>&1')
+    }
 }
 
 task distSPRE(type: Jar) {
@@ -67,10 +71,12 @@ task distSPRE(type: Jar) {
 
     baseName = 'SpriteEditor'
 
-    // Create batch
-    File bat = new File(destinationDir, "sprite-editor.bat")
-    destinationDir.mkdirs();
-    bat.write('java -jar ' + archiveName + ' > sprite-editor.log 2>&1')
+    doLast {
+        // Create batch
+        File bat = new File(destinationDir, "sprite-editor.bat")
+        destinationDir.mkdirs();
+        bat.write('java -jar ' + archiveName + ' > sprite-editor.log 2>&1')
+    }
 }
 
 task distSETE(type: Jar) {
@@ -85,10 +91,12 @@ task distSETE(type: Jar) {
 
     baseName = 'SettingsEditor'
 
-    // Create batch
-    File bat = new File(destinationDir, "settings-editor.bat")
-    destinationDir.mkdirs();
-    bat.write('java -jar ' + archiveName + ' > settings-editor.log 2>&1')
+    doLast {
+        // Create batch
+        File bat = new File(destinationDir, "settings-editor.bat")
+        destinationDir.mkdirs();
+        bat.write('java -jar ' + archiveName + ' > settings-editor.log 2>&1')
+    }
 }
 
 task distTP(type: Jar) {
@@ -103,13 +111,15 @@ task distTP(type: Jar) {
 
     baseName = 'TexturePacker'
 
-    // Create batch
-    File bat = new File(destinationDir, "texture-packer.bat")
-    destinationDir.mkdirs();
-    bat.write('java -jar ' + archiveName + ' > texture-packer.log 2>&1')
+    doLast {
+        // Create batch
+        File bat = new File(destinationDir, "texture-packer.bat")
+        destinationDir.mkdirs();
+        bat.write('java -jar ' + archiveName + ' > texture-packer.log 2>&1')
+    }
 }
 
-task dist(dependsOn: [distSE, distAE, distSPRE, distSETE, distTP]){
+task dist(dependsOn: [clean, distSE, distAE, distSPRE, distSETE, distTP]){
 }
 
 distSE.dependsOn classes
