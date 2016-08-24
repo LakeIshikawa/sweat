@@ -113,3 +113,7 @@ task dist(dependsOn: [distSE, distAE, distSPRE, distSETE, distTP]){
 }
 
 distSE.dependsOn classes
+distAE.dependsOn classes
+distSPRE.dependsOn classes
+distSETE.dependsOn classes
+distTP.dependsOn classes
