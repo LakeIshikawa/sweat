@@ -6,6 +6,8 @@ import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.lksoft.yugen.Resources;
 import com.lksoft.yugen.Yugen;
@@ -350,6 +352,13 @@ public abstract class Fsm<FsmClass, StateClass extends State<FsmClass>, HitClass
      */
     public void setCamera(int x, int y){
         Yugen.i.getCamera().setPosition(x, y);
+    }
+
+    /**
+     * @return Camera position
+     */
+    public Vector3 getCameraPos() {
+        return Yugen.i.getCamera().getCamera().position;
     }
 
     /**
