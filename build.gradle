@@ -3,18 +3,26 @@ buildscript {
         mavenLocal()
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url 'https://geonet.artifactoryonline.com/geonet/public-releases' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.1.0'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.1.0'
+        classpath 'nz.org.geonet:gradle-build-version-plugin:1.0.4'
     }
 }
 
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
+    apply plugin: 'build-version'
 
-    version = '0.1'
+    buildVersion {
+        integrationVersion = true
+    }
+
+    version = buildVersion.version
+
     ext {
         appName = "yugen"
         gdxVersion = '1.9.3'
