@@ -112,7 +112,7 @@ project(":tools") {
     }
 }
 
-task clean(){
+task clean( dependsOn: [':desktop:clean', 'tools:clean']){
     doLast {
         delete fileTree("build/")
     }
@@ -123,19 +123,5 @@ task dist(type: Zip, dependsOn: ['clean', ':desktop:dist', 'tools:dist']){
     from ('tools/build/libs/')
     destinationDir file('build/dist/')
 
-    buildVersion{
-        isRelease = true
-    }
-    archiveName = "sweat-${buildVersion.version}.zip"
-}
-
-task distSnapshot(type: Zip, dependsOn: ['clean', ':desktop:dist', 'tools:dist']){
-    from ('desktop/build/libs/')
-    from ('tools/build/libs/')
-    destinationDir file('build/dist/')
-
-    buildVersion{
-        isRelease = false
-    }
     archiveName = "sweat-${buildVersion.version}.zip"
 }

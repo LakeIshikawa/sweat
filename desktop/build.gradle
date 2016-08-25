@@ -25,7 +25,7 @@ task run(dependsOn: classes, type: JavaExec) {
     ignoreExitValue = true
 }
 
-task dist(type: Jar, dependsOn: [clean, classes]) {
+task dist(type: Jar, dependsOn: [classes]) {
     from files(sourceSets.main.output.classesDir)
     from files(sourceSets.main.output.resourcesDir)
     from {configurations.compile.collect {zipTree(it)}}
@@ -38,9 +38,9 @@ task dist(type: Jar, dependsOn: [clean, classes]) {
 
     doLast {
         // Write batch files
-        File bat = new File(destinationDir, "yugen.bat")
+        File bat = new File(destinationDir, "sweat.bat")
         destinationDir.mkdirs();
-        bat.write('java -jar ' + archiveName + ' > yugen.log 2>&1')
+        bat.write('java -jar ' + archiveName + ' > sweat.log 2>&1')
     }
 }
 
