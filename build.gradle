@@ -20,7 +20,7 @@ allprojects {
     version = buildVersion.version
 
     ext {
-        appName = "yugen"
+        appName = "sweat"
         gdxVersion = '1.9.3'
         roboVMVersion = '2.1.0'
         box2DLightsVersion = '1.4'
@@ -126,7 +126,7 @@ task dist(type: Zip, dependsOn: ['clean', ':desktop:dist', 'tools:dist']){
     buildVersion{
         isRelease = true
     }
-    archiveName = "YUGEN-${buildVersion.version}.zip"
+    archiveName = "sweat-${buildVersion.version}.zip"
 }
 
 task distSnapshot(type: Zip, dependsOn: ['clean', ':desktop:dist', 'tools:dist']){
@@ -137,5 +137,5 @@ task distSnapshot(type: Zip, dependsOn: ['clean', ':desktop:dist', 'tools:dist']
     buildVersion{
         isRelease = false
     }
-    archiveName = "YUGEN-${buildVersion.version}.zip"
+    archiveName = "sweat-${buildVersion.version}.zip"
 }

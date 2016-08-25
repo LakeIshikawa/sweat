@@ -34,7 +34,7 @@ task dist(type: Jar, dependsOn: [clean, classes]) {
         attributes 'Main-Class': project.mainClassName
     }
 
-    baseName = "Yugen"
+    baseName = "Sweat"
 
     doLast {
         // Write batch files

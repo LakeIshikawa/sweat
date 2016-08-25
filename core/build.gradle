@@ -4,12 +4,14 @@ apply plugin: "antlr"
 sourceCompatibility = 1.7
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-sourceSets.main.java.srcDirs = [ "src/main/java/", "gen/" ]
+sourceSets.main.java.srcDirs = [ "src/main/java/", "build/generated-src" ]
 
 generateGrammarSource {
     maxHeapSize = "64m"
     arguments += [ "-visitor", "-long-messages", "-package", "com.lksoft.yugen"]
 }
+
+classes.dependsOn generateGrammarSource
 
 eclipse.project {
     name = appName + "-core"
