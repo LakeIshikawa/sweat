@@ -35,7 +35,7 @@ task distSE(type: Jar) {
         // Create batch
         File bat = new File(destinationDir, "scene-editor.bat")
         destinationDir.mkdirs();
-        bat.write('java -jar ' + archiveName + ' > scene-editor.log 2>&1')
+        bat.write('java -jar _sweat\\' + archiveName + ' > _sweat\\scene-editor.log 2>&1')
     }
 }
 
@@ -55,7 +55,7 @@ task distAE(type: Jar) {
         // Create batch
         File bat = new File(destinationDir, "animation-editor.bat")
         destinationDir.mkdirs();
-        bat.write('java -jar ' + archiveName + ' > animation-editor.log 2>&1')
+        bat.write('java -jar _sweat\\' + archiveName + ' > _sweat\\animation-editor.log 2>&1')
     }
 }
 
@@ -75,7 +75,7 @@ task distSPRE(type: Jar) {
         // Create batch
         File bat = new File(destinationDir, "sprite-editor.bat")
         destinationDir.mkdirs();
-        bat.write('java -jar ' + archiveName + ' > sprite-editor.log 2>&1')
+        bat.write('java -jar _sweat\\' + archiveName + ' > _sweat\\sprite-editor.log 2>&1')
     }
 }
 
@@ -95,7 +95,7 @@ task distSETE(type: Jar) {
         // Create batch
         File bat = new File(destinationDir, "settings-editor.bat")
         destinationDir.mkdirs();
-        bat.write('java -jar ' + archiveName + ' > settings-editor.log 2>&1')
+        bat.write('java -jar _sweat\\' + archiveName + ' > _sweat\\settings-editor.log 2>&1')
     }
 }
 
@@ -115,7 +115,7 @@ task distTP(type: Jar) {
         // Create batch
         File bat = new File(destinationDir, "texture-packer.bat")
         destinationDir.mkdirs();
-        bat.write('java -jar ' + archiveName + ' > texture-packer.log 2>&1')
+        bat.write('java -jar _sweat\\' + archiveName + ' > _sweat\\texture-packer.log 2>&1')
     }
 }
 

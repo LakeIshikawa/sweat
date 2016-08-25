@@ -22,7 +22,7 @@ public class FsmReader {
     private FsmReader(boolean debug){
         if( debug ) {
             try {
-                loader = new URLClassLoader(new URL[]{Gdx.files.internal("bin/").file().toURI().toURL()});
+                loader = new URLClassLoader(new URL[]{Gdx.files.internal("_bin/").file().toURI().toURL()});
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }

@@ -40,7 +40,7 @@ task dist(type: Jar, dependsOn: [classes]) {
         // Write batch files
         File bat = new File(destinationDir, "sweat.bat")
         destinationDir.mkdirs();
-        bat.write('java -jar ' + archiveName + ' > sweat.log 2>&1')
+        bat.write('java -jar _sweat\\' + archiveName + ' > _sweat\\sweat.log 2>&1')
     }
 }
 
@@ -51,7 +51,7 @@ task distRelease(type: Jar) {
     from files(project.assetsDir);
     exclude '**/*.java'
     exclude '**/.gitignore'
-    exclude '**/bin/**'
+    exclude '**/_*/**'
     exclude '**/resources/**'
 
     manifest {

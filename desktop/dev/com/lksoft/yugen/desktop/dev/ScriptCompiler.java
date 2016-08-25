@@ -28,7 +28,7 @@ public class ScriptCompiler implements IScriptCompiler {
         scanJavaFiles(root, files);
 
         // Make output folder
-        File output = new File("bin");
+        File output = new File("_bin");
         output.mkdir();
 
         // Compile

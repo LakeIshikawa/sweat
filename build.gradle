@@ -119,8 +119,13 @@ task clean( dependsOn: [':desktop:clean', 'tools:clean']){
 }
 
 task dist(type: Zip, dependsOn: ['clean', ':desktop:dist', 'tools:dist']){
-    from ('desktop/build/libs/')
-    from ('tools/build/libs/')
+    from (['desktop/build/libs/', 'tools/build/libs/']){
+        include('*.jar')
+        into('_sweat')
+    }
+    from (['desktop/build/libs/', 'tools/build/libs/']){
+        include('*.bat')
+    }
     destinationDir file('build/dist/')
 
     archiveName = "sweat-${buildVersion.version}.zip"
