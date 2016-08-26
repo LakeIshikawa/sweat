@@ -28,8 +28,8 @@ public class ScriptCompiler implements IScriptCompiler {
         scanJavaFiles(root, files);
 
         // Make output folder
-        File output = new File("_bin");
-        output.mkdir();
+        File output = new File("_sweat/_bin");
+        output.mkdirs();
 
         // Compile
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
