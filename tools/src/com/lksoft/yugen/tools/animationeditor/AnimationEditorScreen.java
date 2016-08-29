@@ -329,8 +329,8 @@ public class AnimationEditorScreen implements Screen {
             public void selected(Array<FileHandle> files) {
                 // Find the frm files
                 FileHandle frm = files.first();
-                FileHandle atlas = Gdx.files.internal(frm.pathWithoutExtension()+".atlas");
-                FileHandle anm = Gdx.files.internal(frm.pathWithoutExtension()+".anm");
+                FileHandle atlas = new FileHandle(frm.pathWithoutExtension()+".atlas");
+                FileHandle anm = new FileHandle(frm.pathWithoutExtension()+".anm");
 
                 // Load stuff
                 TextureAtlas tAtlas = new TextureAtlas(atlas);
