@@ -37,7 +37,7 @@ public class Sweat {
     private SweatCamera camera = new SweatCamera();
 
     // Debug
-    private boolean debug = false;
+    private boolean debug = true;
     private boolean drawRects = false;
 
     // Collisions
