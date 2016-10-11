@@ -3,11 +3,11 @@ apply plugin: "java"
 sourceCompatibility = 1.7
 sourceSets.main.java.srcDirs = [ "src/" ]
 
-project.ext.SEmainClassName = "com.lksoft.yugen.tools.sceneeditor.SceneEditorLauncher"
-project.ext.AEmainClassName = "com.lksoft.yugen.tools.animationeditor.AnimationEditorLauncher"
-project.ext.SPREmainClassName = "com.lksoft.yugen.tools.spriteeditor.SpriteEditorLauncher"
-project.ext.SETEmainClassName = "com.lksoft.yugen.tools.settingseditor.SettingsEditorLauncher"
-project.ext.TPmainClassName = "com.lksoft.yugen.tools.texturepacker.TexturePackerLauncher"
+project.ext.SEmainClassName = "com.lksoft.sweat.tools.sceneeditor.SceneEditorLauncher"
+project.ext.AEmainClassName = "com.lksoft.sweat.tools.animationeditor.AnimationEditorLauncher"
+project.ext.SPREmainClassName = "com.lksoft.sweat.tools.spriteeditor.SpriteEditorLauncher"
+project.ext.SETEmainClassName = "com.lksoft.sweat.tools.settingseditor.SettingsEditorLauncher"
+project.ext.TPmainClassName = "com.lksoft.sweat.tools.texturepacker.TexturePackerLauncher"
 
 project.ext.assetsDir = new File("./assets");
 
