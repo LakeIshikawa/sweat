@@ -7,7 +7,6 @@ project.ext.SEmainClassName = "com.lksoft.sweat.tools.sceneeditor.SceneEditorLau
 project.ext.AEmainClassName = "com.lksoft.sweat.tools.animationeditor.AnimationEditorLauncher"
 project.ext.SPREmainClassName = "com.lksoft.sweat.tools.spriteeditor.SpriteEditorLauncher"
 project.ext.SETEmainClassName = "com.lksoft.sweat.tools.settingseditor.SettingsEditorLauncher"
-project.ext.TPmainClassName = "com.lksoft.sweat.tools.texturepacker.TexturePackerLauncher"
 
 project.ext.assetsDir = new File("./assets");
 
@@ -99,31 +98,10 @@ task distSETE(type: Jar) {
     }
 }
 
-task distTP(type: Jar) {
-    from files(sourceSets.main.output.classesDir)
-    from files(sourceSets.main.output.resourcesDir)
-    from {configurations.compile.collect {zipTree(it)}}
-    from files(project.assetsDir);
-
-    manifest {
-        attributes 'Main-Class': project.TPmainClassName
-    }
-
-    baseName = 'TexturePacker'
-
-    doLast {
-        // Create batch
-        File bat = new File(destinationDir, "texture-packer.bat")
-        destinationDir.mkdirs();
-        bat.write('java -jar _sweat\\' + archiveName + ' > _sweat\\texture-packer.log 2>&1')
-    }
-}
-
-task dist(dependsOn: [clean, distSE, distAE, distSPRE, distSETE, distTP]){
+task dist(dependsOn: [clean, distSE, distAE, distSPRE, distSETE]){
 }
 
 distSE.dependsOn classes
 distAE.dependsOn classes
 distSPRE.dependsOn classes
 distSETE.dependsOn classes
-distTP.dependsOn classes
