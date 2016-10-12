@@ -327,9 +327,15 @@ public class AnimationEditorScreen implements Screen {
         chooser.setListener(new FileChooserListener() {
             @Override
             public void selected(Array<FileHandle> files) {
+                // Relative path
+                String absPath = files.first().file().getAbsolutePath();
+                String rootPath = new File(".").getAbsolutePath();
+                String relPath = absPath.replace(rootPath+File.separator, "");
+                FileHandle relHandle = new FileHandle("_sweat/_bin/" + relPath);
+
                 // Find the frm files
                 FileHandle frm = files.first();
-                FileHandle atlas = new FileHandle(frm.pathWithoutExtension()+".atlas");
+                FileHandle atlas = new FileHandle(relHandle.pathWithoutExtension()+".atlas");
                 FileHandle anm = new FileHandle(frm.pathWithoutExtension()+".anm");
 
                 // Load stuff
@@ -348,7 +354,7 @@ public class AnimationEditorScreen implements Screen {
         stage.addActor(chooser);
     }
 
-    // Open stage
+    // Open animation
     void open() {
         final FileChooser chooser = new FileChooser(FileChooser.Mode.OPEN);
         chooser.setSelectionMode(FileChooser.SelectionMode.FILES);
@@ -361,7 +367,11 @@ public class AnimationEditorScreen implements Screen {
 
             @Override
             public void selected(Array<FileHandle> files) {
-                setAnimationPack(AnimationPack.read(files.first()), files.first());
+                String absPath = files.first().file().getAbsolutePath();
+                String rootPath = new File(".").getAbsolutePath();
+                String relPath = absPath.replace(rootPath+File.separator, "");
+                FileHandle handle = new FileHandle(relPath);
+                setAnimationPack(AnimationPack.read(handle), handle);
             }
 
             @Override

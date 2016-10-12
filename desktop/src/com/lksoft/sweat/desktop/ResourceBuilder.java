@@ -20,10 +20,7 @@ public class ResourceBuilder {
         try {
             // Create bin folder
             File output = new File("_sweat/_bin");
-            if( !output.mkdirs() ){
-                System.err.println("Cannot create _sweat folder.  Check permissions?");
-                System.exit(1);
-            }
+            output.mkdirs();
 
             // Compile scripts
             Class<IScriptCompiler> cls = ClassReflection.forName("com.lksoft.sweat.desktop.dev.ScriptCompiler");
