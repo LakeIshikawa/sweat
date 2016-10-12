@@ -3,6 +3,8 @@ package com.lksoft.sweat.desktop;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 
+import java.io.File;
+
 /**
  * Created by Lake on 12/10/2016.
  */
@@ -16,14 +18,21 @@ public class ResourceBuilder {
      */
     public boolean buildResources(){
         try {
+            // Create bin folder
+            File output = new File("_sweat/_bin");
+            if( !output.mkdirs() ){
+                System.err.println("Cannot create _sweat folder.  Check permissions?");
+                System.exit(1);
+            }
+
             // Compile scripts
             Class<IScriptCompiler> cls = ClassReflection.forName("com.lksoft.sweat.desktop.dev.ScriptCompiler");
             IScriptCompiler compiler = cls.newInstance();
-            compiler.compileScripts();
+            compiler.compileScripts(output);
 
             // Pack atlases
             AtlasBuilder builder = new AtlasBuilder();
-            builder.buildAtlases();
+            builder.buildAtlases(output);
             return true;
         } catch (ReflectionException e){
             return false;

@@ -11,23 +11,21 @@ import java.util.List;
 
 /**
  * Created by Lake on 12/10/2016.
+ *
+ * Builds atlases from image folders in the project
  */
-public class AtlasBuilder {
+class AtlasBuilder {
 
     /**
      * Pack all individual images to atlases.
      * The atlases will have the same path/name as the
      * folder containing the pngs, and will reside in the _sweat/_bin folder
      */
-    public void buildAtlases() {
+    void buildAtlases(File binFolder) {
         // Scan for image directories
         List<File> atlasDirs = new ArrayList<>();
         File root = new File(".");
         scanImageFolders(root, atlasDirs);
-
-        // Make output folder
-        File output = new File("_sweat/_bin");
-        output.mkdirs();
 
         // Pack 'em
         TexturePacker.Settings settings = new TexturePacker.Settings();
@@ -40,11 +38,14 @@ public class AtlasBuilder {
         settings.useIndexes = false;
 
         for( File atlasDir : atlasDirs ){
-            TexturePacker.processIfModified(
-                    settings,
-                    atlasDir.getAbsolutePath(),
-                    new File(output, atlasDir.getParent()).getAbsolutePath(),
-                    atlasDir.getName());
+            // Check if anything was modified
+            if( atlasModified(atlasDir, binFolder, settings) ) {
+                TexturePacker.process(
+                        settings,
+                        atlasDir.getAbsolutePath(),
+                        new File(binFolder, atlasDir.getParent()).getAbsolutePath(),
+                        atlasDir.getName());
+            }
         }
     }
 
@@ -66,4 +67,29 @@ public class AtlasBuilder {
             }
         }
     }
+
+    // Check if atlas images were modified
+    private boolean atlasModified(File atlasDir, File outputDir, TexturePacker.Settings settings) {
+        File atlasFile = new File(outputDir, atlasDir.getPath() + settings.atlasExtension);
+
+        // If atlas dir was modified, atlas was modified
+        if( atlasDir.lastModified() > atlasFile.lastModified() ) return true;
+
+        // Check every file recursively
+        return fileModified(atlasDir, atlasFile.lastModified());
+    }
+
+    // Check if file (dir or image) was modified later than the atlas last modification
+    private boolean fileModified(File f, long atlasModified) {
+        if( f.isDirectory() ){
+            // Check folder modification
+            if( f.lastModified() > atlasModified ) return true;
+            // Check every file modification
+            for( File c : f.listFiles() ){
+                if( fileModified(c, atlasModified) ) return true;
+            }
+        }
+        return f.lastModified() > atlasModified;
+    }
+
 }
