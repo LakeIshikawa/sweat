@@ -14,34 +14,17 @@ buildscript {
 
 plugins {
     id "co.riiid.gradle" version "0.4.2"
+    id 'org.ajoberstar.grgit' version '1.6.0-rc.1'
+    id 'org.ajoberstar.release-opinion' version '1.6.0-rc.1'
 }
 
-// Project version
-class ProjectVersion {
-    Integer major;
-    Integer minor;
-    String build;
+apply plugin: 'org.ajoberstar.grgit'
+apply plugin: "org.ajoberstar.release-opinion"
 
-    ProjectVersion(Integer major, Integer minor, String build){
-        this.major = major;
-        this.minor = minor;
-        this.build = build;
-    }
-
-    @Override
-    String toString() {
-        String fullVersion = "$major.$minor"
-        if( build ) fullVersion += ".$build"
-        fullVersion
-    }
-}
-
-def version = new ProjectVersion(0, 2, new Date().format('yyyy_MM_dd_HHmmss'))
 
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
-    apply plugin: 'build-version'
 
     ext {
         appName = "sweat"
@@ -152,22 +135,22 @@ task dist(type: Zip, dependsOn: ['clean', ':desktop:dist', 'tools:dist']){
     }
     destinationDir file('build/dist/')
 
-    archiveName = "sweat-${version}.zip"
+    archiveName = "sweat-${project.version}.zip"
 }
 
 github {
     owner = 'LakeIshikawa'
     repo = 'sweat'
-    token = '06126fe998bec295d4f208e354f1af5399252582'
-    tagName = "${version}"
+    token = "${project.getProperties().get("githubToken")}"
+    tagName = "release-${project.version}"
     targetCommitish = 'master'
-    name = "v${version}"
+    name = "v${project.version}"
     body = """# SWEAT
 Last stable release!
 """
     assets = [
-            "build/dist/sweat-${version}.zip"
+            "build/dist/sweat-${project.version}.zip"
     ]
 }
 
-githubRelease.dependsOn(dist)
+githubRelease.dependsOn(dist, release)
