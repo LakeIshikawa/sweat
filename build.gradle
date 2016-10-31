@@ -12,12 +12,36 @@ buildscript {
     }
 }
 
+plugins {
+    id "co.riiid.gradle" version "0.4.2"
+}
+
+// Project version
+class ProjectVersion {
+    Integer major;
+    Integer minor;
+    String build;
+
+    ProjectVersion(Integer major, Integer minor, String build){
+        this.major = major;
+        this.minor = minor;
+        this.build = build;
+    }
+
+    @Override
+    String toString() {
+        String fullVersion = "$major.$minor"
+        if( build ) fullVersion += ".$build"
+        fullVersion
+    }
+}
+
+def version = new ProjectVersion(0, 2, new Date().format('yyyy_MM_dd_HHmmss'))
+
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
     apply plugin: 'build-version'
-
-    version = buildVersion.version
 
     ext {
         appName = "sweat"
@@ -128,5 +152,22 @@ task dist(type: Zip, dependsOn: ['clean', ':desktop:dist', 'tools:dist']){
     }
     destinationDir file('build/dist/')
 
-    archiveName = "sweat-${buildVersion.version}.zip"
+    archiveName = "sweat-${version}.zip"
 }
+
+github {
+    owner = 'LakeIshikawa'
+    repo = 'sweat'
+    token = '06126fe998bec295d4f208e354f1af5399252582'
+    tagName = "${version}"
+    targetCommitish = 'master'
+    name = "v${version}"
+    body = """# SWEAT
+Last stable release!
+"""
+    assets = [
+            "build/dist/sweat-${version}.zip"
+    ]
+}
+
+githubRelease.dependsOn(dist)
