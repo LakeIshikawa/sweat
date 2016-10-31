@@ -153,4 +153,4 @@ Last stable release!
     ]
 }
 
-githubRelease.dependsOn(dist, release)
+githubRelease.dependsOn(dist, tasks.release)
