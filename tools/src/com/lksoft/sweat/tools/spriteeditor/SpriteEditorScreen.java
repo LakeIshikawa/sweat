@@ -139,7 +139,9 @@ public class SpriteEditorScreen implements Screen, InputProcessor {
         spritePackWindow.setFramePack(pack);
 
         // Select first animation def
-        selectFrame(pack.getSpriteDefs().first());
+        if( pack.getSpriteDefs().size > 0 ) {
+            selectFrame(pack.getSpriteDefs().first());
+        }
     }
 
     // Selects the specified spriteDef
@@ -214,21 +216,22 @@ public class SpriteEditorScreen implements Screen, InputProcessor {
     void newFramePack() {
         // Show file chooser
         final FileChooser chooser = new FileChooser(FileChooser.Mode.OPEN);
-        chooser.setSelectionMode(FileChooser.SelectionMode.FILES);
+        chooser.setSelectionMode(FileChooser.SelectionMode.DIRECTORIES);
         chooser.setMultiSelectionEnabled(false);
         chooser.setDirectory(new File("."));
-        FileTypeFilter filter = new FileTypeFilter(false);
-        filter.addRule("TextureAtlas file", "atlas");
-        chooser.setFileTypeFilter(filter);
         chooser.setListener(new FileChooserListener() {
             @Override
             public void selected(Array<FileHandle> files) {
                 // Find the atlas
-                FileHandle atlas = files.first();
-                FileHandle frm = Gdx.files.internal(atlas.pathWithoutExtension()+".frm");
+                FileHandle imageDir = files.first();
+                FileHandle frm = Gdx.files.internal(imageDir.path()+".frm");
 
                 // Load stuff
-                TextureAtlas tAtlas = new TextureAtlas(atlas);
+                String absPath = files.first().parent().file().getAbsolutePath() + File.separator + files.first().name() + ".atlas";
+                String rootPath = new File(".").getAbsolutePath();
+                String relPath = absPath.replace(rootPath+File.separator, "");
+                FileHandle handle = new FileHandle("_sweat/_bin/" + relPath);
+                TextureAtlas tAtlas = new TextureAtlas(handle);
 
                 // Create new spriteDef pack
                 setFramePack(new SpritePack(tAtlas), frm);
@@ -255,8 +258,14 @@ public class SpriteEditorScreen implements Screen, InputProcessor {
 
             @Override
             public void selected(Array<FileHandle> files) {
+                // Relative path
+                String absPath = files.first().file().getAbsolutePath();
+                String rootPath = new File(".").getAbsolutePath();
+                String relPath = absPath.replace(rootPath+File.separator, "");
+                FileHandle handle = new FileHandle("_sweat/_bin/" + relPath);
+
                 // Read frm and atlas
-                FileHandle atlasHandle = Gdx.files.internal(files.first().pathWithoutExtension() + ".atlas");
+                FileHandle atlasHandle = Gdx.files.internal(handle.pathWithoutExtension() + ".atlas");
                 TextureAtlas atlas = new TextureAtlas(atlasHandle);
 
                 SpritePack spritePack = new SpritePackReader(files.first()).read(atlas);

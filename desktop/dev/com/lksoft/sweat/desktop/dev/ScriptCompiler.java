@@ -21,19 +21,15 @@ public class ScriptCompiler implements IScriptCompiler {
      * Compile all scripts to class files
      */
     @Override
-    public void compileScripts() {
+    public void compileScripts(File binFolder) {
         // Scan for .java files
         List<File> files = new ArrayList<>();
         File root = new File(".");
         scanJavaFiles(root, files);
 
-        // Make output folder
-        File output = new File("_sweat/_bin");
-        output.mkdirs();
-
         // Compile
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-        Iterable<String> options = Arrays.asList( new String[] { "-d", output.getAbsolutePath()} );
+        Iterable<String> options = Arrays.asList( new String[] { "-d", binFolder.getAbsolutePath()} );
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
 
         Iterable<? extends JavaFileObject> compilationUnits =

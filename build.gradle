@@ -12,12 +12,19 @@ buildscript {
     }
 }
 
+plugins {
+    id "co.riiid.gradle" version "0.4.2"
+    id 'org.ajoberstar.grgit' version '1.6.0-rc.1'
+    id 'org.ajoberstar.release-opinion' version '1.6.0-rc.1'
+}
+
+apply plugin: 'org.ajoberstar.grgit'
+apply plugin: "org.ajoberstar.release-opinion"
+
+
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
-    apply plugin: 'build-version'
-
-    version = buildVersion.version
 
     ext {
         appName = "sweat"
@@ -101,9 +108,9 @@ project(":core") {
 project(":tools") {
     apply plugin: "java"
 
-
     dependencies {
         compile project(":core")
+        compile project(":desktop")
         compile "com.kotcrab.vis:vis-ui:1.+"
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
@@ -128,5 +135,22 @@ task dist(type: Zip, dependsOn: ['clean', ':desktop:dist', 'tools:dist']){
     }
     destinationDir file('build/dist/')
 
-    archiveName = "sweat-${buildVersion.version}.zip"
+    archiveName = "sweat-${project.version}.zip"
 }
+
+github {
+    owner = 'LakeIshikawa'
+    repo = 'sweat'
+    token = "${project.getProperties().get("githubToken")}"
+    tagName = "release-${project.version}"
+    targetCommitish = 'master'
+    name = "v${project.version}"
+    body = """# SWEAT
+Last stable release!
+"""
+    assets = [
+            "build/dist/sweat-${project.version}.zip"
+    ]
+}
+
+githubRelease.dependsOn(dist, release)
