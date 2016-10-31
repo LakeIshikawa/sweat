@@ -142,7 +142,7 @@ github {
     owner = 'LakeIshikawa'
     repo = 'sweat'
     token = "${project.getProperties().get("githubToken")}"
-    tagName = "release-${project.version}"
+    tagName = "v${project.version}"
     targetCommitish = 'master'
     name = "v${project.version}"
     body = """# SWEAT
