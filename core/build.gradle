@@ -1,5 +1,6 @@
 apply plugin: "java"
 apply plugin: "antlr"
+apply plugin: 'maven-publish'
 
 sourceCompatibility = 1.7
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
@@ -9,6 +10,25 @@ sourceSets.main.java.srcDirs = [ "src/main/java/", "build/generated-src" ]
 generateGrammarSource {
     maxHeapSize = "64m"
     arguments += [ "-visitor", "-long-messages", "-package", "com.lksoft.sweat"]
+}
+
+publishing {
+    repositories{
+        maven{
+            url "${project.getProperties().get("mavenURL")}"
+            credentials{
+                username "${project.getProperties().get("mavenUser")}"
+                password "${project.getProperties().get("mavenPassword")}"
+            }
+        }
+    }
+
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId 'sweat-core'
+            from components.java
+        }
+    }
 }
 
 classes.dependsOn generateGrammarSource

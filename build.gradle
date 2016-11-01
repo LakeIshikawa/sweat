@@ -20,11 +20,35 @@ plugins {
 
 apply plugin: 'org.ajoberstar.grgit'
 apply plugin: "org.ajoberstar.release-opinion"
+apply plugin: 'maven-publish'
 
+publishing {
+    repositories{
+        maven{
+            url "${project.getProperties().get("mavenURL")}"
+            credentials{
+                username "${project.getProperties().get("mavenUser")}"
+                password "${project.getProperties().get("mavenPassword")}"
+            }
+        }
+    }
+
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId 'sweat-standalone'
+            artifact file("build/dist/sweat-${project.version}.zip")
+        }
+    }
+}
 
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
+    apply plugin: "maven"
+
+    // Maven
+    group = "com.lksoft.sweat"
+    version = project.version
 
     ext {
         appName = "sweat"
@@ -154,3 +178,4 @@ Last stable release!
 }
 
 githubRelease.dependsOn(dist, tasks.release)
+publish.dependsOn(dist)

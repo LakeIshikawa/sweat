@@ -1,4 +1,5 @@
 apply plugin: "java"
+apply plugin: 'maven-publish'
 
 sourceSets{
     main {
@@ -62,3 +63,23 @@ task distRelease(type: Jar) {
 }
 
 distRelease.dependsOn releaseClasses
+
+// Maven
+publishing {
+    repositories{
+        maven{
+            url "${project.getProperties().get("mavenURL")}"
+            credentials{
+                username "${project.getProperties().get("mavenUser")}"
+                password "${project.getProperties().get("mavenPassword")}"
+            }
+        }
+    }
+
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId 'sweat-desktop'
+            from components.java
+        }
+    }
+}
