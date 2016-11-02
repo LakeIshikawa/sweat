@@ -173,9 +173,16 @@ github {
 Last stable release!
 """
     assets = [
-            "build/dist/sweat-${project.version}.zip"
+            "build/dist/sweat-${project.version}-github.zip"
     ]
 }
 
-githubRelease.dependsOn(dist, tasks.release)
-publish.dependsOn(dist)
+task prepareGithubRelease(type: Copy) {
+    from "build/dist/"
+    into "build/dist/"
+    include "sweat-${project.version}.zip"
+    rename ("sweat-${project.version}.zip",
+            "sweat-${project.version}-github.zip")
+}
+
+githubRelease.dependsOn(prepareGithubRelease)
