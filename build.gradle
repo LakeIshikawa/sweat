@@ -177,5 +177,3 @@ Last stable release!
     ]
 }
 
-githubRelease.dependsOn(dist, tasks.release)
-publish.dependsOn(dist)
