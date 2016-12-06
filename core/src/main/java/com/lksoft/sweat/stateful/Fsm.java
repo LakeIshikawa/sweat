@@ -296,12 +296,12 @@ public abstract class Fsm<FsmClass, StateClass extends State<FsmClass>, HitClass
 
     /**
      * Load a scene
-     * @param name
+     * @param path
      * @return The scene
      */
-    public SceneDef loadScene(String name){
+    public SceneDef loadScene(String path){
         try {
-            return Sweat.i.loadScene(Gdx.files.internal(name));
+            return Sweat.i.loadScene(Gdx.files.internal(Resources.BIN_FOLDER + path));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -12,6 +12,7 @@ import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.file.FileChooser;
 import com.kotcrab.vis.ui.widget.file.FileChooserListener;
 import com.kotcrab.vis.ui.widget.file.FileTypeFilter;
+import com.lksoft.sweat.Resources;
 import com.lksoft.sweat.stateless.AnimationDef;
 import com.lksoft.sweat.stateless.SceneDef;
 import com.lksoft.sweat.tools.CameraControls;
@@ -271,9 +272,7 @@ public class SceneEditorScreen implements Screen, InputProcessor {
             @Override
             public void selected(Array<FileHandle> files) {
                 SceneDef.SceneFsmDef def = new SceneDef.SceneFsmDef();
-                String absPath = files.first().file().getAbsolutePath();
-                String rootPath = new File(".").getAbsolutePath();
-                def.scriptPath = absPath.replace(rootPath+File.separator, "");
+                def.scriptPath = Resources.resToAbs(files.first()).path();
                 def.animation = def.loadAnimationPack().getAnimations().first().getName();
                 def.layer = 0;
 
@@ -401,6 +400,7 @@ public class SceneEditorScreen implements Screen, InputProcessor {
     void save() {
         if( getCurrentSceneDef() == null ) return;
         getCurrentSceneDef().write(currentSceneFile);
+        getCurrentSceneDef().write(new FileHandle(Resources.toBin(currentSceneFile).path()));
         Dialogs.showOKDialog(stage, "Success", "Scene saved.");
     }
 }

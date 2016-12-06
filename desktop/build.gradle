@@ -9,7 +9,7 @@ sourceSets{
         compileClasspath = sourceSets.main.compileClasspath
         runtimeClasspath = sourceSets.main.runtimeClasspath
 
-        java.srcDirs = [ "src", "../android/assets" ]
+        java.srcDirs = [ "src", "../android/assets/resources" ]
     }
 }
 
@@ -41,7 +41,7 @@ task dist(type: Jar, dependsOn: [classes]) {
         // Write batch files
         File bat = new File(destinationDir, "sweat.bat")
         destinationDir.mkdirs();
-        bat.write('java -jar _sweat\\' + archiveName + ' > _sweat\\sweat.log 2>&1')
+        bat.write('java -jar sweat\\' + archiveName + ' > sweat\\sweat.log 2>&1')
     }
 }
 
@@ -50,10 +50,8 @@ task distRelease(type: Jar) {
     from files(sourceSets.release.output.resourcesDir)
     from {configurations.compile.collect {zipTree(it)}}
     from files(project.assetsDir);
-    exclude '**/*.java'
-    exclude '**/.gitignore'
-    exclude '**/_*/**'
-    exclude '**/resources/**'
+    exclude 'sweat/**'
+    exclude 'resources/**'
 
     manifest {
         attributes 'Main-Class': project.mainClassName

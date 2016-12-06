@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.lksoft.sweat.Resources;
 import com.lksoft.sweat.Sweat;
 import com.lksoft.sweat.stateless.Settings;
 
@@ -33,7 +34,7 @@ public class SettingsEditorScreen implements Screen {
         settingsWindow.setPosition(w/2-settingsWindow.getWidth()/2, h/2 - settingsWindow.getHeight()/2);
 
         // Load settings
-        Settings settings = Settings.read(Gdx.files.internal(Sweat.SETTINGS_FILE));
+        Settings settings = Settings.read(Gdx.files.internal(Resources.RESOURCES_FOLDER + Sweat.SETTINGS_FILE));
         settingsWindow.setSettings(settings);
 
         stage.addActor(settingsWindow);

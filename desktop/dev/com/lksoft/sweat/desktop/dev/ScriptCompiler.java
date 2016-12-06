@@ -28,18 +28,20 @@ public class ScriptCompiler implements IScriptCompiler {
         scanJavaFiles(root, files);
 
         // Compile
-        JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-        Iterable<String> options = Arrays.asList( new String[] { "-d", binFolder.getAbsolutePath()} );
-        StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
+        if( !files.isEmpty() ) {
+            JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+            Iterable<String> options = Arrays.asList(new String[]{"-d", binFolder.getAbsolutePath()});
+            StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
 
-        Iterable<? extends JavaFileObject> compilationUnits =
-                fileManager.getJavaFileObjectsFromFiles(files);
-        compiler.getTask(null, fileManager, null, options, null, compilationUnits).call();
+            Iterable<? extends JavaFileObject> compilationUnits =
+                    fileManager.getJavaFileObjectsFromFiles(files);
+            compiler.getTask(null, fileManager, null, options, null, compilationUnits).call();
 
-        try {
-            fileManager.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            try {
+                fileManager.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

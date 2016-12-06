@@ -7,7 +7,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.1.0'
-        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.1.0'
+        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.2.0'
         classpath 'nz.org.geonet:gradle-build-version-plugin:1.0.4'
     }
 }
@@ -52,7 +52,7 @@ allprojects {
 
     ext {
         appName = "sweat"
-        gdxVersion = '1.9.+'
+        gdxVersion = '1.9.4'
         roboVMVersion = '2.1.0'
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.0'
@@ -152,7 +152,7 @@ task clean( dependsOn: [':desktop:clean', 'tools:clean']){
 task dist(type: Zip, dependsOn: ['clean', ':desktop:dist', 'tools:dist']){
     from (['desktop/build/libs/', 'tools/build/libs/']){
         include('*.jar')
-        into('_sweat')
+        into('sweat')
     }
     from (['desktop/build/libs/', 'tools/build/libs/']){
         include('*.bat')

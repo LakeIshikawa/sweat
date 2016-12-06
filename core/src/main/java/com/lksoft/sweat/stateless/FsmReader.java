@@ -2,6 +2,7 @@ package com.lksoft.sweat.stateless;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.lksoft.sweat.Resources;
 import com.lksoft.sweat.Sweat;
 
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class FsmReader {
     private FsmReader(boolean debug){
         if( debug ) {
             try {
-                loader = new URLClassLoader(new URL[]{Gdx.files.internal("_sweat/_bin/").file().toURI().toURL()});
+                loader = new URLClassLoader(new URL[]{Gdx.files.internal(Resources.BIN_FOLDER).file().toURI().toURL()});
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
