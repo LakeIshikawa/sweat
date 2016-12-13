@@ -6,7 +6,7 @@ buildscript {
         maven { url 'https://geonet.artifactoryonline.com/geonet/public-releases' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'com.android.tools.build:gradle:2.2.0'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.2.0'
         classpath 'nz.org.geonet:gradle-build-version-plugin:1.0.4'
     }
@@ -135,7 +135,7 @@ project(":tools") {
     dependencies {
         compile project(":core")
         compile project(":desktop")
-        compile "com.kotcrab.vis:vis-ui:1.+"
+        compile "com.kotcrab.vis:vis-ui:1.2.4"
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"

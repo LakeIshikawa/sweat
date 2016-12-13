@@ -228,11 +228,8 @@ public class SpriteEditorScreen implements Screen, InputProcessor {
                 FileHandle frm = Gdx.files.internal(imageDir.path()+".frm");
 
                 // Load stuff
-                String absPath = files.first().parent().file().getAbsolutePath() + File.separator + files.first().name() + ".atlas";
-                String rootPath = new File(".").getAbsolutePath();
-                String relPath = absPath.replace(rootPath+File.separator, "");
-                FileHandle handle = new FileHandle("_sweat/_bin/" + relPath);
-                TextureAtlas tAtlas = new TextureAtlas(handle);
+                FileHandle rel = Resources.toBin(files.first());
+                TextureAtlas tAtlas = new TextureAtlas(rel.pathWithoutExtension()+".atlas");
 
                 // Create new spriteDef pack
                 setFramePack(new SpritePack(tAtlas), frm);
