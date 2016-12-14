@@ -2,8 +2,6 @@ package com.lksoft.sweat.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.badlogic.gdx.utils.reflect.ClassReflection;
-import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.lksoft.sweat.SweatGame;
 
 public class DesktopLauncher {

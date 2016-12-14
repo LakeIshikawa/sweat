@@ -19,13 +19,12 @@ class AtlasBuilder {
     /**
      * Pack all individual images to atlases.
      * The atlases will have the same path/name as the
-     * folder containing the pngs, and will reside in the _sweat/_bin folder
+     * folder containing the pngs, and will reside in the _sweat folder
      */
-    void buildAtlases(File binFolder) {
+    void buildAtlases(File input, File binFolder) {
         // Scan for image directories
         List<File> atlasDirs = new ArrayList<>();
-        File root = new File(".");
-        scanImageFolders(root, atlasDirs);
+        scanImageFolders(input, atlasDirs);
 
         // Pack 'em
         TexturePacker.Settings settings = new TexturePacker.Settings();
@@ -39,11 +38,12 @@ class AtlasBuilder {
 
         for( File atlasDir : atlasDirs ){
             // Check if anything was modified
-            if( atlasModified(atlasDir, binFolder, settings) ) {
+            File atlasPath = new File(binFolder, input.toURI().relativize(atlasDir.getParentFile().toURI()).getPath());
+            if( atlasModified(atlasDir, atlasPath, settings) ) {
                 TexturePacker.process(
                         settings,
                         atlasDir.getAbsolutePath(),
-                        new File(binFolder, atlasDir.getParent()).getAbsolutePath(),
+                        atlasPath.getAbsolutePath(),
                         atlasDir.getName());
             }
         }
@@ -52,7 +52,7 @@ class AtlasBuilder {
     // Get all java files in assets
     private void scanImageFolders(File root, List<File> files) {
         for( File f : root.listFiles() ){
-            if( f.isDirectory() && !f.getName().startsWith("_") ) {
+            if( f.isDirectory() ) {
                 scanImageFolders(f, files);
             } else {
                 try {
@@ -70,7 +70,7 @@ class AtlasBuilder {
 
     // Check if atlas images were modified
     private boolean atlasModified(File atlasDir, File outputDir, TexturePacker.Settings settings) {
-        File atlasFile = new File(outputDir, atlasDir.getPath() + settings.atlasExtension);
+        File atlasFile = new File(outputDir, atlasDir.getName() + settings.atlasExtension);
 
         // If atlas dir was modified, atlas was modified
         if( atlasDir.lastModified() > atlasFile.lastModified() ) return true;

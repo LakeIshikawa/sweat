@@ -112,7 +112,7 @@ public class AnimationPack extends Resource implements Json.Serializable {
      */
     public static AnimationPack read(FileHandle anm) {
         FileHandle frm = Gdx.files.internal(anm.pathWithoutExtension() + ".frm");
-        FileHandle atlasHandle = Gdx.files.internal("_sweat/_bin/" + anm.pathWithoutExtension() + ".atlas");
+        FileHandle atlasHandle = Gdx.files.internal(anm.pathWithoutExtension() + ".atlas");
         TextureAtlas atlas = new TextureAtlas(atlasHandle);
         SpritePack spritePack = new SpritePackReader(frm).read(atlas);
 

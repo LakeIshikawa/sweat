@@ -35,7 +35,7 @@ task distSE(type: Jar) {
         // Create batch
         File bat = new File(destinationDir, "scene-editor.bat")
         destinationDir.mkdirs();
-        bat.write('java -jar _sweat\\' + archiveName + ' > _sweat\\scene-editor.log 2>&1')
+        bat.write('java -jar sweat\\' + archiveName + ' > sweat\\scene-editor.log 2>&1')
     }
 }
 
@@ -55,7 +55,7 @@ task distAE(type: Jar) {
         // Create batch
         File bat = new File(destinationDir, "animation-editor.bat")
         destinationDir.mkdirs();
-        bat.write('java -jar _sweat\\' + archiveName + ' > _sweat\\animation-editor.log 2>&1')
+        bat.write('java -jar sweat\\' + archiveName + ' > sweat\\animation-editor.log 2>&1')
     }
 }
 
@@ -75,7 +75,7 @@ task distSPRE(type: Jar) {
         // Create batch
         File bat = new File(destinationDir, "sprite-editor.bat")
         destinationDir.mkdirs();
-        bat.write('java -jar _sweat\\' + archiveName + ' > _sweat\\sprite-editor.log 2>&1')
+        bat.write('java -jar sweat\\' + archiveName + ' > sweat\\sprite-editor.log 2>&1')
     }
 }
 
@@ -95,7 +95,7 @@ task distSETE(type: Jar) {
         // Create batch
         File bat = new File(destinationDir, "settings-editor.bat")
         destinationDir.mkdirs();
-        bat.write('java -jar _sweat\\' + archiveName + ' > _sweat\\settings-editor.log 2>&1')
+        bat.write('java -jar sweat\\' + archiveName + ' > sweat\\settings-editor.log 2>&1')
     }
 }
 
@@ -111,10 +111,10 @@ distSETE.dependsOn classes
 publishing {
     repositories{
         maven{
-            url "${project.getProperties().get("mavenURL")}"
+            url "${project.getProperties().get("publishURL")}"
             credentials{
-                username "${project.getProperties().get("mavenUser")}"
-                password "${project.getProperties().get("mavenPassword")}"
+                username "${System.getenv("USER")}"
+                password "${System.getenv("PASS")}"
             }
         }
     }

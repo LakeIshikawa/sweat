@@ -53,7 +53,7 @@ public class Sweat {
         this.debug = debug;
 
         // Parse settings
-        settings = Settings.read(Gdx.files.internal(SETTINGS_FILE));
+        settings = Settings.read(Gdx.files.internal(Resources.BIN_FOLDER + SETTINGS_FILE));
 
         // Load main fsm
         loadFSM(Gdx.files.internal(settings.getMainFsm()), "main");
@@ -185,15 +185,15 @@ public class Sweat {
 
     /**
      * Load a scene
-     * @param scnFile
+     * @param scnDef
      * @return
      */
-    public SceneDef loadScene(FileHandle scnFile) throws IOException {
-        SceneDef scene = SceneDef.read(scnFile);
+    public SceneDef loadScene(FileHandle scnDef) throws IOException {
+        SceneDef scene = SceneDef.read(scnDef);
 
         // Load all scene fsms
         for(SceneDef.SceneFsmDef def : scene.layout){
-            Fsm fsm = loadFSM(Gdx.files.internal(def.scriptPath), scnFile.pathWithoutExtension() + def.animation);
+            Fsm fsm = loadFSM(Gdx.files.internal(def.scriptPath), scnDef.pathWithoutExtension() + def.animation);
             fsm.setAnimation(def.animation);
             fsm.pos.set(def.x, def.y);
             fsm.scrollFactor.set(def.scrollFactorX, def.scrollFactorY);

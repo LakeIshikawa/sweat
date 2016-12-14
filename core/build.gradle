@@ -15,10 +15,10 @@ generateGrammarSource {
 publishing {
     repositories{
         maven{
-            url "${project.getProperties().get("mavenURL")}"
+            url "${project.getProperties().get("publishURL")}"
             credentials{
-                username "${project.getProperties().get("mavenUser")}"
-                password "${project.getProperties().get("mavenPassword")}"
+                username "${System.getenv("USER")}"
+                password "${System.getenv("PASS")}"
             }
         }
     }

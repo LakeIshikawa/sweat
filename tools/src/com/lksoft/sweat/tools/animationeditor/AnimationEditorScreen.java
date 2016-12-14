@@ -14,6 +14,7 @@ import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.file.FileChooser;
 import com.kotcrab.vis.ui.widget.file.FileChooserListener;
 import com.kotcrab.vis.ui.widget.file.FileTypeFilter;
+import com.lksoft.sweat.Resources;
 import com.lksoft.sweat.stateless.*;
 import com.lksoft.sweat.tools.CameraControls;
 
@@ -328,14 +329,11 @@ public class AnimationEditorScreen implements Screen {
             @Override
             public void selected(Array<FileHandle> files) {
                 // Relative path
-                String absPath = files.first().file().getAbsolutePath();
-                String rootPath = new File(".").getAbsolutePath();
-                String relPath = absPath.replace(rootPath+File.separator, "");
-                FileHandle relHandle = new FileHandle("_sweat/_bin/" + relPath);
+                FileHandle rel = Resources.toBin(files.first());
 
                 // Find the frm files
                 FileHandle frm = files.first();
-                FileHandle atlas = new FileHandle(relHandle.pathWithoutExtension()+".atlas");
+                FileHandle atlas = new FileHandle(rel.pathWithoutExtension()+".atlas");
                 FileHandle anm = new FileHandle(frm.pathWithoutExtension()+".anm");
 
                 // Load stuff
@@ -371,7 +369,7 @@ public class AnimationEditorScreen implements Screen {
                 String rootPath = new File(".").getAbsolutePath();
                 String relPath = absPath.replace(rootPath+File.separator, "");
                 FileHandle handle = new FileHandle(relPath);
-                setAnimationPack(AnimationPack.read(handle), handle);
+                setAnimationPack(AnimationPack.read(Resources.toBin(handle)), handle);
             }
 
             @Override
@@ -387,6 +385,8 @@ public class AnimationEditorScreen implements Screen {
         if( animationPackWindow.getAnimationPack() == null ) return;
 
         animationPackWindow.getAnimationPack().write(anmFile);
+        // Copy to bin
+        animationPackWindow.getAnimationPack().write(new FileHandle(Resources.toBin(anmFile).path()));
         Dialogs.showOKDialog(stage, "Success", "Animation Pack saved.");
     }
 

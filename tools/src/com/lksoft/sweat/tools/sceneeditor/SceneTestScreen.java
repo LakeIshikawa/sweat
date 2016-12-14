@@ -7,6 +7,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.lksoft.sweat.Resources;
 import com.lksoft.sweat.Sweat;
 import com.lksoft.sweat.stateless.SceneDef;
 
@@ -47,7 +48,7 @@ public class SceneTestScreen implements Screen {
     @Override
     public void show() {
         try {
-            sceneDef = sweat.loadScene(scnFile);
+            sceneDef = sweat.loadScene(Resources.toBin(scnFile));
             sweat.getCamera().init(sceneDef.camera_x, sceneDef.camera_y, sceneDef.camera_width, sceneDef.camera_height);
         } catch (IOException e) {
             e.printStackTrace();

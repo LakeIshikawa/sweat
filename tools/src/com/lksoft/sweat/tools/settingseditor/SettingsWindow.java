@@ -9,6 +9,7 @@ import com.kotcrab.vis.ui.widget.*;
 import com.kotcrab.vis.ui.widget.file.FileChooser;
 import com.kotcrab.vis.ui.widget.file.FileChooserListener;
 import com.kotcrab.vis.ui.widget.file.FileTypeFilter;
+import com.lksoft.sweat.Resources;
 import com.lksoft.sweat.Sweat;
 import com.lksoft.sweat.stateless.Settings;
 
@@ -72,11 +73,11 @@ public class SettingsWindow extends VisWindow {
 
                     @Override
                     public void selected(Array<FileHandle> files) {
-                        String absPath = files.first().file().getAbsolutePath();
-                        String rootPath = new File(".").getAbsolutePath();
-                        mainFsmField.setText(absPath.replace(rootPath+File.separator, ""));
-                        settings.setMainFsm(mainFsmField.getText());
-                        settings.write(new File(Sweat.SETTINGS_FILE));
+                        FileHandle abs = Resources.resToAbs(files.first());
+                        mainFsmField.setText(abs.path());
+                        settings.setMainFsm(abs.path());
+                        settings.write(new File(Resources.RESOURCES_FOLDER + Sweat.SETTINGS_FILE));
+                        settings.write(new File(Resources.BIN_FOLDER + Sweat.SETTINGS_FILE));
                     }
 
                     @Override
@@ -164,7 +165,8 @@ public class SettingsWindow extends VisWindow {
             boxes[i].setSelected(key);
         }
 
-        settings.write(new File(Sweat.SETTINGS_FILE));
+        settings.write(new File(Resources.RESOURCES_FOLDER + Sweat.SETTINGS_FILE));
+        settings.write(new File(Resources.BIN_FOLDER + Sweat.SETTINGS_FILE));
     }
 
     /**

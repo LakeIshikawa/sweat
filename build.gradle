@@ -3,12 +3,10 @@ buildscript {
         mavenLocal()
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url 'https://geonet.artifactoryonline.com/geonet/public-releases' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0'
-        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.1.0'
-        classpath 'nz.org.geonet:gradle-build-version-plugin:1.0.4'
+        classpath 'com.android.tools.build:gradle:2.2.0'
+        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.2.0'
     }
 }
 
@@ -25,10 +23,10 @@ apply plugin: 'maven-publish'
 publishing {
     repositories{
         maven{
-            url "${project.getProperties().get("mavenURL")}"
+            url "${project.getProperties().get("publishURL")}"
             credentials{
-                username "${project.getProperties().get("mavenUser")}"
-                password "${project.getProperties().get("mavenPassword")}"
+                username "${System.getenv("USER")}"
+                password "${System.getenv("PASS")}"
             }
         }
     }
@@ -52,7 +50,7 @@ allprojects {
 
     ext {
         appName = "sweat"
-        gdxVersion = '1.9.+'
+        gdxVersion = '1.9.4'
         roboVMVersion = '2.1.0'
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.0'
@@ -135,7 +133,7 @@ project(":tools") {
     dependencies {
         compile project(":core")
         compile project(":desktop")
-        compile "com.kotcrab.vis:vis-ui:1.+"
+        compile "com.kotcrab.vis:vis-ui:1.2.4"
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
@@ -152,7 +150,7 @@ task clean( dependsOn: [':desktop:clean', 'tools:clean']){
 task dist(type: Zip, dependsOn: ['clean', ':desktop:dist', 'tools:dist']){
     from (['desktop/build/libs/', 'tools/build/libs/']){
         include('*.jar')
-        into('_sweat')
+        into('sweat')
     }
     from (['desktop/build/libs/', 'tools/build/libs/']){
         include('*.bat')

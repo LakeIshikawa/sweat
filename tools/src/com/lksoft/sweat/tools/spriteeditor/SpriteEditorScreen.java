@@ -15,6 +15,7 @@ import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.file.FileChooser;
 import com.kotcrab.vis.ui.widget.file.FileChooserListener;
 import com.kotcrab.vis.ui.widget.file.FileTypeFilter;
+import com.lksoft.sweat.Resources;
 import com.lksoft.sweat.stateless.SpriteDef;
 import com.lksoft.sweat.stateless.SpritePack;
 import com.lksoft.sweat.stateless.SpritePackReader;
@@ -227,11 +228,8 @@ public class SpriteEditorScreen implements Screen, InputProcessor {
                 FileHandle frm = Gdx.files.internal(imageDir.path()+".frm");
 
                 // Load stuff
-                String absPath = files.first().parent().file().getAbsolutePath() + File.separator + files.first().name() + ".atlas";
-                String rootPath = new File(".").getAbsolutePath();
-                String relPath = absPath.replace(rootPath+File.separator, "");
-                FileHandle handle = new FileHandle("_sweat/_bin/" + relPath);
-                TextureAtlas tAtlas = new TextureAtlas(handle);
+                FileHandle rel = Resources.toBin(files.first());
+                TextureAtlas tAtlas = new TextureAtlas(rel.pathWithoutExtension()+".atlas");
 
                 // Create new spriteDef pack
                 setFramePack(new SpritePack(tAtlas), frm);
@@ -259,13 +257,10 @@ public class SpriteEditorScreen implements Screen, InputProcessor {
             @Override
             public void selected(Array<FileHandle> files) {
                 // Relative path
-                String absPath = files.first().file().getAbsolutePath();
-                String rootPath = new File(".").getAbsolutePath();
-                String relPath = absPath.replace(rootPath+File.separator, "");
-                FileHandle handle = new FileHandle("_sweat/_bin/" + relPath);
+                FileHandle rel = Resources.toBin(files.first());
 
                 // Read frm and atlas
-                FileHandle atlasHandle = Gdx.files.internal(handle.pathWithoutExtension() + ".atlas");
+                FileHandle atlasHandle = Gdx.files.internal(rel.pathWithoutExtension() + ".atlas");
                 TextureAtlas atlas = new TextureAtlas(atlasHandle);
 
                 SpritePack spritePack = new SpritePackReader(files.first()).read(atlas);
@@ -285,8 +280,10 @@ public class SpriteEditorScreen implements Screen, InputProcessor {
         if( spritePackWindow.getFramePack() == null ) return;
 
         SpritePackWriter writer = new SpritePackWriter(frmFile.file());
+        SpritePackWriter binWriter = new SpritePackWriter(Resources.toBin(frmFile).file());
         try {
             writer.write(spritePackWindow.getFramePack());
+            binWriter.write(spritePackWindow.getFramePack());
             Dialogs.showOKDialog(stage, "Success", "SpriteDef Pack saved.");
         } catch (IOException e) {
             e.printStackTrace();
