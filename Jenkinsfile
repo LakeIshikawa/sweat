@@ -28,7 +28,7 @@ node {
 
         // Grab build version!
         version = sh(
-                script:"./gradlew -Prelease.stage=$rstage -Prelease.scope=patch", returnStdout: true).trim().split('\n')[0];
+                script:"./gradlew -Prelease.stage=$rstage -Prelease.scope=patch", returnStdout: true).trim().split('\n')[1]
         version = "v" + version.substring(version.indexOf('version: ') + 9);
 
         currentBuild.displayName = version
@@ -42,7 +42,7 @@ node {
     }
 
     // Deploy to archiva
-    if( "${env.BRANCH_NAME}".toString() == "master" || "${env.BRANCH_NAME}".toString() == "develop" ) {
+    if( "${env.BRANCH_NAME}".toString() == "master" || "${env.BRANCH_NAME}".toString() == "devel" ) {
         stage('deploy') {
             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'nexus', passwordVariable: 'PASS', usernameVariable: 'USER']]) {
                 sh "./gradlew publish -Prelease.stage=$rstage -Prelease.scope=patch -PpublishURL=$repo"
