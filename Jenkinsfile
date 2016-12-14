@@ -1,7 +1,4 @@
 #!/usr/bin/env groovy
-
-properties([pipelineTriggers([[$class: 'BitBucketTrigger']])])
-
 node {
     // Determine version properties
     switch ("${env.BRANCH_NAME}") {
