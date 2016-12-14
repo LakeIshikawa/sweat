@@ -9,7 +9,7 @@ node {
             rstage = 'final'
             repo = "${env.RELEASES_REPO}"
             break
-        case 'develop':
+        case 'devel':
             rstage = 'dev'
             repo = "${env.SNAPSHOTS_REPO}"
             break
